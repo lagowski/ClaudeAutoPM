@@ -1,0 +1,54 @@
+name: issue-label-guard
+on:
+  issues:
+    types: [opened, reopened]
+permissions:
+  issues: write
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const n = context.issue.number;
+            const body = issue.body || '';
+            let have = issue.labels.map(l => l.name);
+
+            // 1. Adopt the issue form's own dropdown answers, if it was form-filed.
+            //    Only a value the filer explicitly selected, and only if that exact
+            //    label already exists here. Never inferred from prose.
+            const section = h => {
+              const m = body.match(new RegExp('###\\s+' + h + '\\s*\\n+([^\\n]+)', 'i'));
+              const v = m && m[1].trim();
+              return (!v || v === '_No response_') ? null : v.split(/\s/)[0].trim();
+            };
+            const wanted = [];
+            const area = section('Area'); if (area) wanted.push('area:' + area);
+            const size = section('Size'); if (size) wanted.push('size:' + size);
+
+            if (wanted.length) {
+              const existing = await github.paginate(
+                github.rest.issues.listLabelsForRepo, { ...context.repo, per_page: 100 });
+              const names = new Set(existing.map(l => l.name));
+              const add = wanted.filter(w => names.has(w) && !have.includes(w));
+              if (add.length) {
+                await github.rest.issues.addLabels(
+                  { ...context.repo, issue_number: n, labels: add });
+                have = have.concat(add);
+              }
+            }
+
+            // 2. Whatever is still missing becomes a loud, visible gap.
+            const missing = ['type:', 'area:', 'size:']
+              .filter(p => !have.some(x => x.startsWith(p)))
+              .map(p => p.slice(0, -1));
+            if (!missing.length) return;
+            await github.rest.issues.addLabels({ ...context.repo, issue_number: n,
+              labels: ['needs-triage'] });
+            await github.rest.issues.createComment({ ...context.repo, issue_number: n,
+              body: `This issue is missing: **${missing.join(', ')}**.\n\n` +
+                    `Unlabelled issues do not appear in the fleet's backlog queries at ` +
+                    `all — they are skipped, not flagged. Add the missing labels and ` +
+                    `remove \`needs-triage\`. See \`CLAUDE.md\` -> Labels.`});

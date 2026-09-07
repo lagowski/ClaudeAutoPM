@@ -36,6 +36,26 @@ See `.claude/rules/` for reference:
 - `frontmatter-operations.md` — YAML frontmatter read/write/strip
 - `git-strategy.md` — Branch naming, commit standards, merge workflow
 
+## Labels
+
+Every issue opened here carries `type:`, `area:` and `size:` **at creation** — including
+issues filed by `gh issue create` or the REST API, neither of which picks up issue forms.
+
+- `type:` — `feat`, `bug`, `chore`, `infra`, `spike`, `docs`
+- `area:` — `framework` (autopm/), `lib`, `cli` (bin/), `packages`, `install`, `scripts`,
+  `test`, `docs` (docs/ + docs-site/), `ci` (.github/)
+- `size:` — `S` one sitting, `M` a day or so, `L` more than a day (split it first)
+
+An epic also carries `tracking`, and is never dispatched to a worker.
+`needs-split`, `not-code` and `tracking` all mean **do not dispatch**.
+
+No space after the colon: `size:M`, never `size: M` — a cross-repo query against the
+spaced form returns an empty set, which looks exactly like a backlog with nothing in it.
+
+These exist because dispatching the wrong issue is expensive: an unlabelled epic once
+produced seven issues in one 3,074-line PR, three of them in no sprint at all.
+`.github/workflows/issue-label-guard.yml` applies `needs-triage` to anything filed without them.
+
 ## PROJECT
 
 - **Language**: JavaScript/Node.js

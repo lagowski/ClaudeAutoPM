@@ -1,8 +1,38 @@
 name: Feature / Enhancement
 description: New feature, improvement, or refactoring task
 title: "[feat][scope] "
-labels: ["enhancement", "ai-ready"]
+labels: ["type:feat", "ai-ready"]
 body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: "Which part of this repository. Applied as an `area:` label by issue-label-guard."
+      options:
+        - framework
+        - lib
+        - cli
+        - packages
+        - install
+        - scripts
+        - test
+        - docs
+        - ci
+    validations:
+      required: true
+
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      description: "Applied as a `size:` label by issue-label-guard."
+      options:
+        - "S — one sitting"
+        - "M — a day or so"
+        - "L — more than a day (file it as tracking and split it instead)"
+    validations:
+      required: true
+
   - type: textarea
     id: goal
     attributes:
