@@ -132,7 +132,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.122.0",
+    "@anthropic-ai/sdk": "^0.124.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@octokit/rest": "^22.0.0",
     "azure-devops-node-api": "^17.0.0",
