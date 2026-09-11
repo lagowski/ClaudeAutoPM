@@ -33,7 +33,12 @@ jobs:
       # {packageEcosystem, updateType, dependencyName, ...}. The previous
       # single-dep-only gate therefore skipped every grouped PR (see #689/#690).
       # New rule: approve iff EVERY entry is npm AND NONE is semver-major.
-      # `github-actions` is excluded implicitly (not npm); majors are held.
+      # `github_actions` is excluded implicitly (not npm); majors are held.
+      # The ecosystem string is fetch-metadata's verbatim `npm_and_yarn` — NOT
+      # `npm`. Comparing against `npm` made `allNpm` false for every npm PR, so
+      # nothing was ever approved and the job stayed green while doing nothing
+      # (#773/#774 sat blocked on an approval that never came). Locked in by
+      # test/unit/dependabot-auto-merge-gate.test.js.
       - name: Decide auto-merge (grouped-aware)
         id: gate
         uses: actions/github-script@v9
@@ -47,7 +52,7 @@ jobs:
               core.info('No updates in metadata; nothing to gate.');
               return;
             }
-            const allNpm = updates.every(u => u.packageEcosystem === 'npm');
+            const allNpm = updates.every(u => u.packageEcosystem === 'npm_and_yarn');
             const anyMajor = updates.some(u => u.updateType === 'version-update:semver-major');
             const approve = allNpm && !anyMajor;
             core.setOutput('approve', String(approve));
