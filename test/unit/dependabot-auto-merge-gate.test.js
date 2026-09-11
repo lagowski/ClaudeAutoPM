@@ -38,6 +38,7 @@ if (typeof describe === 'undefined') {
 const assert = require('node:assert');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 const yaml = require('js-yaml');
 
 const WORKFLOW = path.resolve(
@@ -52,15 +53,28 @@ function gateScript() {
   return step.with.script;
 }
 
-/** Run the gate body against a fixture metadata payload; return the `approve` output. */
+/**
+ * Run the gate body against a fixture metadata payload; return the `approve` output.
+ *
+ * The body executes in a fresh vm context whose ONLY reachable outer values are the
+ * two frozen stubs below — no `require`, no real `process`, no module scope. The
+ * realm supplies its own `JSON` et al; injecting ours would hand the body cross-realm
+ * references and defeat the point. Wrapped in a function expression because the step
+ * uses a top-level `return`, which is legal in a function body but not in a vm.Script.
+ */
 function runGate(updates) {
   const outputs = {};
-  const core = {
-    setOutput: (k, v) => { outputs[k] = v; },
-    info: () => {}
+  const sandbox = {
+    core: Object.freeze({
+      setOutput: (k, v) => { outputs[k] = v; },
+      info: () => {}
+    }),
+    process: Object.freeze({ env: Object.freeze({ UPDATES: JSON.stringify(updates) }) })
   };
-  const proc = { env: { UPDATES: JSON.stringify(updates) } };
-  new Function('core', 'process', gateScript())(core, proc);
+  vm.runInNewContext(`(function () {\n${gateScript()}\n})()`, sandbox, {
+    filename: 'dependabot-auto-merge.yml#gate',
+    timeout: 5000
+  });
   return outputs.approve;
 }
 
