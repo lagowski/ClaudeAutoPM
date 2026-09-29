@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# fmt: off
+# ruff: noqa
 """PreToolUse(Bash) guard: refuse `git stash` and `pkill` for Claude Code agents.
 
 Distributed fleet-wide by lagowski/pr-review-gate (templates/claude-guard-shared-refs.py) —
@@ -25,6 +27,11 @@ input: a guard that blocks every command when its own parsing breaks gets switch
 then it guards nothing.
 
 Pinned in both directions by lagowski/pr-review-gate tests/test_claude_guard_hook.py.
+
+`# fmt: off` / `# ruff: noqa` above: this file is canon-owned and byte-checked, so no repo's
+formatter or linter may rewrite it — and repos pin different black/ruff line lengths, so no
+single formatting could satisfy all of them (news-sentiment's changed-lines black check
+failed the first sync, #517). The exemption is the only fleet-stable choice.
 """
 from __future__ import annotations
 
