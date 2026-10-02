@@ -69,3 +69,20 @@ produced seven issues in one 3,074-line PR, three of them in no sprint at all.
 - Be concise. Be skeptical. Criticism welcome.
 - Ask questions rather than guessing intent.
 - No flattery. No compliments unless asked.
+
+## Approvals and merging (fleet policy, owner decision 2026-10-02)
+
+**An approval is an approval, whichever account gives it.** An APPROVED review from any of
+`rlagowski`, `rafeekpro` or `Dixter999` counts. Don't hold back a merge because the approval came
+from a different account than you expected: not the PR author's, not this session's, and not the
+"usual" owner's. The only identity rule is GitHub's own: an author can't approve their own PR.
+
+A session may merge a PR itself once all of these hold:
+- an APPROVED review from one of those three accounts is on the PR's **current head commit** (a
+  push that changes the diff dismisses it);
+- every required check is green and GitHub reports the PR mergeable. The ruleset decides whether
+  that approval satisfies any code-owner rule;
+- no PR comment asks to hold (for example "DO NOT MERGE").
+
+Merge with `gh pr merge <n> --match-head-commit <approved-sha>`, using this repo's merge method.
+Never use `--admin` to get past a missing approval or a missing check.
