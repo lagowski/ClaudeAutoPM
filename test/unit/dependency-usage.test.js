@@ -19,12 +19,21 @@
  * through them "the top CLI risk". Both are unused. The brief is deployed from
  * lagowski/pr-review-gate (`contexts/`), so it cannot be corrected here.
  *
- * KNOWN_UNUSED is a baseline, not a blessing: these were already unused when
- * this guard was written and removing them was out of scope for #785. The list
- * is checked in both directions — an entry that becomes used, or one that is no
- * longer declared, fails the test — so it cannot quietly rot. Shrink it; never
- * grow it. A new dependency belongs in `dependencies` only once something
- * imports it.
+ * KNOWN_UNUSED is now EMPTY, and that is the intended end state. It began as a
+ * baseline of six packages that were already unused when this guard was written
+ * (execa, fast-glob, marked, moment, table, which) and were out of scope for
+ * #785; all six were removed in #789. The list is checked in both directions —
+ * an entry that becomes used, or one no longer declared, fails the test — so it
+ * cannot quietly rot. Keep it empty. A new dependency belongs in `dependencies`
+ * only once something imports it.
+ *
+ * Three names that look used but are not, so nobody re-adds them:
+ *   - `which`  — `execFileSync('which', [cmd])` invokes the SYSTEM binary
+ *                (.claude/scripts/setup-context7.js:49), not the npm package.
+ *   - `table`  — `'table'` appears only as an output-format string in the azure
+ *                command tests.
+ *   - `marked` — appears only as fixture data naming a dependency, in
+ *                test/unit/dependabot-auto-merge-gate.test.js.
  *
  * To fix a failure:
  *   - "declared but never imported" → delete it from package.json and
@@ -52,11 +61,10 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..', '..');
 
 /**
- * Declared but imported nowhere as of the #785 cleanup. Removing these is a
- * separate decision per package (some may be intended for the shipped payload),
- * so they are recorded rather than removed. See the header.
+ * Runtime dependencies that ship despite having no import site. Empty by design —
+ * see the header. An addition here needs a stated reason, not just a passing test.
  */
-const KNOWN_UNUSED = ['execa', 'fast-glob', 'marked', 'moment', 'table', 'which'];
+const KNOWN_UNUSED = [];
 
 const SKIP_DIRS = new Set([
   'node_modules', '.git', 'coverage', '.nyc_output', 'test-temp', 'worktrees'
