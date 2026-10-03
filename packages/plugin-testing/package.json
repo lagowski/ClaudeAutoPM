@@ -35,6 +35,6 @@
     "README.md"
   ],
   "peerDependencies": {
-    "claude-autopm": "*"
+    "@claudeautopm/plugin-core": "^4.0.0"
   }
 }
