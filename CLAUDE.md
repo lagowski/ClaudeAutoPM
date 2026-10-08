@@ -75,7 +75,9 @@ produced seven issues in one 3,074-line PR, three of them in no sprint at all.
 **An approval is an approval, whichever account gives it.** An APPROVED review from any of
 `rlagowski`, `rafeekpro` or `Dixter999` counts. Don't hold back a merge because the approval came
 from a different account than you expected: not the PR author's, not this session's, and not the
-"usual" owner's. The only identity rule is GitHub's own: an author can't approve their own PR.
+"usual" owner's. Two identity rules, both enforced by GitHub: an author can't approve their own PR,
+and (since 2026-10-08, owner rule) the account that pushed the latest commit can't approve it either
+(`require_last_push_approval: true` on every org ruleset; pr-review-gate `rulesets/branch-protection.md`).
 
 A session may merge a PR itself once all of these hold:
 - an APPROVED review from one of those three accounts is on the PR's **current head commit** (a
