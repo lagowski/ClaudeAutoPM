@@ -29,7 +29,7 @@
 <rule>Always delegate test runs to @test-runner agent</rule>
 <rule>Verbose output with full stack traces</rule>
 <rule>Check test structure first before assuming code bugs</rule>
-<rule>Cleanup after tests: pkill -f "jest|mocha|pytest" 2>/dev/null || true</rule>
+<rule>Cleanup after tests: Stop only the processes you started, by their PID. Never kill by name or pattern: other agents and CI jobs share the host, and a pattern kill sends them SIGTERM too (exit code 143, veracrew#2296). Example: npm test & pid=$!; wait "$pid" (or kill "$pid" if you must stop it)</rule>
 </execution>
 
 <example>
