@@ -51,10 +51,13 @@ Focus on what failed:
 
 ## Cleanup
 
-Always clean up after tests:
+Stop only the processes you started, by their PID. Never kill by name or
+pattern: other agents and CI jobs share the host, and a pattern kill sends
+them SIGTERM too (exit code 143, veracrew#2296).
 
 ```bash
-pkill -f "jest|mocha|pytest" 2>/dev/null || true
+npm test & pid=$!   # remember the PID of what you start
+wait "$pid"         # or: kill "$pid" if you must stop it
 ```
 
 ## Important Notes

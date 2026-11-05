@@ -32,21 +32,20 @@ Before implementation, query Context7 for:
 
 ## Key Patterns
 - Always run with verbose output for debugging context
-- Kill stale test processes before and after runs
+- Stop only the test processes you started, by their PID; never kill by name or pattern (veracrew#2296)
 - Return pass/fail summary, not full test output
 - On failure, include only the failing test name, error message, and location
 
 ## Execution Pattern
 
+Stop only the processes you started, by their PID. Never kill by name or pattern: other agents and CI jobs share the host, and a pattern kill sends them SIGTERM too (exit code 143, veracrew#2296).
+
 ```bash
-# Clean up stale processes first
-pkill -f "jest|mocha|pytest|vitest" 2>/dev/null || true
+# Run tests with verbose output, remembering the PID of what you start
+npm test -- --verbose 2>&1 & pid=$!
 
-# Run tests with verbose output
-npm test -- --verbose 2>&1
-
-# Clean up after
-pkill -f "jest|mocha|pytest|vitest" 2>/dev/null || true
+# Wait for it (or: kill "$pid" if you must stop it)
+wait "$pid"
 ```
 
 ## Output Format
