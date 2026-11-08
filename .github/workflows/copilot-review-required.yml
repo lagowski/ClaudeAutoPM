@@ -126,16 +126,16 @@ jobs:
       OPENROUTER_API_KEY: ''
       REVIEW_EFFORT: medium
       ENGINE_JS: ${{ github.workspace }}/_engine/.github/scripts/review-engine.js
-      ENGINE_REF: ${{ '1a69ba8f14886d93ebe0f5279c46df9a3386979f' }}
+      ENGINE_REF: ${{ 'b07b2b026098bbc331224d3bf88ff8a57d71b338' }}
     steps:
       - name: load the engine source at the pinned commit
         id: engine_src
         if: ${{ !(github.event_name == 'pull_request' && github.actor == 'dependabot[bot]') }}
         continue-on-error: true   # a failed checkout must fail CLOSED at the loader, never wedge the job
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: lagowski/pr-review-gate
-          ref: ${{ '1a69ba8f14886d93ebe0f5279c46df9a3386979f' }}
+          ref: ${{ 'b07b2b026098bbc331224d3bf88ff8a57d71b338' }}
           token: ${{ secrets.FLEET_DEPLOY_TOKEN }}
           path: _engine
           persist-credentials: false
