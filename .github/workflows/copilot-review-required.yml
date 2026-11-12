@@ -126,7 +126,7 @@ jobs:
       OPENROUTER_API_KEY: ''
       REVIEW_EFFORT: medium
       ENGINE_JS: ${{ github.workspace }}/_engine/.github/scripts/review-engine.js
-      ENGINE_REF: ${{ 'aa3233d3c4f33fbcb11696a891299bb1d3773984' }}
+      ENGINE_REF: ${{ '753a3b40a5fa8c387dd37f5805ea2ec8a0d16b1a' }}
     steps:
       - name: load the engine source at the pinned commit
         id: engine_src
@@ -135,7 +135,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: lagowski/pr-review-gate
-          ref: ${{ 'aa3233d3c4f33fbcb11696a891299bb1d3773984' }}
+          ref: ${{ '753a3b40a5fa8c387dd37f5805ea2ec8a0d16b1a' }}
           token: ${{ secrets.FLEET_DEPLOY_TOKEN }}
           path: _engine
           persist-credentials: false
