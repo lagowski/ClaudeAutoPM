@@ -201,7 +201,7 @@ npm install -g claude-autopm
 **Verify installation:**
 ```bash
 autopm --version
-# Output: ClaudeAutoPM v3.7.0
+# Output: 4.0.0
 
 autopm --help
 # Shows all available commands
@@ -218,7 +218,7 @@ npx autopm --help
 #### Method 3: Development Install (For Contributors)
 
 ```bash
-git clone https://github.com/rafeekpro/ClaudeAutoPM.git
+git clone https://github.com/lagowski/ClaudeAutoPM.git
 cd ClaudeAutoPM
 npm install
 npm link  # Symlink for local development
@@ -1556,7 +1556,7 @@ az account get-access-token
 
 ### Documentation
 
-- **GitHub Repository**: https://github.com/rafeekpro/ClaudeAutoPM
+- **GitHub Repository**: https://github.com/lagowski/ClaudeAutoPM
 - **npm Package**: https://www.npmjs.com/package/claude-autopm
 - **TEMPLATE_REGISTRY**: `.claude/templates/xml-prompts/TEMPLATE_REGISTRY.md`
 - **Infrastructure Protection**: `.claude/docs/UNIVERSAL-INFRASTRUCTURE-PROTECTION.md`
@@ -1597,8 +1597,8 @@ autopm --help
 
 ### Community
 
-- **Issues**: https://github.com/rafeekpro/ClaudeAutoPM/issues
-- **Discussions**: https://github.com/rafeekpro/ClaudeAutoPM/discussions
+- **Issues**: https://github.com/lagowski/ClaudeAutoPM/issues
+- **Discussions**: https://github.com/lagowski/ClaudeAutoPM/discussions
 - **Contributing**: See `CONTRIBUTING.md` in repo
 
 ### Support

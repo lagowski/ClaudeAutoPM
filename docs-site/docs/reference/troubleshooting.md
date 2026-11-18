@@ -666,9 +666,9 @@ cp ~/.autopm-env-backup .claude/.env
 
 ### Community Support
 
-1. **GitHub Issues**: [Report bugs and get help](https://github.com/rafeekpro/ClaudeAutoPM/issues)
-2. **Discussions**: [Community Q&A](https://github.com/rafeekpro/ClaudeAutoPM/discussions)
-3. **Wiki**: [Complete documentation](https://github.com/rafeekpro/ClaudeAutoPM/wiki)
+1. **GitHub Issues**: [Report bugs and get help](https://github.com/lagowski/ClaudeAutoPM/issues)
+2. **Discussions**: [Community Q&A](https://github.com/lagowski/ClaudeAutoPM/discussions)
+3. **Wiki**: [Complete documentation](https://github.com/lagowski/ClaudeAutoPM/wiki)
 
 ### Creating Bug Reports
 
@@ -694,7 +694,7 @@ tail -50 ~/.autopm/logs/autopm.log
 
 ### Feature Requests
 
-1. Check [existing issues](https://github.com/rafeekpro/ClaudeAutoPM/issues)
+1. Check [existing issues](https://github.com/lagowski/ClaudeAutoPM/issues)
 2. Use the feature request template
 3. Provide use case and business justification
 4. Include mockups or examples if applicable
