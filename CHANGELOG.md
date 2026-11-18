@@ -8,10 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Agent rules no longer tell agents to clean up with a by-name process kill (`jest|mocha|pytest` pattern), which killed other agents' and CI processes on shared hosts (exit 143); they now say to stop only processes you started, by PID (PR #809).
 - Plugin peer ranges on `@claudeautopm/plugin-core` corrected from `^3.0.0` to `^4.0.0` in the twelve plugins that declare one (PR #758). The 4.0.0 release bumped every package's `version` and `engines` but not the peer ranges, so `npm ci` failed with `ERESOLVE` — npm tried to satisfy the peer with the stale `plugin-core@3.13.1` tarball instead of the workspace link. Hidden since 2026-06-22 because every CI workflow installs with `--legacy-peer-deps`, which skips peer resolution.
 - `test/unit/plugin-peer-versions.test.js` added as a regression guard: each declared peer range must match `plugin-core`'s current major, and no plugin may silently lack a peer.
 
 ### Changed
+- Every shipped agent definition now pins a model: `sonnet` by default, `haiku` for the read-only search/analysis agents, instead of `model: inherit` (#792). Repos relying on the built-in `general-purpose` agent should set `CLAUDE_CODE_SUBAGENT_MODEL` themselves.
 - The twelve affected plugins bumped to `4.0.1` (`plugin-obsidian` to `2.0.1`) so the corrected peer range reaches npm. The published `4.0.0` / `2.0.0` tarballs carry the broken `^3.0.0` peer, and npm does not allow overwriting a published version — users installing a plugin alongside `plugin-core@4` hit `ERESOLVE` until these ship.
 - `plugin-core` and `plugin-testing` are deliberately **not** bumped: neither declares a `plugin-core` peer range, so their published tarballs are correct and need no republish.
 
