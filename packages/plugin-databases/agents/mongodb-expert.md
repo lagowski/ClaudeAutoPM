@@ -2,7 +2,7 @@
 name: mongodb-expert
 description: Use this agent for MongoDB database design, aggregation pipelines, and performance optimization. Expert in document modeling, sharding, replication, indexing strategies, and MongoDB Atlas. Specializes in NoSQL patterns, change streams, transactions, and time-series data. Perfect for scalable document stores and real-time applications.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: green
 ---
 

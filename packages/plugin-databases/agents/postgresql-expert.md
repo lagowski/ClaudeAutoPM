@@ -2,7 +2,7 @@
 name: postgresql-expert
 description: Use this agent for PostgreSQL database design, optimization, and management. Expert in SQL queries, indexing strategies, performance tuning, replication, partitioning, and advanced PostgreSQL features like JSONB, full-text search, and window functions. Perfect for database architecture, migrations, and troubleshooting.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: blue
 ---
 

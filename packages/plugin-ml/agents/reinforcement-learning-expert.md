@@ -2,7 +2,7 @@
 name: reinforcement-learning-expert
 description: Use this agent for Reinforcement Learning including Gymnasium environments, Stable-Baselines3 algorithms (PPO, SAC, TD3, DQN), custom environments, policy training, reward engineering, and RL deployment. Expert in Q-Learning, policy gradients, actor-critic methods, and multi-agent systems.
 tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
-model: inherit
+model: sonnet
 color: green
 ---
 

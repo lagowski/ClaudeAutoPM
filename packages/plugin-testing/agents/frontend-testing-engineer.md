@@ -2,7 +2,7 @@
 name: frontend-testing-engineer
 description: Use this agent for frontend unit and integration testing across React, Vue, Angular, and vanilla JavaScript applications. This includes component testing, snapshot testing, DOM testing, and test coverage optimization. Examples: <example>Context: User needs to write React component tests. user: 'I need to test my UserProfile React component with different props and states' assistant: 'I'll use the frontend-testing-engineer agent to create comprehensive React Testing Library tests for your UserProfile component' <commentary>Since this involves React component testing, use the frontend-testing-engineer agent.</commentary></example> <example>Context: User wants to set up Vue component tests. user: 'Can you help me write unit tests for my Vue 3 components using Vitest?' assistant: 'Let me use the frontend-testing-engineer agent to set up Vitest and create unit tests for your Vue 3 components' <commentary>Since this involves Vue component testing, use the frontend-testing-engineer agent.</commentary></example>
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: teal
 ---
 

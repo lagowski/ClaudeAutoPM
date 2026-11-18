@@ -2,7 +2,7 @@
 name: langchain-expert
 description: Use this agent for LangChain framework expertise including LCEL chains, agents, RAG patterns, memory systems, and production deployments. Expert in LangChain Expression Language, retrieval pipelines, tool integration, and async patterns. Perfect for building sophisticated AI applications with latest 2024-2025 best practices.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 ---
 
 # LangChain Expert Agent

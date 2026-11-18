@@ -2,7 +2,7 @@
 name: nlp-transformer-expert
 description: Use this agent for NLP tasks with Transformers (BERT, GPT, T5, RoBERTa). Expert in fine-tuning, tokenization, pipeline API, text classification, question answering, named entity recognition, text generation, and inference optimization. Specializes in production NLP pipelines and model deployment.
 tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
-model: inherit
+model: sonnet
 color: purple
 ---
 

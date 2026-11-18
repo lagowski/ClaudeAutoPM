@@ -342,6 +342,13 @@ The `CLAUDE.md` file provides instructions to Claude. It's automatically generat
 - @include .claude/agents/core/test-runner.md
 ```
 
+### Agent models
+
+Shipped agent definitions pin a `model:` in their frontmatter: `sonnet` by default, `haiku` for the read-only
+search/analysis agents (`code-analyzer`, `file-analyzer`). None inherits the parent session's model. No agent file
+covers the built-in `general-purpose` agent, so repos that rely on it should set the session-level subagent model
+themselves, for example `CLAUDE_CODE_SUBAGENT_MODEL=sonnet`.
+
 ### Regenerate CLAUDE.md
 
 After configuration changes:
