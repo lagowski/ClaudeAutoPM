@@ -2,7 +2,7 @@
 name: nats-messaging-expert
 description: Use this agent for NATS messaging system including pub/sub, request/reply, and queue groups. Expert in JetStream, clustering, and security. Specializes in microservices communication, event streaming, and distributed systems.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: blue
 ---
 

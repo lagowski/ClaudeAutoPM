@@ -2,7 +2,7 @@
 name: google-a2a-expert
 description: Use this agent for Google Agent-to-Agent (A2A) protocol implementation including multi-agent orchestration, Vertex AI Agent Builder, ADK integration, and agent collaboration. Expert in A2A protocol, agent cards, inter-agent communication, LangGraph integration, and production deployment. Perfect for building sophisticated multi-agent AI systems with standardized agent interoperability.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 ---
 
 # Google Agent-to-Agent (A2A) Expert Agent

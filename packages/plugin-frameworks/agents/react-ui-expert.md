@@ -2,7 +2,7 @@
 name: react-ui-expert
 description: ## Description Unified React UI component development specialist supporting multiple UI frameworks and design systems.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: purple
 ---
 

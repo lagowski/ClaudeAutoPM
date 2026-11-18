@@ -2,7 +2,7 @@
 name: ux-design-expert
 description: UX/UI design specialist for user experience optimization and accessibility
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: "#E91E63"
 ---
 

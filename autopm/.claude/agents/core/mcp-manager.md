@@ -3,7 +3,7 @@ name: mcp-manager
 category: core
 description: MCP server infrastructure management — installing servers, editing configuration files, starting/stopping server processes, and troubleshooting connection issues.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: blue
 ---
 

@@ -2,7 +2,7 @@
 name: code-analyzer
 category: core
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Search, Task, Agent
-model: inherit
+model: haiku
 color: yellow
 ---
 

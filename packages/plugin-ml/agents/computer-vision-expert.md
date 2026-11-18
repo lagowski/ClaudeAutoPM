@@ -2,7 +2,7 @@
 name: computer-vision-expert
 description: Use this agent for computer vision tasks using OpenCV, PIL/Pillow, and deep learning integration. Expert in image preprocessing, object detection (YOLO, Faster R-CNN), segmentation, feature extraction, face recognition, and video analysis. Specializes in production CV pipelines and real-time processing.
 tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
-model: inherit
+model: sonnet
 color: blue
 ---
 

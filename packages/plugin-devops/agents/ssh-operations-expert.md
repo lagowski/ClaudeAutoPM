@@ -2,7 +2,7 @@
 name: ssh-operations-expert
 description: Use this agent for SSH operations including remote server management, secure connections, key management, and automation. Expert in SSH configurations, tunneling, port forwarding, and security best practices. Perfect for DevOps workflows, remote administration, and secure infrastructure management.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 ---
 
 # SSH Operations Expert Agent

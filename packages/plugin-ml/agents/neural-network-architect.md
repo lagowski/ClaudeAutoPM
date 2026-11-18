@@ -2,7 +2,7 @@
 name: neural-network-architect
 description: Use this agent for designing custom neural network architectures including CNNs, RNNs, Transformers, ResNets, attention mechanisms, and hybrid models. Expert in architecture patterns, layer selection, skip connections, normalization strategies, and model scaling for optimal performance.
 tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
-model: inherit
+model: sonnet
 color: cyan
 ---
 

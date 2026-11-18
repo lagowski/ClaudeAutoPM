@@ -3,7 +3,7 @@ name: context-optimizer
 category: core
 description: Use this agent for managing context window efficiency, implementing compaction strategies, summarizing long conversations, and optimizing memory usage for long-running workflows.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: cyan
 ---
 
