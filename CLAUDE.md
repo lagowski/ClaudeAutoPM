@@ -118,4 +118,4 @@ REST core is **5000 calls/hour per USER**, shared by every token and every sessi
 - For repeated reads, use `gh api --cache 60s`.
 - Every waiter or watcher has an **iteration cap** and **stops on a 403 / "rate limit exceeded"**. Don't retry; report it.
 - Never leave a background loop running past its purpose: kill it when the PR merges or the task ends. A 23.7 h orphan loop was found.
-- On DIXTER and dixter-pc, `gh` **reads** go out as rafeekpro via a shim; writes stay on your account. Don't work around it.
+- On the maintainers' machines, `gh` **reads** go out as rafeekpro via a shim; writes stay on your account. Don't work around it.
