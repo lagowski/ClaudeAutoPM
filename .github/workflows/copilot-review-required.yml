@@ -19,7 +19,7 @@
 #     `safe-to-review` label (then by the next sweep, or by "Run workflow" here).
 #     pull_request_target ignores GitHub's fork-approval setting, so the label is the approval gate.
 
-name: AI Review Gate (Claude Sonnet 4.6)
+name: AI Review Gate (Claude Sonnet 5.5)
 
 on:
   pull_request_target:
@@ -114,8 +114,8 @@ jobs:
       VERDICT_PREFIX: ${{ 'gemini-verdict' }}
       TRUNCATED_PREFIX: ${{ 'gemini-truncated' }}
       BACKEND: ${{ 'claude-bridge' }}
-      REVIEW_MODEL: ${{ 'claude-sonnet-4-6' }}
-      DISPLAY_NAME: ${{ 'Claude Sonnet 4.6' }}
+      REVIEW_MODEL: ${{ 'claude-sonnet-5-5' }}
+      DISPLAY_NAME: ${{ 'Claude Sonnet 5.5' }}
       MAX_DIFF_CHARS: ${{ '200000' }}
       PER_CALL_TIMEOUT_MS: ${{ '600000' }}
       JOB_TIMEOUT_MIN: ${{ '30' }}
