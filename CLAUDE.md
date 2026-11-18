@@ -25,8 +25,8 @@ Full agent descriptions: `.claude/agents/AGENT-REGISTRY.md`
 
 ## XML PROMPT TEMPLATES
 
-See `.claude/templates/xml-prompts/TEMPLATE_REGISTRY.md` for staged workflow templates.
-Builder: `lib/xml-prompt-builder.js` — invoke with template path and variables.
+See `autopm/.claude/templates/xml-prompts/TEMPLATE_REGISTRY.md` for staged workflow templates.
+Builder: `.claude/lib/xml-prompt-builder.js` — invoke with template path and variables.
 
 ## OPERATIONAL GUIDANCE
 
@@ -58,10 +58,24 @@ produced seven issues in one 3,074-line PR, three of them in no sprint at all.
 
 ## PROJECT
 
-- **Language**: JavaScript/Node.js
-- **Testing**: Jest (`npm test`, `npm run test:coverage`)
+- **What this is**: the source of the `claude-autopm` npm package (CLI `autopm`, entry `bin/autopm.js`)
+  and the 14 `@claudeautopm/plugin-*` workspaces under `packages/`. This file is the working
+  instructions for this repo; the CLAUDE.md that `autopm install` writes into user projects is
+  generated from `autopm/.claude/templates/claude-templates/` (`base.md` + `addons/`).
+- **Language**: JavaScript/Node.js (`engines`: Node >= 22, npm >= 10; CI runs 22.x and 24.x)
+- **Testing**: Jest (`npm test`, `npm run test:coverage`); lint with `npm run lint:js`
 - **Install**: `autopm install` copies `autopm/.claude/` to target
 - **Path rule**: Never hardcode `autopm/` in framework files — use `.claude/`
+- **Synced copies**: shared scripts and plugin commands are edited only under `packages/`
+  (scripts: `packages/plugin-core/scripts/`), then copied with `npm run sync:scripts` (into
+  `autopm/.claude/scripts/` and this repo's `.claude/scripts/`) and `npm run sync:commands` (into
+  `autopm/.claude/commands/`). Never edit the copies: CI (`scripts-sync-check.yml`,
+  `commands-sync-check.yml`) fails a PR whose copies diverge. Details: `install/README.md`.
+- **Branches**: PRs go into `develop` (the default branch). `main` only takes PRs from `develop`
+  (`.github/workflows/enforce-main-source.yml`).
+- **Release**: pushing a `v*` tag runs `.github/workflows/npm-publish.yml`; the docs site
+  (`docs-site/`, VitePress) deploys from `main` via `deploy-docs.yml`. Record user-visible changes
+  under `[Unreleased]` in `CHANGELOG.md`.
 - **Commits**: Semantic format, no Claude attribution signatures
 
 ## TONE
@@ -104,4 +118,4 @@ REST core is **5000 calls/hour per USER**, shared by every token and every sessi
 - For repeated reads, use `gh api --cache 60s`.
 - Every waiter or watcher has an **iteration cap** and **stops on a 403 / "rate limit exceeded"**. Don't retry; report it.
 - Never leave a background loop running past its purpose: kill it when the PR merges or the task ends. A 23.7 h orphan loop was found.
-- On DIXTER and dixter-pc, `gh` **reads** go out as rafeekpro via a shim; writes stay on your account. Don't work around it.
+- On the maintainers' machines, `gh` **reads** go out as rafeekpro via a shim; writes stay on your account. Don't work around it.

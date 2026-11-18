@@ -245,7 +245,7 @@ Hook types: `pre-command`, `pre-agent`, `pre-tool`, `wrapper`, `testing`, `docum
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM.git",
+    "url": "https://github.com/lagowski/ClaudeAutoPM.git",
     "directory": "packages/plugin-example"
   },
   "publishConfig": {

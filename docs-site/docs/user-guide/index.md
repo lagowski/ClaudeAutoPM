@@ -107,8 +107,8 @@ If you get stuck:
 
 1. Run `/pm:help` to see available commands
 2. Check the [Troubleshooting Guide](/reference/troubleshooting)
-3. Search [GitHub Issues](https://github.com/rafeekpro/ClaudeAutoPM/issues)
-4. Join [Community Discussions](https://github.com/rafeekpro/ClaudeAutoPM/discussions)
+3. Search [GitHub Issues](https://github.com/lagowski/ClaudeAutoPM/issues)
+4. Join [Community Discussions](https://github.com/lagowski/ClaudeAutoPM/discussions)
 
 ## Next Steps
 

@@ -1,50 +1,31 @@
 # Contributing to ClaudeAutoPM
 
-Thank you for your interest in contributing to ClaudeAutoPM! This project uses a flexible hybrid workflow that adapts to different types of contributions.
+Thank you for your interest in contributing to ClaudeAutoPM! All changes land through pull requests into `develop`.
 
 ## 🎯 Quick Start
 
-### For Small Changes (Direct Commits)
-If you're a trusted contributor making small fixes:
 ```bash
-git checkout main
-git pull origin main
-# Make your changes
-npm test
-git commit -m "fix: description"
-git push origin main
-```
-
-### For Features (Pull Requests)
-For new features or if you're a new contributor:
-```bash
+git checkout develop
+git pull origin develop
 git checkout -b feat/your-feature
-# Make your changes
+# Make your changes (tests first)
 npm test
 git commit -m "feat: description"
 git push origin feat/your-feature
-# Open PR on GitHub
+# Open a PR into develop on GitHub
 ```
 
-## 📊 Contribution Decision Tree
+## 🌿 Branches
 
-```mermaid
-graph TD
-    Start[Want to contribute?] --> Q1{Trusted contributor?}
-    Q1 -->|Yes| Q2{Type of change?}
-    Q1 -->|No| PR[Create Pull Request]
-    Q2 -->|Hotfix/Docs| Direct[Direct Commit]
-    Q2 -->|Feature| Q3{Size?}
-    Q3 -->|Small| Direct
-    Q3 -->|Large| PR
-    Q2 -->|Breaking| PR
-```
+- **`develop`** is the default branch: every feature, fix and docs PR targets it.
+- **`main`** is the release branch. It is protected (pull requests only) and accepts PRs only from `develop`; the `Verify PR source is develop` check rejects anything else.
+- Outside contributors: fork the repository and open the PR from your fork into `develop`.
 
 ## 🔧 Development Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/rafeekpro/ClaudeAutoPM.git
+   git clone https://github.com/lagowski/ClaudeAutoPM.git
    cd ClaudeAutoPM
    ```
 
@@ -86,35 +67,14 @@ We use **Conventional Commits** for all contributions:
 ❌ `update`
 ❌ `wip`
 
-## 🚦 When to Use Each Workflow
+## 🔄 Pull Requests
 
-### Direct Commits ✅
-**Appropriate for:**
-- Critical hotfixes
-- Documentation typos
-- Small bug fixes
-- Config updates
-- Trusted contributors
+Every change goes through a pull request, including hotfixes and documentation:
 
-**Requirements:**
-- Pass all tests locally
-- Follow commit conventions
-- Small, focused changes
-
-### Pull Requests 🔄
-**Required for:**
-- New features
-- Breaking changes
-- Large refactors
-- External contributors
-- Dependency updates
-- Experimental work
-
-**Benefits:**
-- Code review
-- CI/CD validation
-- Discussion platform
-- Change documentation
+- Keep the PR small and focused on one change
+- Pass tests and lint locally before pushing
+- Follow the commit conventions above
+- Wait for the required checks and a review before it is merged
 
 ## 🧪 Testing
 
@@ -154,23 +114,23 @@ AUTOPM/
 ├── autopm/           # Framework resources
 │   └── .claude/      # Claude configuration
 ├── bin/              # CLI executables
+├── lib/              # CLI command implementations and helpers
+├── packages/         # @claudeautopm/plugin-* workspaces (agents, commands, scripts)
 ├── install/          # Installation scripts
 ├── test/             # Test suites
-└── docs/             # Documentation
+├── docs/             # Plugin documentation and assets
+└── docs-site/        # Documentation website (VitePress)
 ```
 
 ## 🔄 CI/CD Pipeline
 
-Our GitHub Actions run on:
-- **Direct commits to main**: Quick validation
-- **Pull requests**: Comprehensive testing
+GitHub Actions run on every pull request into `develop` or `main`, and on pushes to both branches.
 
-### What Gets Tested
-- Installation scenarios
-- Security checks
-- Docker integration (if applicable)
-- Kubernetes deployment (if applicable)
-- Cross-platform compatibility
+### What Gets Checked
+- JavaScript lint (`npm run lint:js`)
+- Jest tests and coverage (`npm test`, `npm run test:coverage`) on Node.js 22.x and 24.x
+- Synced copies: `npm run sync:scripts:check` and `npm run sync:commands:check` must report no divergence (see [install/README.md](install/README.md))
+- PRs into `main` must come from `develop`
 
 ## 💡 Development Tips
 
@@ -234,9 +194,9 @@ autopm install
 
 ## 📞 Getting Help
 
-- **Questions**: Open a [Discussion](https://github.com/rafeekpro/ClaudeAutoPM/discussions)
-- **Bugs**: Open an [Issue](https://github.com/rafeekpro/ClaudeAutoPM/issues)
-- **Ideas**: Start a [Discussion](https://github.com/rafeekpro/ClaudeAutoPM/discussions/categories/ideas)
+- **Questions**: Open a [Discussion](https://github.com/lagowski/ClaudeAutoPM/discussions)
+- **Bugs**: Open an [Issue](https://github.com/lagowski/ClaudeAutoPM/issues)
+- **Ideas**: Start a [Discussion](https://github.com/lagowski/ClaudeAutoPM/discussions/categories/ideas)
 
 ## 🏆 Recognition
 

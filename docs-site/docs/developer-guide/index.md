@@ -93,7 +93,7 @@ Use specialized agents for complex tasks rather than direct tool calls:
 
 ```bash
 # Clone the repository
-git clone https://github.com/rafeekpro/ClaudeAutoPM.git
+git clone https://github.com/lagowski/ClaudeAutoPM.git
 cd ClaudeAutoPM
 
 # Install dependencies
@@ -221,8 +221,8 @@ npm run test:security
 
 ## Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/rafeekpro/ClaudeAutoPM/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/rafeekpro/ClaudeAutoPM/discussions)
+- **Issues**: [GitHub Issues](https://github.com/lagowski/ClaudeAutoPM/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/lagowski/ClaudeAutoPM/discussions)
 - **Documentation**: Review `.claude/DEVELOPMENT-STANDARDS.md`
 - **Agent Registry**: See `.claude/agents/AGENT-REGISTRY.md`
 

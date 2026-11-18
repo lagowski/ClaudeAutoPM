@@ -92,8 +92,8 @@ Before you begin, ensure you have:
 
 ## Need Help?
 
-- **Issues**: [GitHub Issues](https://github.com/rafeekpro/ClaudeAutoPM/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/rafeekpro/ClaudeAutoPM/discussions)
+- **Issues**: [GitHub Issues](https://github.com/lagowski/ClaudeAutoPM/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/lagowski/ClaudeAutoPM/discussions)
 - **Documentation**: Explore the sidebar for detailed guides
 
 ## Next Steps
