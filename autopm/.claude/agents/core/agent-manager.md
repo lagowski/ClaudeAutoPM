@@ -2,7 +2,7 @@
 name: agent-manager
 category: core
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: magenta
 ---
 

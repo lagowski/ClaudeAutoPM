@@ -2,7 +2,7 @@
 name: nodejs-backend-engineer
 description: Use this agent for Node.js backend development including Express, Fastify, NestJS, and other Node.js frameworks. Specializes in REST APIs, GraphQL, microservices, real-time applications with WebSockets, and server-side TypeScript. Expert in Node.js performance optimization, clustering, and production deployment.
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: green
 ---
 

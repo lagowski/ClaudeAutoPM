@@ -2,7 +2,7 @@
 name: gradient-boosting-expert
 description: Use this agent for gradient boosting models including XGBoost, LightGBM, and CatBoost. Expert in hyperparameter tuning, feature importance, early stopping, categorical feature handling, and model interpretation. Specializes in tabular data problems, competition-winning models, and production deployment.
 tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
-model: inherit
+model: sonnet
 color: green
 ---
 

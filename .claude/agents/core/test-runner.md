@@ -2,7 +2,7 @@
 name: test-runner
 category: core
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Search, Task, Agent, Bash
-model: inherit
+model: sonnet
 color: green
 ---
 

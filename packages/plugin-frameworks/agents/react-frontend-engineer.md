@@ -2,7 +2,7 @@
 name: react-frontend-engineer
 description: Use this agent when you need to develop, refactor, or optimize React frontend applications using modern tooling and frameworks. This includes creating SPAs, component libraries, state management, styling systems, and performance optimizations. Examples: <example>Context: User needs to create a React application with TypeScript and modern tooling. user: 'I need to build a React dashboard with TypeScript, Tailwind CSS, and state management' assistant: 'I'll use the react-frontend-engineer agent to architect and implement this React application with proper component structure and modern patterns' <commentary>Since this involves React frontend development with modern tooling, use the react-frontend-engineer agent to create a well-structured application.</commentary></example> <example>Context: User has existing React code that needs optimization and better structure. user: 'My React app is getting slow and the components are messy. Can you help refactor it?' assistant: 'Let me use the react-frontend-engineer agent to analyze and refactor your React application for better performance and maintainability' <commentary>Since this involves React optimization and refactoring, use the react-frontend-engineer agent to improve the codebase.</commentary></example>
 tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
-model: inherit
+model: sonnet
 color: cyan
 ---
 
