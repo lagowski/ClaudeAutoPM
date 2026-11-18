@@ -3,7 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/claude-autopm)](https://www.npmjs.com/package/claude-autopm)
 [![NPM Downloads](https://img.shields.io/npm/dm/claude-autopm)](https://www.npmjs.com/package/claude-autopm)
 [![MIT License](https://img.shields.io/badge/License-MIT-28a745)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/rafeekpro/ClaudeAutoPM?style=social)](https://github.com/rafeekpro/ClaudeAutoPM)
+[![GitHub Stars](https://img.shields.io/github/stars/lagowski/ClaudeAutoPM?style=social)](https://github.com/lagowski/ClaudeAutoPM)
 
 **AI-Powered Project Management Framework for Claude Code**
 
@@ -32,6 +32,8 @@ Choose your scenario during installation:
 | **Obsidian** | 7 core | PM + Obsidian vault integration |
 | **Full** | 45+ | Complete CI/CD: cloud, databases, AI included |
 | **Performance** | 55+ | All plugins (incl. data + ML) + max parallelization |
+
+Skip the prompt with `autopm install --scenario=<name>` (`lite`, `github`, `azure`, `docker`, `full`, `full-azure`, `performance`, `obsidian`); `full-azure` is Full plus Azure DevOps sync.
 
 ---
 
@@ -171,11 +173,11 @@ All commands run inside Claude Code (not terminal):
 
 ## Documentation
 
-- [Installation](https://rafeekpro.github.io/ClaudeAutoPM/getting-started/installation)
-- [Command Overview](https://rafeekpro.github.io/ClaudeAutoPM/user-guide/commands-overview)
-- [Agent Registry](https://rafeekpro.github.io/ClaudeAutoPM/user-guide/agents-overview)
-- [Plugin Development](https://rafeekpro.github.io/ClaudeAutoPM/developer-guide/plugin-development)
-- [Architecture](https://rafeekpro.github.io/ClaudeAutoPM/developer-guide/architecture)
+- [Installation](https://lagowski.github.io/ClaudeAutoPM/getting-started/installation)
+- [Command Overview](https://lagowski.github.io/ClaudeAutoPM/user-guide/commands-overview)
+- [Agent Registry](https://lagowski.github.io/ClaudeAutoPM/user-guide/agents-overview)
+- [Plugin Development](https://lagowski.github.io/ClaudeAutoPM/developer-guide/plugin-development)
+- [Architecture](https://lagowski.github.io/ClaudeAutoPM/developer-guide/architecture)
 
 ---
 
@@ -194,7 +196,7 @@ All commands run inside Claude Code (not terminal):
 
 ## Contributing
 
-We welcome contributions! See [Contributing Guide](https://rafeekpro.github.io/ClaudeAutoPM/developer-guide/contributing).
+We welcome contributions! See [Contributing Guide](https://lagowski.github.io/ClaudeAutoPM/developer-guide/contributing).
 
 TDD is mandatory — every PR must follow Red-Green-Refactor.
 
@@ -208,9 +210,9 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- **Documentation**: [rafeekpro.github.io/ClaudeAutoPM](https://rafeekpro.github.io/ClaudeAutoPM/)
+- **Documentation**: [lagowski.github.io/ClaudeAutoPM](https://lagowski.github.io/ClaudeAutoPM/)
 - **npm**: [npmjs.com/package/claude-autopm](https://www.npmjs.com/package/claude-autopm)
-- **Issues**: [GitHub Issues](https://github.com/rafeekpro/ClaudeAutoPM/issues)
+- **Issues**: [GitHub Issues](https://github.com/lagowski/ClaudeAutoPM/issues)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
 
 <!-- veracrew:delivery:start -->
