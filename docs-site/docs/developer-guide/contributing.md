@@ -9,48 +9,24 @@ Thank you for your interest in contributing to ClaudeAutoPM! This guide covers t
 
 ## Quick Start
 
-### For Small Changes
-
-Trusted contributors making small fixes:
+All changes land through pull requests into `develop`:
 
 ```bash
-git checkout main
-git pull origin main
-# Make changes
-npm test
-git commit -m "fix: description"
-git push origin main
-```
-
-### For Features
-
-New features or external contributors:
-
-```bash
+git checkout develop
+git pull origin develop
 git checkout -b feat/your-feature
-# Make changes
+# Make changes (tests first)
 npm test
 git commit -m "feat: description"
 git push origin feat/your-feature
-# Open PR on GitHub
+# Open a PR into develop on GitHub
 ```
 
-## Contribution Decision Tree
+## Branches
 
-```
-Want to contribute?
-    │
-    ├── Trusted contributor?
-    │       │
-    │       ├── Yes ─► Type of change?
-    │       │              │
-    │       │              ├── Hotfix/Docs ─► Direct Commit
-    │       │              ├── Small Feature ─► Direct Commit
-    │       │              ├── Large Feature ─► Pull Request
-    │       │              └── Breaking Change ─► Pull Request
-    │       │
-    │       └── No ─► Pull Request
-```
+- **`develop`** is the default branch: every feature, fix and docs PR targets it.
+- **`main`** is the release branch. It is protected (pull requests only) and accepts PRs only from `develop`.
+- Outside contributors: fork the repository and open the PR from your fork into `develop`.
 
 ## Development Setup
 
@@ -65,7 +41,7 @@ Want to contribute?
 
 ```bash
 # Clone the repository
-git clone https://github.com/rafeekpro/ClaudeAutoPM.git
+git clone https://github.com/lagowski/ClaudeAutoPM.git
 cd ClaudeAutoPM
 
 # Install dependencies
@@ -155,29 +131,9 @@ This is a human development project. While Claude may assist, commits should be 
 
 ## Workflow Guidelines
 
-### Direct Commits
-
-Appropriate for:
-- Critical hotfixes
-- Documentation typos
-- Small bug fixes
-- Configuration updates
-- Trusted contributors
-
-Requirements:
-- Pass all tests locally
-- Follow commit conventions
-- Small, focused changes
-
 ### Pull Requests
 
-Required for:
-- New features
-- Breaking changes
-- Large refactors
-- External contributors
-- Dependency updates
-- Experimental work
+Required for every change, including hotfixes and documentation.
 
 Benefits:
 - Code review
@@ -192,8 +148,8 @@ Benefits:
 1. **Create feature branch**
 
 ```bash
-git checkout main
-git pull origin main
+git checkout develop
+git pull origin develop
 git checkout -b feat/my-feature
 ```
 
@@ -396,9 +352,9 @@ PRs are evaluated on:
 
 ### Where to Discuss
 
-- **Questions**: [GitHub Discussions](https://github.com/rafeekpro/ClaudeAutoPM/discussions)
-- **Bugs**: [GitHub Issues](https://github.com/rafeekpro/ClaudeAutoPM/issues)
-- **Ideas**: [Discussion - Ideas Category](https://github.com/rafeekpro/ClaudeAutoPM/discussions/categories/ideas)
+- **Questions**: [GitHub Discussions](https://github.com/lagowski/ClaudeAutoPM/discussions)
+- **Bugs**: [GitHub Issues](https://github.com/lagowski/ClaudeAutoPM/issues)
+- **Ideas**: [Discussion - Ideas Category](https://github.com/lagowski/ClaudeAutoPM/discussions/categories/ideas)
 
 ### Getting Help
 
