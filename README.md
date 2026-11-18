@@ -98,6 +98,8 @@ packages/plugin-*/agents/    ← 50+ specialized agents (per plugin)
 | `mcp-manager` | MCP server install, config, health |
 | `context-optimizer` | Context window efficiency, compaction |
 
+Shipped agents pin a model instead of inheriting the parent session's: `sonnet` by default, `haiku` for the read-only `code-analyzer` and `file-analyzer`. The built-in `general-purpose` agent is not covered; set `CLAUDE_CODE_SUBAGENT_MODEL` yourself (see [Agent models](docs-site/docs/getting-started/configuration.md#agent-models)).
+
 ## Plugin Agents
 
 | Plugin | Agents | Examples |
