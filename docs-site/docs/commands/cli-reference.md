@@ -588,8 +588,8 @@ autopm install
 ### Recovery
 ```bash
 # Restore from backup
-ls .autopm_backup_*
-cp -r .autopm_backup_20240113_143022/* .
+ls -d .claude-backup-*
+cp -r .claude-backup-20240113-143022/. .claude/
 
 # Reset configuration
 autopm config

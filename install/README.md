@@ -6,9 +6,12 @@ This directory contains installation and configuration scripts for the **ClaudeA
 
 | File | Description |
 |------|-------------|
-| `install.sh` | Main installation script for ClaudeAutoPM framework |
+| `install.sh` / `install.js` | Main installation script for ClaudeAutoPM framework (`install.sh` is a wrapper around `install.js`; `autopm install` runs `install.js`) |
 | `update.sh` | Update existing installation to latest framework version |
-| `merge-claude.sh` | Helper script for merging CLAUDE.md configurations |
+| `merge-claude.sh` / `merge-claude.js` | Helper for merging CLAUDE.md configurations |
+| `setup-env.sh` / `setup-env.js` | Interactive `.claude/.env` setup |
+| `post-install-check.js` | Post-installation validation |
+| `plugin-manifest-generator.js` | Generates the installed-plugins manifest |
 | `README.md` | This documentation file |
 
 ## 🎯 Quick Start
@@ -50,17 +53,14 @@ autopm update --force --no-backup
 
 ✅ **Installs/Updates Core Components:**
 
-- `.claude/` - Claude Code configuration and rules
-- `.claude-code/` - Claude Code specific settings  
-- `.github/` - GitHub workflows and templates
-- `scripts/` - Project automation scripts
-- `PLAYBOOK.md` - Usage guidelines
-- `COMMIT_CHECKLIST.md` - Quality assurance checklist
-- `LICENSE` - License file
+- `.claude/` - agents, commands, rules, hooks, scripts, checklists, strategies, MCP definitions, templates and quick-reference docs
+- `.claude-code/` - Claude Code specific settings
+- `scripts/` - `safe-commit` and `setup-hooks` helpers
+- The agents and commands of the plugins that belong to the chosen scenario
 
 ✅ **Handles CLAUDE.md Migration:**
 
-- Copies `.claude/CLAUDE_BASIC.md` → `CLAUDE.md` (new installations)
+- Generates `CLAUDE.md` from `.claude/templates/claude-templates/base.md` plus the add-ons that match your configuration (new installations)
 - Detects conflicts with existing `CLAUDE.md`
 - Offers intelligent merge prompts for combining configurations
 
@@ -88,7 +88,7 @@ autopm update --force --no-backup
 #### 🆕 Fresh Installation
 
 - Copies all framework files
-- Creates `CLAUDE.md` from `CLAUDE_BASIC.md`
+- Generates `CLAUDE.md` from the `claude-templates` base and add-ons
 - Sets up complete project structure
 
 #### 🔄 Update/Sync Mode
@@ -139,7 +139,7 @@ autopm update --no-preserve-config
 
 ### Safety Features
 
-🛡️ **Automatic Backup** - Creates timestamped backup before any changes
+🛡️ **Automatic Backup** - Copies `.claude/` to `.claude-backup-YYYYMMDD-HHMMSS/` before any changes
 🔒 **Config Preservation** - Keeps your settings and customizations
 📁 **Data Protection** - Never touches your epics, PRDs, or project files
 ⚡ **Quick Rollback** - Easy to restore from backup if needed
@@ -153,8 +153,14 @@ autopm update --no-preserve-config
 - `rules/` - Updated development patterns
 - `templates/` - New project templates
 
+> **Local edits to framework files are not kept.** `update.sh` removes and reinstalls the framework
+> directories (`agents/`, `commands/`, `rules/`, `scripts/`, `checklists/`, `hooks/`, `lib/`, `mcp/`,
+> `providers/`, `strategies/`, `templates/`), so a rule or command you edited in place is replaced by the
+> shipped version ([#790](https://github.com/lagowski/ClaudeAutoPM/issues/790)). Your copy stays in the backup directory.
+
 **Your Data (Preserved):**
 - `config.json` - Your provider and settings
+- `settings.local.json` - Your local Claude Code settings
 - `epics/` - All your epic files and tasks
 - `prds/` - All your product requirements
 - `teams.json` - Your team configurations
@@ -167,7 +173,7 @@ autopm update --no-preserve-config
 Generates comprehensive AI prompts for intelligently merging:
 
 - Your existing `CLAUDE.md` (with customizations)
-- New `CLAUDE_BASIC.md` (framework updates)
+- A newly generated framework `CLAUDE.md` (framework updates)
 
 ### Usage
 
@@ -176,10 +182,10 @@ Generates comprehensive AI prompts for intelligently merging:
 ./install/merge-claude.sh
 
 # Explicit file paths
-./install/merge-claude.sh CLAUDE.md .claude/CLAUDE_BASIC.md
+./install/merge-claude.sh CLAUDE.md <new-CLAUDE.md>
 
 # Save prompt to file
-./install/merge-claude.sh CLAUDE.md .claude/CLAUDE_BASIC.md merge_prompt.md
+./install/merge-claude.sh CLAUDE.md <new-CLAUDE.md> merge_prompt.md
 ```
 
 ### Output Options
@@ -221,13 +227,13 @@ flowchart TD
     
     B -->|No| C[Fresh Installation]
     C --> D[Copy all framework files]
-    D --> E[Create CLAUDE.md from CLAUDE_BASIC.md]
+    D --> E[Generate CLAUDE.md from templates]
     E --> F[Setup complete]
     
     B -->|Yes| G[Update Mode]
     G --> H[Create backup]
     H --> I[Update changed files]
-    I --> J{CLAUDE_BASIC.md changed?}
+    I --> J{CLAUDE.md already exists?}
     
     J -->|No| K[Update complete]
     J -->|Yes| L[Offer merge assistance]
@@ -247,29 +253,18 @@ The installer uses intelligent file comparison to:
 
 - ✅ **Skip unchanged files** - Faster updates
 - ✅ **Update only modified files** - Preserve customizations  
-- ✅ **Detect CLAUDE_BASIC.md changes** - Trigger merge assistance
+- ✅ **Detect an existing CLAUDE.md** - Trigger merge assistance
 - ✅ **Create backups before changes** - Safety first
 
 ## 🛡️ Safety Features
 
 ### Automatic Backups
 
-```bash
-# Backups created at:
-.autopm_backup_YYYYMMDD_HHMMSS/
-├── .claude/
-├── .github/
-├── scripts/
-├── CLAUDE.md
-└── ... (other existing files)
-```
-
-### Non-Destructive Updates
-
-- Never overwrites existing files without confirmation
-- Preserves user customizations in all scenarios
-- Creates restore points before major changes
-- Offers rollback information
+- `autopm update` copies the whole `.claude/` directory to `.claude-backup-YYYYMMDD-HHMMSS/` first
+  (skipped with `--no-backup`).
+- `autopm install` leaves existing files alone unless `--force` is given; with `--force` the replaced
+  file is kept next to it as `<file>.backup`. An existing `CLAUDE.md` or `.claude/config.json` that is
+  replaced is kept as `<file>.backup.<timestamp>`.
 
 ### Error Handling
 
@@ -277,30 +272,6 @@ The installer uses intelligent file comparison to:
 - Checks dependencies (git, diff)
 - Graceful failure with helpful error messages
 - Cleanup of temporary files on exit
-
-## 🎨 Customization
-
-### Environment Variables
-
-```bash
-# Custom repository URL
-REPO_URL="https://github.com/your-fork/ClaudeAutoPM.git"
-
-# Custom temporary directory
-TEMP_DIR="/tmp/my_autopm_install"
-```
-
-### Extending Installation
-
-The installer is modular and can be extended:
-
-```bash
-# Add custom install items
-INSTALL_ITEMS+=(
-    "custom-folder"
-    "my-config.yaml"
-)
-```
 
 ## 🔍 Troubleshooting
 
@@ -324,8 +295,8 @@ brew install git                    # macOS
 **Backup location:**
 
 ```bash
-# Backups are created with timestamp
-ls -la .autopm_backup_*
+# Update backups are created with a timestamp
+ls -d .claude-backup-*
 ```
 
 ### Getting Help
@@ -333,7 +304,7 @@ ls -la .autopm_backup_*
 1. **Check logs**: Installation provides detailed output
 2. **Review backups**: All changes are backed up
 3. **Manual merge**: Use `merge-claude.sh` separately
-4. **Reset**: Delete `.autopm_backup_*` and re-run
+4. **Roll back an update**: restore `.claude/` from the newest `.claude-backup-*` directory
 
 ## 🗂️ Shared Scripts Architecture (Source of Truth)
 
@@ -378,10 +349,9 @@ independently.
 
 ## 📖 Related Documentation
 
-- [`PLAYBOOK.md`](../PLAYBOOK.md) - ClaudeAutoPM usage guide
-- [`COMMIT_CHECKLIST.md`](../COMMIT_CHECKLIST.md) - Quality standards
-- [`.claude/CLAUDE.md`](../.claude/CLAUDE.md) - Complete configuration
-- [`.claude/rules/`](../.claude/rules/) - Development rules
+- [`PLAYBOOK.md`](../autopm/PLAYBOOK.md) - ClaudeAutoPM usage guide
+- [`COMMIT_CHECKLIST.md`](../autopm/.claude/checklists/COMMIT_CHECKLIST.md) - Quality standards
+- [`autopm/.claude/rules/`](../autopm/.claude/rules/) - Development rules shipped to user projects
 
 ## 🎉 Post-Installation
 
@@ -390,9 +360,8 @@ After successful installation:
 1. **Review `CLAUDE.md`** - Customize for your project
 2. **Setup `.env`** - Copy `.claude/.env.example` → `.claude/.env`
 3. **Add API keys** - Fill in your service credentials
-4. **Read `PLAYBOOK.md`** - Learn ClaudeAutoPM workflows
-5. **Explore `.claude/rules/`** - Understand development standards
+4. **Explore `.claude/rules/`** - Understand development standards
 
 ---
 
-**Ready to install?** Run `./install.sh` and let ClaudeAutoPM transform your development workflow! 🚀
+**Ready to install?** Run `autopm install` and let ClaudeAutoPM transform your development workflow! 🚀
