@@ -334,6 +334,37 @@ ${this.colors.BOLD}Examples:${this.colors.NC}
     }
   }
 
+  /**
+   * Record the sha256 of every framework file as installed in `.claude/.autopm-manifest`
+   * ("<sha256>  <path relative to .claude>", sha256sum format). `install/update.sh` reads it to
+   * tell a file the user edited from one it may replace (#790). Files the framework does not ship
+   * are not recorded, so update leaves them alone.
+   */
+  writeFrameworkManifest() {
+    const crypto = require('crypto');
+    const sourceRoot = path.join(this.autopmDir, '.claude');
+    const targetRoot = path.join(this.targetDir, '.claude');
+    if (!fs.existsSync(sourceRoot) || !fs.existsSync(targetRoot)) return;
+
+    const lines = [];
+    const walk = (rel) => {
+      for (const entry of fs.readdirSync(path.join(sourceRoot, rel), { withFileTypes: true })) {
+        const childRel = rel ? `${rel}/${entry.name}` : entry.name;
+        if (entry.isDirectory()) {
+          walk(childRel);
+        } else if (entry.isFile()) {
+          const target = path.join(targetRoot, childRel);
+          if (fs.existsSync(target) && fs.statSync(target).isFile()) {
+            const hash = crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex');
+            lines.push(`${hash}  ${childRel}`);
+          }
+        }
+      }
+    };
+    walk('');
+    fs.writeFileSync(path.join(targetRoot, '.autopm-manifest'), lines.join('\n') + (lines.length ? '\n' : ''));
+  }
+
   installFramework() {
     this.printStep('Installing ClaudeAutoPM framework files...');
 
@@ -1639,6 +1670,9 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
 
     // Install CLAUDE.md
     this.installClaudeMd();
+
+    // Record install-time hashes so `autopm update` keeps local edits (#790)
+    this.writeFrameworkManifest();
 
     // Setup MCP integration for Claude Code
     this.setupMCPIntegration();
