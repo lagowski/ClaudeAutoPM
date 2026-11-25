@@ -109,8 +109,10 @@ describe('Always-loaded budget per installed scenario (report-only baseline)', (
       `  ${r.scenario.padEnd(12)} ${String(r.tokens).padStart(7)} tokens  ` +
       `${String(r.files).padStart(3)} files  ${r.tokens > ALWAYS_LOADED_BUDGET ? 'OVER' : 'ok'}`
     );
-    // eslint-disable-next-line no-console
-    console.log(`Always-loaded context (budget ${ALWAYS_LOADED_BUDGET} tokens, report-only, #791):\n${lines.join('\n')}`);
+    // test/setup.js mutes console; the baseline must show up in CI logs.
+    process.stderr.write(
+      `Always-loaded context (budget ${ALWAYS_LOADED_BUDGET} tokens, report-only, #791):\n${lines.join('\n')}\n`
+    );
   });
 
   it.each(SCENARIOS)('%s: measures CLAUDE.md + unscoped rules', async scenario => {

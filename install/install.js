@@ -1668,6 +1668,44 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
   }
 }
 
+/**
+ * Measure the context Claude Code loads into every session of an installed
+ * project: CLAUDE.md plus every `.claude/rules/**\/*.md` whose frontmatter has
+ * no `paths:` key (#791). Tokens are estimated as ceil(chars / 4).
+ * @param {string} targetDir - installed project root
+ * @returns {{tokens: number, files: Array<{file: string, tokens: number}>}}
+ */
+Installer.measureAlwaysLoaded = function measureAlwaysLoaded(targetDir) {
+  const estimate = text => Math.ceil(text.length / 4);
+  const isPathScoped = text => {
+    const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+    return Boolean(fm && /^paths\s*:/m.test(fm[1]));
+  };
+  const files = [];
+  const add = (abs, text) => files.push({
+    file: path.relative(targetDir, abs).split(path.sep).join('/'),
+    tokens: estimate(text)
+  });
+
+  const claudeMd = path.join(targetDir, 'CLAUDE.md');
+  if (fs.existsSync(claudeMd)) add(claudeMd, fs.readFileSync(claudeMd, 'utf-8'));
+
+  const walk = dir => {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const abs = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(abs);
+      else if (entry.name.endsWith('.md')) {
+        const text = fs.readFileSync(abs, 'utf-8');
+        if (!isPathScoped(text)) add(abs, text);
+      }
+    }
+  };
+  walk(path.join(targetDir, '.claude', 'rules'));
+
+  return { tokens: files.reduce((sum, f) => sum + f.tokens, 0), files };
+};
+
 // Main execution
 if (require.main === module) {
   const installer = new Installer();
