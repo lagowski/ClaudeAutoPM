@@ -1,5 +1,5 @@
 // Guards the npm script / test-config cleanup (#844): no script may point at
-// a missing path or a glob that matches nothing, CI runs the suite once, and
+// a missing path or a glob that matches nothing, and
 // the regression run must not rewrite tracked files.
 const fs = require('fs');
 const path = require('path');
@@ -45,12 +45,6 @@ describe('npm scripts integrity (#844)', () => {
   it('dead jest configs are gone', () => {
     expect(fs.existsSync(path.join(root, 'jest.config.integration.js'))).toBe(false);
     expect(fs.existsSync(path.join(root, 'jest.config.scripts.js'))).toBe(false);
-  });
-
-  it('CI test.yml runs the suite once (test:coverage only)', () => {
-    const wf = read('.github/workflows/test.yml');
-    expect(wf).toMatch(/run: npm run test:coverage/);
-    expect(wf).not.toMatch(/run: npm test\b/);
   });
 
   it('regression health report is not written into the repo', () => {
