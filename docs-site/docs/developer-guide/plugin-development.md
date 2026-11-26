@@ -210,7 +210,7 @@ Rules enforce mandatory behaviors. Use XML format for auto-loaded rules (stronge
 
 Priority levels: `critical`, `high`, `medium`, `low`.
 
-Rules are copied to `.claude/rules/` during installation. To auto-load a rule, add an `@include` directive to CLAUDE.md.
+Rules are copied to `.claude/rules/` during installation and read on demand. To make a rule part of every session, add a short summary and its path to the CLAUDE.md template (`autopm/.claude/templates/claude-templates/`); Claude Code has no `@include` directive (its import syntax is `@path/to/file`).
 
 ## Defining Hooks
 
