@@ -65,6 +65,28 @@ describe('pm engines in an installed project (#848)', () => {
     });
   });
 
+  describe('real `autopm install` output', () => {
+    const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'autopm-848-install-'));
+    projects.push(proj);
+    spawnSync('git', ['init', '-q'], { cwd: proj });
+    const install = spawnSync(
+      process.execPath,
+      [path.join(ROOT, 'install/install.js'), proj, '--scenario=minimal'],
+      { encoding: 'utf8', input: '', timeout: 120000, env: { ...process.env, AUTOPM_TEST_MODE: '1' } }
+    );
+
+    test('installer succeeds and ships .claude/lib/pm-engines', () => {
+      expect(install.status).toBe(0);
+      expect(fs.existsSync(path.join(proj, '.claude/lib/pm-engines/analytics-engine.js'))).toBe(true);
+    });
+
+    test.each(SCRIPTS)('%s loads in the installed project', (script) => {
+      const res = loadIn(proj, script);
+      expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module|PM engine '/);
+      expect(res.status).toBe(0);
+    });
+  });
+
   test('engine copies under autopm/.claude/lib/pm-engines match lib/', () => {
     for (const name of ENGINES) {
       const normalise = (s) =>
