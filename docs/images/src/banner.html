@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- ClaudeAutoPM README banner (v3). The product is a CLI plus slash commands inside Claude Code, so the design was
+     made from what it prints (see brand.json): the installer's double-line box (install/install.js, bin/autopm.js
+     Quick Reference) carries the name, the palette is the chalk set the CLI uses (cyan, green, yellow, red, gray,
+     bold), and the visual is one PRD becoming an epic, tasks, issues and a pull request through the /pm: commands
+     (packages/plugin-pm/commands). Project, tasks and numbers are invented. ?theme=dark|light, 1280x640 @2x. -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+:root{--bg:#0F1317;--pane:#151A20;--line:#2A323C;--fg:#D9DEE5;--bold:#FFFFFF;--gray:#7E8894;--cyan:#5CCFE0;--green:#7BD88F;--yellow:#E8C660;--red:#F27F74;--sel:#1D2630}
+:root.light{--bg:#F7F4EC;--pane:#FFFDF8;--line:#DAD4C6;--fg:#2B2F36;--bold:#0E1116;--gray:#7A7468;--cyan:#0E7C8C;--green:#1F7A3A;--yellow:#946A00;--red:#B8392E;--sel:#EFEADB}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:640px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Fira Code",monospace;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+b{color:var(--bold);font-weight:600}.g{color:var(--gray)}.c{color:var(--cyan)}.ok{color:var(--green)}.y{color:var(--yellow)}.r{color:var(--red)}
+.box{position:absolute;left:44px;top:42px;width:470px;height:176px;border:7px double var(--cyan);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.box h1{font-size:47px;font-weight:700;color:var(--bold);letter-spacing:-.03em;line-height:1.1}
+.box p{color:var(--gray);font-size:14.5px;margin-top:8px}
+.left{position:absolute;left:44px;top:246px;width:470px;font-size:15px;line-height:1.72}
+.left .p{color:var(--green)}
+.tag{position:absolute;left:44px;top:400px;width:470px;font-size:19px;line-height:1.45;color:var(--bold);font-weight:500}
+.tag span{color:var(--cyan)}
+.pane{position:absolute;left:552px;top:42px;width:684px;height:556px;background:var(--pane);border:1px solid var(--line);border-radius:8px;padding:18px 22px;font-size:15px;line-height:1.78;white-space:pre}
+.pane .cmd{color:var(--bold);font-weight:600}.pane .cmd::before{content:"> ";color:var(--cyan)}
+.hl{background:var(--sel);display:block;margin:0 -22px;padding:0 22px}
+.flow{position:absolute;left:44px;top:566px;width:470px;display:flex;justify-content:space-between;font-size:13.5px;color:var(--gray)}
+.flow b{font-weight:600}
+</style></head><body>
+<script>if(new URLSearchParams(location.search).get('theme')==='light')document.documentElement.classList.add('light')</script>
+<div class="box"><h1>ClaudeAutoPM</h1><p>Project management for Claude Code</p></div>
+<div class="left"><span class="p">$</span> <b>npm install -g claude-autopm</b>
+<br><span class="p">$</span> <b>autopm install</b> --scenario=github
+<br><span class="ok">✓</span> 12 agents, commands, rules, hooks <span class="g">→ .claude/</span>
+<br><span class="ok">✓</span> GitHub sync ready <span class="g">· 14 plugins on demand</span></div>
+<p class="tag">One PRD in. <span>Epics, tasks, issues</span> and tested pull requests out, each task worked by a specialist agent.</p>
+<div class="flow"><b>PRD</b><span>──▶</span><b>epic</b><span>──▶</span><b>tasks</b><span>──▶</span><b>issues</b><span>──▶</span><b>PR</b></div>
+
+<div class="pane"><span class="cmd">/pm:prd-new checkout-redesign</span>
+  <span class="ok">✓</span> <span class="g">.claude/prds/</span>checkout-redesign.md
+<span class="cmd">/pm:prd-parse checkout-redesign</span>
+  <span class="ok">✓</span> <span class="g">.claude/epics/checkout-redesign/</span>epic.md
+<span class="cmd">/pm:epic-decompose checkout-redesign</span>
+  <b>checkout-redesign</b>                  <span class="g">5 tasks, 3 in parallel</span>
+  <span class="g">├─</span> <span class="c">001</span> Cart summary component     <span class="g">react-frontend-engineer</span>
+  <span class="g">├─</span> <span class="c">002</span> Payment intent endpoint    <span class="g">nodejs-backend-engineer</span>
+  <span class="g">├─</span> <span class="c">003</span> Address validation         <span class="g">python-backend-engineer</span>
+  <span class="g">├─</span> <span class="c">004</span> Orders table migration     <span class="g">postgresql-expert</span>
+  <span class="g">└─</span> <span class="c">005</span> Checkout flow, end to end  <span class="g">e2e-test-engineer</span>
+<span class="cmd">/pm:epic-sync checkout-redesign</span>
+  <span class="ok">✓</span> GitHub epic <span class="c">#210</span>, issues <span class="c">#211</span>-<span class="c">#215</span>
+<span class="cmd">/pm:issue-start 212</span>
+<span class="hl">  <span class="y">●</span> <span class="c">#212</span> Payment intent endpoint    <span class="g">nodejs-backend-engineer</span></span>  <span class="r">✗</span> test first: 6 failing  <span class="g">→</span>  <span class="ok">✓</span> 6 passing  <span class="g">·</span>  coverage <span class="ok">91%</span>
+  <span class="ok">✓</span> pull request <span class="c">#218</span> opened, closes <span class="c">#212</span>
+<span class="cmd">/pm:epic-status checkout-redesign</span>
+  <span class="ok">████████████</span><span class="g">░░░░░░░░</span>  3 of 5 done <span class="g">· 1 in progress · 1 blocked</span></div>
+</body></html>

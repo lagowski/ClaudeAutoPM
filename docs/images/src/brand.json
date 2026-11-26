@@ -1,0 +1,29 @@
+{
+  "product": "ClaudeAutoPM",
+  "kind": "no frontend of its own (CLI + slash commands inside Claude Code; docs-site is the stock VitePress theme): this design system was created for the repo",
+  "why": "Everything ClaudeAutoPM shows a user is terminal text: the installer's double-line box, chalk-coloured status lines, and the output of /pm: commands in Claude Code. The design is that output, tidied: the double-line box carries the name, single-line boxes are diagram nodes, box-drawing branches and arrows are the edges.",
+  "derived_from": {
+    "double_box": "install/install.js ('ClaudeAutoPM Installation Script' box), bin/autopm.js (Quick Reference box), install/post-install-check.js",
+    "palette": "chalk colours used across bin/, install/ and lib/: cyan, green, yellow, red, gray, bold",
+    "commands": "packages/plugin-pm/commands and autopm/.claude/commands (pm:prd-new, pm:prd-parse, pm:epic-decompose, pm:epic-sync, pm:issue-start, pm:issue-close, pm:epic-status, pm:next)",
+    "files": ".claude/prds/<name>.md, .claude/epics/<name>/epic.md and numbered task files (pm:epic-decompose.md)",
+    "agents": "packages/plugin-*/agents (react-frontend-engineer, nodejs-backend-engineer, python-backend-engineer, postgresql-expert, e2e-test-engineer)",
+    "rules": "packages/plugin-core/rules (tdd.enforcement, test-execution, context7-enforcement, git-strategy)",
+    "scenarios_and_counts": "README.md Quick Install table; 14 packages/plugin-* directories"
+  },
+  "fonts": { "mono": "Fira Code 400-700, used for everything" },
+  "motif": {
+    "name_box": "7px double border in cyan, the name in bold white, one gray line under it",
+    "node": "1.5px single-line box on the pane colour; title is a command with its prompt ('> ' cyan inside Claude Code, '$ ' green in the shell)",
+    "tree": "box-drawing branches in gray, task numbers in cyan, agent names in gray",
+    "status": "green check, red cross, yellow dot, block-character progress bar"
+  },
+  "dark": { "bg": "#0F1317", "pane": "#151A20", "line": "#2A323C", "fg": "#D9DEE5", "bold": "#FFFFFF", "gray": "#7E8894", "cyan": "#5CCFE0", "green": "#7BD88F", "yellow": "#E8C660", "red": "#F27F74" },
+  "light": { "bg": "#F7F4EC", "pane": "#FFFDF8", "line": "#DAD4C6", "fg": "#2B2F36", "bold": "#0E1116", "gray": "#7A7468", "cyan": "#0E7C8C", "green": "#1F7A3A", "yellow": "#946A00", "red": "#B8392E" },
+  "data": "The project (checkout-redesign), its five tasks, the issue and pull request numbers and the coverage figure are invented.",
+  "assets": {
+    "docs/images/banner.png": "src/banner.html?theme=dark, 1280x640 @2x",
+    "docs/images/banner-light.png": "src/banner.html?theme=light, 1280x640 @2x",
+    "docs/images/how-it-works.png": "src/diagram.html, 1600x900 @2x (opaque terminal frame: reads on GitHub dark and light)"
+  }
+}
