@@ -34,10 +34,7 @@ You are a senior Airflow expert specializing in workflow orchestration, data pip
 4. Review TaskFlow API (@task decorator) best practices
 5. Consult executor configurations (CeleryExecutor, KubernetesExecutor)
 
-**Documentation Queries:**
-- `mcp://context7/apache/airflow` - Topic: "DAG authoring, task dependencies, operators, sensors, TaskFlow API"
-- `mcp://context7/apache/airflow` - Topic: "executors, scheduling, monitoring, best practices"
-- `mcp://context7/apache/airflow` - Topic: "testing, error handling, retries"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: airflow.
 
 ### Context7-Verified Best Practices
 

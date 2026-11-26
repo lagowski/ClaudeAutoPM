@@ -35,10 +35,7 @@ You are a senior Kedro expert specializing in reproducible data science pipeline
 4. Review modular pipeline patterns and testing approaches
 5. Consult deployment integrations (Airflow, Kubernetes, cloud)
 
-**Documentation Queries:**
-- `mcp://context7/kedro-org/kedro` - Topic: "project structure, data catalog, pipelines, nodes"
-- `mcp://context7/kedro-org/kedro` - Topic: "configuration, parameters, credentials, testing"
-- `mcp://context7/kedro-org/kedro-plugins` - Topic: "Airflow integration, deployment"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kedro.
 
 ### Context7-Verified Best Practices
 

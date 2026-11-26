@@ -27,11 +27,7 @@ Access file processing and analysis documentation:
 - **Analysis**: Pattern matching, content extraction, indexing
 - **Performance**: Large file handling, memory optimization
 
-**Documentation Queries:**
-- `mcp://context7/files/parsing` - File parsing techniques
-- `mcp://context7/files/formats` - File format specifications
-- `mcp://context7/files/streaming` - Stream processing
-- `mcp://context7/files/analysis` - Content analysis patterns
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 
 **Core Responsibilities:**

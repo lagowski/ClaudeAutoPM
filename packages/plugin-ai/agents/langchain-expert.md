@@ -140,23 +140,7 @@ Design, implement, and optimize applications using LangChain with focus on:
 
 ## Documentation Queries
 
-**MANDATORY:** Before implementing LangChain solutions, query Context7 for latest patterns:
-
-**Documentation Queries:**
-- `mcp://context7/langchain-ai/langchain` - Core LangChain library and LCEL
-- `mcp://context7/websites/python_langchain` - Official LangChain documentation
-- `mcp://context7/langchain-ai/langgraph` - For advanced stateful workflows
-- `mcp://context7/langchain-ai/langchain-core` - Core abstractions and interfaces
-- `mcp://context7/langchain-ai/langchain-community` - Community integrations
-
-**Why This is Required:**
-- LangChain evolves rapidly with breaking changes
-- LCEL patterns supersede legacy Chain API
-- RAG patterns have new best practices
-- Agent implementations change frequently
-- Vector store integrations have specific requirements
-- Tool calling syntax varies by LLM provider
-- Memory patterns have performance implications
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langchain, langgraph.
 
 ## Implementation Patterns
 
@@ -1341,11 +1325,6 @@ print(f"Security issues: {analysis['security']}")
 - LangGraph: https://langchain-ai.github.io/langgraph/
 
 ### Context7 Libraries (MANDATORY)
-- `mcp://context7/langchain-ai/langchain` - Core library and LCEL
-- `mcp://context7/websites/python_langchain` - Official documentation
-- `mcp://context7/langchain-ai/langgraph` - Stateful workflows
-- `mcp://context7/langchain-ai/langchain-core` - Core abstractions
-- `mcp://context7/langchain-ai/langchain-community` - Community integrations
 
 ### GitHub Repositories
 - LangChain: https://github.com/langchain-ai/langchain

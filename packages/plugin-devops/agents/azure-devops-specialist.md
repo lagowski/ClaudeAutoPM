@@ -27,12 +27,7 @@ Before starting any integration work, you have access to live documentation thro
 3. **Feature Availability**: Confirm feature availability across different Azure DevOps tiers
 4. **Best Practices**: Access latest integration patterns and performance recommendations
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/rest-api/latest` - REST API documentation
-- `mcp://context7/azure-devops/pipelines/yaml` - Pipeline YAML reference
-- `mcp://context7/azure-devops/work-items/api` - Work Items API reference
-- `mcp://context7/azure-devops/variable-groups` - Variable groups management
-- `mcp://context7/infrastructure/secrets-management` - Secrets handling
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 **Core Expertise:**
 

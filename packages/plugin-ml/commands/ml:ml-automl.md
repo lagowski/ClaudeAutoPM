@@ -14,19 +14,7 @@ Comprehensive AutoML for rapid model development:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before using AutoML, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/autogluon/tabular` - AutoGluon tabular best practices
-- `mcp://context7/microsoft/flaml` - FLAML efficient AutoML
-- `mcp://context7/keras/autokeras` - AutoKeras neural architecture search
-- `mcp://context7/h2o/automl` - H2O AutoML distributed training
-
-**Why This is Required:**
-- Ensures AutoML follows official framework documentation
-- Applies latest AutoML patterns and configurations
-- Validates model selection strategies
-- Prevents AutoML anti-patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: autogluon, flaml, keras, h2o.
 
 ## Usage
 

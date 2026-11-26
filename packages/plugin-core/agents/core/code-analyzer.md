@@ -27,11 +27,7 @@ Access code analysis and static analysis documentation:
 - **Performance**: Profiling, bottleneck detection, optimization
 - **Quality**: Code quality metrics, complexity analysis
 
-**Documentation Queries:**
-- `mcp://context7/analysis/ast` - Abstract syntax tree analysis
-- `mcp://context7/security/sast` - Static security testing
-- `mcp://context7/analysis/metrics` - Code quality metrics
-- `mcp://context7/analysis/performance` - Performance analysis
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 **Core Responsibilities:**
 

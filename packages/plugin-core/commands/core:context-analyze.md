@@ -44,19 +44,7 @@ Analyze context usage, track token consumption, identify optimization opportunit
 
 ## Required Documentation Access
 
-**MANDATORY:** Before analyzing context, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/anthropic/claude-api` - Claude API context limits and token counting
-- `mcp://context7/langchain/context-management` - Context optimization patterns and strategies
-- `mcp://context7/tiktoken/tokenization` - Token counting methods and encoding schemes
-
-**Why This is Required:**
-- Ensures accurate token counting using latest encoding schemes
-- Applies proven context optimization strategies
-- Validates against current Claude API context limits
-- Prevents hallucinations about token calculation methods
-- Uses industry-standard context management patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: anthropic, langchain, tiktoken.
 
 ## Instructions
 

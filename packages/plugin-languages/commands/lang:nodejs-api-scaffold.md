@@ -18,21 +18,7 @@ Generate production-ready Node.js REST API with Context7-verified best practices
 
 ## Required Documentation Access
 
-**MANDATORY:** Before scaffolding, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/nodejs/node` - Event loop, async iterators (for await...of), Symbol.asyncIterator, AbortSignal
-- `mcp://context7/airbnb/javascript` - ES6 patterns, object shorthand, spread syntax
-- `mcp://context7/agile/api-design` - REST API design patterns
-- `mcp://context7/project-management/project-structure` - Node.js project organization
-
-**Why This is Required:**
-- Ensures use of latest Node.js async iteration patterns
-- Applies ES6 best practices from Airbnb style guide
-- Implements AbortSignal for request cancellation
-- Uses Symbol.asyncIterator for custom iterators
-- Follows modern JavaScript syntax patterns
-- Optimizes event loop performance
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: nodejs.
 
 ## Purpose
 

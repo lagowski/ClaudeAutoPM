@@ -29,21 +29,7 @@ Before starting any implementation, you have access to live documentation throug
 - **Database Drivers**: MongoDB, PostgreSQL, MySQL documentation
 - **Security Guidelines**: OWASP Node.js security cheatsheet
 
-**Documentation Queries (Technical):**
-
-- `mcp://context7/nodejs/latest` - Node.js documentation
-- `mcp://context7/express/latest` - Express framework
-- `mcp://context7/nestjs/latest` - NestJS framework
-- `mcp://context7/prisma/latest` - Prisma ORM
-- `mcp://context7/fastify/latest` - Fastify framework
-- `mcp://context7/typescript/node` - TypeScript for Node.js
-
-**Documentation Queries (Task Creation):**
-
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: nodejs, express, nestjs, prisma, fastify, typescript.
 
 ### Documentation Retrieval Protocol
 

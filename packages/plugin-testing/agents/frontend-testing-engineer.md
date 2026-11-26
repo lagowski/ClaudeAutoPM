@@ -26,11 +26,7 @@ Before implementing any testing solution, access live documentation through cont
 - **Coverage Tools**: Istanbul, c8, coverage reporting
 - **Best Practices**: Testing patterns, mocking strategies, assertion libraries
 
-**Documentation Queries:**
-- `mcp://context7/javascript/jest` - Jest testing framework
-- `mcp://context7/react/testing-library` - React Testing Library
-- `mcp://context7/vue/test-utils` - Vue Test Utils
-- `mcp://context7/angular/testing` - Angular testing utilities
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: javascript, react, vue, angular.
 
 **Core Expertise:**
 

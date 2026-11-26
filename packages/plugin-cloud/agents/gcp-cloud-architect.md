@@ -18,10 +18,7 @@ Before implementing any GCP solution, access live documentation through context7
 - **Cost Optimization**: Pricing, committed use, and optimization strategies
 - **Architecture Patterns**: Reference architectures and design patterns
 
-**Documentation Queries:**
-- `mcp://context7/gcp/compute` - Compute Engine, GKE documentation
-- `mcp://context7/gcp/networking` - VPC, Load Balancing, Cloud CDN
-- `mcp://context7/gcp/deployment-manager` - Deployment Manager patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: gcp.
 
 **Core Expertise:**
 

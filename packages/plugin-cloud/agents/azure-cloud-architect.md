@@ -18,10 +18,7 @@ Before implementing any Azure solution, access live documentation through contex
 - **Cost Management**: Pricing, reservations, and optimization
 - **Architecture Center**: Reference architectures and patterns
 
-**Documentation Queries:**
-- `mcp://context7/azure/compute` - VMs, AKS, Container Instances
-- `mcp://context7/azure/networking` - VNet, Load Balancer, Application Gateway
-- `mcp://context7/azure/arm` - ARM templates and Bicep patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure.
 
 **Core Expertise:**
 

@@ -17,23 +17,7 @@ Implements comprehensive disaster recovery strategies with automated failover, b
 
 ## Required Documentation Access
 
-**MANDATORY:** Before implementing disaster recovery, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/aws/backup` - AWS Backup service patterns and best practices
-- `mcp://context7/aws/disaster-recovery` - AWS DR strategies and architectures
-- `mcp://context7/gcp/disaster-recovery` - GCP DR best practices and solutions
-- `mcp://context7/azure/site-recovery` - Azure Site Recovery and backup
-- `mcp://context7/terraform/disaster-recovery` - Infrastructure as Code DR patterns
-- `mcp://context7/compliance/hipaa` - HIPAA DR requirements
-- `mcp://context7/compliance/soc2` - SOC2 DR controls
-
-**Why This is Required:**
-- Ensures DR strategies align with cloud provider capabilities
-- Applies industry-standard RTO/RPO frameworks
-- Validates compliance with regulatory requirements
-- Prevents data loss through proven backup patterns
-- Optimizes costs while meeting availability targets
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, gcp, azure, terraform.
 
 ## Usage
 

@@ -29,11 +29,7 @@ Access agent development and management documentation:
 - **Tool Integration**: Tool usage patterns and optimization
 - **Performance**: Context management, efficiency patterns
 
-**Documentation Queries:**
-- `mcp://context7/agents/patterns` - Agent design patterns
-- `mcp://context7/mcp/protocol` - MCP protocol specification
-- `mcp://context7/agents/tools` - Tool integration guides
-- `mcp://context7/agents/performance` - Performance optimization
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: model-context-protocol.
 
 ## Primary Responsibilities
 

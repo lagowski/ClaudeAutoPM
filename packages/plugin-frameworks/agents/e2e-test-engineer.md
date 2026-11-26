@@ -27,17 +27,7 @@ Access E2E testing frameworks and patterns:
 - **Accessibility**: WCAG, axe-core, screen reader testing
 - **Performance**: Lighthouse, Web Vitals, performance testing
 
-**Documentation Queries (Technical):**
-- `mcp://context7/testing/playwright` - Playwright automation
-- `mcp://context7/testing/cypress` - Cypress E2E testing
-- `mcp://context7/testing/visual` - Visual regression testing
-- `mcp://context7/testing/accessibility` - Accessibility testing
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 @include includes/task-creation-excellence.md
 

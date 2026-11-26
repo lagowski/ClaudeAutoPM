@@ -35,21 +35,12 @@ Use the tailwindcss-expert agent to create a comprehensive TailwindCSS design sy
 - Dark mode implementation
 - Responsive design patterns
 
-## Example Usage
-```
 ## Required Documentation Access
 
-**MANDATORY:** Before UI framework setup, query Context7 for best practices:
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: tailwindcss.
 
-**Documentation Queries:**
-- `mcp://context7/ui/bootstrap` - bootstrap best practices
-- `mcp://context7/ui/tailwind` - tailwind best practices
-- `mcp://context7/frontend/design-systems` - design systems best practices
-- `mcp://context7/css/frameworks` - frameworks best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
-
-
+## Example Usage
+```
 Task: Create TailwindCSS design system with custom color palette, typography scale, and component library
 Agent: tailwindcss-expert
 Parameters: theme=modern, utilities=custom-spacing,gradients,animations, components=buttons,cards,forms, plugins=forms,typography

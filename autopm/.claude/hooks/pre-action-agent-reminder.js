@@ -50,9 +50,9 @@ const patterns = {
       'e2e-test-engineer (E2E tests)'
     ],
     context7: [
-      'mcp://context7/jest/best-practices',
-      'mcp://context7/testing/tdd-patterns',
-      'mcp://context7/<framework>/testing'
+      'jest: best-practices',
+      'testing: tdd-patterns',
+      '<framework>: testing'
     ]
   },
 
@@ -72,9 +72,9 @@ const patterns = {
       'redis-expert (Redis)'
     ],
     context7: [
-      'mcp://context7/<database>/schema-design',
-      'mcp://context7/<database>/query-optimization',
-      'mcp://context7/<database>/best-practices'
+      '<database>: schema-design',
+      '<database>: query-optimization',
+      '<database>: best-practices'
     ]
   },
 
@@ -96,9 +96,9 @@ const patterns = {
       'github-operations-specialist (GitHub Actions)'
     ],
     context7: [
-      'mcp://context7/kubernetes/deployment-patterns',
-      'mcp://context7/docker/best-practices',
-      'mcp://context7/terraform/infrastructure-patterns'
+      'kubernetes: deployment-patterns',
+      'docker: best-practices',
+      'terraform: infrastructure-patterns'
     ]
   },
 
@@ -117,8 +117,8 @@ const patterns = {
       'security-scanning-expert (Security analysis)'
     ],
     context7: [
-      'mcp://context7/<language>/code-quality',
-      'mcp://context7/security/best-practices'
+      '<language>: code-quality',
+      'security: best-practices'
     ]
   },
 
@@ -134,7 +134,7 @@ const patterns = {
       'file-analyzer (File and log analysis)'
     ],
     context7: [
-      'mcp://context7/logging/analysis-patterns'
+      'logging: analysis-patterns'
     ]
   }
 };
@@ -176,7 +176,7 @@ function generateReminder(matches) {
       reminder += `   • ${agent}\n`;
     }
 
-    reminder += '\n**Context7 Queries:**\n';
+    reminder += '\n**Context7 (resolve-library-id, then query-docs):**\n';
     for (const query of match.context7) {
       reminder += `   • ${query}\n`;
     }

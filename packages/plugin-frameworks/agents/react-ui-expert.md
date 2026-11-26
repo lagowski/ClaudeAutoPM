@@ -20,17 +20,7 @@ Before implementing any UI solution, access live documentation through context7:
 - **Design Systems**: Material Design, accessibility guidelines
 - **Styling**: CSS-in-JS, styled-components, emotion
 
-**Documentation Queries (Technical):**
-- `mcp://context7/react/mui` - Material-UI documentation
-- `mcp://context7/react/chakra-ui` - Chakra UI components
-- `mcp://context7/react/ant-design` - Ant Design system
-- `mcp://context7/react/patterns` - React design patterns
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react.
 
 @include includes/task-creation-excellence.md
 

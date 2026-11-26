@@ -64,7 +64,11 @@ describe('no fake mcp://context7/ URIs (issue #862)', () => {
         '# Demo\n\n## Required Documentation Access\n\n' +
           'Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react.\n'
       );
-      const hookPath = path.join(ROOT, 'packages', 'plugin-core', 'hooks', hook);
+      // Installed projects run hooks from .claude/hooks/ (CommonJS there;
+      // plugin-core's own package.json marks the source dir as ESM).
+      const hookPath = path.join(tmp, '.claude', 'hooks', hook);
+      fs.mkdirSync(path.dirname(hookPath), { recursive: true });
+      fs.copyFileSync(path.join(ROOT, 'packages', 'plugin-core', 'hooks', hook), hookPath);
       const arg = isCommand ? '/pm:demo' : '@demo-agent';
       const out = execFileSync(process.execPath, [hookPath, arg], { cwd: tmp, encoding: 'utf8' });
       expect(out).toMatch(/context7-required\.md/);

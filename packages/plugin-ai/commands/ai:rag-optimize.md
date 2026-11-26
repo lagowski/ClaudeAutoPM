@@ -15,22 +15,7 @@ Comprehensive RAG system optimization following LangChain best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for RAG best practices:
-
-**Documentation Queries:**
-- `mcp://context7/langchain/rag-optimization` - RAG system optimization
-- `mcp://context7/langchain/vector-stores` - Vector store selection and configuration
-- `mcp://context7/langchain/embeddings-caching` - Embeddings caching strategies
-- `mcp://context7/langchain/retrieval-strategies` - MMR, similarity search optimization
-- `mcp://context7/langchain/document-chunking` - Chunking best practices
-- `mcp://context7/langchain/index-optimization` - Index configuration and tuning
-
-**Why This is Required:**
-- Ensures optimization follows official LangChain documentation
-- Applies proven vector store patterns
-- Validates retrieval strategies
-- Prevents performance bottlenecks
-- Optimizes embedding costs
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langchain.
 
 ## Usage
 
