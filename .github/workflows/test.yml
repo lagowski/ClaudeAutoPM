@@ -31,10 +31,9 @@ jobs:
     - name: Lint JavaScript
       run: npm run lint:js
 
-    - name: Run quick tests
-      run: npm test
-
-    - name: Check test coverage
+    # test:coverage runs the full default suite (npm test) plus thresholds,
+    # so the suite runs once per Node version (#844).
+    - name: Run tests with coverage
       run: npm run test:coverage
 
   # Summary job that branch protection can depend on
