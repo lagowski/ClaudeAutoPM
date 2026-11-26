@@ -120,10 +120,20 @@ for dir in "${PROJECT_DIRS[@]}"; do
     fi
 done
 
-# Remove old framework files (but preserve data)
-echo -e "${YELLOW}🗑️  Removing old framework files...${NC}"
+# Update framework files without overwriting local edits (#790).
+# .claude/.autopm-manifest records the sha256 of every framework file as shipped at the last
+# install/update ("<sha256>  <path relative to .claude>", sha256sum format). A file whose current
+# hash differs from its recorded hash was edited locally: it is kept, and the shipped version is
+# written next to it as <file>.autopm-new. A recorded file the user deleted is not reinstalled.
+# Files the framework never shipped (your own, plugin-installed) are left alone.
+echo -e "${YELLOW}📥 Updating framework files...${NC}"
 
-# List of framework directories to update
+if [ ! -d "$FRAMEWORK_SOURCE" ]; then
+    echo -e "${RED}❌ Error: Framework source not found at $FRAMEWORK_SOURCE${NC}"
+    exit 1
+fi
+
+# Framework directories and root files managed by update
 FRAMEWORK_DIRS=(
     "agents"
     "commands"
@@ -137,50 +147,102 @@ FRAMEWORK_DIRS=(
     "strategies"
     "templates"
 )
-
-for dir in "${FRAMEWORK_DIRS[@]}"; do
-    if [ -d "$CLAUDE_DIR/$dir" ]; then
-        rm -rf "$CLAUDE_DIR/$dir"
-        echo -e "   🗑️  Removed: $dir/"
-    fi
-done
-
-# Remove framework files from root
 FRAMEWORK_FILES=(
     "base.md"
     "mcp-servers.json"
 )
 
-for file in "${FRAMEWORK_FILES[@]}"; do
-    if [ -f "$CLAUDE_DIR/$file" ]; then
-        rm -f "$CLAUDE_DIR/$file"
-        echo -e "   🗑️  Removed: $file"
+file_hash() {
+    if command -v sha256sum >/dev/null 2>&1; then
+        sha256sum "$1" | cut -c1-64
+    else
+        shasum -a 256 "$1" | cut -c1-64
     fi
-done
+}
 
-# Copy new framework files
-echo -e "${YELLOW}📥 Installing new framework files...${NC}"
+MANIFEST="$CLAUDE_DIR/.autopm-manifest"
+OLD_MANIFEST=$(mktemp)
+NEW_MANIFEST=$(mktemp)
+SOURCE_LIST=$(mktemp)
+[ -f "$MANIFEST" ] && cp "$MANIFEST" "$OLD_MANIFEST"
 
-if [ ! -d "$FRAMEWORK_SOURCE" ]; then
-    echo -e "${RED}❌ Error: Framework source not found at $FRAMEWORK_SOURCE${NC}"
-    exit 1
-fi
+recorded_hash() {
+    awk -v p="$1" 'substr($0, 67) == p { print substr($0, 1, 64); exit }' "$OLD_MANIFEST"
+}
 
-# Copy framework directories
+in_update_scope() {
+    local top="${1%%/*}" item
+    for item in "${FRAMEWORK_DIRS[@]}"; do
+        [ "$1" != "$top" ] && [ "$top" = "$item" ] && return 0
+    done
+    for item in "${FRAMEWORK_FILES[@]}"; do
+        [ "$1" = "$item" ] && return 0
+    done
+    return 1
+}
+
 for dir in "${FRAMEWORK_DIRS[@]}"; do
-    if [ -d "$FRAMEWORK_SOURCE/$dir" ]; then
-        cp -r "$FRAMEWORK_SOURCE/$dir" "$CLAUDE_DIR/"
-        echo -e "   ✅ Installed: $dir/"
-    fi
+    [ -d "$FRAMEWORK_SOURCE/$dir" ] && (cd "$FRAMEWORK_SOURCE" && find "$dir" -type f) >> "$SOURCE_LIST"
+done
+for file in "${FRAMEWORK_FILES[@]}"; do
+    [ -f "$FRAMEWORK_SOURCE/$file" ] && echo "$file" >> "$SOURCE_LIST"
 done
 
-# Copy framework files
-for file in "${FRAMEWORK_FILES[@]}"; do
-    if [ -f "$FRAMEWORK_SOURCE/$file" ]; then
-        cp "$FRAMEWORK_SOURCE/$file" "$CLAUDE_DIR/"
-        echo -e "   ✅ Installed: $file"
+KEPT_EDITS=()
+UPDATED_COUNT=0
+while IFS= read -r rel; do
+    src="$FRAMEWORK_SOURCE/$rel"
+    dst="$CLAUDE_DIR/$rel"
+    new_hash=$(file_hash "$src")
+    rec_hash=$(recorded_hash "$rel")
+    echo "$new_hash  $rel" >> "$NEW_MANIFEST"
+
+    if [ -e "$dst" ]; then
+        cur_hash=$(file_hash "$dst")
+        if [ "$cur_hash" = "$new_hash" ]; then
+            rm -f "$dst.autopm-new"
+        elif [ -n "$rec_hash" ] && [ "$cur_hash" != "$rec_hash" ]; then
+            cp "$src" "$dst.autopm-new"
+            KEPT_EDITS+=("$rel")
+        else
+            cp "$src" "$dst"
+            rm -f "$dst.autopm-new"
+            UPDATED_COUNT=$((UPDATED_COUNT + 1))
+        fi
+    elif [ -z "$rec_hash" ]; then
+        mkdir -p "$(dirname "$dst")"
+        cp "$src" "$dst"
+        UPDATED_COUNT=$((UPDATED_COUNT + 1))
     fi
-done
+done < "$SOURCE_LIST"
+echo -e "   ✅ Installed or updated: $UPDATED_COUNT files"
+
+# Recorded files the framework no longer ships: remove if unedited, keep (as yours) if edited.
+# Recorded files outside update's scope stay recorded.
+while IFS= read -r line; do
+    rel="${line:66}"
+    [ -z "$rel" ] && continue
+    if ! in_update_scope "$rel"; then
+        echo "$line" >> "$NEW_MANIFEST"
+        continue
+    fi
+    grep -qxF -- "$rel" "$SOURCE_LIST" && continue
+    if [ -f "$CLAUDE_DIR/$rel" ] && [ "$(file_hash "$CLAUDE_DIR/$rel")" = "${line:0:64}" ]; then
+        rm -f "$CLAUDE_DIR/$rel"
+        echo -e "   🗑️  Removed retired file: $rel"
+    fi
+done < "$OLD_MANIFEST"
+
+cp "$NEW_MANIFEST" "$MANIFEST"
+rm -f "$OLD_MANIFEST" "$NEW_MANIFEST" "$SOURCE_LIST"
+
+if [ ${#KEPT_EDITS[@]} -gt 0 ]; then
+    echo -e "${YELLOW}✋ Kept ${#KEPT_EDITS[@]} locally edited file(s); the shipped version is next to each as .autopm-new:${NC}"
+    for rel in "${KEPT_EDITS[@]}"; do
+        echo -e "   ✋ $rel"
+    done
+    echo -e "${YELLOW}   To take the shipped version: mv .claude/<file>.autopm-new .claude/<file>${NC}"
+fi
 
 # Update config.json with new version and timestamp
 if [ -f "$TEMP_PRESERVE_DIR/config.json" ]; then

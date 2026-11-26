@@ -153,10 +153,13 @@ autopm update --no-preserve-config
 - `rules/` - Updated development patterns
 - `templates/` - New project templates
 
-> **Local edits to framework files are not kept.** `update.sh` removes and reinstalls the framework
-> directories (`agents/`, `commands/`, `rules/`, `scripts/`, `checklists/`, `hooks/`, `lib/`, `mcp/`,
-> `providers/`, `strategies/`, `templates/`), so a rule or command you edited in place is replaced by the
-> shipped version ([#790](https://github.com/lagowski/ClaudeAutoPM/issues/790)). Your copy stays in the backup directory.
+> **Local edits to framework files are kept** ([#790](https://github.com/lagowski/ClaudeAutoPM/issues/790)).
+> `install` and `update` record the sha256 of each shipped file in `.claude/.autopm-manifest`. On update, a file
+> that differs from its recorded hash is left as it is, and the shipped version is written next to it as
+> `<file>.autopm-new` (take it with `mv .claude/<file>.autopm-new .claude/<file>`). A shipped file you deleted is
+> not reinstalled, files the framework never shipped are left alone, and a retired file is removed only if
+> unedited. An install older than the manifest has no record yet: its first update replaces changed files (your
+> copy stays in the backup directory) and writes the manifest.
 
 **Your Data (Preserved):**
 - `config.json` - Your provider and settings
