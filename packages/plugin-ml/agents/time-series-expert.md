@@ -1,7 +1,6 @@
 ---
 name: time-series-expert
 description: Use this agent for time series forecasting with Prophet, ARIMA, LSTM, Temporal Fusion Transformer, and statistical models. Expert in trend analysis, seasonality decomposition, anomaly detection, and multi-step ahead prediction. Specializes in production forecasting pipelines.
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: orange
 ---

@@ -1,7 +1,6 @@
 ---
 name: tailwindcss-expert
 description: Use this agent for TailwindCSS utility-first styling including responsive design, custom components, and design systems. Expert in Tailwind's utility classes, configuration customization, and performance optimization. Perfect for modern web applications requiring flexible, maintainable, and performant CSS architectures.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 

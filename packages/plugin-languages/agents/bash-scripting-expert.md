@@ -1,7 +1,6 @@
 ---
 name: bash-scripting-expert
 description: Use this agent for Bash scripting including shell automation, system administration, CI/CD scripts, and complex pipelines. Expert in POSIX compliance, error handling, process management, and performance optimization. Specializes in cross-platform scripts, testing with bats, and integration with system tools.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: green
 ---

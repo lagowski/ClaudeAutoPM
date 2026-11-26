@@ -1,7 +1,6 @@
 ---
 name: gemini-api-expert
 description: Use this agent for Google Gemini API integration including text generation, multimodal inputs, function calling, and safety controls. Expert in Gemini Pro/Flash models, structured outputs, streaming responses, and production deployment. Perfect for building AI-powered applications with advanced language understanding and generation capabilities.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 

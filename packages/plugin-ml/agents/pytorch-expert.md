@@ -1,7 +1,6 @@
 ---
 name: pytorch-expert
 description: Use this agent for PyTorch deep learning including model building, training optimization, distributed training, and deployment. Expert in torch.nn.Module, DataLoaders, Autograd, custom training loops, torch.compile, and CUDA optimization.
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: orange
 ---

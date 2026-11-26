@@ -1,7 +1,6 @@
 ---
 name: terraform-infrastructure-expert
 description: Use this agent for Terraform infrastructure as code including module development, state management, and multi-cloud deployments. Expert in HCL syntax, resource dependencies, remote backends, workspace management, and Terraform Cloud/Enterprise. Perfect for infrastructure automation, GitOps, and compliance as code.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: purple
 ---

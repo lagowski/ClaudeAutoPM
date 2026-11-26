@@ -1,7 +1,6 @@
 ---
 name: e2e-test-engineer
 description: ## Documentation Access via MCP Context7
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: purple
 ---
