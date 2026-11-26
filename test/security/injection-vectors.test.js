@@ -53,24 +53,25 @@ test('epic: epic name with command substitution is rejected', () => {
   assert.strictEqual(epicCmd.isValidEpicName('fullstack-app_v2.1'), true);
 });
 
-test('epic: CLI refuses a path-traversal epic name before any handler runs', async () => {
-  const yargs = require('yargs/yargs');
-  const epicCmd = require(path.join(ROOT, 'lib/cli/commands/epic.js'));
-  const ran = [];
-  const cmd = {
-    ...epicCmd,
-    builder: (y) => epicCmd.builder(y).command('probe <name>', 'probe', () => {}, (a) => ran.push(a.name))
-  };
-  let failure = null;
-  await yargs(['epic', 'probe', '../../escape'])
-    .command(cmd)
-    .exitProcess(false)
-    .fail((msg, err) => { failure = msg || (err && err.message); })
-    .parseAsync()
-    .catch((err) => { failure = failure || err.message; });
+test('epic: CLI refuses a path-traversal epic name before any handler runs', () => {
+  const os = require('os');
+  const { spawnSync } = require('child_process');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'epic-inject-'));
+  const cwd = path.join(tmp, 'a', 'b');
+  fs.mkdirSync(cwd, { recursive: true });
+  try {
+    const res = spawnSync(process.execPath,
+      [path.join(ROOT, 'bin/autopm.js'), 'epic', 'new', '../../escape'],
+      { cwd, input: '', encoding: 'utf8', timeout: 30000 });
 
-  assert.deepStrictEqual(ran, [], 'handler must not run for an invalid epic name');
-  assert.match(String(failure), /invalid epic name/i);
+    assert.notStrictEqual(res.status, 0, 'an invalid epic name must fail the command');
+    assert.match(res.stderr + res.stdout, /invalid epic name/i);
+    // Without validation the name resolves to <tmp>/escape, outside .claude/epics
+    assert.strictEqual(fs.existsSync(path.join(tmp, 'escape')), false,
+      'no epic directory may be created outside .claude/epics');
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 // ---------------------------------------------------------------------------
