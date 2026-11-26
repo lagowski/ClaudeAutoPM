@@ -29,15 +29,7 @@ Before starting any implementation, you have access to live documentation throug
 - **State Management**: Remote backends, state locking, migration
 - **Best Practices**: Module design, workspace strategies, security
 
-**Documentation Queries:**
-
-- `mcp://context7/terraform/latest` - Terraform core documentation
-- `mcp://context7/terraform/aws-provider` - AWS provider
-- `mcp://context7/terraform/azure-provider` - Azure provider
-- `mcp://context7/terraform/gcp-provider` - GCP provider
-- `mcp://context7/terraform/kubernetes-provider` - Kubernetes provider
-- `mcp://context7/terraform/modules` - Module development patterns
-- `mcp://context7/terraform/cloud` - Terraform Cloud/Enterprise
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: terraform.
 
 ## Core Expertise
 

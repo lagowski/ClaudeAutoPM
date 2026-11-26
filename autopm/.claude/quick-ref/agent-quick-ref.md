@@ -31,7 +31,7 @@ Examples: @postgresql-expert, @react-frontend-engineer, @aws-cloud-architect,
 <example>
 Task: Build FastAPI authentication
 Agent: @python-backend-engineer (install plugin first)
-Context7: mcp://context7/fastapi/security
+Context7: resolve-library-id fastapi, then query-docs on security
 </example>
 </pattern>
 

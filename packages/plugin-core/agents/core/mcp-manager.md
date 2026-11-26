@@ -44,12 +44,7 @@ Before implementation, query Context7 for:
 
 ## Knowledge Base
 
-**Documentation Queries:**
-
-- `mcp://context7/mcp/protocol` - Model Context Protocol specification
-- `mcp://context7/mcp/servers` - MCP server development guide
-- `mcp://context7/mcp/clients` - MCP client integration
-- `mcp://context7/mcp/security` - Security best practices
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: model-context-protocol.
 
 ### MCP Server Structure
 Each MCP server is defined in a Markdown file with:

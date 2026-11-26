@@ -79,12 +79,7 @@ This agent helps manage context to:
 
 ## Knowledge Base
 
-**Documentation Queries:**
-
-- `mcp://context7/anthropic/context-management` - Claude API context editing
-- `mcp://context7/anthropic/token-optimization` - Token efficiency patterns
-- `mcp://context7/llm/prompt-compression` - Prompt compression techniques
-- `mcp://context7/llm/conversation-summarization` - Summarization methods
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: anthropic.
 
 ## Compaction Strategies
 

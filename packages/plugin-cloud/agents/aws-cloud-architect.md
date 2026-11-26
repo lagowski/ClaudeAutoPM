@@ -26,10 +26,7 @@ Before implementing any AWS solution, access live documentation through context7
 - **Cost Optimization**: Pricing, savings plans, and optimization
 - **Architecture Patterns**: Reference architectures and patterns
 
-**Documentation Queries:**
-- `mcp://context7/aws/compute` - EC2, EKS, Lambda documentation
-- `mcp://context7/aws/networking` - VPC, ELB, CloudFront
-- `mcp://context7/terraform/aws` - Terraform AWS provider patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, terraform.
 
 **Core Expertise:**
 

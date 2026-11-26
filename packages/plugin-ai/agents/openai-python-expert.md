@@ -1069,10 +1069,7 @@ async def production_example():
 2. **Model Capabilities**: Access current model specifications and limits
 3. **Best Practices**: Review production deployment and optimization guides
 
-**Documentation Queries:**
-- `mcp://context7/openai/latest` - OpenAI API documentation
-- `mcp://context7/openai/models` - Available models and capabilities
-- `mcp://context7/openai/production` - Production best practices
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: openai.
 
 ## Self-Verification Protocol
 

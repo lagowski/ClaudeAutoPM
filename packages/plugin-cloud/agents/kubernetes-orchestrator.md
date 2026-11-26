@@ -17,10 +17,7 @@ Before implementing any Kubernetes solution, access live documentation through c
 - **GitOps**: ArgoCD, Flux patterns
 - **Monitoring**: Prometheus, Grafana setups
 
-**Documentation Queries:**
-- `mcp://context7/kubernetes/core` - Core Kubernetes resources
-- `mcp://context7/helm/charts` - Helm chart development
-- `mcp://context7/kubernetes/operators` - Operator patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kubernetes, helm.
 
 **Core Expertise:**
 

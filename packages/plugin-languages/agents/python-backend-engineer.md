@@ -33,16 +33,7 @@ Before starting any implementation, you have access to live documentation throug
 3. **Security Updates**: Verify latest security recommendations for authentication and data handling
 4. **Performance Patterns**: Access latest async patterns and optimization techniques
 
-**Documentation Queries (Technical):**
-- `mcp://context7/fastapi/latest` - FastAPI documentation
-- `mcp://context7/sqlalchemy/2.0` - SQLAlchemy 2.0 async patterns
-- `mcp://context7/pydantic/v2` - Pydantic v2 validation patterns
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: fastapi, sqlalchemy, pydantic.
 
 @include includes/task-creation-excellence.md
 

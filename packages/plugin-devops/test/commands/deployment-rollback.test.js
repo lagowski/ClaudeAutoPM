@@ -58,36 +58,8 @@ describe('/devops:deployment-rollback Command Structure Tests', () => {
   });
 
   describe('Context7 Documentation Queries', () => {
-    test('should have MANDATORY documentation access statement', () => {
-      expect(commandContent).toContain('**MANDATORY:**');
-    });
-
-    test('should have Documentation Queries subsection', () => {
-      expect(commandContent).toContain('**Documentation Queries:**');
-    });
-
-    test('should include Kubernetes rollback documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/kubernetes\/deployments/);
-    });
-
-    test('should include Docker rollback documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/docker\/deployment/);
-    });
-
-    test('should include GitHub Actions deployment documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/github-actions\/deployment/);
-    });
-
-    test('should include AWS CodeDeploy documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/aws\/code-deploy/);
-    });
-
-    test('should include blue-green deployment documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/devops\/blue-green-deployment/);
-    });
-
-    test('should have "Why This is Required" explanation', () => {
-      expect(commandContent).toContain('**Why This is Required:**');
+    test('points to the shared Context7 rule', () => {
+      expect(commandContent).toContain('.claude/rules/context7-required.md');
     });
   });
 

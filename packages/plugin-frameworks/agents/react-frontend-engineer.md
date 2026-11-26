@@ -33,16 +33,7 @@ Before starting any implementation, you have access to live documentation throug
 3. **Performance Updates**: Verify latest performance optimization techniques
 4. **Accessibility Standards**: Access current a11y patterns and WCAG guidelines
 
-**Documentation Queries (Technical):**
-- `mcp://context7/react/latest` - React documentation and patterns
-- `mcp://context7/nextjs/app-router` - Next.js App Router patterns
-- `mcp://context7/typescript/react` - TypeScript + React best practices
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react, nextjs, typescript.
 
 @include includes/task-creation-excellence.md
 

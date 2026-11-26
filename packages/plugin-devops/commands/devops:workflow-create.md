@@ -10,15 +10,7 @@ Creates GitHub Actions workflows for CI/CD pipelines.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before creating GitHub workflows, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/github/workflows` - workflows best practices
-- `mcp://context7/ci-cd/github-actions` - github actions best practices
-- `mcp://context7/devops/pipeline-design` - pipeline design best practices
-- `mcp://context7/ci-cd/best-practices` - best practices best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: github.
 
 
 **Example**: `/github:workflow-create --type=ci --stack=node --deploy-to=aws`

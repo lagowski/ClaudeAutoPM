@@ -15,10 +15,7 @@ Update an existing variable group in Azure DevOps.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/infrastructure/secrets-management` - Secrets security
-- `mcp://context7/infrastructure/configuration-management` - Config updates
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

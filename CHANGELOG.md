@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Commands and agents no longer carry lists of `mcp://context7/...` URIs, which are not real Context7 resources and only cost tokens (#862). Each "Required Documentation Access" block is now one line pointing to `.claude/rules/context7-required.md` and naming the real libraries to query; the rule explains the two Context7 tools (`resolve-library-id`, then `query-docs`), and the Context7 hooks check for that pointer.
+
 ### Fixed
 - `autopm update` no longer deletes and recopies the framework directories, which silently undid local edits and trims to rules, agents and commands (#790). Install and update now record each shipped file's sha256 in `.claude/.autopm-manifest`; update keeps a file you edited (the shipped version lands next to it as `<file>.autopm-new`), does not reinstall a shipped file you deleted, and leaves files the framework never shipped alone.
 - Agent rules no longer tell agents to clean up with a by-name process kill (`jest|mocha|pytest` pattern), which killed other agents' and CI processes on shared hosts (exit 143); they now say to stop only processes you started, by PID (PR #809).

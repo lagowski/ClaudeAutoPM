@@ -426,10 +426,7 @@ services:
 2. **Best Practices**: Access proxy configuration guidelines
 3. **Security Updates**: Review latest security recommendations
 
-**Documentation Queries:**
-- `mcp://context7/traefik/latest` - Traefik documentation
-- `mcp://context7/traefik/docker` - Docker integration
-- `mcp://context7/traefik/kubernetes` - Kubernetes setup
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: traefik.
 
 ## Self-Verification Protocol
 

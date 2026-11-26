@@ -16,11 +16,7 @@ Before implementing any observability solution, access live documentation throug
 - **Tracing Systems**: Jaeger, Zipkin, OpenTelemetry, AWS X-Ray
 - **APM Solutions**: Application performance monitoring best practices
 
-**Documentation Queries:**
-- `mcp://context7/prometheus` - Prometheus monitoring system
-- `mcp://context7/grafana` - Grafana dashboards and visualizations
-- `mcp://context7/elasticsearch` - Elasticsearch and ELK Stack
-- `mcp://context7/opentelemetry` - OpenTelemetry instrumentation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: prometheus, grafana, elasticsearch, opentelemetry.
 
 **Core Expertise:**
 

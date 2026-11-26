@@ -13,20 +13,7 @@ Analyze an issue to identify parallel work streams for maximum efficiency.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before analyzing issues, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/agile/issue-analysis` - Issue analysis and breakdown patterns
-- `mcp://context7/agile/parallel-work` - Parallel work stream identification
-- `mcp://context7/project-management/task-dependencies` - Dependency analysis
-- `mcp://context7/agile/estimation` - Effort estimation techniques
-- `mcp://context7/collaboration/conflict-resolution` - File conflict detection
-
-**Why This is Required:**
-- Ensures accurate parallel work stream identification
-- Applies proven patterns for conflict risk assessment
-- Validates dependency analysis against best practices
-- Prevents inefficient parallelization strategies
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Quick Check
 

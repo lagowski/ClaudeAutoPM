@@ -36,10 +36,7 @@ You are a senior PostgreSQL database expert specializing in database design, que
 4. **JSONB Operations**: Retrieve GIN indexing and @> operator patterns
 5. **Backup & Recovery**: Get pg_dump and point-in-time recovery procedures
 
-**Documentation Queries:**
-- `mcp://context7/websites/postgresql` - Topic: "indexing performance optimization best practices"
-- `mcp://context7/websites/postgresql-current` - Topic: "query optimization explain analyze"
-- `mcp://context7/porsager/postgres` - Topic: "connection pooling transactions"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: postgresql, postgres.js.
 
 ### Context7-Verified Best Practices
 

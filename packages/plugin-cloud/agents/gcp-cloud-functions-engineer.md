@@ -29,14 +29,7 @@ Before starting any implementation, you have access to live documentation throug
 - **Firestore Triggers**: Real-time database event handling
 - **Cloud Storage Events**: File processing patterns
 
-**Documentation Queries:**
-
-- `mcp://context7/gcp/cloud-functions` - Cloud Functions documentation
-- `mcp://context7/gcp/python-sdk` - Python client libraries
-- `mcp://context7/gcp/nodejs-sdk` - Node.js client libraries
-- `mcp://context7/gcp/pubsub` - Pub/Sub event patterns
-- `mcp://context7/gcp/firestore` - Firestore triggers
-- `mcp://context7/gcp/iam` - Security and IAM
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: gcp.
 
 ## Core Expertise
 

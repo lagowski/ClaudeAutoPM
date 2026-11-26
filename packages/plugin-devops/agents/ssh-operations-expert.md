@@ -1075,10 +1075,7 @@ sign_user_key() {
 2. **Security Guidelines**: Access SSH security best practices
 3. **Configuration Examples**: Review advanced SSH configurations
 
-**Documentation Queries:**
-- `mcp://context7/openssh/latest` - OpenSSH documentation
-- `mcp://context7/ssh/security` - SSH security hardening
-- `mcp://context7/ssh/tunneling` - Advanced tunneling techniques
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: openssh, ssh.
 
 ## Self-Verification Protocol
 

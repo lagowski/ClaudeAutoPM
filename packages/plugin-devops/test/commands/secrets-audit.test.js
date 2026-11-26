@@ -63,44 +63,8 @@ describe('/devops:secrets-audit Command Structure Tests', () => {
   });
 
   describe('Context7 Documentation Queries - MANDATORY', () => {
-    test('should have MANDATORY documentation access statement', () => {
-      expect(commandContent).toContain('**MANDATORY:**');
-    });
-
-    test('should have Documentation Queries subsection', () => {
-      expect(commandContent).toContain('**Documentation Queries:**');
-    });
-
-    test('should include security/secrets-management documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/security\/secrets-management/);
-    });
-
-    test('should include github/secrets documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/github\/secrets/);
-    });
-
-    test('should include kubernetes/secrets documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/kubernetes\/secrets/);
-    });
-
-    test('should include vault/setup documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/vault\/setup/);
-    });
-
-    test('should include aws/secrets-manager documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/aws\/secrets-manager/);
-    });
-
-    test('should include security/secret-scanning documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/security\/secret-scanning/);
-    });
-
-    test('should have "Why This is Required" explanation', () => {
-      expect(commandContent).toContain('**Why This is Required:**');
-    });
-
-    test('should explain Context7 usage prevents hardcoded credentials', () => {
-      expect(commandContent).toMatch(/prevents.*hardcoded|best practices.*secrets/i);
+    test('points to the shared Context7 rule', () => {
+      expect(commandContent).toContain('.claude/rules/context7-required.md');
     });
   });
 

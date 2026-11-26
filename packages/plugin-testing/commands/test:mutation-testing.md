@@ -38,20 +38,7 @@ Perform mutation testing to assess test suite quality beyond code coverage. Muta
 
 ## Required Documentation Access
 
-**MANDATORY:** Before running mutation testing, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/stryker-mutator/mutation-testing` - Stryker mutation testing framework
-- `mcp://context7/jest/mutation-testing` - Jest integration with mutation testing
-- `mcp://context7/testing-best-practices/mutation-coverage` - Mutation coverage patterns and thresholds
-- `mcp://context7/testing/test-quality` - Test quality assessment metrics
-
-**Why This is Required:**
-- Ensures mutation testing follows industry standards (70-95% mutation score)
-- Applies proven mutation strategies verified by Context7
-- Validates test quality metrics against best practices
-- Prevents false confidence from high code coverage with weak tests
-- Uses Stryker mutator (industry standard) correctly
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: stryker-mutator, jest.
 
 ## Usage
 

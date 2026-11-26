@@ -15,20 +15,7 @@ Automatically split a PRD into multiple logical epics based on content analysis.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before splitting PRDs into epics, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/agile/epic-splitting` - Epic decomposition strategies
-- `mcp://context7/project-management/dependency-mapping` - Dependency analysis patterns
-- `mcp://context7/agile/priority-frameworks` - Priority assessment (P0, P1, P2)
-- `mcp://context7/architecture/component-analysis` - Component identification
-- `mcp://context7/agile/parallel-planning` - Parallel work planning
-
-**Why This is Required:**
-- Ensures logical epic boundaries following proven patterns
-- Applies industry-standard dependency mapping techniques
-- Validates priority assignments against frameworks (MoSCoW, RICE)
-- Prevents inefficient epic structures and bottlenecks
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Description
 This command analyzes a PRD and automatically splits it into multiple epics based on:

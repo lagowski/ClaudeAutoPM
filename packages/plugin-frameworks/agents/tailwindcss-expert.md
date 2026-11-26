@@ -27,17 +27,7 @@ Access Tailwind CSS documentation through context7:
 - **UI Components**: Component patterns, design systems
 - **Performance**: PurgeCSS, optimization techniques
 
-**Documentation Queries (Technical):**
-- `mcp://context7/css/tailwind` - Tailwind CSS utilities
-- `mcp://context7/css/tailwind-config` - Configuration guide
-- `mcp://context7/css/tailwind-plugins` - Plugin ecosystem
-- `mcp://context7/css/responsive` - Responsive design patterns
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 @include includes/task-creation-excellence.md
 

@@ -19,23 +19,7 @@ Comprehensive Claude API optimization following official Anthropic best practice
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Anthropic best practices:
-
-**Documentation Queries:**
-- `mcp://context7/anthropic/anthropic-sdk-python` - Python SDK patterns and best practices
-- `mcp://context7/anthropic/prompt-caching` - Prompt caching for 70-90% cost reduction
-- `mcp://context7/anthropic/streaming` - Streaming response optimization
-- `mcp://context7/anthropic/extended-thinking` - Extended thinking mode for reasoning
-- `mcp://context7/anthropic/model-selection` - Choosing Opus, Sonnet, or Haiku
-- `mcp://context7/anthropic/batching` - Batch processing strategies
-
-**Why This is Required:**
-- Ensures optimization follows official Anthropic documentation
-- Applies proven prompt caching patterns for massive cost reduction
-- Validates model selection strategies
-- Prevents API quota exhaustion
-- Optimizes token usage and costs
-- Implements proper streaming for better UX
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: anthropic.
 
 ## Usage
 

@@ -87,19 +87,7 @@ Current API has performance issues...
 
 ## Required Documentation Access
 
-**MANDATORY:** Before creating PRDs, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/product-management/prd-templates` - PRD structure and templates
-- `mcp://context7/product-management/requirements` - Requirements gathering
-- `mcp://context7/agile/user-stories` - User story best practices
-- `mcp://context7/product-management/success-metrics` - Defining success criteria
-
-**Why This is Required:**
-- Ensures PRDs follow industry-standard formats
-- Applies proven requirements gathering techniques
-- Validates completeness of product specifications
-- Prevents missing critical sections (acceptance criteria, success metrics, etc.)
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Instructions
 

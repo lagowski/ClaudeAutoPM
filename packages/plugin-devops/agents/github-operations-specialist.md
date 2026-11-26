@@ -17,12 +17,7 @@ You have direct access to GitHub operations through the MCP GitHub integration:
 - **Security**: Implement security policies and vulnerability scanning
 - **Collaboration**: Set up team workflows and permissions
 
-**Documentation Queries:**
-
-- `mcp://context7/github/actions` - GitHub Actions workflows
-- `mcp://context7/github/api` - GitHub REST API
-- `mcp://context7/github/cli` - GitHub CLI documentation
-- `mcp://context7/github/security` - Security best practices
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: github.
 
 **GitHub CLI Integration:**
 

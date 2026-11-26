@@ -81,20 +81,7 @@ Design, implement, and optimize applications using Anthropic's Claude API with f
 
 ## Documentation Queries
 
-**MANDATORY:** Before implementing Claude integration, query Context7 for latest patterns:
-
-**Documentation Queries:**
-- `mcp://context7/anthropic/anthropic-sdk-python` - Python SDK patterns, Messages API, streaming
-- `mcp://context7/anthropic/anthropic-sdk-typescript` - TypeScript SDK patterns
-- `mcp://context7/anthropic/claude-api` - Claude API reference, models, capabilities
-- `mcp://context7/websites/docs_anthropic` - Official docs for tool use, prompt caching, vision
-
-**Why This is Required:**
-- Claude API evolves rapidly with new features
-- Prompt caching syntax and best practices change
-- Tool use patterns have specific requirements
-- Vision capabilities have format constraints
-- Token counting differs by model version
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: anthropic.
 
 ## Implementation Patterns
 

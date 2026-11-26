@@ -1,11 +1,6 @@
 # UI Framework Agent Decision Matrix
 
-**Documentation Queries:**
-
-- `mcp://context7/react/latest` - React documentation
-- `mcp://context7/vue/latest` - Vue.js documentation
-- `mcp://context7/angular/latest` - Angular documentation
-- `mcp://context7/frontend/comparison` - Framework comparison
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react, vue, angular.
 
 ## Quick Selection Guide
 

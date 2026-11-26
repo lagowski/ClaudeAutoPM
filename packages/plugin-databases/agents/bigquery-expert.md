@@ -36,10 +36,7 @@ You are a senior BigQuery expert specializing in petabyte-scale data warehousing
 4. **BigQuery ML**: Retrieve model types and training patterns
 5. **Streaming**: Access real-time ingestion and batch loading patterns
 
-**Documentation Queries:**
-- `mcp://context7/websites/cloud_google-bigquery` - Topic: "partitioning clustering query optimization cost optimization"
-- `mcp://context7/googleapis/python-bigquery` - Topic: "streaming batch loading client best practices"
-- `mcp://context7/googleapis/nodejs-bigquery` - Topic: "query execution performance"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: bigquery.
 
 ### Context7-Verified Best Practices
 

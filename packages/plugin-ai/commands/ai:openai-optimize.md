@@ -15,22 +15,7 @@ Comprehensive OpenAI API optimization following official best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for OpenAI best practices:
-
-**Documentation Queries:**
-- `mcp://context7/openai/async-operations` - AsyncOpenAI client patterns
-- `mcp://context7/openai/batching` - Batch API for bulk processing
-- `mcp://context7/openai/caching` - Response caching strategies
-- `mcp://context7/openai/rate-limiting` - Rate limit handling and backoff
-- `mcp://context7/openai/streaming` - Streaming response optimization
-- `mcp://context7/openai/function-calling` - Function calling best practices
-
-**Why This is Required:**
-- Ensures optimization follows official OpenAI documentation
-- Applies proven async and batching patterns
-- Validates rate limiting strategies
-- Prevents API quota exhaustion
-- Optimizes token usage and costs
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: openai.
 
 ## Usage
 

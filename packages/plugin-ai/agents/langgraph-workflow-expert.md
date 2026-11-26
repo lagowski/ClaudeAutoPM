@@ -502,10 +502,7 @@ def log_results(state: WorkflowState) -> WorkflowState:
 2. **Pattern Library**: Access workflow pattern examples
 3. **Best Practices**: Review performance optimization guides
 
-**Documentation Queries:**
-- `mcp://context7/langgraph/latest` - LangGraph documentation
-- `mcp://context7/langgraph/patterns` - Workflow patterns
-- `mcp://context7/langgraph/state-management` - State handling
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langgraph.
 
 ## Self-Verification Protocol
 

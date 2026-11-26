@@ -2,21 +2,7 @@
 
 ## Required Documentation Access
 
-**MANDATORY:** Before deploying AI models, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/mlflow/deployment` - MLflow model deployment patterns
-- `mcp://context7/ml flow/tracking` - Experiment tracking and model registry
-- `mcp://context7/openai/production` - OpenAI production deployment
-- `mcp://context7/huggingface/inference` - HuggingFace model serving
-- `mcp://context7/langchain/production` - LangChain production patterns
-
-**Why This is Required:**
-- Ensures deployment follows industry-standard MLOps practices
-- Prevents production issues with proper model versioning
-- Applies Context7-verified monitoring and logging strategies
-- Uses optimized inference configurations
-- Implements proper error handling and fallbacks
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: mlflow, openai, huggingface, langchain.
 
 ## Command Description
 
