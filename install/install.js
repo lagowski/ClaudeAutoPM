@@ -335,6 +335,19 @@ ${this.colors.BOLD}Examples:${this.colors.NC}
   }
 
   /**
+   * Register the framework's enforcement hooks where Claude Code reads them (#859).
+   */
+  installClaudeHooks() {
+    this.printStep('Registering Claude Code hooks...');
+    try {
+      const registered = Installer.registerClaudeHooks(this.targetDir, this.currentConfig || {});
+      this.printSuccess(`Registered ${registered.length} hook(s) in .claude/settings.json`);
+    } catch (error) {
+      this.printWarning(`Could not register hooks: ${error.message}`);
+    }
+  }
+
+  /**
    * Record the sha256 of every framework file as installed in `.claude/.autopm-manifest`
    * ("<sha256>  <path relative to .claude>", sha256sum format). `install/update.sh` reads it to
    * tell a file the user edited from one it may replace (#790). Files the framework does not ship
@@ -1668,6 +1681,9 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
     // Install plugins based on scenario
     await this.installPlugins();
 
+    // Register enforcement hooks in .claude/settings.json (#859)
+    this.installClaudeHooks();
+
     // Install CLAUDE.md
     this.installClaudeMd();
 
@@ -1738,6 +1754,76 @@ Installer.measureAlwaysLoaded = function measureAlwaysLoaded(targetDir) {
   walk(path.join(targetDir, '.claude', 'rules'));
 
   return { tokens: files.reduce((sum, f) => sum + f.tokens, 0), files };
+};
+
+// Hook scripts the framework owns in `.claude/hooks/`. An entry in settings.json whose command runs
+// one of these is ours: re-install replaces it, so re-runs never duplicate it. Retired names are
+// listed so their stale entries get removed. Everything else in settings.json is the user's (#859).
+const FRAMEWORK_HOOK_SCRIPTS = [
+  'enforce-agents.cjs', 'docker-first-enforcement.sh',
+  // retired in #859
+  'pre-action-agent-reminder.js', 'context7-enforcement.js', 'pre-agent-context7.js',
+  'pre-command-context7.js', 'pre-commit-clear-reminder.sh', 'test-hook.sh',
+  'unified-context7-enforcement.sh', 'strict-enforce-agents.sh', 'enforce-agents.sh', 'enforce-agents.js'
+];
+
+/**
+ * Merge the framework's PreToolUse hooks into `<targetDir>/.claude/settings.json`, keeping every
+ * user entry and setting. A hook is registered only if its script exists in `.claude/hooks/`.
+ * Docker scenarios also get `pre-push-docker-tests.sh` as the git pre-push hook unless one exists.
+ * Returns the registered script names. Used by install and by `install/update.sh`.
+ */
+Installer.registerClaudeHooks = function registerClaudeHooks(targetDir, config = {}) {
+  const hooksDir = path.join(targetDir, '.claude', 'hooks');
+  const dockerEnabled = config.tools?.docker?.enabled === true;
+  const wanted = [
+    { script: 'enforce-agents.cjs', matcher: 'Bash|Read', runner: 'node' },
+    dockerEnabled && { script: 'docker-first-enforcement.sh', matcher: 'Bash', runner: 'bash' }
+  ].filter(h => h && fs.existsSync(path.join(hooksDir, h.script)));
+
+  const settingsPath = path.join(targetDir, '.claude', 'settings.json');
+  let settings = {};
+  if (fs.existsSync(settingsPath)) {
+    // Invalid JSON throws: never overwrite a settings file we cannot read
+    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
+  }
+
+  const isOurs = handler => FRAMEWORK_HOOK_SCRIPTS.some(name =>
+    typeof handler?.command === 'string' && handler.command.includes(`.claude/hooks/${name}`));
+  const hooks = settings.hooks && typeof settings.hooks === 'object' ? settings.hooks : {};
+  for (const event of Object.keys(hooks)) {
+    if (!Array.isArray(hooks[event])) continue;
+    hooks[event] = hooks[event]
+      .map(entry => (Array.isArray(entry?.hooks)
+        ? { ...entry, hooks: entry.hooks.filter(h => !isOurs(h)) }
+        : entry))
+      .filter(entry => !Array.isArray(entry?.hooks) || entry.hooks.length > 0);
+    if (hooks[event].length === 0) delete hooks[event];
+  }
+
+  if (wanted.length > 0) {
+    hooks.PreToolUse = (hooks.PreToolUse || []).concat(wanted.map(h => ({
+      matcher: h.matcher,
+      hooks: [{ type: 'command', command: `${h.runner} "$CLAUDE_PROJECT_DIR/.claude/hooks/${h.script}"` }]
+    })));
+  }
+  if (Object.keys(hooks).length > 0) settings.hooks = hooks;
+  else delete settings.hooks;
+
+  fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
+  fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2) + '\n');
+
+  // Git pre-push hook: run the Docker test suite before a push (docker scenarios only)
+  const prePush = path.join(hooksDir, 'pre-push-docker-tests.sh');
+  const gitHooks = path.join(targetDir, '.git', 'hooks');
+  const gitPrePush = path.join(gitHooks, 'pre-push');
+  if (dockerEnabled && fs.existsSync(prePush) && fs.existsSync(gitHooks) && !fs.existsSync(gitPrePush)) {
+    fs.writeFileSync(gitPrePush,
+      '#!/bin/sh\n# Installed by ClaudeAutoPM (#859)\nexec bash "$(git rev-parse --show-toplevel)/.claude/hooks/pre-push-docker-tests.sh" "$@"\n');
+    fs.chmodSync(gitPrePush, 0o755);
+  }
+
+  return wanted.map(h => h.script);
 };
 
 // Main execution

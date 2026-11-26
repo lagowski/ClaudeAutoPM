@@ -59,14 +59,14 @@ describe('install registers framework hooks in .claude/settings.json (#859)', ()
 
     const scripts = scriptsOf(project, pre);
     expect(scripts.map(s => path.basename(s)).sort())
-      .toEqual(['docker-first-enforcement.sh', 'enforce-agents.js']);
+      .toEqual(['docker-first-enforcement.sh', 'enforce-agents.cjs']);
     for (const s of scripts) expect(fs.existsSync(s)).toBe(true);
   }, 60000);
 
   test('a scenario without docker does not register the docker-first hook', () => {
     install(project, 'lite');
     const names = scriptsOf(project, settingsOf(project).hooks.PreToolUse).map(s => path.basename(s));
-    expect(names).toEqual(['enforce-agents.js']);
+    expect(names).toEqual(['enforce-agents.cjs']);
   }, 60000);
 
   test('re-install keeps user hook entries and other settings, without duplicating ours', () => {
@@ -96,7 +96,7 @@ describe('install registers framework hooks in .claude/settings.json (#859)', ()
     for (const gone of [
       'pre-action-agent-reminder.js', 'context7-enforcement.js', 'pre-agent-context7.js',
       'pre-command-context7.js', 'context7-reminder.md', 'pre-commit-clear-reminder.sh',
-      'test-hook.sh', 'unified-context7-enforcement.sh', 'strict-enforce-agents.sh', 'enforce-agents.sh'
+      'test-hook.sh', 'unified-context7-enforcement.sh', 'strict-enforce-agents.sh', 'enforce-agents.sh', 'enforce-agents.js'
     ]) {
       expect(hooks).not.toContain(gone);
     }
@@ -106,12 +106,12 @@ describe('install registers framework hooks in .claude/settings.json (#859)', ()
 });
 
 describe('registered hooks speak the Claude Code hook protocol (#859)', () => {
-  const run = (script, input, cwd) => spawnSync(script.endsWith('.js') ? 'node' : 'bash', [script], {
+  const run = (script, input, cwd) => spawnSync(/\.c?js$/.test(script) ? 'node' : 'bash', [script], {
     cwd, input: JSON.stringify(input), encoding: 'utf8'
   });
 
-  test('enforce-agents.js reads the tool call from stdin and blocks with exit 2', () => {
-    const script = path.join(ROOT, 'packages', 'plugin-core', 'hooks', 'enforce-agents.js');
+  test('enforce-agents.cjs reads the tool call from stdin and blocks with exit 2', () => {
+    const script = path.join(ROOT, 'packages', 'plugin-core', 'hooks', 'enforce-agents.cjs');
     const blocked = run(script, { tool_name: 'Bash', tool_input: { command: 'npm test' } }, ROOT);
     expect(blocked.status).toBe(2);
     expect(blocked.stderr).toMatch(/BLOCKED/);
