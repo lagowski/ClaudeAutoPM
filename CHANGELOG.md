@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- Dead code nobody could run (#855): `bin/commands/epic.js` (shadowed by `lib/cli/commands/epic.js`), `lib/cli/commands/config.js` (never registered; required ESM-only `inquirer` and offered retired models), `lib/ai-providers/base-provider.js` and `lib/ai-providers/TemplateProvider.js`, with their tests.
+
 ### Fixed
+- `autopm epic <action> <name>` now rejects names outside `[a-zA-Z0-9._-]` (and `.`/`..`) before any handler runs; `autopm epic new ../../x` used to create the epic outside `.claude/epics/` (#855). The validator only existed in the unregistered `bin/commands/epic.js`.
 - `autopm update` no longer deletes and recopies the framework directories, which silently undid local edits and trims to rules, agents and commands (#790). Install and update now record each shipped file's sha256 in `.claude/.autopm-manifest`; update keeps a file you edited (the shipped version lands next to it as `<file>.autopm-new`), does not reinstall a shipped file you deleted, and leaves files the framework never shipped alone.
 - Agent rules no longer tell agents to clean up with a by-name process kill (`jest|mocha|pytest` pattern), which killed other agents' and CI processes on shared hosts (exit 143); they now say to stop only processes you started, by PID (PR #809).
 - Plugin peer ranges on `@claudeautopm/plugin-core` corrected from `^3.0.0` to `^4.0.0` in the twelve plugins that declare one (PR #758). The 4.0.0 release bumped every package's `version` and `engines` but not the peer ranges, so `npm ci` failed with `ERESOLVE` — npm tried to satisfy the peer with the stale `plugin-core@3.13.1` tarball instead of the workspace link. Hidden since 2026-06-22 because every CI workflow installs with `--legacy-peer-deps`, which skips peer resolution.
