@@ -366,7 +366,7 @@ Use this checklist when creating agents:
 - [ ] Define core expertise areas
 - [ ] Include development patterns with examples
 - [ ] Add Self-Verification Protocol (MANDATORY)
-- [ ] Update CLAUDE.md with `@include` directive
+- [ ] Add the agent to `.claude/agents/agent-registry.xml`
 - [ ] Add entry to `.claude/agents/AGENT-REGISTRY.md`
 - [ ] Create test scenarios (recommended)
 - [ ] Document integration points
