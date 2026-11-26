@@ -1,13 +1,38 @@
-# ClaudeAutoPM
+<p align="center"><a href="https://www.npmjs.com/package/claude-autopm"><picture>
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/banner-light.png">
+  <img alt="ClaudeAutoPM: from PRD to epics to shipped issues, run by specialist Claude Code agents" src="docs/images/banner.png" width="100%">
+</picture></a></p>
 
-[![NPM Version](https://img.shields.io/npm/v/claude-autopm)](https://www.npmjs.com/package/claude-autopm)
-[![NPM Downloads](https://img.shields.io/npm/dm/claude-autopm)](https://www.npmjs.com/package/claude-autopm)
-[![MIT License](https://img.shields.io/badge/License-MIT-28a745)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/lagowski/ClaudeAutoPM?style=social)](https://github.com/lagowski/ClaudeAutoPM)
+<p align="center"><b>From PRD to epics to shipped issues, run by specialist Claude Code agents.</b><br>
+<a href="#quick-install">Install</a> · <a href="#demo">Demo</a> · <a href="#how-it-works">How it works</a> · <a href="docs-site/docs">Docs</a></p>
+
+<p align="center">
+<a href="https://www.npmjs.com/package/claude-autopm"><img alt="npm" src="https://img.shields.io/badge/npm-claude--autopm-e0643c?style=flat-square&labelColor=1a1a1a"></a>
+<a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-e0643c?style=flat-square&labelColor=1a1a1a"></a>
+<img alt="Node 22+" src="https://img.shields.io/badge/node-%3E%3D22-e0643c?style=flat-square&labelColor=1a1a1a">
+<img alt="14 plugins" src="https://img.shields.io/badge/plugins-14-e0643c?style=flat-square&labelColor=1a1a1a">
+<a href="https://github.com/lagowski/ClaudeAutoPM"><img alt="GitHub stars" src="https://img.shields.io/github/stars/lagowski/ClaudeAutoPM?style=flat-square&labelColor=1a1a1a&color=e0643c"></a>
+</p>
+
+# ClaudeAutoPM
 
 **AI-Powered Project Management Framework for Claude Code**
 
 ClaudeAutoPM transforms your development workflow with intelligent automation, specialized AI agents via a plugin system, and complete GitHub/Azure DevOps integration. Install only what you need — pay only for the tokens you use.
+
+## Demo
+
+<p align="center"><img alt="autopm install --scenario=lite, then autopm validate" src="docs/images/demo.gif" width="900"></p>
+
+<sub>A real run of autopm v4.0.0 in an empty git repository, output shortened.</sub>
+
+## How it works
+
+<p align="center"><img alt="How ClaudeAutoPM works: install, PRD, epic decompose, provider sync, agents, pull request" src="docs/images/how-it-works.png" width="100%"></p>
+
+`autopm install` copies the framework and the plugins your scenario picks into `.claude/`. Slash commands turn a PRD
+into epics and tasks and sync them to GitHub or Azure DevOps; agents then work each task under the XML rules (tests
+first, coverage gates) and close it with a pull request.
 
 ---
 

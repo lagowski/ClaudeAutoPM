@@ -1,0 +1,71 @@
+<!doctype html>
+<!-- ClaudeAutoPM: how it works (v3). Same invented language as the banner: the CLI's double-line box as the title
+     bar (bin/autopm.js Quick Reference), single-line boxes as nodes, box-drawing arrows as edges, the chalk palette.
+     Opaque terminal frame: reads on GitHub dark and light. 1600x900 @2x. -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+:root{--bg:#0F1317;--pane:#151A20;--line:#3A4551;--fg:#D9DEE5;--bold:#FFFFFF;--gray:#8A94A0;--cyan:#5CCFE0;--green:#7BD88F;--yellow:#E8C660;--red:#F27F74}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1600px;height:900px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Fira Code",monospace;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+b{color:var(--bold);font-weight:600}.g{color:var(--gray)}.c{color:var(--cyan)}.ok{color:var(--green)}.y{color:var(--yellow)}.r{color:var(--red)}
+.title{position:absolute;left:48px;right:48px;top:36px;height:84px;border:7px double var(--cyan);display:flex;align-items:center;justify-content:center;gap:26px}
+.title h1{font-size:30px;font-weight:700;color:var(--bold);letter-spacing:-.02em}.title span{color:var(--gray);font-size:17px}
+.sec{position:absolute;left:48px;right:48px;color:var(--gray);font-size:15px;display:flex;align-items:center;gap:14px;white-space:nowrap}
+.sec::after{content:"";flex:1;border-top:1px solid var(--line)}.sec b{color:var(--cyan)}
+.n{position:absolute;border:1.5px solid var(--line);background:var(--pane);padding:12px 16px;white-space:pre;font-size:15px;line-height:1.6}
+.n h2{font-size:16.5px;font-weight:600;color:var(--bold);margin-bottom:4px}
+.n h2::before{content:"> ";color:var(--cyan)}.n h2.sh::before{content:"$ ";color:var(--green)}.n h2.no::before{content:""}
+.ar{position:absolute;color:var(--gray);font-size:17px;transform:translate(-50%,-50%);white-space:nowrap}
+</style></head><body>
+<div class="title"><h1>ClaudeAutoPM</h1><span>how it works: install once, then drive every feature with /pm: commands</span></div>
+
+<div class="sec" style="top:144px"><b>1</b> install <span>pick a scenario, get only the agents you need</span></div>
+<div class="n" style="left:48px;top:182px;width:330px;height:216px"><h2 class="sh">autopm install</h2><span class="g">scenario     agents</span>
+lite         7 core
+<b>github       12</b>  <span class="c">◀</span>
+docker       26
+full         45+
+performance  55+</div>
+<div class="ar" style="left:413px;top:290px">──▶</div>
+<div class="n" style="left:448px;top:182px;width:500px;height:216px"><h2 class="no">14 plugins <span class="g" style="font-weight:400">packages/plugin-*</span></h2>core  pm  pm-github  pm-azure  languages
+frameworks  testing  devops  cloud
+databases  data  ml  ai  obsidian
+<span class="g">each: agents, commands, rules, hooks</span>
+<span class="ok">✓</span> only the scenario's plugins are copied</div>
+<div class="ar" style="left:983px;top:290px">──▶</div>
+<div class="n" style="left:1018px;top:182px;width:534px;height:216px"><h2 class="no">your-project/.claude/</h2><span class="g">├─</span> agents/     <span class="g">specialists, one file each</span>
+<span class="g">├─</span> commands/   <span class="g">/pm:* slash commands</span>
+<span class="g">├─</span> rules/      <span class="g">TDD, git strategy, Context7</span>
+<span class="g">├─</span> hooks/      <span class="g">checks around tool calls</span>
+<span class="g">└─</span> prds/  epics/   <span class="g">the work itself, as files</span></div>
+
+<div class="sec" style="top:428px"><b>2</b> plan <span>inside Claude Code</span></div>
+<div class="n" style="left:48px;top:466px;width:330px;height:150px"><h2>/pm:prd-new</h2>asks the product questions
+<span class="ok">✓</span> <span class="g">prds/</span>&lt;name&gt;.md</div>
+<div class="ar" style="left:413px;top:541px">──▶</div>
+<div class="n" style="left:448px;top:466px;width:330px;height:150px"><h2>/pm:prd-parse</h2>PRD to a technical epic
+<span class="ok">✓</span> <span class="g">epics/</span>&lt;name&gt;<span class="g">/</span>epic.md</div>
+<div class="ar" style="left:813px;top:541px">──▶</div>
+<div class="n" style="left:848px;top:466px;width:330px;height:150px"><h2>/pm:epic-decompose</h2>tasks with deps, parallel flags
+<span class="ok">✓</span> 001.md  002.md  003.md <span class="g">…</span></div>
+<div class="ar" style="left:1213px;top:541px">──▶</div>
+<div class="n" style="left:1248px;top:466px;width:304px;height:150px"><h2>/pm:epic-sync</h2>GitHub issues <span class="g">or</span>
+Azure DevOps work items
+<span class="ok">✓</span> epic <span class="c">#</span> + one per task</div>
+
+<div class="sec" style="top:646px"><b>3</b> ship <span>one task at a time, or several in parallel</span></div>
+<div class="n" style="left:48px;top:684px;width:330px;height:170px"><h2>/pm:issue-start</h2>picks the specialist agent
+for the task and starts
+the work on its issue</div>
+<div class="ar" style="left:413px;top:769px">──▶</div>
+<div class="n" style="left:448px;top:684px;width:500px;height:170px"><h2 class="no">agent works under the rules</h2><span class="r">✗</span> failing test first   <span class="g">tdd.enforcement</span>
+<span class="ok">✓</span> make it pass         <span class="g">test-execution</span>
+<span class="ok">✓</span> current docs         <span class="g">context7-enforcement</span>
+<span class="ok">✓</span> small commits        <span class="g">git-strategy</span></div>
+<div class="ar" style="left:983px;top:769px">──▶</div>
+<div class="n" style="left:1018px;top:684px;width:534px;height:170px"><h2 class="no">pull request</h2>closes the issue it came from
+<span class="c">/pm:issue-close</span>   <span class="g">updates the task file</span>
+<span class="c">/pm:epic-status</span>   <span class="ok">██████</span><span class="g">░░░░  3 of 5</span>
+<span class="c">/pm:next</span>          <span class="g">what is unblocked now</span></div>
+</body></html>
