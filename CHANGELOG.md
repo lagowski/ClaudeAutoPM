@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- About 5k lines of code nothing live loaded (#856): `lib/providers/{AzureDevOpsResourcesProvider,AzureDevOpsCliWrapper,AzureDevOpsRestClient}.js` (the live path is `AzureDevOpsProvider.js`), `lib/guide/` with the deprecated `autopm guide` command, `lib/{batch-processor,batch-processor-integration,conflict-history,conflict-resolver,query-parser,visual-diff}.js`, `lib/validators/email-validator.js`, `lib/services/interfaces.js`, `lib/README-FILTER-SEARCH.md`, the examples that only demoed them, and their tests. Also removed: the `pm:sync-batch` script and the `user/guide.js` command module, whose only job was to require those modules through paths that do not exist in an installed project.
+
 ### Fixed
 - `autopm update` no longer deletes and recopies the framework directories, which silently undid local edits and trims to rules, agents and commands (#790). Install and update now record each shipped file's sha256 in `.claude/.autopm-manifest`; update keeps a file you edited (the shipped version lands next to it as `<file>.autopm-new`), does not reinstall a shipped file you deleted, and leaves files the framework never shipped alone.
 - Agent rules no longer tell agents to clean up with a by-name process kill (`jest|mocha|pytest` pattern), which killed other agents' and CI processes on shared hosts (exit 143); they now say to stop only processes you started, by PID (PR #809).

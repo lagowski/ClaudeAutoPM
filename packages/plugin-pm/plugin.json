@@ -547,19 +547,6 @@
       "wrapper": "scripts/pm/status.sh"
     },
     {
-      "name": "sync-batch",
-      "file": "scripts/pm/sync-batch.js",
-      "description": "Batch synchronization with GitHub",
-      "type": "workflow",
-      "executable": true,
-      "category": "synchronization",
-      "tags": [
-        "sync",
-        "batch",
-        "github"
-      ]
-    },
-    {
       "name": "sync",
       "file": "scripts/pm/sync.js",
       "description": "Synchronize PM artifacts with GitHub",
