@@ -1,7 +1,6 @@
 ---
 name: huggingface-expert
 description: Use this agent for HuggingFace Transformers, Datasets, and Model Hub integration. Expert in model loading, inference optimization, fine-tuning, quantization (GPTQ, AWQ, bitsandbytes), and production deployment. Perfect for building AI applications with HuggingFace ecosystem including LangChain integration and custom pipelines.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 

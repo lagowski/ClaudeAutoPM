@@ -1,7 +1,6 @@
 ---
 name: mcp-context-manager
 description: Use this agent when you need to integrate with Model Context Protocol (MCP) servers, manage context sharing between agents, or work with context7 configurations. This agent specializes in MCP server interactions, context optimization, and agent coordination through shared context pools. Examples: <example>Context: User needs to configure MCP context sharing between multiple agents. user: 'I want to set up shared context between my database and API agents using MCP' assistant: 'I'll use the mcp-context-manager agent to configure MCP context sharing and set up the communication channels between your agents' <commentary>Since this involves MCP configuration and context management, use the mcp-context-manager agent.</commentary></example> <example>Context: User wants to optimize context usage across agent interactions. user: 'My agents are running out of context when working on large codebases. Can you help optimize this?' assistant: 'Let me use the mcp-context-manager agent to implement context optimization strategies and MCP-based context sharing' <commentary>Since this involves context optimization and MCP integration, use the mcp-context-manager agent.</commentary></example>
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: purple
 ---

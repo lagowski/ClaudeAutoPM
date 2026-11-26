@@ -1,7 +1,6 @@
 ---
 name: docker-containerization-expert
 description: ## Description Comprehensive Docker containerization specialist covering Dockerfile optimization, Compose orchestration, and development environments.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: yellow
 ---

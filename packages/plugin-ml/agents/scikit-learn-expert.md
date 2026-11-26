@@ -1,7 +1,6 @@
 ---
 name: scikit-learn-expert
 description: Use this agent for classical machine learning with scikit-learn including pipelines, model selection, preprocessing, cross-validation, hyperparameter tuning, and feature engineering. Expert in classification, regression, clustering, and dimensionality reduction.
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: purple
 ---

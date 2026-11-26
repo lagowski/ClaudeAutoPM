@@ -1,7 +1,6 @@
 ---
 name: azure-openai-expert
 description: Use this agent for Azure OpenAI Service integration including enterprise deployments, managed endpoints, compliance features, and hybrid cloud architectures. Expert in deployment management, Azure AD authentication, private endpoints, content filtering, cost allocation, and multi-tenant patterns. Perfect for building enterprise AI-powered applications with Azure's managed OpenAI service following Microsoft's best practices.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 

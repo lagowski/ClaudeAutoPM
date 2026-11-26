@@ -1,7 +1,6 @@
 ---
 name: langgraph-workflow-expert
 description: Use this agent for LangGraph workflow orchestration including state machines, conditional routing, and multi-agent collaboration. Expert in graph-based AI workflows, state management, tool integration, and complex decision trees. Perfect for building sophisticated AI applications with branching logic and persistent state.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 

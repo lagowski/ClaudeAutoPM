@@ -1,7 +1,6 @@
 ---
 name: openai-python-expert
 description: Use this agent for OpenAI Python SDK integration including GPT models, embeddings, fine-tuning, and assistants API. Expert in chat completions, function calling, vision, audio processing, and production deployment. Perfect for building AI-powered applications with OpenAI's latest capabilities and best practices.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 

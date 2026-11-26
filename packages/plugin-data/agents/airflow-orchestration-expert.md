@@ -1,7 +1,6 @@
 ---
 name: airflow-orchestration-expert
 description: Use this agent for Apache Airflow workflow orchestration including DAG development, task dependencies, and scheduling. Expert in operators, sensors, hooks, and executors. Specializes in data pipelines, ETL/ELT processes, and workflow monitoring.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: cyan
 ---

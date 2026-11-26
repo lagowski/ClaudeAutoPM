@@ -1,7 +1,6 @@
 ---
 name: javascript-frontend-engineer
 description: Use this agent for modern JavaScript/TypeScript frontend development. Specializes in vanilla JS, TypeScript, modern ECMAScript features, browser APIs, and frontend build tools. Perfect for creating responsive web applications, handling DOM manipulation, async operations, and optimizing frontend performance.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: yellow
 ---

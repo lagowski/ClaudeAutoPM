@@ -1,7 +1,6 @@
 ---
 name: traefik-proxy-expert
 description: Use this agent for Traefik reverse proxy configuration including load balancing, SSL termination, service discovery, and routing. Expert in Docker integration, Let's Encrypt automation, middleware configuration, and microservices routing. Perfect for containerized environments requiring dynamic service discovery and SSL management.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
