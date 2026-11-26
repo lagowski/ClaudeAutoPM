@@ -35,7 +35,8 @@ describe('docs/plugin-format-migration.md (#860)', () => {
     const rest = doc.slice(start + 1);
     const end = rest.search(/^## /m);
     const section = end === -1 ? rest : rest.slice(0, end);
-    const items = section.split('\n').filter((l) => /^\d+\. /.test(l));
+    // An item runs from its "N. " line to the next item, blank line or end.
+    const items = section.split(/\n(?=\d+\. )|\n\s*\n/).filter((b) => /^\d+\. /.test(b));
     expect(items.length).toBeGreaterThanOrEqual(3);
     for (const item of items) expect(item).toMatch(/`size:[SM]`/);
   });
