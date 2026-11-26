@@ -29,7 +29,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Octokit } = require('@octokit/rest');
-const { batchSyncAll, batchSyncPRDs, batchSyncEpics, batchSyncTasks } = require('../../../../lib/batch-processor-integration');
+const { requireEngine } = require('./lib/require-engine');
+const { batchSyncAll, batchSyncPRDs, batchSyncEpics, batchSyncTasks } = requireEngine('batch-processor-integration');
 
 class SyncBatchCommand {
   constructor() {
