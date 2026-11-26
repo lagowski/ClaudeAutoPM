@@ -79,7 +79,7 @@ function main() {
       },
       (argv) => {
         // Delegate to the update script
-        const { execSync } = require('child_process');
+        const { execFileSync } = require('child_process');
         const updatePath = path.join(__dirname, '..', 'install', 'update.sh');
         try {
           const env = {
@@ -88,7 +88,7 @@ function main() {
             AUTOPM_BACKUP: argv.backup ? '1' : '0',
             AUTOPM_PRESERVE_CONFIG: argv.preserveConfig ? '1' : '0'
           };
-          execSync(`bash ${updatePath}`, {
+          execFileSync('bash', [updatePath], {
             stdio: 'inherit',
             env
           });
