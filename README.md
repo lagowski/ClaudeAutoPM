@@ -77,7 +77,8 @@ packages/plugin-*/agents/    ← 50+ specialized agents (per plugin)
 
 ### XML Rules Engine
 
-8 critical rules auto-loaded via `@include` in XML format:
+8 critical rules in XML format, in `.claude/rules/`. The generated CLAUDE.md summarizes them and points to each
+full file, which Claude reads when the work needs it; they are not loaded into context automatically:
 
 | Rule | Enforcement |
 |------|-------------|
@@ -144,22 +145,28 @@ packages/plugin-*/agents/    ← 50+ specialized agents (per plugin)
 
 ## Quick Start
 
-All commands run inside Claude Code (not terminal):
+These commands work in every scenario, including the default and `lite`. They run inside Claude Code, not the
+terminal:
 
 ```bash
-# Initialize context and testing
+# Set up PM structure and project context
+/pm:init
 /context:create
-/test:test-setup
 
-# PM workflow
-/pm:issue-start 42
-/pm:issue-close 42
+# PM workflow: PRD -> epic -> tasks
+/pm:prd-new user-login
+/pm:prd-parse user-login
+/pm:epic-decompose user-login
+/pm:next
+/pm:status
 
-# Working with agents
-@python-backend-engineer Build FastAPI endpoint
+# Working with the core agents
 @test-runner execute all tests
 @code-analyzer review recent changes
 ```
+
+With a provider scenario (`github`, `azure`, ...), `/pm:epic-sync` pushes the tasks to it and `/pm:issue-start 42`
+/ `/pm:issue-close 42` work on synced issues.
 
 ---
 
