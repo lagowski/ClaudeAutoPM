@@ -33,7 +33,7 @@ features:
     details: Transform PRDs into epics, epics into issues, and issues into production code with full traceability.
   - icon: ⚡
     title: Token-Optimized Context
-    details: 8 XML rules auto-loaded via @include. Dynamic agent-registry.xml injects only installed plugin agents.
+    details: Rules are summarized in CLAUDE.md and read in full on demand. Dynamic agent-registry.xml injects only installed plugin agents.
   - icon: 🔄
     title: 7 Install Scenarios
     details: From lite (2 plugins) to performance (12 plugins). Choose your footprint — no Docker required for basic PM.
