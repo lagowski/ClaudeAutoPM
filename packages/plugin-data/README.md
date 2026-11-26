@@ -33,13 +33,8 @@ autopm plugin install data
   - Production deployment
 
 ### AI Workflow Automation
-- **langgraph-workflow-expert** - LangGraph AI workflow orchestration
-  - Graph-based workflow design
-  - State management
-  - Agent coordination patterns
-  - LLM integration
-  - Error handling and retries
-  - Streaming and async workflows
+`langgraph-workflow-expert` is owned by [`@claudeautopm/plugin-ai`](../plugin-ai/README.md)
+(a peer plugin of this one); install it to use the LangGraph examples below.
 
 ## 💡 Usage
 
@@ -297,7 +292,7 @@ plugins:
 
 - [Airflow Orchestration Expert Guide](./agents/airflow-orchestration-expert.md)
 - [Kedro Pipeline Expert Guide](./agents/kedro-pipeline-expert.md)
-- [LangGraph Workflow Expert Guide](./agents/langgraph-workflow-expert.md)
+- [LangGraph Workflow Expert Guide](../plugin-ai/agents/langgraph-workflow-expert.md) (plugin-ai)
 
 ## 🤝 Contributing
 
