@@ -40,7 +40,8 @@ test('pr-validation: commands are argv arrays, no tokenizer, no sh -c', () => {
 // 2. epic name validation rejects shell metacharacters
 // ---------------------------------------------------------------------------
 test('epic: epic name with command substitution is rejected', () => {
-  const epicCmd = require(path.join(ROOT, 'bin/commands/epic.js'));
+  // The registered command (bin/autopm.js) is lib/cli/commands/epic.js (#855)
+  const epicCmd = require(path.join(ROOT, 'lib/cli/commands/epic.js'));
   assert.strictEqual(typeof epicCmd.isValidEpicName, 'function',
     'epic command must export isValidEpicName');
 
@@ -50,6 +51,26 @@ test('epic: epic name with command substitution is rejected', () => {
   assert.strictEqual(epicCmd.isValidEpicName('../escape'), false);
   // Legitimate names still allowed
   assert.strictEqual(epicCmd.isValidEpicName('fullstack-app_v2.1'), true);
+});
+
+test('epic: CLI refuses a path-traversal epic name before any handler runs', async () => {
+  const yargs = require('yargs/yargs');
+  const epicCmd = require(path.join(ROOT, 'lib/cli/commands/epic.js'));
+  const ran = [];
+  const cmd = {
+    ...epicCmd,
+    builder: (y) => epicCmd.builder(y).command('probe <name>', 'probe', () => {}, (a) => ran.push(a.name))
+  };
+  let failure = null;
+  await yargs(['epic', 'probe', '../../escape'])
+    .command(cmd)
+    .exitProcess(false)
+    .fail((msg, err) => { failure = msg || (err && err.message); })
+    .parseAsync()
+    .catch((err) => { failure = failure || err.message; });
+
+  assert.deepStrictEqual(ran, [], 'handler must not run for an invalid epic name');
+  assert.match(String(failure), /invalid epic name/i);
 });
 
 // ---------------------------------------------------------------------------
