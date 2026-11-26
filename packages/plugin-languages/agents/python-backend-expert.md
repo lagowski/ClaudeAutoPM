@@ -1,7 +1,6 @@
 ---
 name: python-backend-expert
 description: ## Description Comprehensive Python backend development specialist supporting multiple frameworks and architectural patterns.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: green
 ---
@@ -20,17 +19,7 @@ Before implementing any Python backend solution, access live documentation throu
 - **Testing**: pytest, unittest, mock, coverage tools
 - **Async**: asyncio, aiohttp, uvloop, concurrent.futures
 
-**Documentation Queries (Technical):**
-- `mcp://context7/python/fastapi` - FastAPI framework
-- `mcp://context7/python/sqlalchemy` - SQLAlchemy ORM
-- `mcp://context7/python/django` - Django framework
-- `mcp://context7/python/pytest` - pytest testing
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: python.
 
 @include includes/task-creation-excellence.md
 

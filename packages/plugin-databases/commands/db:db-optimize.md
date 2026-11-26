@@ -11,21 +11,7 @@ Comprehensive database optimization covering:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for database-specific best practices:
-
-**Documentation Queries:**
-- `mcp://context7/postgresql/performance` - PostgreSQL performance tuning
-- `mcp://context7/postgresql/indexing` - PostgreSQL indexing strategies
-- `mcp://context7/mongodb/aggregation` - MongoDB aggregation optimization
-- `mcp://context7/mongodb/indexing` - MongoDB index best practices
-- `mcp://context7/redis/caching` - Redis caching patterns
-- `mcp://context7/redis/performance` - Redis performance optimization
-
-**Why This is Required:**
-- Ensures optimization follows official database documentation
-- Applies latest performance best practices
-- Prevents anti-patterns and common mistakes
-- Validates optimization strategies
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: postgresql, mongodb, redis.
 
 ## Usage
 

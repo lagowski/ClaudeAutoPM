@@ -27,79 +27,19 @@ If Context7 MCP is unavailable:
 </context7_usage>
 
 <query_format>
-mcp://context7/[library-name]/[topic]
-
-<examples>
-mcp://context7/fastapi/authentication
-mcp://context7/react/hooks
-mcp://context7/postgresql/indexing
-mcp://context7/kubernetes/deployments
-mcp://context7/aws/lambda
-</examples>
+Context7 is two MCP tools, not URLs:
+1. `resolve-library-id` with the library name (fastapi, react, postgresql) → library ID
+2. `query-docs` with that ID and the topic (authentication, hooks, indexing)
 </query_format>
 
-<common_queries>
-<backend>
-# Python
-mcp://context7/fastapi/routing
-mcp://context7/sqlalchemy/relationships
-mcp://context7/pydantic/validation
-
-# Node.js
-mcp://context7/express/middleware
-mcp://context7/nestjs/modules
-mcp://context7/prisma/migrations
-</backend>
-
-<frontend>
-# React
-mcp://context7/react/state-management
-mcp://context7/nextjs/routing
-mcp://context7/tailwindcss/utilities
-
-# Vue
-mcp://context7/vue/composition-api
-mcp://context7/nuxt/server-routes
-</frontend>
-
-<testing>
-mcp://context7/jest/mocking
-mcp://context7/pytest/fixtures
-mcp://context7/playwright/selectors
-mcp://context7/cypress/commands
-</testing>
-
-<cloud>
-# AWS
-mcp://context7/aws/ec2
-mcp://context7/aws/s3
-mcp://context7/cloudformation/resources
-
-# Azure
-mcp://context7/azure/app-service
-mcp://context7/azure/functions
-mcp://context7/bicep/modules
-
-# GCP
-mcp://context7/gcp/cloud-run
-mcp://context7/gcp/cloud-functions
-mcp://context7/terraform/gcp
-</cloud>
-
-<databases>
-mcp://context7/postgresql/performance
-mcp://context7/mongodb/aggregation
-mcp://context7/redis/caching
-mcp://context7/elasticsearch/queries
-</databases>
-
-<devops>
-mcp://context7/docker/multi-stage
-mcp://context7/kubernetes/helm
-mcp://context7/github-actions/workflows
-mcp://context7/terraform/modules
-</devops>
-</common_queries>
+<common_libraries>
+Backend: fastapi, sqlalchemy, pydantic, express, nestjs, prisma
+Frontend: react, nextjs, tailwindcss, vue, nuxt
+Testing: jest, pytest, playwright, cypress
+Cloud: aws, cloudformation, azure, bicep, gcp, terraform
+Databases: postgresql, mongodb, redis, elasticsearch
+DevOps: docker, kubernetes, helm, github-actions
+</common_libraries>
 
 <workflow_integration>
 <step1>Receive task</step1>
@@ -112,11 +52,7 @@ mcp://context7/terraform/modules
 <example>
 Task: "Implement user authentication with JWT"
 
-Queries:
-1. mcp://context7/fastapi/security
-2. mcp://context7/jwt/best-practices
-3. mcp://context7/pydantic/validation
-4. mcp://context7/sqlalchemy/user-models
+Queries: fastapi (security), pydantic (validation), sqlalchemy (user models)
 
 Result: Current, secure implementation using latest patterns
 </example>

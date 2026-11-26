@@ -54,36 +54,8 @@ describe('/devops:incident-response Command Structure Tests', () => {
   });
 
   describe('Context7 Documentation Queries', () => {
-    test('should have MANDATORY documentation access statement', () => {
-      expect(commandContent).toContain('**MANDATORY:**');
-    });
-
-    test('should have Documentation Queries subsection', () => {
-      expect(commandContent).toContain('**Documentation Queries:**');
-    });
-
-    test('should include incident management documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/observability\/incident-management/);
-    });
-
-    test('should include Kubernetes troubleshooting documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/kubernetes\/troubleshooting/);
-    });
-
-    test('should include Prometheus alerting documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/prometheus\/alerting/);
-    });
-
-    test('should include distributed tracing documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/distributed-tracing\/debugging/);
-    });
-
-    test('should include runbook automation documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/devops\/runbooks/);
-    });
-
-    test('should have "Why This is Required" explanation', () => {
-      expect(commandContent).toContain('**Why This is Required:**');
+    test('points to the shared Context7 rule', () => {
+      expect(commandContent).toContain('.claude/rules/context7-required.md');
     });
   });
 

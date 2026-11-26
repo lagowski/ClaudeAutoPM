@@ -1,7 +1,6 @@
 ---
 name: ux-design-expert
 description: UX/UI design specialist for user experience optimization and accessibility
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: "#E91E63"
 ---
@@ -29,17 +28,7 @@ Access UX design and accessibility documentation:
 - **UX Patterns**: Navigation, forms, data visualization
 - **Tools**: Figma, Sketch, design tokens, component libraries
 
-**Documentation Queries (Technical):**
-- `mcp://context7/design/material` - Material Design guidelines
-- `mcp://context7/design/accessibility` - Accessibility standards
-- `mcp://context7/design/patterns` - UX design patterns
-- `mcp://context7/design/systems` - Design system principles
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 @include includes/task-creation-excellence.md
 

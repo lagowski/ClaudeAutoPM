@@ -82,7 +82,7 @@ function generateFrontmatter(filePath, content) {
   return `---
 name: ${agentName}
 description: ${description}
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
+tools: Glob, Grep, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, Bash, Task, Agent
 model: inherit
 color: ${color}
 ---`;

@@ -8,12 +8,10 @@
  * Workflow:
  * 1. Intercept agent invocation (e.g., @aws-cloud-architect)
  * 2. Extract agent file path from .claude/agents/{category}/{agent}.md
- * 3. Parse "Documentation Queries" section
- * 4. Query Context7 MCP for each link
- * 5. Inject results into agent context
- * 6. Allow agent to proceed with Context7 knowledge
+ * 3. Require the pointer to .claude/rules/context7-required.md
+ * 4. Print the libraries to query (resolve-library-id, then query-docs)
  *
- * Zero Tolerance: If Context7 query fails, agent invocation STOPS.
+ * A file without the pointer is blocked.
  */
 
 const fs = require('fs');
@@ -74,58 +72,18 @@ function findAgentFile(agentName) {
 }
 
 /**
- * Extract Documentation Queries from agent file
- * @param {string} filePath - Path to agent .md file
- * @returns {Array<{url: string, description: string}>}
+ * Read the Context7 pointer from a command/agent file. Context7 is two MCP
+ * tools (resolve-library-id, query-docs), so files point to the shared rule
+ * `.claude/rules/context7-required.md` and may name libraries (#862).
+ * @param {string} filePath - Path to the .md file
+ * @returns {{referenced: boolean, libraries: string[]}}
  */
-function extractDocumentationQueries(filePath) {
+function extractContext7Pointer(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
-  const queries = [];
-
-  // Find the Documentation Queries section (agent format)
-  const querySection = content.match(/\*\*Documentation Queries:\*\*\s*\n([\s\S]*?)(?=\n\n|\*\*|##|$)/);
-
-  if (!querySection) {
-    return queries; // No Documentation Queries section found
-  }
-
-  // Extract each mcp://context7/... line
-  const lines = querySection[1].split('\n');
-  for (const line of lines) {
-    const match = line.match(/`(mcp:\/\/context7\/[^`]+)`\s*-\s*(.+)/);
-    if (match) {
-      queries.push({
-        url: match[1],
-        description: match[2].trim()
-      });
-    }
-  }
-
-  return queries;
-}
-
-/**
- * Query Context7 MCP server
- * @param {string} mcpUrl - e.g., "mcp://context7/aws/compute"
- * @returns {Promise<object>} - Context7 response
- */
-async function queryContext7(mcpUrl) {
-  // Parse MCP URL: mcp://context7/category/topic
-  const urlMatch = mcpUrl.match(/mcp:\/\/context7\/(.+)/);
-  if (!urlMatch) {
-    throw new Error(`Invalid Context7 URL format: ${mcpUrl}`);
-  }
-
-  const topicPath = urlMatch[1]; // e.g., "aws/compute"
-
-  // In real implementation, this would call the MCP server
-  // For now, return a placeholder that instructs Claude to query
-  return {
-    url: mcpUrl,
-    topic: topicPath,
-    instruction: `MANDATORY: Query Context7 MCP for topic "${topicPath}" before implementing solution.`,
-    placeholder: true
-  };
+  const referenced = /context7-required\.md/.test(content);
+  const libsLine = content.match(/Libraries: ([^\n]+?)\.?\s*$/m);
+  const libraries = libsLine ? libsLine[1].split(/,\s*/).filter(Boolean) : [];
+  return { referenced, libraries };
 }
 
 /**
@@ -154,57 +112,22 @@ async function main(agentInvocation) {
 
   console.log(`   File: ${path.relative(process.cwd(), agentFile)}`);
 
-  // Extract Documentation Queries
-  const queries = extractDocumentationQueries(agentFile);
+  const { referenced, libraries } = extractContext7Pointer(agentFile);
 
-  if (queries.length === 0) {
-    console.log(`\n❌ CRITICAL: No Documentation Queries found in agent file!`);
-    console.log(`   This violates Context7 enforcement policy.`);
-    console.log(`   ALL agents MUST have Documentation Queries section.`);
-    console.log(`\n   Please add to ${path.basename(agentFile)}:`);
-    console.log(`   **Documentation Queries:**`);
-    console.log(`   - \`mcp://context7/...\` - Description`);
-    console.log(`\n   Blocking agent invocation until fixed.\n`);
+  if (!referenced) {
+    console.log(`\n❌ CRITICAL: No Context7 pointer found in ${path.basename(agentFile)}`);
+    console.log(`   Add: Query Context7 first: see \`.claude/rules/context7-required.md\`. Libraries: <names>.`);
+    console.log(`\n   Blocking until fixed.\n`);
     process.exit(1);
   }
 
-  console.log(`\n📚 Context7 Documentation Queries Required: ${queries.length}\n`);
-
-  // Query Context7 for each link
-  const results = [];
-  for (const query of queries) {
-    console.log(`   ➜ ${query.url}`);
-    console.log(`     ${query.description}`);
-
-    try {
-      const result = await queryContext7(query.url);
-      results.push(result);
-    } catch (error) {
-      console.log(`\n❌ Context7 query FAILED: ${error.message}`);
-      console.log(`   Cannot proceed without Context7 documentation.`);
-      console.log(`   Please ensure Context7 MCP server is running.\n`);
-      process.exit(1);
-    }
+  console.log(`\n📚 Context7 required (.claude/rules/context7-required.md)`);
+  console.log(`⚡ ACTION REQUIRED: before proceeding, for each library run`);
+  console.log(`   resolve-library-id, then query-docs with the topic you need.`);
+  if (libraries.length > 0) {
+    console.log(`   Libraries: ${libraries.join(', ')}`);
   }
-
-  console.log(`\n✅ Context7 Queries Complete\n`);
-  console.log(`📖 REMINDER: @${agentName} MUST use Context7 documentation:`);
-  console.log(`   • Apply patterns from Context7 examples`);
-  console.log(`   • Verify API signatures against Context7 results`);
-  console.log(`   • Follow best practices documented in Context7`);
-  console.log(`   • Flag any conflicts between training data and Context7`);
-  console.log(`\n🚀 Proceeding with agent invocation...\n`);
-
-  // In production, this would inject Context7 results into agent's context
-  // For now, we output instruction for Claude to see
-  if (results.length > 0 && results[0].placeholder) {
-    console.log(`⚡ ACTION REQUIRED FOR @${agentName}:`);
-    console.log(`   Before implementing "${task || 'task'}", you MUST:`);
-    for (const result of results) {
-      console.log(`   • ${result.instruction}`);
-    }
-    console.log();
-  }
+  console.log();
 }
 
 // Execute if run directly
@@ -219,6 +142,5 @@ if (require.main === module) {
 module.exports = {
   parseAgentInvocation,
   findAgentFile,
-  extractDocumentationQueries,
-  queryContext7
+  extractContext7Pointer
 };

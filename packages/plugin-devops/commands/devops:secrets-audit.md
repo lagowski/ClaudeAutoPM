@@ -14,22 +14,7 @@ Performs comprehensive secrets scanning across multiple sources to identify hard
 
 ## Required Documentation Access
 
-**MANDATORY:** Before executing secrets audit, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/security/secrets-management` - Secrets management best practices
-- `mcp://context7/github/secrets` - GitHub secrets and security scanning
-- `mcp://context7/kubernetes/secrets` - Kubernetes secrets management patterns
-- `mcp://context7/vault/setup` - HashiCorp Vault setup and integration
-- `mcp://context7/aws/secrets-manager` - AWS Secrets Manager best practices
-- `mcp://context7/security/secret-scanning` - Secret detection tools and patterns
-
-**Why This is Required:**
-- Ensures audit follows industry security best practices
-- Applies latest secret detection patterns and techniques
-- Validates secrets management approaches
-- Prevents hardcoded credentials and security vulnerabilities
-- Ensures compliance with security standards (GDPR, SOC2, PCI-DSS)
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: github, kubernetes, vault, aws.
 
 ## Usage
 

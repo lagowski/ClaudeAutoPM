@@ -1,7 +1,7 @@
 ---
 name: file-analyzer
 category: core
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Search, Task, Agent
+tools: Glob, Grep, Read, WebFetch, TodoWrite, WebSearch, Task, Agent
 model: haiku
 color: blue
 ---

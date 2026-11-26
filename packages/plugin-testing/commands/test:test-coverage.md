@@ -10,19 +10,7 @@ Generate and analyze test coverage reports with actionable improvements. This co
 
 ## Required Documentation Access
 
-**MANDATORY:** Before analyzing coverage, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/testing/coverage-analysis` - Coverage metrics and thresholds
-- `mcp://context7/testing/coverage-tools` - Istanbul, c8, v8 coverage providers
-- `mcp://context7/testing/code-quality` - Quality metrics and standards
-- `mcp://context7/project-management/metrics` - Tracking and reporting metrics
-
-**Why This is Required:**
-- Ensures coverage analysis follows industry standards
-- Applies proven coverage threshold strategies
-- Validates coverage metrics against best practices
-- Prevents misleading or insufficient coverage metrics
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Usage
 

@@ -8,15 +8,7 @@ Load project context into current AI session for better understanding and contin
 
 ## Required Documentation Access
 
-**MANDATORY:** Before priming context, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/knowledge-management/context-loading` - Context loading patterns
-- `mcp://context7/ai/prompt-engineering` - Effective context management for AI
-
-**Why This is Required:**
-- Ensures optimal context loading for AI comprehension
-- Provides strategies for maintaining session continuity
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Instructions
 

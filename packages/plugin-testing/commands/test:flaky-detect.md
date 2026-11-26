@@ -50,23 +50,7 @@ Detects and analyzes flaky tests across all testing frameworks:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before flaky test detection, query Context7 for testing best practices:
-
-**Documentation Queries:**
-- `mcp://context7/jest/retry-mechanisms` - Jest retry patterns (jest.retryTimes)
-- `mcp://context7/playwright/flaky-tests` - Playwright flaky detection (testInfo.retry)
-- `mcp://context7/testing-best-practices/flaky-detection` - Flaky test patterns and root causes
-- `mcp://context7/testing/root-cause-analysis` - Root cause analysis techniques
-- `mcp://context7/testing/quarantine` - Test quarantine strategies
-- `mcp://context7/ci-cd/test-reliability` - CI/CD flaky test handling
-
-**Why This is Required:**
-- Applies industry-proven flaky test detection methodologies
-- Uses Context7-verified retry and detection patterns
-- Ensures root cause analysis follows best practices
-- Prevents false positives in flaky test identification
-- Applies proper statistical analysis for flakiness scoring
-- Follows proven quarantine and remediation strategies
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: jest, playwright.
 
 ## Usage
 

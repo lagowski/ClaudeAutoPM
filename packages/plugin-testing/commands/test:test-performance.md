@@ -14,22 +14,7 @@ Unified performance optimization for entire test ecosystem:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for testing best practices:
-
-**Documentation Queries:**
-- `mcp://context7/nodejs-testing/performance` - Node.js testing performance patterns
-- `mcp://context7/jest/optimization` - Jest optimization strategies
-- `mcp://context7/playwright/performance` - Playwright E2E optimization
-- `mcp://context7/vitest/concurrent` - Vitest concurrent testing
-- `mcp://context7/testing/database` - Database testing optimization
-- `mcp://context7/testing/ci-cd` - CI/CD pipeline optimization
-
-**Why This is Required:**
-- Ensures optimization follows industry best practices
-- Applies proven patterns across all test types
-- Validates framework-specific optimizations
-- Prevents flaky tests and race conditions
-- Optimizes resource utilization
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: nodejs, jest, playwright, vitest.
 
 ## Usage
 

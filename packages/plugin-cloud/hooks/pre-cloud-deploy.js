@@ -295,26 +295,24 @@ function checkRequiredTags() {
 function remindContext7Queries(provider) {
   header('Context7 Documentation Queries');
 
-  info('Before deployment, ensure you have queried Context7 for:');
+  info('Before deployment, query Context7 (resolve-library-id, then query-docs) for:');
   console.log('');
 
-  const queries = [
-    'mcp://context7/security/cloud-security - Cloud security best practices',
-  ];
+  const queries = [];
 
   if (provider === 'aws') {
-    queries.push('mcp://context7/aws/security - AWS security guidelines');
-    queries.push('mcp://context7/aws/best-practices - AWS Well-Architected Framework');
+    queries.push('aws: security');
+    queries.push('aws: best-practices');
   } else if (provider === 'azure') {
-    queries.push('mcp://context7/azure/security - Azure security center');
-    queries.push('mcp://context7/azure/best-practices - Azure Cloud Adoption Framework');
+    queries.push('azure: security');
+    queries.push('azure: best-practices');
   } else if (provider === 'gcp') {
-    queries.push('mcp://context7/gcp/security - GCP security command center');
-    queries.push('mcp://context7/gcp/best-practices - Google Cloud Architecture Framework');
+    queries.push('gcp: security');
+    queries.push('gcp: best-practices');
   }
 
   if (isTerraformProject()) {
-    queries.push('mcp://context7/terraform/security - Terraform security patterns');
+    queries.push('terraform: security');
   }
 
   queries.forEach(query => {

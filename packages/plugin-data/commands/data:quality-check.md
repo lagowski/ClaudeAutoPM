@@ -32,21 +32,7 @@ Comprehensive data quality validation using Great Expectations, with automated p
 
 ## Required Documentation Access
 
-**MANDATORY:** Before performing data quality checks, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/great-expectations/expectations` - Expectation suite patterns and built-in expectations
-- `mcp://context7/great-expectations/checkpoints` - Checkpoint configuration and validation workflows
-- `mcp://context7/great-expectations/datasources` - Data source setup (CSV, Parquet, PostgreSQL, BigQuery)
-- `mcp://context7/pandas/data-quality` - Pandas data validation and profiling patterns
-- `mcp://context7/dbt/testing` - dbt test patterns for data quality checks
-
-**Why This is Required:**
-- Ensures validation follows Great Expectations best practices
-- Applies Context7-verified expectation patterns
-- Uses proper checkpoint and data source configuration
-- Implements pandas-based profiling correctly
-- Integrates dbt testing methodologies where applicable
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: great-expectations, pandas, dbt.
 
 ## Command Usage
 

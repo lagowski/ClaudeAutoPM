@@ -35,25 +35,7 @@ Track data lineage across SQL, Spark, dbt, and Airflow with OpenLineage complian
 
 ## Required Documentation Access
 
-**MANDATORY:** Before tracking data lineage, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/openlineage/spec` - OpenLineage specification and event format
-- `mcp://context7/apache/atlas` - Apache Atlas lineage integration patterns
-- `mcp://context7/dbt/lineage` - dbt lineage metadata and DAG structure
-- `mcp://context7/apache/airflow` - Airflow lineage tracking with providers
-- `mcp://context7/graphviz/visualization` - Graph visualization with DOT format
-- `mcp://context7/apache/spark` - Spark lineage extraction patterns
-- `mcp://context7/datahub` - DataHub lineage API and metadata model
-- `mcp://context7/sqlparser` - SQL parsing for lineage extraction
-
-**Why This is Required:**
-- Ensures OpenLineage events follow the correct schema specification
-- Applies Context7-verified patterns for catalog integration (Atlas, DataHub)
-- Validates lineage extraction from dbt manifest.json and run artifacts
-- Confirms proper Airflow lineage backend configuration
-- Prevents anti-patterns in graph construction and visualization
-- Ensures GDPR and compliance reporting follows industry standards
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: openlineage, atlas, dbt, airflow, graphviz, spark, datahub, sqlparser.
 
 ## Command Usage
 
@@ -105,21 +87,7 @@ Track data lineage across SQL, Spark, dbt, and Airflow with OpenLineage complian
 
 ### 1. Query Context7 for Latest Patterns
 
-Before implementing any lineage tracking, query Context7:
-
-```bash
-# Query OpenLineage specification
-mcp://context7/openlineage/spec
-# Topics: event schema, run facets, dataset facets, job facets
-
-# Query Apache Atlas integration
-mcp://context7/apache/atlas
-# Topics: lineage API, entity types, relationship creation
-
-# Query dbt lineage
-mcp://context7/dbt/lineage
-# Topics: manifest.json, run_results.json, DAG structure
-```
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: openlineage, apache-atlas, dbt.
 
 ### 2. Extract Lineage from Sources
 

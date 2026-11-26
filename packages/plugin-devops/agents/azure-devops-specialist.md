@@ -1,7 +1,6 @@
 ---
 name: azure-devops-specialist
 description: Use this agent when you need to integrate with Azure DevOps services including work items, pipelines, boards, repositories, and test management. This agent specializes in Azure DevOps REST API interactions, pipeline configurations, and workflow automation. Examples: <example>Context: User needs to sync GitHub issues with Azure DevOps work items. user: 'I need to sync our GitHub issues with Azure DevOps work items for project tracking' assistant: 'I'll use the azure-devops-specialist agent to implement bidirectional synchronization between GitHub and Azure DevOps' <commentary>Since this involves Azure DevOps integration and API work, use the azure-devops-specialist agent.</commentary></example> <example>Context: User wants to automate Azure DevOps pipeline deployments. user: 'Can you help set up automated deployment pipelines in Azure DevOps?' assistant: 'Let me use the azure-devops-specialist agent to configure your CI/CD pipelines with proper automation and deployment strategies' <commentary>Since this involves Azure DevOps pipeline configuration, use the azure-devops-specialist agent.</commentary></example>
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: blue
 ---
@@ -27,12 +26,7 @@ Before starting any integration work, you have access to live documentation thro
 3. **Feature Availability**: Confirm feature availability across different Azure DevOps tiers
 4. **Best Practices**: Access latest integration patterns and performance recommendations
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/rest-api/latest` - REST API documentation
-- `mcp://context7/azure-devops/pipelines/yaml` - Pipeline YAML reference
-- `mcp://context7/azure-devops/work-items/api` - Work Items API reference
-- `mcp://context7/azure-devops/variable-groups` - Variable groups management
-- `mcp://context7/infrastructure/secrets-management` - Secrets handling
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 **Core Expertise:**
 

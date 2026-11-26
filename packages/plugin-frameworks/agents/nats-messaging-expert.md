@@ -1,7 +1,6 @@
 ---
 name: nats-messaging-expert
 description: Use this agent for NATS messaging system including pub/sub, request/reply, and queue groups. Expert in JetStream, clustering, and security. Specializes in microservices communication, event streaming, and distributed systems.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: blue
 ---
@@ -27,15 +26,7 @@ Use this agent for NATS messaging system including pub/sub, request/reply, and q
 - **Patterns**: Request/reply, queue groups, wildcards
 - **Security**: TLS, authentication, authorization
 
-**Documentation Queries (Technical):**
-- `mcp://context7/nats/latest` - Core NATS documentation
-- `mcp://context7/nats/jetstream` - JetStream streaming platform
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: nats.
 
 @include includes/task-creation-excellence.md
 

@@ -1,7 +1,7 @@
 ---
 name: test-runner
 category: core
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Search, Task, Agent, Bash
+tools: Glob, Grep, Read, WebFetch, TodoWrite, WebSearch, Task, Agent, Bash
 model: sonnet
 color: green
 ---

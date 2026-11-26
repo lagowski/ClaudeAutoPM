@@ -41,15 +41,7 @@ AZURE_DEVOPS_PROJECT=<your-project>
 
 ## Required Documentation Access
 
-**MANDATORY:** Before creating user stories, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/agile/user-stories` - user stories best practices
-- `mcp://context7/agile/invest-criteria` - invest criteria best practices
-- `mcp://context7/azure-devops/user-stories` - user stories best practices
-- `mcp://context7/requirements/writing` - writing best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 
 ## Instructions

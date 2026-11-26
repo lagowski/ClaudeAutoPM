@@ -13,20 +13,7 @@ Comprehensive Node.js performance optimization following official best practices
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Node.js best practices:
-
-**Documentation Queries:**
-- `mcp://context7/nodejs/performance` - Node.js performance optimization
-- `mcp://context7/nodejs/cluster` - Cluster module for multi-core
-- `mcp://context7/nodejs/worker-threads` - Worker threads for parallel processing
-- `mcp://context7/nodejs/performance-hooks` - Performance monitoring
-- `mcp://context7/nodejs/async-hooks` - Async context tracking
-
-**Why This is Required:**
-- Ensures optimization follows official Node.js documentation
-- Applies proven clustering and threading patterns
-- Validates performance monitoring approaches
-- Prevents common Node.js performance pitfalls
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: nodejs.
 
 ## Usage
 

@@ -1,7 +1,6 @@
 ---
 name: langgraph-workflow-expert
 description: Use this agent for LangGraph workflow orchestration including state machines, conditional routing, and multi-agent collaboration. Expert in graph-based AI workflows, state management, tool integration, and complex decision trees. Perfect for building sophisticated AI applications with branching logic and persistent state.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
@@ -513,10 +512,7 @@ def log_results(state: WorkflowState) -> WorkflowState:
 4. Review tool integration and human-in-the-loop patterns
 5. Consult performance optimization and debugging techniques
 
-**Documentation Queries:**
-- `mcp://context7/langchain-ai/langgraph` - Topic: "StateGraph, nodes, edges, conditional routing"
-- `mcp://context7/langchain-ai/langgraph` - Topic: "state management, persistence, checkpointing"
-- `mcp://context7/websites/langchain-ai_github_io_langgraph` - Topic: "multi-agent, tool integration, patterns"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langgraph.
 
 ## Self-Verification Protocol
 

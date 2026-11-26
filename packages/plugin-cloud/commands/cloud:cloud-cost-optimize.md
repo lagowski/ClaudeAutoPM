@@ -14,20 +14,7 @@ Performs comprehensive cost analysis and provides optimization recommendations:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before executing cost optimization, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/aws/cost-optimization` - AWS Cost Optimization strategies
-- `mcp://context7/azure/cost-management` - Azure Cost Management best practices
-- `mcp://context7/gcp/pricing-optimization` - GCP pricing and cost optimization
-- `mcp://context7/terraform/cost-estimation` - Terraform cost estimation patterns
-- `mcp://context7/finops/cost-optimization` - FinOps cost optimization frameworks
-
-**Why This is Required:**
-- Ensures recommendations follow cloud provider pricing models
-- Applies latest cost optimization techniques
-- Validates against FinOps best practices
-- Prevents over-optimization that impacts performance
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, azure, gcp, terraform.
 
 ## Usage
 

@@ -14,9 +14,7 @@ Delete a variable group from Azure DevOps.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/infrastructure/change-management` - Change control
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

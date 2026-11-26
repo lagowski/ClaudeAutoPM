@@ -10,19 +10,7 @@ Setup comprehensive testing framework with Jest/Vitest, Testing Library, and cov
 
 ## Required Documentation Access
 
-**MANDATORY:** Before setting up testing framework, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/testing/vitest` - Vitest configuration and setup patterns
-- `mcp://context7/testing/jest` - Jest configuration for JavaScript testing
-- `mcp://context7/testing/testing-library` - Testing Library setup and patterns
-- `mcp://context7/testing/coverage` - Coverage reporting best practices
-
-**Why This is Required:**
-- Ensures configuration follows latest testing framework patterns
-- Applies proven testing methodologies and setup strategies
-- Validates test runner configuration against current standards
-- Prevents outdated testing patterns and anti-patterns
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Usage
 

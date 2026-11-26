@@ -4,19 +4,7 @@ Generate a production-ready Apache Airflow DAG with Context7-verified best pract
 
 ## Required Documentation Access
 
-**MANDATORY:** Before scaffolding an Airflow DAG, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/apache/airflow` - Topic: "DAG authoring, task dependencies, TaskFlow API, operators"
-- `mcp://context7/apache/airflow` - Topic: "sensors, error handling, retries, scheduling"
-- `mcp://context7/apache/airflow` - Topic: "executors, monitoring, testing best practices"
-
-**Why This is Required:**
-- Ensures DAGs follow latest Airflow patterns (TaskFlow API, bitshift operators)
-- Applies Context7-verified error handling and retry mechanisms
-- Validates sensor usage for external dependencies
-- Confirms proper task dependency management
-- Prevents anti-patterns in DAG structure
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: airflow.
 
 ## Command Usage
 
