@@ -1,6 +1,7 @@
 /**
- * #856: test-only lib modules, the deprecated `autopm guide` command and the
- * orphaned examples that demo them are removed, and nothing requires them.
+ * #856 (part 1): the deprecated `autopm guide` command with lib/guide/, and the
+ * test-only lib/services/interfaces.js and lib/validators/email-validator.js are
+ * removed, and nothing requires them. The other dead modules are a later part.
  */
 const fs = require('fs');
 const path = require('path');
@@ -9,42 +10,19 @@ const { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..', '..');
 
 const REMOVED = [
-  'lib/providers/AzureDevOpsResourcesProvider.js',
-  'lib/providers/AzureDevOpsCliWrapper.js',
-  'lib/providers/AzureDevOpsRestClient.js',
   'lib/guide/interactive-guide.js',
   'lib/guide/manager.js',
-  'lib/batch-processor.js',
-  'lib/batch-processor-integration.js',
-  'lib/conflict-history.js',
-  'lib/conflict-resolver.js',
-  'lib/query-parser.js',
-  'lib/visual-diff.js',
   'lib/validators/email-validator.js',
   'lib/services/interfaces.js',
-  'lib/README-FILTER-SEARCH.md',
-  'examples/batch-sync-example.js',
-  'examples/conflict-resolution-integration.js',
-  'examples/filter-search-cli-integration.js',
-  // Only consumers of the modules above; both resolve a path that does not
-  // exist in an installed project, so they could never run there.
-  'packages/plugin-pm/scripts/pm/sync-batch.js',
-  'autopm/.claude/scripts/pm/sync-batch.js',
+  // Only consumers of lib/guide/; they resolve a path that does not exist in
+  // an installed project, so they could never run there.
   'autopm/.claude/lib/commands/user/guide.js',
   '.claude/lib/commands/user/guide.js',
 ];
 
 const MODULE_NAMES = [
-  'AzureDevOpsResourcesProvider',
-  'AzureDevOpsCliWrapper',
-  'AzureDevOpsRestClient',
   'guide/interactive-guide',
   'guide/manager',
-  'batch-processor',
-  'conflict-history',
-  'conflict-resolver',
-  'query-parser',
-  'visual-diff',
   'email-validator',
   'services/interfaces',
 ];
@@ -59,11 +37,6 @@ describe('#856 dead lib modules removed', () => {
     expect(src).not.toMatch(/\.command\(\s*['"]guide\b/);
   });
 
-  test('plugin-pm no longer registers the sync-batch script', () => {
-    const plugin = require(path.join(ROOT, 'packages/plugin-pm/plugin.json'));
-    const names = (plugin.scripts || []).map((s) => s.name);
-    expect(names).not.toContain('sync-batch');
-  });
 
   test('no require of a removed module in bin/, lib/, packages/, autopm/', () => {
     const pattern = `require\\([^)]*(${MODULE_NAMES.join('|')})`;

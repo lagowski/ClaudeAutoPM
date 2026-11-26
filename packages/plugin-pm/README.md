@@ -54,8 +54,9 @@ This plugin contains the complete PM workflow automation suite organized into:
 #### Release & Publishing (1 script)
 - **release.js** - Automated release workflow
 
-#### GitHub Integration (5 scripts)
+#### GitHub Integration (6 scripts)
 - **sync.js** - Synchronize PM artifacts with GitHub
+- **sync-batch.js** - Batch synchronization
 - **pr-create.js** - Create pull requests
 - **pr-list.js** - List pull requests
 
@@ -208,6 +209,9 @@ pm:search "query"
 ```bash
 # Sync all artifacts with GitHub
 pm:sync
+
+# Batch synchronization
+pm:sync-batch
 
 # Create pull request
 pm:pr-create
