@@ -1056,7 +1056,7 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
       processedContent = processedContent.replace(regex, value);
     }
 
-    // Generate agent @include directives from installed plugins
+    // Generate agent @path imports (Claude Code import syntax) from installed plugins
     const agentIncludes = this.generateAgentIncludes();
     processedContent = processedContent.replace(
       /<!-- AGENTS_START -->\s*<!-- AGENTS_END -->/,
@@ -1109,14 +1109,14 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
       }
     }
 
-    // Generate @include directives organized by category
+    // Generate @path imports organized by category
     const lines = [];
     const categoryOrder = ['core', 'languages', 'frameworks', 'testing', 'devops', 'cloud', 'databases', 'data', 'ai', 'ml'];
 
     for (const category of categoryOrder) {
       if (agentsByCategory[category]) {
         for (const agent of agentsByCategory[category]) {
-          lines.push(`- @include ${agent.path}`);
+          lines.push(`- @${agent.path}`);
         }
       }
     }
@@ -1124,7 +1124,7 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
     for (const category of Object.keys(agentsByCategory)) {
       if (!categoryOrder.includes(category)) {
         for (const agent of agentsByCategory[category]) {
-          lines.push(`- @include ${agent.path}`);
+          lines.push(`- @${agent.path}`);
         }
       }
     }

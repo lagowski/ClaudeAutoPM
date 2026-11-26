@@ -222,3 +222,57 @@ describe('Scenario Plugin Selection', () => {
     expect(config.plugins).toEqual(fullConfig.plugins);
   });
 });
+
+// #790 task 2: Claude Code imports with `@path`; `@include <path>` is plain
+// text to it, so nothing listed that way was ever loaded.
+describe('generated imports use Claude Code @path syntax (#790)', () => {
+  const INCLUDE_LINE = /^\s*(?:-\s+)?@include\b/;
+  const IMPORT = /(?:^|\s)@(\.claude\/[^\s`)]+)/g;
+
+  async function installScenario(scenario, dir) {
+    const inst = new Installer();
+    inst.baseDir = PROJECT_ROOT;
+    inst.targetDir = dir;
+    inst.options.force = true;
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+    try {
+      inst.installFramework();
+      inst.installConfig(scenario);
+      inst.currentConfig = inst.generateConfig(scenario);
+      await inst.installPlugins();
+    } finally {
+      log.mockRestore();
+    }
+    return inst;
+  }
+
+  function importsOf(text) {
+    return [...text.matchAll(IMPORT)].map(m => m[1]);
+  }
+
+  test.each(['lite', 'full'])('%s: no @include line, every @.claude import resolves', async (scenario) => {
+    const inst = await installScenario(scenario, tempDir);
+    const generated = {
+      agentIncludes: inst.generateAgentIncludes(),
+      // install/update.sh ships it next to the installed .claude/ tree.
+      'base.md': fs.readFileSync(path.join(PROJECT_ROOT, 'autopm', '.claude', 'base.md'), 'utf-8')
+    };
+
+    expect(generated.agentIncludes).not.toBe('');
+    for (const [name, text] of Object.entries(generated)) {
+      const bad = text.split('\n').filter(l => INCLUDE_LINE.test(l));
+      expect({ name, bad }).toEqual({ name, bad: [] });
+      const missing = importsOf(text).filter(p => !fs.existsSync(path.join(tempDir, p)));
+      expect({ name, missing }).toEqual({ name, missing: [] });
+    }
+    expect(importsOf(generated.agentIncludes).length).toBe(generated.agentIncludes.split('\n').length);
+    expect(importsOf(generated['base.md']).length).toBeGreaterThan(0);
+  }, 60000);
+
+  test('team and plugin commands emit @path, not @include', () => {
+    for (const f of ['bin/commands/team.js', 'bin/commands/plugin.js']) {
+      const src = fs.readFileSync(path.join(PROJECT_ROOT, f), 'utf-8');
+      expect({ f, hasInclude: /@include\b/.test(src) }).toEqual({ f, hasInclude: false });
+    }
+  });
+});

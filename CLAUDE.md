@@ -65,9 +65,6 @@ projects is a product file, generated from `autopm/.claude/templates/claude-temp
   source -> edit only under `packages/`, then run the sync commands (Workflow, Synced copies).
 - A framework file works here and breaks in an installed project -> it hardcodes `autopm/` -> never hardcode
   `autopm/` in framework files, use `.claude/`.
-- The rule files under Pointers are not in a session's context by themselves -> this file used to list them
-  as `@include <path>`, which is not Claude Code import syntax, so nothing was loaded (#790) -> read the rule
-  file that applies before the work; turning them into real imports waits for the size trim in #791.
 - A fix made only in a target project's installed copy never reaches other projects, and `autopm update`
   keeps that edited file and parks the shipped one beside it as `.autopm-new` (#790) -> change the source
   here, not the installed copy.
@@ -106,7 +103,8 @@ An epic also carries `tracking`, and is never dispatched to a worker.
 
 ## Pointers
 
-- Critical rules (zero tolerance; read the one that applies, see Traps): `.claude/rules/tdd.enforcement.xml`,
+- Critical rules (zero tolerance; `.claude/rules/*.md` load by themselves, these `.xml` ones do not, so read
+  the one that applies before the work): `.claude/rules/tdd.enforcement.xml`,
   `.claude/rules/coverage-thresholds.xml`, `.claude/rules/agent-mandatory.xml`, `.claude/rules/context7.xml`,
   `.claude/rules/github-operations.xml`, `.claude/rules/naming-conventions.xml`,
   `.claude/rules/command-pipelines.xml`, `.claude/rules/issue-structure.xml`

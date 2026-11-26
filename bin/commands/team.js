@@ -136,7 +136,7 @@ function validateAgentMCPDependencies(agents, projectRoot) {
 function generateAgentIncludes(agents) {
   return agents
     .sort()
-    .map(agent => `- @include .claude/agents/${agent}`)
+    .map(agent => `- @.claude/agents/${agent}`)
     .join('\n');
 }
 

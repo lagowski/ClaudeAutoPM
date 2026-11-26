@@ -4,18 +4,20 @@
 
 ## CRITICAL RULES (zero tolerance — read on every task)
 
-@include .claude/rules/tdd.enforcement.xml
-@include .claude/rules/coverage-thresholds.xml
-@include .claude/rules/agent-mandatory.xml
-@include .claude/rules/context7.xml
+@.claude/rules/tdd-reminder.md
+@.claude/rules/context7-required.md
+
+Read the one that applies before the work (not loaded automatically):
+`.claude/rules/tdd.enforcement.xml`, `.claude/rules/coverage-thresholds.xml`,
+`.claude/rules/agent-mandatory.xml`, `.claude/rules/context7.xml`
 
 ## COMMANDS
 
-@include .claude/commands/pm/pm-commands.md
+@.claude/commands/pm/pm-commands.md
 
 ## AGENTS
 
-@include .claude/agents/AGENT-REGISTRY.md
+@.claude/agents/AGENT-REGISTRY.md
 
 ## EXTENDED RULES
 
