@@ -243,8 +243,8 @@ Edit the base template for project-wide changes:
 # Edit base template
 nano autopm/.claude/templates/claude-templates/base.md
 
-# Regenerate CLAUDE.md
-autopm merge
+# Regenerate CLAUDE.md (the old one is kept as CLAUDE.md.backup.<timestamp>)
+autopm install --force
 ```
 
 ### Creating Custom Presets
@@ -270,30 +270,11 @@ Add a new configuration preset:
 
 If you have an existing CLAUDE.md:
 
-### Automatic Merge
+### Regenerate, then merge
 
-```bash
-autopm merge
-
-# Generates merge instructions for AI:
-# 1. Preserves your customizations
-# 2. Adds framework features
-# 3. Resolves conflicts intelligently
-```
-
-### Manual Merge
-
-The merge helper creates sections:
-
-```markdown
-<!-- FRAMEWORK START -->
-Framework-provided instructions
-<!-- FRAMEWORK END -->
-
-<!-- CUSTOM START -->
-Your custom instructions
-<!-- CUSTOM END -->
-```
+There is no merge command in the CLI. `autopm install --force` writes a fresh CLAUDE.md from the templates and
+keeps your previous file as `CLAUDE.md.backup.<timestamp>`; copy your customizations back from it. Inside
+Claude Code, `/re-init` updates CLAUDE.md with the rules from `.claude/CLAUDE.md`.
 
 ## Strategy Templates
 
@@ -398,7 +379,7 @@ Generated CLAUDE.md includes:
 ls autopm/.claude/templates/claude-templates/
 
 # Reinstall if missing
-autopm install --repair
+autopm install --force
 ```
 
 ### Variables Not Replaced
@@ -418,7 +399,7 @@ sed -i 's/{PROJECT_NAME}/my-project/g' CLAUDE.md
 cp CLAUDE.md CLAUDE.md.backup
 
 # Generate fresh
-autopm merge --force
+autopm install --force
 
 # Compare and merge manually
 diff CLAUDE.md.backup CLAUDE.md
