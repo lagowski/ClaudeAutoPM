@@ -1,10 +1,21 @@
 #!/bin/bash
 
 # Docker-First Development Enforcement Hook
-# Blocks local execution when docker_first_development is enabled
+# Blocks local execution when docker-first is enabled (.claude/config.json:
+# tools.docker.first, or features.docker_first_development).
+#
+# Registered by the installer as a Claude Code PreToolUse hook (matcher Bash) in
+# .claude/settings.json. Claude Code passes {tool_name, tool_input} as JSON on stdin;
+# exit 2 blocks the call and shows stderr to Claude. Manual use: <tool> <params-json>.
 
-TOOL_NAME="$1"
-TOOL_PARAMS="$2"
+if [[ $# -gt 0 ]]; then
+    TOOL_NAME="$1"
+    TOOL_PARAMS="$2"
+elif command -v jq &> /dev/null; then
+    HOOK_INPUT=$(cat)
+    TOOL_NAME=$(echo "$HOOK_INPUT" | jq -r '.tool_name // ""' 2>/dev/null)
+    TOOL_PARAMS=$(echo "$HOOK_INPUT" | jq -c '.tool_input // {}' 2>/dev/null)
+fi
 
 # Function to check if Docker-first is enabled
 is_docker_first_enabled() {
@@ -20,7 +31,7 @@ is_docker_first_enabled() {
         return 1
     fi
     
-    local enabled=$(jq -r '.features.docker_first_development // false' "$config_file" 2>/dev/null)
+    local enabled=$(jq -r '(.features.docker_first_development // false) or (.tools.docker.first // false)' "$config_file" 2>/dev/null)
     [[ "$enabled" == "true" ]]
 }
 
@@ -119,6 +130,9 @@ if is_command_allowed "$FIRST_WORD"; then
     exit 0
 fi
 
+# Everything below explains a block: send it to stderr, which Claude Code shows to Claude
+exec 1>&2
+
 # Block development commands that should run in Docker
 case "$FIRST_WORD" in
     npm|yarn|pnpm)
@@ -126,7 +140,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         suggest_docker_alternative "$COMMAND"
         check_docker_files
-        exit 1
+        exit 2
         ;;
     
     pip|pipenv|poetry)
@@ -134,7 +148,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         suggest_docker_alternative "$COMMAND"
         check_docker_files
-        exit 1
+        exit 2
         ;;
     
     python|python3)
@@ -147,7 +161,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         suggest_docker_alternative "$COMMAND"
         check_docker_files
-        exit 1
+        exit 2
         ;;
     
     node|nodejs)
@@ -160,7 +174,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         suggest_docker_alternative "$COMMAND"
         check_docker_files
-        exit 1
+        exit 2
         ;;
     
     pytest|nose|unittest)
@@ -168,7 +182,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         echo "✅ USE: docker compose -f docker compose.yml -f docker compose.test.yml run --rm test"
         check_docker_files
-        exit 1
+        exit 2
         ;;
     
     jest|mocha|vitest)
@@ -176,7 +190,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         echo "✅ USE: docker compose run --rm app npm test"
         check_docker_files
-        exit 1
+        exit 2
         ;;
     
     go)
@@ -190,7 +204,7 @@ case "$FIRST_WORD" in
             echo "🐳 REASON: docker_first_development is enabled"
             suggest_docker_alternative "$COMMAND"
             check_docker_files
-            exit 1
+            exit 2
         fi
         ;;
     
@@ -199,7 +213,7 @@ case "$FIRST_WORD" in
         echo "🐳 REASON: docker_first_development is enabled"
         suggest_docker_alternative "$COMMAND"
         check_docker_files
-        exit 1
+        exit 2
         ;;
 esac
 
