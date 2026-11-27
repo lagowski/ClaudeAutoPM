@@ -496,11 +496,21 @@ def log_results(state: WorkflowState) -> WorkflowState:
 4. **Decision Making**: Complex approval processes
 5. **API Orchestration**: Service composition and routing
 
-## Documentation Retrieval Protocol
+## Documentation Access via MCP Context7
 
-1. **Check Latest Features**: Query context7 for LangGraph updates
-2. **Pattern Library**: Access workflow pattern examples
-3. **Best Practices**: Review performance optimization guides
+**MANDATORY**: Before starting any implementation, query Context7 for latest LangGraph best practices.
+
+**Context7 Libraries:**
+- **/langchain-ai/langgraph** - Official LangGraph Python repository (1,995 snippets, trust 9.2)
+- **/websites/langchain-ai_github_io_langgraph** - LangGraph documentation (6,226 snippets, trust 7.5)
+
+### Documentation Retrieval Protocol
+
+1. Query Context7 for graph structure and state management patterns
+2. Verify conditional routing and multi-agent collaboration approaches
+3. Check persistence, checkpointing, and recovery mechanisms
+4. Review tool integration and human-in-the-loop patterns
+5. Consult performance optimization and debugging techniques
 
 Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langgraph.
 
