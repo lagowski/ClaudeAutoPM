@@ -5,7 +5,7 @@ description: ClaudeAutoPM v4.0.0 project architecture, plugin system, providers,
 
 # Project Architecture
 
-ClaudeAutoPM v4.0.0 follows a plugin-based architecture with 13 npm packages, a provider router for issue tracking, and an XML rules system for token-efficient context loading.
+ClaudeAutoPM v4.0.0 follows a plugin-based architecture with 14 npm packages, a provider router for issue tracking, and an XML rules system for token-efficient context loading.
 
 ## High-Level Overview
 
@@ -32,7 +32,7 @@ ClaudeAutoPM v4.0.0 follows a plugin-based architecture with 13 npm packages, a 
 │  ├── GitHubProvider  (lib/providers/)      ← plugin-pm-github   │
 │  └── AzureProvider   (lib/providers/)      ← plugin-pm-azure   │
 ├─────────────────────────────────────────────────────────────────┤
-│  13 Plugin Packages (packages/plugin-*)                          │
+│  14 Plugin Packages (packages/plugin-*)                          │
 │  ├── plugin-core (7 agents)    │ plugin-pm (commands)           │
 │  ├── plugin-languages (5)      │ plugin-frameworks (4)          │
 │  ├── plugin-devops (7)         │ plugin-cloud (8)               │
@@ -41,7 +41,7 @@ ClaudeAutoPM v4.0.0 follows a plugin-based architecture with 13 npm packages, a 
 │  ├── plugin-data (3)           │ plugin-pm-github               │
 │  └── plugin-pm-azure                                            │
 ├─────────────────────────────────────────────────────────────────┤
-│  Rules System (8 XML auto-loaded + 3 MD reference)              │
+│  Rules System (8 XML + 3 MD, read on demand)                    │
 │  ├── tdd.enforcement.xml       │ coverage-thresholds.xml        │
 │  ├── agent-mandatory.xml       │ context7.xml                   │
 │  ├── github-operations.xml     │ naming-conventions.xml         │
@@ -57,7 +57,7 @@ ClaudeAutoPM v4.0.0 follows a plugin-based architecture with 13 npm packages, a 
 
 ## Plugin System
 
-### 13 Plugin Packages
+### 14 Plugin Packages
 
 All plugins are published under the `@claudeautopm` scope on npm and managed via npm workspaces:
 
@@ -75,7 +75,8 @@ packages/
 ├── plugin-testing/      # 1 frontend testing engineer agent (see plugin.json)
 ├── plugin-ai/           # 8 AI/ML integration agents
 ├── plugin-data/         # 3 data pipeline agents
-└── plugin-ml/           # 10 machine learning agents
+├── plugin-ml/           # 10 machine learning agents
+└── plugin-obsidian/     # Obsidian vault integration
 ```
 
 ### Plugin Manifest (plugin.json)
@@ -168,26 +169,21 @@ No external service or authentication required. This is the default for the `lit
 
 ## XML Rules System
 
-ClaudeAutoPM uses 8 XML rules that are auto-loaded into the system prompt via `@include` directives in CLAUDE.md:
+ClaudeAutoPM ships 8 XML rules in `.claude/rules/`:
 
-```markdown
-# CLAUDE.md
-@include .claude/rules/tdd.enforcement.xml
-@include .claude/rules/coverage-thresholds.xml
-@include .claude/rules/agent-mandatory.xml
-@include .claude/rules/context7.xml
-@include .claude/rules/github-operations.xml
-@include .claude/rules/naming-conventions.xml
-@include .claude/rules/command-pipelines.xml
-@include .claude/rules/issue-structure.xml
-```
+- `tdd.enforcement.xml`, `coverage-thresholds.xml`, `agent-mandatory.xml`, `context7.xml`
+- `github-operations.xml`, `naming-conventions.xml`, `command-pipelines.xml`, `issue-structure.xml`
+
+They are **not** loaded into context automatically. The generated CLAUDE.md carries a short
+summary of the critical rules with a pointer to each full file (`📖 Full: .claude/rules/...`),
+and Claude reads the full rule when the work needs it. Claude Code has no `@include` directive (its import syntax is `@path/to/file`), so nothing below is loaded into context automatically.
 
 XML format was chosen over markdown for rules because:
 - Stronger enforcement by the model (XML tags are treated as structured instructions)
 - More compact representation (fewer tokens)
 - Clear nesting and hierarchy
 
-Three additional MD rules are available as reference but not auto-loaded:
+Three additional MD rules are available as reference:
 - `standard-patterns.md` - Output formats, error messages
 - `git-strategy.md` - Branch-based workflow
 - `frontmatter-operations.md` - YAML frontmatter read/write
@@ -244,7 +240,7 @@ For each plugin in scenario:
 Generate agent-registry.xml with plugin agents injected
     │
     ▼
-Generate CLAUDE.md with @include directives
+Generate CLAUDE.md (rule summaries + pointers)
 ```
 
 ### Command Execution Flow
