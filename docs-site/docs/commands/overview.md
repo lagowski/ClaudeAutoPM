@@ -1,46 +1,45 @@
 # Command Reference Overview
 
-ClaudeAutoPM provides 96+ professional CLI commands organized into logical categories. All commands follow a consistent pattern and provide built-in help documentation.
+ClaudeAutoPM has two command surfaces:
 
-## Command Structure
-
-Commands follow this pattern:
-
-```bash
-autopm [category]:[action] [options]
-```
+- **Terminal CLI** — `autopm <command> [sub-command] [options]`, run in your shell. Full list:
+  [CLI Reference](/commands/cli-reference) or `autopm --help`.
+- **Claude Code slash commands** — `/pm:<action>` (for example `/pm:status`, `/pm:prd-new`), run inside
+  Claude Code after `autopm install`. They are not terminal commands, so never prefix them with `autopm`.
 
 Examples:
-- `autopm guide` - Launch interactive setup
-- `autopm pm:status` - View project status
-- `autopm azure:task-new` - Create new Azure task
+- `autopm install` - Install the framework in the current project
+- `autopm epic status <name>` - Show epic progress (terminal)
+- `/pm:status` - Project overview (inside Claude Code)
 
 ## Getting Help
-
-Every command supports the `--help` flag:
 
 ```bash
 # General help
 autopm --help
 
 # Command-specific help
-autopm guide --help
-autopm pm:status --help
+autopm prd --help
+autopm prd parse --help
 ```
+
+Inside Claude Code, `/pm:help` lists the slash commands.
 
 ## Command Categories
 
+Apart from Core Commands, the tables below list Claude Code slash commands; prefix each name with `/`.
+
 ### Core Commands
 
-Essential commands for getting started:
+Terminal commands for getting started:
 
 | Command | Description |
 |---------|------------|
-| `guide` | Interactive setup wizard |
 | `install` | Install ClaudeAutoPM in project |
-| `help` | Display help information |
-| `merge` | Merge Claude instructions |
-| `setup-env` | Setup environment variables |
+| `update` | Update the installed framework |
+| `config` | Show and set configuration |
+| `validate` | Check configuration and setup |
+| `guide` | Interactive setup guide (deprecated: use `--help`) |
 
 ### Project Management (pm:)
 
@@ -176,160 +175,33 @@ Azure DevOps integration commands:
 | `regression:suite` | Run regression tests |
 | `codeRabbit` | CodeRabbit review |
 
-## Command Patterns
-
-### Creating Resources
-
-Most creation commands follow this pattern:
-
-```bash
-autopm [category]:[resource]-new [name] [description]
-```
-
-Examples:
-```bash
-autopm pm:issue-new "Fix login bug" "Users can't login with email"
-autopm azure:task-new "Update API docs" "Add examples to endpoints"
-```
-
-### Listing Resources
-
-List commands typically support filters:
-
-```bash
-autopm [category]:[resource]-list [--filter=value]
-```
-
-Examples:
-```bash
-autopm pm:issue-list --status=open
-autopm azure:task-list --assigned-to=me
-```
-
-### Working with Resources
-
-Start/stop/edit patterns:
-
-```bash
-autopm [category]:[resource]-start [id]
-autopm [category]:[resource]-edit [id] [updates]
-autopm [category]:[resource]-close [id]
-```
-
 ## Global Options
 
-All commands support these global options:
+Every terminal command accepts these options:
 
 | Option | Description |
 |--------|------------|
-| `--verbose`, `-v` | Verbose output |
-| `--debug` | Debug information |
-| `--dry-run` | Preview without changes |
-| `--format` | Output format (json, table) |
-| `--help`, `-h` | Show help |
-| `--version` | Show version |
+| `--help` | Show help |
+| `--version`, `-v` | Show version |
+| `--verbose` | Verbose logging |
+| `--debug` | Debug output |
+
+Command-specific flags are listed by `autopm <command> --help`.
 
 ## Environment Variables
 
-Commands respect these environment variables:
+Commands read these environment variables:
 
 ```bash
 # Provider tokens
 GITHUB_TOKEN
-AZURE_DEVOPS_TOKEN
+AZURE_DEVOPS_PAT
 
 # Project configuration
+GITHUB_OWNER
 GITHUB_REPO
 AZURE_DEVOPS_ORG
 AZURE_DEVOPS_PROJECT
-
-# Behavior
-AUTOPM_VERBOSE
-AUTOPM_DEBUG
-AUTOPM_CONFIG_PATH
-```
-
-## Output Formats
-
-Commands support multiple output formats:
-
-### Table Format (Default)
-
-```bash
-autopm pm:issue-list
-```
-
-```
-ID    Title              Status    Assignee
----   ----------------   -------   --------
-#12   Fix login bug      Open      @user
-#13   Update docs        Closed    @user
-```
-
-### JSON Format
-
-```bash
-autopm pm:issue-list --format=json
-```
-
-```json
-[
-  {
-    "id": 12,
-    "title": "Fix login bug",
-    "status": "open",
-    "assignee": "user"
-  }
-]
-```
-
-### Quiet Format
-
-```bash
-autopm pm:issue-list --quiet
-```
-
-```
-12
-13
-```
-
-## Command Aliases
-
-Common commands have shorter aliases:
-
-| Alias | Full Command |
-|-------|-------------|
-| `status` | `pm:status` or `azure:status` |
-| `new` | `pm:issue-new` or `azure:task-new` |
-| `list` | `pm:issue-list` or `azure:task-list` |
-| `sync` | `pm:sync` or `azure:sync-all` |
-
-## Batch Operations
-
-Many commands support batch operations:
-
-```bash
-# Close multiple issues
-autopm pm:issue-close 12,13,14
-
-# Add label to multiple issues
-autopm pm:issue-label bug 12,13,14
-
-# Assign multiple tasks
-autopm azure:task-assign @user 45,46,47
-```
-
-## Interactive Mode
-
-Some commands offer interactive mode:
-
-```bash
-# Interactive issue creation
-autopm pm:issue-new --interactive
-
-# Interactive epic planning
-autopm pm:epic-new -i
 ```
 
 ## Next Steps
