@@ -9,7 +9,7 @@ The agent registry is defined in `.claude/agents/agent-registry.xml`. This XML f
 1. Lists all 7 core agents (always present)
 2. Contains `PLUGIN_AGENTS_START` / `PLUGIN_AGENTS_END` markers
 3. During `autopm install`, the installer injects agents from selected plugins between these markers
-4. CLAUDE.md includes this file via `@include .claude/agents/agent-registry.xml`
+4. Claude reads this file when it picks an agent; it is not imported into CLAUDE.md
 
 This means only agents from your installed plugins consume context tokens.
 

@@ -79,7 +79,7 @@ function main() {
       },
       (argv) => {
         // Delegate to the update script
-        const { execSync } = require('child_process');
+        const { execFileSync } = require('child_process');
         const updatePath = path.join(__dirname, '..', 'install', 'update.sh');
         try {
           const env = {
@@ -88,7 +88,7 @@ function main() {
             AUTOPM_BACKUP: argv.backup ? '1' : '0',
             AUTOPM_PRESERVE_CONFIG: argv.preserveConfig ? '1' : '0'
           };
-          execSync(`bash ${updatePath}`, {
+          execFileSync('bash', [updatePath], {
             stdio: 'inherit',
             env
           });
@@ -269,8 +269,8 @@ function main() {
    2. autopm config set provider github # Configure your provider
    3. claude --dangerously-skip-permissions .  # Open Claude Code
 
-🆕 NEW in v2.1.0 - STANDALONE Commands:
-   autopm prd parse <name>              # Parse PRD without AI overhead
+🧰 STANDALONE Commands (run in the terminal):
+   autopm prd parse <name>              # Parse PRD (AI when a provider is set)
    autopm prd extract-epics <name>      # Extract epics from PRD
    autopm prd summarize <name>          # Generate PRD summary
    autopm prd validate <name>           # Validate PRD structure
@@ -362,7 +362,6 @@ function main() {
 📊 Epic Status (Read-Only Utilities):
    autopm epic list                 # List all available epics
    autopm epic status <name>        # Show epic progress and metrics
-   autopm epic breakdown <name>     # Show detailed task breakdown
 
    💡 Note: To CREATE or MODIFY epics, use Claude Code /pm:* commands
 
@@ -393,7 +392,7 @@ function main() {
 
 🔍 Using STANDALONE Commands:
 
-   # Parse PRD without AI (fast, deterministic)
+   # Parse PRD (uses the configured AI provider, else basic parsing)
    autopm prd parse my-feature
 
    # AI-powered parsing with streaming output
@@ -401,7 +400,7 @@ function main() {
 
    # Extract and validate
    autopm prd extract-epics my-feature
-   autopm prd validate my-feature --fix
+   autopm prd validate my-feature
 
    # Task management
    autopm task list epic-001
@@ -413,7 +412,6 @@ function main() {
 
 🛠️  Troubleshooting:
    autopm validate                  # Check installation & config
-   autopm validate --fix            # Auto-fix common issues
    autopm mcp diagnose              # Check MCP server health
    autopm install --force           # Reinstall framework
 

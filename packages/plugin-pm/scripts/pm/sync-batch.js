@@ -29,7 +29,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Octokit } = require('@octokit/rest');
-const { batchSyncAll, batchSyncPRDs, batchSyncEpics, batchSyncTasks } = require('../../../../lib/batch-processor-integration');
+const { requireEngine } = require('./lib/require-engine');
+const { batchSyncAll, batchSyncPRDs, batchSyncEpics, batchSyncTasks } = requireEngine('batch-processor-integration');
 
 class SyncBatchCommand {
   constructor() {
@@ -57,6 +58,10 @@ class SyncBatchCommand {
         repo: match[2]
       };
     } catch (error) {
+      // Preserve the specific parse error instead of shadowing it (#608)
+      if (error.message === 'Could not parse GitHub repository URL') {
+        throw error;
+      }
       throw new Error('Failed to get repository info. Are you in a Git repository with GitHub remote?');
     }
   }
