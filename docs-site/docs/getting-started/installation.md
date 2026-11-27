@@ -50,10 +50,11 @@ autopm install
 
 ### Using npx (No Global Install)
 
+The package's command is `autopm`, not `claude-autopm`, so tell npx which package
+provides it with `-p`:
+
 ```bash
-npx claude-autopm install
-npx claude-autopm merge
-npx claude-autopm setup-env
+npx -p claude-autopm autopm install
 ```
 
 ### Non-Interactive Installation
@@ -68,7 +69,7 @@ autopm install --scenario=full-azure
 One command, no global install:
 
 ```bash
-npx claude-autopm install --scenario=lite
+npx -p claude-autopm autopm install --scenario=lite
 ```
 
 `--scenario` skips the scenario menu, but the installer can still ask yes/no questions
@@ -79,7 +80,7 @@ npx claude-autopm install --scenario=lite
   `--scenario` is given, pick `lite` instead of showing the menu.
 
 ```bash
-AUTOPM_TEST_MODE=1 npx claude-autopm install --scenario=lite
+AUTOPM_TEST_MODE=1 npx -p claude-autopm autopm install --scenario=lite
 ```
 
 ## Installation Scenarios

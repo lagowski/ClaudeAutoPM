@@ -23,7 +23,7 @@ This directory contains installation and configuration scripts for the **ClaudeA
 npm i -g claude-autopm && autopm install
 
 # Or without a global install, non-interactively:
-npx claude-autopm install --scenario=lite
+npx -p claude-autopm autopm install --scenario=lite
 ```
 
 Contributors working from a clone can still run `./install/install.sh [/path/to/project]`.

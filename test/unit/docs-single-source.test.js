@@ -88,13 +88,19 @@ function documentedNpxLines() {
 }
 
 describe('documented npx commands (#865)', () => {
-  test('every documented npx line names a bin the package ships', () => {
+  test('every documented npx line names a bin the package ships and a real subcommand', () => {
     const bins = Object.keys(JSON.parse(read('package.json')).bin);
+    const help = execFileSync('node', [path.join(root, 'bin/autopm.js'), '--help'], { encoding: 'utf8' });
+    const commands = [...help.matchAll(/^\s+autopm\.js (\S+)/gm)].map((m) => m[1]);
+    expect(commands).toContain('install');
     const lines = documentedNpxLines();
     expect(lines.length).toBeGreaterThan(0);
     for (const line of lines) {
-      const { bin } = parseNpx(line);
+      const { bin, args } = parseNpx(line);
       expect({ line, bin, shipped: bins.includes(bin) }).toEqual({ line, bin, shipped: true });
+      if (bin === 'autopm') {
+        expect({ line, cmd: args[0], known: commands.includes(args[0]) }).toEqual({ line, cmd: args[0], known: true });
+      }
     }
   });
 
