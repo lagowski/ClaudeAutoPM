@@ -52,8 +52,7 @@ autopm install
 
 ```bash
 npx claude-autopm install
-npx claude-autopm merge
-npx claude-autopm setup-env
+npx claude-autopm validate
 ```
 
 ### Non-Interactive Installation
@@ -208,10 +207,14 @@ After installation, complete these setup steps:
 
 This creates the `.claude/` directory tree (prds/, epics/, issues/, etc.) and configures your selected provider.
 
-### 2. Configure Environment (Optional)
+### 2. Configure Provider Credentials (Optional)
+
+Needed only for a synced provider (GitHub or Azure DevOps):
 
 ```bash
-autopm setup-env
+autopm config set provider github
+echo "GITHUB_TOKEN=ghp_your_token" >> .claude/.env
+autopm config validate
 ```
 
 ### 3. Enable MCP Servers (Optional)
@@ -277,7 +280,7 @@ n latest
 
 ```bash
 npm cache clean --force
-autopm install --verbose
+autopm install --force   # overwrite a partial install
 ```
 
 ## Updates and Maintenance
@@ -289,8 +292,11 @@ npm update -g claude-autopm
 # Update existing project installation
 autopm update
 
-# Force update with latest templates
-autopm install --no-backup
+# Update without the .claude-backup-* copy
+autopm update --no-backup
+
+# Reinstall, overwriting existing framework files
+autopm install --force
 ```
 
 ## Next Steps
