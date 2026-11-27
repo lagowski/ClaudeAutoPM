@@ -79,7 +79,7 @@ function main() {
       },
       (argv) => {
         // Delegate to the update script
-        const { execSync } = require('child_process');
+        const { execFileSync } = require('child_process');
         const updatePath = path.join(__dirname, '..', 'install', 'update.sh');
         try {
           const env = {
@@ -88,7 +88,7 @@ function main() {
             AUTOPM_BACKUP: argv.backup ? '1' : '0',
             AUTOPM_PRESERVE_CONFIG: argv.preserveConfig ? '1' : '0'
           };
-          execSync(`bash ${updatePath}`, {
+          execFileSync('bash', [updatePath], {
             stdio: 'inherit',
             env
           });
@@ -269,7 +269,7 @@ function main() {
    2. autopm config set provider github # Configure your provider
    3. claude --dangerously-skip-permissions .  # Open Claude Code
 
-🆕 NEW in v2.1.0 - STANDALONE Commands:
+🧰 STANDALONE Commands (run in the terminal):
    autopm prd parse <name>              # Parse PRD without AI overhead
    autopm prd extract-epics <name>      # Extract epics from PRD
    autopm prd summarize <name>          # Generate PRD summary
@@ -413,7 +413,6 @@ function main() {
 
 🛠️  Troubleshooting:
    autopm validate                  # Check installation & config
-   autopm validate --fix            # Auto-fix common issues
    autopm mcp diagnose              # Check MCP server health
    autopm install --force           # Reinstall framework
 

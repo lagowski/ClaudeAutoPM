@@ -384,9 +384,9 @@ describe('Critical Path Protection', () => {
     });
 
     it('should generate actionable report', () => {
+      // Written outside the repo so a regression run leaves git status clean (#844)
       const reportPath = path.join(
-        process.cwd(),
-        'test/regression/__snapshots__',
+        fs.mkdtempSync(path.join(require('os').tmpdir(), 'autopm-regression-')),
         'health-report.json'
       );
 
