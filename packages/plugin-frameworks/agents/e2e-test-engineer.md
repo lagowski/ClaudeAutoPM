@@ -1,7 +1,6 @@
 ---
 name: e2e-test-engineer
 description: "Unified end-to-end test engineering specialist covering Playwright automation, MCP browser control, visual testing, and comprehensive test strategies."
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: purple
 ---
