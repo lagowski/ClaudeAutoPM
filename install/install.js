@@ -885,7 +885,7 @@ This project is configured with ClaudeAutoPM for autonomous project management.
 - \`/pm:help\` - Show available PM commands
 
 ## Documentation
-See: https://github.com/rafeekpro/ClaudeAutoPM
+See: https://github.com/lagowski/ClaudeAutoPM
 `;
 
       if (!fs.existsSync(targetPath)) {

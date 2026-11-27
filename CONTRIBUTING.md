@@ -168,7 +168,8 @@ autopm install
 
 ### Good First Issues
 - [ ] Documentation improvements
-- [ ] Add more examples to `autopm/.claude/examples/`
+- [ ] Add more examples: framework examples shipped to users go in `autopm/.claude/examples/`;
+  repo-level scripts and sample PRDs live in [`examples/`](examples/)
 - [ ] Improve error messages in commands
 - [ ] Add unit tests for existing commands
 - [ ] Update agent documentation

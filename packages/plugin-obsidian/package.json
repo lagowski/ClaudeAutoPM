@@ -31,13 +31,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafeekpro/ClaudeAutoPM.git",
+    "url": "git+https://github.com/lagowski/ClaudeAutoPM.git",
     "directory": "packages/plugin-obsidian"
   },
   "bugs": {
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM/issues"
+    "url": "https://github.com/lagowski/ClaudeAutoPM/issues"
   },
-  "homepage": "https://github.com/rafeekpro/ClaudeAutoPM/tree/main/packages/plugin-obsidian#readme",
+  "homepage": "https://github.com/lagowski/ClaudeAutoPM/tree/main/packages/plugin-obsidian#readme",
   "engines": {
     "node": ">=22.0.0"
   },

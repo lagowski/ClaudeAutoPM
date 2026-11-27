@@ -105,7 +105,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/rafeekpro/ClaudeAutoPM' }
+      { icon: 'github', link: 'https://github.com/lagowski/ClaudeAutoPM' }
     ],
 
     search: {
@@ -118,7 +118,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/rafeekpro/ClaudeAutoPM/edit/main/docs-site/docs/:path',
+      pattern: 'https://github.com/lagowski/ClaudeAutoPM/edit/main/docs-site/docs/:path',
       text: 'Edit this page on GitHub'
     }
   }

@@ -338,7 +338,7 @@ The plugin integrates seamlessly with ClaudeAutoPM's plugin system. All PM scrip
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read the [Contributing Guide](https://github.com/rafeekpro/ClaudeAutoPM/blob/main/CONTRIBUTING.md).
+Contributions are welcome! Please read the [Contributing Guide](https://github.com/lagowski/ClaudeAutoPM/blob/main/CONTRIBUTING.md).
 
 ---
 
@@ -350,10 +350,10 @@ MIT © ClaudeAutoPM Team
 
 ## 🔗 Links
 
-- **Homepage:** https://github.com/rafeekpro/ClaudeAutoPM
-- **Issues:** https://github.com/rafeekpro/ClaudeAutoPM/issues
+- **Homepage:** https://github.com/lagowski/ClaudeAutoPM
+- **Issues:** https://github.com/lagowski/ClaudeAutoPM/issues
 - **NPM:** https://www.npmjs.com/package/@claudeautopm/plugin-pm
-- **Documentation:** https://github.com/rafeekpro/ClaudeAutoPM/tree/main/packages/plugin-pm
+- **Documentation:** https://github.com/lagowski/ClaudeAutoPM/tree/main/packages/plugin-pm
 
 ---
 

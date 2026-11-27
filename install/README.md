@@ -19,13 +19,14 @@ This directory contains installation and configuration scripts for the **ClaudeA
 ### Fresh Installation
 
 ```bash
-# Clone or download ClaudeAutoPM, then run:
-cd ClaudeAutoPM
-./install/install.sh
+# In your project directory:
+npm i -g claude-autopm && autopm install
 
-# Or install to specific directory:
-./install/install.sh /path/to/your/project
+# Or without a global install, non-interactively:
+npx -p claude-autopm autopm install --scenario=lite
 ```
+
+Contributors working from a clone can still run `./install/install.sh [/path/to/project]`.
 
 ### Update Existing Installation
 

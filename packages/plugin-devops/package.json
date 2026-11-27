@@ -57,12 +57,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafeekpro/ClaudeAutoPM.git",
+    "url": "git+https://github.com/lagowski/ClaudeAutoPM.git",
     "directory": "packages/plugin-devops"
   },
-  "homepage": "https://github.com/rafeekpro/ClaudeAutoPM/tree/main/packages/plugin-devops#readme",
+  "homepage": "https://github.com/lagowski/ClaudeAutoPM/tree/main/packages/plugin-devops#readme",
   "bugs": {
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM/issues"
+    "url": "https://github.com/lagowski/ClaudeAutoPM/issues"
   },
   "engines": {
     "node": ">=22.0.0",

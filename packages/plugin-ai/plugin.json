@@ -9,10 +9,10 @@
     "category": "AI & Machine Learning",
     "author": "ClaudeAutoPM Team",
     "license": "MIT",
-    "homepage": "https://github.com/rafeekpro/ClaudeAutoPM",
+    "homepage": "https://github.com/lagowski/ClaudeAutoPM",
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/rafeekpro/ClaudeAutoPM.git",
+      "url": "git+https://github.com/lagowski/ClaudeAutoPM.git",
       "directory": "packages/plugin-ai"
     },
     "size": "~35 KB (gzipped)",

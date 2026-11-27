@@ -24,12 +24,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM.git",
+    "url": "https://github.com/lagowski/ClaudeAutoPM.git",
     "directory": "packages/plugin-core"
   },
-  "homepage": "https://github.com/rafeekpro/ClaudeAutoPM#readme",
+  "homepage": "https://github.com/lagowski/ClaudeAutoPM#readme",
   "bugs": {
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM/issues"
+    "url": "https://github.com/lagowski/ClaudeAutoPM/issues"
   },
   "publishConfig": {
     "access": "public"
