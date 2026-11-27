@@ -47,6 +47,10 @@ while read -r old_name new_number _; do
     fi
 done < "$MAPPING_FILE"
 
+if ! grep -q '[^[:space:]]' "$MAPPING_FILE"; then
+    echo "   Mapping is empty: no task files to rename"
+    exit 0
+fi
 if [[ ! -s "$VALID_MAPPING" ]]; then
     echo "❌ Error: no valid mapping entries in $MAPPING_FILE; no files changed"
     exit 1
