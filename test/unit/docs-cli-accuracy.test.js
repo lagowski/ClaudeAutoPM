@@ -45,7 +45,8 @@ const cliErrors = (text, label) => {
   const bad = [];
   text.split('\n').forEach((line, i) => {
     const code = line.replace(/\s#.*$/, '');
-    for (const m of code.matchAll(/\bautopm[ \t]+([a-z][\w:-]*)([^`|]*)/g)) {
+    // (?<![\w-]): `claude-autopm` (the npm package in `npx -p claude-autopm autopm …`) is not the CLI.
+    for (const m of code.matchAll(/(?<![\w-])autopm[ \t]+([a-z][\w:-]*)([^`|]*)/g)) {
       const where = `${label}:${i + 1}`;
       const words = [m[1]];
       if (!commands.has(m[1])) { bad.push(`${where} autopm ${m[1]}`); continue; }
