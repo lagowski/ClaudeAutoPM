@@ -1,6 +1,6 @@
 ---
 name: python-backend-expert
-description: ## Description Comprehensive Python backend development specialist supporting multiple frameworks and architectural patterns.
+description: "Comprehensive Python backend development specialist supporting multiple frameworks and architectural patterns."
 model: sonnet
 color: green
 ---
