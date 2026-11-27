@@ -6,9 +6,11 @@ set -euo pipefail
 
 # Load libraries
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../lib/logging-utils.sh"
-source "${SCRIPT_DIR}/../lib/frontmatter-utils.sh"
-source "${SCRIPT_DIR}/../lib/datetime-utils.sh"
+# The libs live in .claude/scripts/lib; resolve once, since a lib may reset SCRIPT_DIR
+LIB_DIR="$(cd "${SCRIPT_DIR}/../../lib" && pwd)"
+source "${LIB_DIR}/logging-utils.sh"
+source "${LIB_DIR}/frontmatter-utils.sh"
+source "${LIB_DIR}/datetime-utils.sh"
 
 # Script configuration
 readonly ISSUE_NUMBER="${1:-}"
@@ -22,6 +24,9 @@ declare -g temp_dir=""
 
 # Main function
 main() {
+    # stdout carries only the comment path; banner, logs and results go to stderr
+    exec 3>&1 1>&2
+
     print_banner "GitHub Comment Formatter" "1.0.0"
 
     # Validate inputs
@@ -48,7 +53,7 @@ main() {
     display_results
 
     # Return path to formatted comment
-    echo "$formatted_comment"
+    echo "$formatted_comment" >&3
 }
 
 # Validate script inputs

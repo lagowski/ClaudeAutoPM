@@ -468,4 +468,130 @@ exit 0
       expect(r.stdout).not.toContain('Tasks: 2 issues created');
     });
   });
+
+  describe('gate findings #920 round 2', () => {
+    const { spawnSync } = require('child_process');
+    const EPIC = 'demo';
+    let binDir;
+    let epicDir;
+    let ghLog;
+
+    const FAKE_GH = `#!/bin/bash
+case "$1 $2" in
+  "repo view") [[ -n "\${FAKE_GH_NO_REPO:-}" ]] && exit 1; echo "o/r"; exit 0 ;;
+  "issue create") n=$(( $(cat "$FAKE_GH_LOG.n" 2>/dev/null || echo 100) + 1 )); echo "$n" > "$FAKE_GH_LOG.n"
+    echo "CREATE $n" >> "$FAKE_GH_LOG"; echo "https://github.com/o/r/issues/$n"; exit 0 ;;
+esac
+exit 0
+`;
+    const run = (script, args, env = {}) => spawnSync('bash', [script, ...args], {
+      cwd: tempDir,
+      encoding: 'utf8',
+      env: { ...process.env, PATH: `${binDir}:${process.env.PATH}`, FAKE_GH_LOG: ghLog, ...env }
+    });
+    const write = (rel, content) => fs.writeFileSync(path.join(epicDir, rel), content);
+    const read = (rel) => fs.readFileSync(path.join(epicDir, rel), 'utf8');
+    const log = () => (fs.existsSync(ghLog) ? fs.readFileSync(ghLog, 'utf8') : '');
+    const REFS = path.join(SCRIPTS_DIR, 'update-references.sh');
+    const EPIC_FILE = path.join(SCRIPTS_DIR, 'update-epic-file.sh');
+    const TASKS = path.join(SCRIPTS_DIR, 'create-task-issues.sh');
+
+    beforeEach(() => {
+      binDir = path.join(tempDir, 'bin');
+      epicDir = path.join(tempDir, '.claude', 'epics', EPIC);
+      ghLog = path.join(tempDir, 'gh.log');
+      fs.mkdirSync(binDir, { recursive: true });
+      fs.mkdirSync(epicDir, { recursive: true });
+      fs.writeFileSync(path.join(binDir, 'gh'), FAKE_GH, { mode: 0o755 });
+    });
+
+    test('update-references:114 an all-invalid mapping never truncates task files', () => {
+      write('001.md', '---\nname: t\n---\nSee #5\n');
+      write('77.md', '# Seventy-seven, see #001\n');
+      write('.map', 'abc 5\n');
+      const r = run(REFS, [EPIC, path.join(epicDir, '.map')]);
+      expect(read('001.md')).toBe('---\nname: t\n---\nSee #5\n');
+      expect(read('77.md')).toBe('# Seventy-seven, see #001\n');
+      expect(r.status).not.toBe(0);
+      expect(r.stdout).not.toContain('✅');
+    });
+
+    test('update-epic-file:65 rejects non-numeric mapping values instead of feeding them to sed', () => {
+      write('epic.md', '---\nname: demo\ngithub: x\n---\n- [ ] 001\n- [x] 002\nTask 003\n');
+      write('.task-mapping.txt', '001 2&x\n002 9\n003 12\n');
+      const r = run(EPIC_FILE, [EPIC, '50']);
+      expect(r.status).toBe(0);
+      expect(read('epic.md')).toBe(
+        '---\nname: demo\ngithub: https://github.com/o/r/issues/50\n---\n- [ ] 001\n- [x] #9\nTask #12\n'
+      );
+      expect(r.stdout + r.stderr).toMatch(/invalid mapping/i);
+    });
+
+    test('update-epic-file:64 does not chain substitutions (single pass)', () => {
+      write('epic.md', '---\nname: demo\n---\n- [ ] 10\n- [ ] 20\n');
+      write('.task-mapping.txt', '10 20\n20 30\n');
+      expect(run(EPIC_FILE, [EPIC, '50']).status).toBe(0);
+      expect(read('epic.md')).toBe('---\nname: demo\n---\n- [ ] #20\n- [ ] #30\n');
+    });
+
+    test('update-references:28 and update-epic-file fail instead of writing unknown/repo', () => {
+      write('001.md', '---\nname: t\ngithub: x\n---\n# One\n');
+      write('epic.md', '---\nname: demo\ngithub: x\n---\n');
+      write('.map', '001 46\n');
+      const refs = run(REFS, [EPIC, path.join(epicDir, '.map')], { FAKE_GH_NO_REPO: '1' });
+      expect(refs.status).not.toBe(0);
+      expect(read('001.md')).toBe('---\nname: t\ngithub: x\n---\n# One\n');
+      expect(fs.existsSync(path.join(epicDir, '46.md'))).toBe(false);
+      const ep = run(EPIC_FILE, [EPIC, '50'], { FAKE_GH_NO_REPO: '1' });
+      expect(ep.status).not.toBe(0);
+      expect(read('epic.md')).toBe('---\nname: demo\ngithub: x\n---\n');
+    });
+
+    test('update-references:112 a failed cross-reference pass fails the script', () => {
+      write('001.md', '---\nname: t\n---\nSee #5\n');
+      write('.map', '001 46\n');
+      fs.writeFileSync(path.join(binDir, 'perl'), '#!/bin/sh\nexit 3\n', { mode: 0o755 });
+      const r = run(REFS, [EPIC, path.join(epicDir, '.map')]);
+      expect(r.status).not.toBe(0);
+      expect(r.stdout).not.toContain('✅');
+      expect(read('46.md')).toContain('See #5');
+      expect(fs.existsSync(path.join(epicDir, '46.md.tmp'))).toBe(false);
+    });
+
+    test('create-task-issues:36 skips task files already synced to an issue', () => {
+      write('001.md', '# One\n');
+      write('46.md', '---\nname: t\ngithub: https://github.com/o/r/issues/46\n---\n# Done\n');
+      const r = run(TASKS, [EPIC, '7']);
+      expect(r.status).toBe(0);
+      expect(log().match(/CREATE/g)).toHaveLength(1);
+      expect(read('.task-mapping.txt')).toBe('001 101\n');
+      expect(r.stderr).toMatch(/already synced.*46\.md/);
+    });
+
+    test('epic-sync.sh refuses a re-run before creating a duplicate epic issue', () => {
+      write('epic.md', '---\nname: demo\n---\n# Demo\n');
+      write('46.md', '---\nname: t\ngithub: https://github.com/o/r/issues/46\n---\n# Done\n');
+      const r = run(path.join(SCRIPTS_DIR, '..', 'epic-sync.sh'), [EPIC]);
+      expect(r.status).not.toBe(0);
+      expect(log()).not.toContain('CREATE');
+      expect(r.stdout + r.stderr).toMatch(/already synced/);
+    });
+
+    test('format-comment:52 prints only the comment path on stdout', () => {
+      // Installed layout: .claude/scripts/{lib,pm/issue-sync}
+      const scripts = path.join(tempDir, '.claude', 'scripts');
+      const libSrc = path.join(__dirname, '..', '..', 'packages', 'plugin-core', 'scripts', 'lib');
+      fs.mkdirSync(path.join(scripts, 'pm', 'issue-sync'), { recursive: true });
+      fs.cpSync(libSrc, path.join(scripts, 'lib'), { recursive: true });
+      const fc = path.join(scripts, 'pm', 'issue-sync', 'format-comment.sh');
+      fs.copyFileSync(path.join(SCRIPTS_DIR, '..', 'issue-sync', 'format-comment.sh'), fc);
+      fs.writeFileSync(path.join(tempDir, 'updates.md'), '## Progress\n- did a thing\n');
+      fs.writeFileSync(path.join(tempDir, 'progress.md'), '---\ncompletion: 50\n---\n# Progress\n');
+      const r = run(fc, ['12', 'updates.md', 'progress.md']);
+      expect(r.status).toBe(0);
+      const out = r.stdout.trim();
+      expect(out.split('\n')).toHaveLength(1);
+      expect(fs.existsSync(out)).toBe(true);
+    });
+  });
 });

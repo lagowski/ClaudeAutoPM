@@ -24,7 +24,11 @@ if [[ ! -f "$EPIC_FILE" ]]; then
 fi
 
 # Get repository info
-REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || echo "unknown/repo")
+REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || true)
+if [[ -z "$REPO" ]]; then
+    echo "❌ Error: could not read the repository (gh repo view failed); epic file not changed"
+    exit 1
+fi
 EPIC_URL="https://github.com/$REPO/issues/$EPIC_NUMBER"
 
 echo "📄 Updating epic file: $EPIC_FILE"
@@ -60,20 +64,31 @@ in_front && /^updated:/ {
 if [[ -f "$MAPPING_FILE" ]]; then
     echo "   Updating task references with real issue numbers..."
 
-    # Read mapping and update task references
-    while read -r old_name new_number; do
-        # Cross-platform sed: create temp file instead of in-place
-        # Update checkbox items like "- [ ] 001" to "- [ ] #2"
-        sed "s/- \[ \] $old_name\b/- [ ] #$new_number/g" "$EPIC_FILE.tmp" > "$EPIC_FILE.tmp2"
-        mv "$EPIC_FILE.tmp2" "$EPIC_FILE.tmp"
-
-        sed "s/- \[x\] $old_name\b/- [x] #$new_number/g" "$EPIC_FILE.tmp" > "$EPIC_FILE.tmp2"
-        mv "$EPIC_FILE.tmp2" "$EPIC_FILE.tmp"
-
-        # Update task links
-        sed "s/Task $old_name\b/Task #$new_number/g" "$EPIC_FILE.tmp" > "$EPIC_FILE.tmp2"
-        mv "$EPIC_FILE.tmp2" "$EPIC_FILE.tmp"
+    # Keep only numeric "old new" pairs: the values end up in a regex
+    VALID_MAPPING=$(mktemp)
+    trap 'rm -f "$VALID_MAPPING"' EXIT
+    while read -r old_name new_number _; do
+        [[ -z "${old_name:-}" ]] && continue
+        if [[ "$old_name" =~ ^[0-9]+$ && "${new_number:-}" =~ ^[0-9]+$ ]]; then
+            echo "$old_name $new_number" >> "$VALID_MAPPING"
+        else
+            echo "⚠️  Skipping invalid mapping entry: $old_name ${new_number:-}"
+        fi
     done < "$MAPPING_FILE"
+
+    # One perl pass with every mapping in a single regex: replaced text is never
+    # matched again, and \b works on BSD/macOS too (sed's \b is GNU-only).
+    # "- [ ] 001" / "- [x] 001" / "Task 001" become "#<issue number>".
+    perl -e '
+        open(my $m, "<", shift) or die "mapping: $!";
+        my %map = map { chomp; split / / } <$m>;
+        my $ids = join "|", sort { length($b) <=> length($a) } keys %map;
+        while (<STDIN>) {
+            s/(- \[[ x]\] |Task )($ids)\b/$1#$map{$2}/g if %map;
+            print;
+        }
+    ' "$VALID_MAPPING" < "$EPIC_FILE.tmp" > "$EPIC_FILE.tmp2"
+    mv "$EPIC_FILE.tmp2" "$EPIC_FILE.tmp"
 fi
 
 # Finalize

@@ -47,6 +47,24 @@ if [[ $task_count -eq 0 ]]; then
     exit 1
 fi
 
+# A task file is already synced when its frontmatter github: holds an issue URL
+is_synced() {
+    awk 'NR==1 && !/^---$/ {exit} /^---$/ {if (++n==2) exit; next}
+         /^github:[[:space:]]*https?:\/\/[^[:space:]]+\/issues\/[0-9]+/ {f=1; exit}
+         END {exit !f}' "$1"
+}
+
+# A re-run would create a second epic issue and duplicate task issues
+synced=""
+for f in $(find "$EPIC_DIR" -name "[0-9]*.md" -type f | sort); do
+    if is_synced "$f"; then synced="$synced $(basename "$f")"; fi
+done
+if [[ -n "$synced" ]]; then
+    echo "❌ Error: epic already synced (tasks with an issue URL:$synced)"
+    echo "   Re-running would create a duplicate epic issue. Sync remaining tasks by hand."
+    exit 1
+fi
+
 echo ""
 echo "🚀 Starting Epic Sync"
 echo "═══════════════════════════════════════════"
