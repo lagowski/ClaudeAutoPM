@@ -58,6 +58,8 @@ Choose your scenario during installation:
 | **Full** | 45+ | Complete CI/CD: cloud, databases, AI included |
 | **Performance** | 55+ | All plugins (incl. data + ML) + max parallelization |
 
+No global install: `npx -p claude-autopm autopm install --scenario=lite` (the package's command is `autopm`, not `claude-autopm`).
+
 Skip the prompt with `autopm install --scenario=<name>` (`lite`, `github`, `azure`, `docker`, `full`, `full-azure`, `performance`, `obsidian`); `full-azure` is Full plus Azure DevOps sync.
 
 ---
@@ -72,6 +74,8 @@ ClaudeAutoPM uses a **plugin architecture** for token efficiency. Only 7 core ag
 autopm/.claude/agents/       ← 7 core agents (always available)
 packages/plugin-*/agents/    ← 50+ specialized agents (per plugin)
 ```
+
+These are repo paths. In an installed project, agents live in `.claude/agents/`.
 
 **Token savings**: Lite installs use 73% fewer agent tokens vs full.
 
