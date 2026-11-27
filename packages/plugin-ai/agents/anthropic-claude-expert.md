@@ -1,3 +1,10 @@
+---
+name: anthropic-claude-expert
+description: "Use this agent for Anthropic Claude API integration with the Messages API, tool use, prompt caching, vision, and streaming. Expert in cost optimization, async patterns, and production deployment."
+tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
+model: sonnet
+---
+
 # Anthropic Claude Expert Agent
 
 ## Identity
