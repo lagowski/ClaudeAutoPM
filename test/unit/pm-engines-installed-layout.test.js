@@ -134,7 +134,7 @@ describe('sync coverage of the vendored copies (#899)', () => {
     const targets = jobs.flatMap((j) => j.targetDirs.map((t) => path.relative(ROOT, t)));
     expect(sources).toEqual(expect.arrayContaining(['packages/plugin-core/scripts', 'packages/plugin-pm/scripts/pm', 'lib']));
     expect(targets).toEqual(
-      expect.arrayContaining(['autopm/.claude/scripts/pm', '.claude/scripts/pm', 'autopm/.claude/lib/pm-engines'])
+      expect.arrayContaining(['autopm/.claude/scripts/pm', 'autopm/.claude/lib/pm-engines'])
     );
     const res = spawnSync(process.execPath, [path.join(ROOT, 'scripts/sync-plugin-scripts.js'), '--check'], {
       encoding: 'utf8'

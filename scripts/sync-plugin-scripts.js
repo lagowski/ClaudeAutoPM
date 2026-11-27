@@ -4,7 +4,7 @@
  * Default jobs:
  *
  *   - packages/plugin-core/scripts   -> autopm/.claude/scripts, .claude/scripts
- *   - packages/plugin-pm/scripts/pm  -> autopm/.claude/scripts/pm, .claude/scripts/pm
+ *   - packages/plugin-pm/scripts/pm  -> autopm/.claude/scripts/pm
  *   - lib/<pm engine>.js             -> autopm/.claude/lib/pm-engines/ (generated:
  *     require paths rewritten for the installed layout, `yaml` swapped for the
  *     dependency-free scripts/pm/lib/yaml-parse.js; #899)
@@ -135,10 +135,8 @@ function parseArgs(argv) {
     },
     {
       sourceDir: path.join(repoRoot, 'packages', 'plugin-pm', 'scripts', 'pm'),
-      targetDirs: [
-        path.join(repoRoot, 'autopm', '.claude', 'scripts', 'pm'),
-        path.join(repoRoot, '.claude', 'scripts', 'pm')
-      ]
+      // Only the shipped payload: this repo's own .claude/ has never carried pm/ (#899).
+      targetDirs: [path.join(repoRoot, 'autopm', '.claude', 'scripts', 'pm')]
     },
     {
       sourceDir: path.join(repoRoot, 'lib'),
