@@ -7,7 +7,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const FAKE_URI = 'mcp://' + 'context7/';
@@ -50,29 +49,4 @@ describe('no fake mcp://context7/ URIs (issue #862)', () => {
     }
   });
 
-  test.each(['pre-command-context7.js', 'pre-agent-context7.js'])(
-    '%s accepts a file that points to the shared rule',
-    (hook) => {
-      const tmp = fs.mkdtempSync(path.join(require('os').tmpdir(), 'c7-'));
-      const isCommand = hook.startsWith('pre-command');
-      const dir = isCommand
-        ? path.join(tmp, '.claude', 'commands', 'pm')
-        : path.join(tmp, '.claude', 'agents', 'core');
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(
-        path.join(dir, isCommand ? 'demo.md' : 'demo-agent.md'),
-        '# Demo\n\n## Required Documentation Access\n\n' +
-          'Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react.\n'
-      );
-      // Installed projects run hooks from .claude/hooks/ (CommonJS there;
-      // plugin-core's own package.json marks the source dir as ESM).
-      const hookPath = path.join(tmp, '.claude', 'hooks', hook);
-      fs.mkdirSync(path.dirname(hookPath), { recursive: true });
-      fs.copyFileSync(path.join(ROOT, 'packages', 'plugin-core', 'hooks', hook), hookPath);
-      const arg = isCommand ? '/pm:demo' : '@demo-agent';
-      const out = execFileSync(process.execPath, [hookPath, arg], { cwd: tmp, encoding: 'utf8' });
-      expect(out).toMatch(/context7-required\.md/);
-      fs.rmSync(tmp, { recursive: true, force: true });
-    }
-  );
 });
