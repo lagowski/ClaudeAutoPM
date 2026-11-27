@@ -71,22 +71,11 @@ Universal rules that apply to all projects:
 - `strip-frontmatter` - Frontmatter utilities
 - `use-ast-grep` - AST parsing utilities
 
-### 🪝 Hooks (7)
+### 🪝 Hooks (1)
 
-Enforcement hooks for framework behavior:
-
-**Context7 Enforcement:**
-- `pre-command-context7.js` - Enforce Context7 queries before command execution (BLOCKING)
-- `pre-agent-context7.js` - Enforce Context7 queries before agent invocation (BLOCKING)
-- `unified-context7-enforcement.sh` - Unified Context7 wrapper
-- `context7-reminder.md` - Context7 reminder text
-
-**Agent Enforcement:**
-- `enforce-agents.js` + `.sh` - Enforce agent usage over direct tool calls (BLOCKING)
-- `strict-enforce-agents.sh` - Stricter agent enforcement (BLOCKING)
-
-**Testing:**
-- `test-hook.sh` - Hook testing utility
+- `enforce-agents.cjs` - Blocks direct test runs, code searches and large-file reads in favour of
+  an agent (BLOCKING). The installer registers it as a `PreToolUse` hook (matcher `Bash|Read`) in
+  the project's `.claude/settings.json`, keeping your own entries there.
 
 ### 📦 Scripts (10)
 
@@ -147,8 +136,6 @@ autopm init
 ```bash
 # Enforced by:
 # - rules/context7-enforcement.md
-# - hooks/pre-command-context7.js
-# - hooks/pre-agent-context7.js
 ```
 
 ### Agent Coordination ✅

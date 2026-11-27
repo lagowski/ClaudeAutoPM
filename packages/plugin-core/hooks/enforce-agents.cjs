@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * Hook enforcing agent usage instead of direct operations
- * Usage: set as tool-use-hook in Claude Code configuration
+ * Hook enforcing agent usage instead of direct operations.
+ *
+ * Registered by the installer as a Claude Code PreToolUse hook in .claude/settings.json.
+ * Claude Code passes the tool call as JSON on stdin ({tool_name, tool_input}); exit 2 blocks
+ * the call and shows stderr to Claude. `node enforce-agents.js <tool> <params>` still works by hand.
  */
 
 const fs = require('fs');
@@ -10,25 +13,38 @@ const path = require('path');
 
 class AgentEnforcer {
   constructor() {
-    // Get tool name and parameters from arguments
-    this.toolName = process.argv[2] || '';
-    this.toolParams = process.argv[3] || '';
-
-    // Parse params if they're JSON
-    try {
-      this.parsedParams = JSON.parse(this.toolParams);
-    } catch {
-      this.parsedParams = {};
+    if (process.argv[2]) {
+      this.toolName = process.argv[2];
+      this.toolParams = process.argv[3] || '';
+      try {
+        this.parsedParams = JSON.parse(this.toolParams);
+      } catch {
+        this.parsedParams = {};
+      }
+      return;
     }
+
+    // Claude Code hook input on stdin
+    let input = {};
+    try {
+      input = JSON.parse(fs.readFileSync(0, 'utf-8') || '{}');
+    } catch {
+      input = {};
+    }
+    this.toolName = input.tool_name || '';
+    this.parsedParams = input.tool_input || {};
+    this.toolParams = typeof this.parsedParams.command === 'string'
+      ? this.parsedParams.command
+      : JSON.stringify(this.parsedParams);
   }
 
   blockWithMessage(reason, agent, example) {
-    console.log(`❌ BLOCKED: ${reason}`);
-    console.log(`✅ INSTEAD: Use the ${agent} agent via Task tool`);
-    console.log('');
-    console.log('Example:');
-    console.log(`  Task: ${example}`);
-    process.exit(1);
+    console.error(`❌ BLOCKED: ${reason}`);
+    console.error(`✅ INSTEAD: Use the ${agent} agent via Task tool`);
+    console.error('');
+    console.error('Example:');
+    console.error(`  Task: ${example}`);
+    process.exit(2);
   }
 
   checkBashUsage() {
