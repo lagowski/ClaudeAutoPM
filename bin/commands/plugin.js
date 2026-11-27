@@ -228,6 +228,13 @@ async function handleSearch(manager, keyword, argv) {
  * Handle 'install' command
  */
 async function handleInstall(manager, pluginName, argv) {
+  // #846: the name ends up in an npm argument; allow only a plain package-name segment.
+  if (!/^[a-z0-9-]+$/.test(pluginName)) {
+    console.error(chalk.red(`Error: Invalid plugin name: ${JSON.stringify(pluginName)}`));
+    console.log('Plugin names may contain only lowercase letters, digits and hyphens.');
+    process.exit(1);
+  }
+
   const fullPluginName = pluginName.startsWith('plugin-') ? pluginName : `plugin-${pluginName}`;
 
   console.log(chalk.bold(`\n📦 Installing plugin: ${pluginName}\n`));
@@ -242,11 +249,11 @@ async function handleInstall(manager, pluginName, argv) {
   }
 
   // Check if npm package exists
-  const { execSync } = require('child_process');
+  const { execFileSync } = require('child_process');
   let packageInstalled = false;
 
   try {
-    execSync(`npm list -g @claudeautopm/${fullPluginName}`, { stdio: 'ignore' });
+    execFileSync('npm', ['list', '-g', `@claudeautopm/${fullPluginName}`], { stdio: 'ignore' });
     packageInstalled = true;
   } catch {
     // Package not installed
@@ -256,7 +263,7 @@ async function handleInstall(manager, pluginName, argv) {
   if (!packageInstalled) {
     console.log(chalk.gray('Installing npm package...'));
     try {
-      execSync(`npm install -g @claudeautopm/${fullPluginName}`, { stdio: 'inherit' });
+      execFileSync('npm', ['install', '-g', `@claudeautopm/${fullPluginName}`], { stdio: 'inherit' });
       console.log('');
     } catch (error) {
       console.error(chalk.red(`\n✗ Failed to install npm package: @claudeautopm/${fullPluginName}`));

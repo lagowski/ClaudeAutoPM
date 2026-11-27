@@ -40,7 +40,8 @@ test('pr-validation: commands are argv arrays, no tokenizer, no sh -c', () => {
 // 2. epic name validation rejects shell metacharacters
 // ---------------------------------------------------------------------------
 test('epic: epic name with command substitution is rejected', () => {
-  const epicCmd = require(path.join(ROOT, 'bin/commands/epic.js'));
+  // The registered command (bin/autopm.js) is lib/cli/commands/epic.js (#855)
+  const epicCmd = require(path.join(ROOT, 'lib/cli/commands/epic.js'));
   assert.strictEqual(typeof epicCmd.isValidEpicName, 'function',
     'epic command must export isValidEpicName');
 
@@ -50,6 +51,27 @@ test('epic: epic name with command substitution is rejected', () => {
   assert.strictEqual(epicCmd.isValidEpicName('../escape'), false);
   // Legitimate names still allowed
   assert.strictEqual(epicCmd.isValidEpicName('fullstack-app_v2.1'), true);
+});
+
+test('epic: CLI refuses a path-traversal epic name before any handler runs', () => {
+  const os = require('os');
+  const { spawnSync } = require('child_process');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'epic-inject-'));
+  const cwd = path.join(tmp, 'a', 'b');
+  fs.mkdirSync(cwd, { recursive: true });
+  try {
+    const res = spawnSync(process.execPath,
+      [path.join(ROOT, 'bin/autopm.js'), 'epic', 'new', '../../escape'],
+      { cwd, input: '', encoding: 'utf8', timeout: 30000 });
+
+    assert.notStrictEqual(res.status, 0, 'an invalid epic name must fail the command');
+    assert.match(res.stderr + res.stdout, /invalid epic name/i);
+    // Without validation the name resolves to <tmp>/escape, outside .claude/epics
+    assert.strictEqual(fs.existsSync(path.join(tmp, 'escape')), false,
+      'no epic directory may be created outside .claude/epics');
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 // ---------------------------------------------------------------------------
