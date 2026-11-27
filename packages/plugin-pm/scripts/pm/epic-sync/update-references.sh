@@ -26,8 +26,12 @@ if [[ ! -d "$EPIC_DIR" ]]; then
     exit 1
 fi
 
-# Get repository info
-REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || echo "unknown/repo")
+# Get repository info; a placeholder repo would be written into every task file
+REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || true)
+if [[ -z "$REPO" ]]; then
+    echo "❌ Error: could not read the repository (gh repo view failed); no files changed"
+    exit 1
+fi
 
 echo "🔗 Updating task references and renaming files"
 
@@ -42,6 +46,11 @@ while read -r old_name new_number _; do
         echo "⚠️  Skipping invalid mapping entry: $old_name ${new_number:-}"
     fi
 done < "$MAPPING_FILE"
+
+if [[ ! -s "$VALID_MAPPING" ]]; then
+    echo "❌ Error: no valid mapping entries in $MAPPING_FILE; no files changed"
+    exit 1
+fi
 
 failed=0
 
@@ -104,22 +113,27 @@ echo "   Updating cross-references within task files..."
 # One pass per file with every mapping in a single regex, so replaced text is
 # never matched again (no chaining like #10 -> #20 -> #30). perl, not sed: \b
 # and case-insensitive flags are not portable to BSD/macOS sed.
-find "$EPIC_DIR" -name "[0-9]*.md" -type f | while read -r task_file; do
-    perl -e '
+while read -r task_file; do
+    if perl -e '
         open(my $m, "<", shift) or die "mapping: $!";
         my %map = map { chomp; split / / } <$m>;
-        exit 0 unless %map;
         my $ids = join "|", sort { length($b) <=> length($a) } keys %map;
         while (<STDIN>) {
-            s/(\b(?:task|issue|depends on) |#)($ids)\b/($1 eq "#" ? "#" : "$1#") . $map{$2}/gie;
+            s/(\b(?:task|issue|depends on) |#)($ids)\b/($1 eq "#" ? "#" : "$1#") . $map{$2}/gie if %map;
             print;
         }
-    ' "$VALID_MAPPING" < "$task_file" > "$task_file.tmp" && mv "$task_file.tmp" "$task_file"
-done
+    ' "$VALID_MAPPING" < "$task_file" > "$task_file.tmp" && mv "$task_file.tmp" "$task_file"; then
+        :
+    else
+        rm -f "$task_file.tmp"
+        echo "⚠️  Could not update cross-references in $task_file"
+        failed=$((failed + 1))
+    fi
+done < <(find "$EPIC_DIR" -name "[0-9]*.md" -type f)
 
 echo ""
 if [[ $failed -gt 0 ]]; then
-    echo "❌ $failed task file(s) could not be renamed"
+    echo "❌ $failed task file(s) could not be renamed or updated"
     exit 1
 fi
 echo "✅ Task files renamed and frontmatter updated"

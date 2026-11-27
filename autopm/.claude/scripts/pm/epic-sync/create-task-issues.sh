@@ -27,11 +27,27 @@ MAPPING_FILE="$EPIC_DIR/.task-mapping.txt"
 
 echo "📋 Creating task issues for epic #$EPIC_NUMBER" >&2
 
-# Find all task files (sequential numbered files)
-task_files=$(find "$EPIC_DIR" -name "[0-9]*.md" -type f | sort)
+# A task file is already synced when its frontmatter github: holds an issue URL
+is_synced() {
+    awk 'NR==1 && !/^---$/ {exit} /^---$/ {if (++n==2) exit; next}
+         /^github:[[:space:]]*https?:\/\/[^[:space:]]+\/issues\/[0-9]+/ {f=1; exit}
+         END {exit !f}' "$1"
+}
+
+# Find all task files (sequential numbered files); skip ones already synced so
+# a re-run never creates duplicate issues
+task_files=""
+for f in $(find "$EPIC_DIR" -name "[0-9]*.md" -type f | sort); do
+    if is_synced "$f"; then
+        echo "   Skipping, already synced: $(basename "$f")" >&2
+    else
+        task_files="$task_files$f"$'\n'
+    fi
+done
+task_files="${task_files%$'\n'}"
 
 if [[ -z "$task_files" ]]; then
-    echo "❌ Error: No task files found in $EPIC_DIR" >&2
+    echo "❌ Error: No unsynced task files found in $EPIC_DIR" >&2
     exit 1
 fi
 
