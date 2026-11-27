@@ -531,7 +531,9 @@ exit 0
       write('epic.md', '---\nname: demo\n---\n- [ ] 10\n- [ ] 20\n');
       write('.task-mapping.txt', '10 20\n20 30\n');
       expect(run(EPIC_FILE, [EPIC, '50']).status).toBe(0);
-      expect(read('epic.md')).toBe('---\nname: demo\n---\n- [ ] #20\n- [ ] #30\n');
+      expect(read('epic.md')).toBe(
+        '---\nname: demo\ngithub: https://github.com/o/r/issues/50\n---\n- [ ] #20\n- [ ] #30\n'
+      );
     });
 
     test('update-references:28 and update-epic-file fail instead of writing unknown/repo', () => {
@@ -592,6 +594,55 @@ exit 0
       const out = r.stdout.trim();
       expect(out.split('\n')).toHaveLength(1);
       expect(fs.existsSync(out)).toBe(true);
+    });
+
+    // gate findings #920 round 3 (#933)
+    test('update-epic-file:48 opens frontmatter only on line 1, never at a body --- rule', () => {
+      // No frontmatter, body has a --- rule: body kept byte-for-byte, a fresh
+      // frontmatter carrying github: is prepended.
+      const body = '# Demo\n\n---\ngithub: keep-me\nupdated: keep-me\n---\nend\n';
+      const fm = (n) => new RegExp(`^---\\ngithub: https://github\\.com/o/r/issues/${n}\\nupdated: \\S+\\n---\\n`);
+      write('epic.md', body);
+      const ep = run(EPIC_FILE, [EPIC, '50']);
+      expect(ep.status).toBe(0);
+      expect(read('epic.md')).toMatch(fm(50));
+      expect(read('epic.md').replace(fm(50), '')).toBe(body);
+
+      write('001.md', body);
+      write('.map', '001 46\n');
+      const refs = run(REFS, [EPIC, path.join(epicDir, '.map')]);
+      expect(refs.status).toBe(0);
+      expect(read('46.md')).toMatch(fm(46));
+      expect(read('46.md').replace(fm(46), '')).toBe(body);
+    });
+
+    test('update-epic-file:48 an unclosed frontmatter fails and changes nothing', () => {
+      const bad = '---\nname: demo\ngithub: x\n';
+      write('epic.md', bad);
+      const ep = run(EPIC_FILE, [EPIC, '50']);
+      expect(ep.status).not.toBe(0);
+      expect(ep.stdout).not.toContain('✅');
+      expect(read('epic.md')).toBe(bad);
+      expect(fs.existsSync(path.join(epicDir, 'epic.md.backup'))).toBe(false);
+
+      write('001.md', bad);
+      write('.map', '001 46\n');
+      const refs = run(REFS, [EPIC, path.join(epicDir, '.map')]);
+      expect(refs.status).not.toBe(0);
+      expect(read('001.md')).toBe(bad);
+      expect(fs.existsSync(path.join(epicDir, '46.md'))).toBe(false);
+    });
+
+    test('update-references:88 writes github: when the frontmatter has none', () => {
+      write('001.md', '---\nname: t\n---\n# One\n');
+      write('epic.md', '---\nname: demo\n---\n# Demo\n');
+      write('.map', '001 46\n');
+      const refs = run(REFS, [EPIC, path.join(epicDir, '.map')]);
+      expect(refs.status).toBe(0);
+      expect(read('46.md')).toBe('---\nname: t\ngithub: https://github.com/o/r/issues/46\n---\n# One\n');
+      const ep = run(EPIC_FILE, [EPIC, '50']);
+      expect(ep.status).toBe(0);
+      expect(read('epic.md')).toBe('---\nname: demo\ngithub: https://github.com/o/r/issues/50\n---\n# Demo\n');
     });
   });
 });
