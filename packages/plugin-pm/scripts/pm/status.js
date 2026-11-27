@@ -21,6 +21,14 @@ async function status() {
     }
   }
 
+  // Preamble
+  try {
+    const { loadPreamble, formatPreamble } = require(path.join(process.cwd(), '.claude', 'lib', 'preamble'));
+    const preamble = loadPreamble(process.cwd());
+    addMessage(formatPreamble(preamble));
+    addMessage('');
+  } catch (e) { /* preamble not available */ }
+
   // Count PRDs by status
   try {
     if (fs.existsSync('.claude/prds') && fs.statSync('.claude/prds').isDirectory()) {

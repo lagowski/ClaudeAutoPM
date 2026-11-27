@@ -23,6 +23,14 @@ async function next() {
     }
   }
 
+  // Preamble
+  try {
+    const { loadPreamble, formatPreamble } = require(path.join(process.cwd(), '.claude', 'lib', 'preamble'));
+    const preamble = loadPreamble(process.cwd());
+    addMessage(formatPreamble(preamble));
+    addMessage('');
+  } catch (e) { /* preamble not available */ }
+
   try {
     const availableTasks = await findAvailableTasks();
     result.availableTasks = availableTasks;

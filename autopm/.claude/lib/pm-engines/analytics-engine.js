@@ -1,3 +1,4 @@
+// GENERATED from lib/analytics-engine.js by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.
 /**
  * AnalyticsEngine - Comprehensive analytics and insights for PRDs, Epics, and Tasks
  *

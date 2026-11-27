@@ -54,7 +54,7 @@ describe('pm engines in a real `autopm install --scenario=minimal` (#899)', () =
     );
     fs.writeFileSync(
       path.join(epicDir, 'task-001.md'),
-      '---\nid: task-001\ntitle: Done task\nstatus: closed\ncreated: 2026-11-21T10:00:00Z\ncompleted: 2026-11-22T10:00:00Z\n---\n# T1\n'
+      '---\nid: task-001\ntitle: Done task\nstatus: completed\ncreated: 2026-11-21T10:00:00Z\ncompleted: 2026-11-22T10:00:00Z\n---\n# T1\n'
     );
     fs.writeFileSync(
       path.join(epicDir, 'task-002.md'),
@@ -70,17 +70,17 @@ describe('pm engines in a real `autopm install --scenario=minimal` (#899)', () =
     expect(data.status.completed).toBe(1);
   });
 
-  test('sync-batch.js exits with a clear @octokit/rest message, not MODULE_NOT_FOUND', () => {
+  test('sync-batch.js exits naming the npm packages to install, not MODULE_NOT_FOUND', () => {
     const res = run(proj, ['.claude/scripts/pm/sync-batch.js', '--dry-run'], { GITHUB_TOKEN: 'dummy' });
     expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module/);
     expect(res.stderr).toMatch(/@octokit\/rest/);
-    expect(res.stderr).toMatch(/npm install @octokit\/rest/);
+    expect(res.stderr).toMatch(/npm install @octokit\/rest yaml/);
     expect(res.status).toBe(1);
   });
 });
 
 describe('pm-engines yaml fallback (#899)', () => {
-  const parseBuiltin = (text) => require('../../autopm/.claude/lib/pm-engines/yaml-parse').parseBuiltin(text);
+  const parseBuiltin = (text) => require('../../packages/plugin-pm/scripts/pm/lib/yaml-parse').parseBuiltin(text);
 
   test('parses the frontmatter shapes PM files use', () => {
     expect(

@@ -1,10 +1,16 @@
 #!/usr/bin/env node
 /**
- * Sync shared scripts from the single source of truth
- * (packages/plugin-core/scripts) into its two consumers:
+ * Sync shared scripts from their single source of truth into their consumers.
+ * Default jobs:
  *
- *   - the installer payload at `autopm/` + `.claude/scripts` (shipped to user projects)
- *   - this repo's own installed copy at `.claude/scripts`
+ *   - packages/plugin-core/scripts   -> autopm/.claude/scripts, .claude/scripts
+ *   - packages/plugin-pm/scripts/pm  -> autopm/.claude/scripts/pm, .claude/scripts/pm
+ *   - lib/<pm engine>.js             -> autopm/.claude/lib/pm-engines/ (generated:
+ *     require paths rewritten for the installed layout, `yaml` swapped for the
+ *     dependency-free scripts/pm/lib/yaml-parse.js; #899)
+ *
+ * The autopm payload is what `autopm install` ships to user projects; .claude/
+ * is this repo's own installed copy.
  *
  * Usage:
  *   node scripts/sync-plugin-scripts.js            # copy (repair) targets
@@ -14,8 +20,8 @@
  *   --source <dir>    override source directory
  *   --target <dir>    override target directory (repeatable)
  *
- * Only files present in the source tree are managed; consumer-specific
- * files (e.g. autopm payload pm/*.js) are left untouched. No dependencies.
+ * Only files present in the source tree (or a job's file list) are managed;
+ * consumer-specific files are left untouched. No dependencies.
  */
 
 'use strict';
@@ -37,16 +43,43 @@ function collectFiles(dir, prefix = '') {
   return files.sort();
 }
 
+/** PM engines generated from lib/ into autopm/.claude/lib/pm-engines (#848, #899). */
+const PM_ENGINES = [
+  'analytics-engine.js',
+  'batch-processor-integration.js',
+  'batch-processor.js',
+  'burndown-chart.js',
+  'dependency-analyzer.js',
+  'filter-engine.js'
+];
+
+/** Rewrite a lib/ engine for <proj>/.claude/lib/pm-engines/. */
+function engineTransform(content, rel) {
+  const rewritten = content
+    .replace("require('../.claude/scripts/pm-sync-upload-local')", "require('../../scripts/pm-sync-upload-local')")
+    .replace("require('yaml')", "require('../../scripts/pm/lib/yaml-parse')");
+  return Buffer.from(
+    `// GENERATED from lib/${rel} by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.\n` +
+      rewritten
+  );
+}
+
+/** Expected bytes of a target file. */
+function render(sourceDir, rel, transform) {
+  const buf = fs.readFileSync(path.join(sourceDir, rel));
+  return transform ? transform(buf.toString('utf8'), rel) : buf;
+}
+
 /** Copy every source file into each target, preserving permission bits. */
-function syncScripts({ sourceDir, targetDirs }) {
+function syncScripts({ sourceDir, targetDirs, files: only, transform }) {
   const copied = [];
-  const files = collectFiles(sourceDir);
+  const files = only || collectFiles(sourceDir);
   for (const target of targetDirs) {
     for (const rel of files) {
       const src = path.join(sourceDir, rel);
       const dst = path.join(target, rel);
       fs.mkdirSync(path.dirname(dst), { recursive: true });
-      fs.copyFileSync(src, dst);
+      fs.writeFileSync(dst, render(sourceDir, rel, transform));
       fs.chmodSync(dst, fs.statSync(src).mode & 0o777);
       copied.push({ target, file: rel });
     }
@@ -55,16 +88,16 @@ function syncScripts({ sourceDir, targetDirs }) {
 }
 
 /** Compare targets against source. Reasons: missing | content | mode. */
-function checkSync({ sourceDir, targetDirs }) {
+function checkSync({ sourceDir, targetDirs, files: only, transform }) {
   const diverged = [];
-  const files = collectFiles(sourceDir);
+  const files = only || collectFiles(sourceDir);
   for (const target of targetDirs) {
     for (const rel of files) {
       const src = path.join(sourceDir, rel);
       const dst = path.join(target, rel);
       if (!fs.existsSync(dst)) {
         diverged.push({ target, file: rel, reason: 'missing' });
-      } else if (!fs.readFileSync(src).equals(fs.readFileSync(dst))) {
+      } else if (!render(sourceDir, rel, transform).equals(fs.readFileSync(dst))) {
         diverged.push({ target, file: rel, reason: 'content' });
       } else if ((fs.statSync(src).mode & 0o777) !== (fs.statSync(dst).mode & 0o777)) {
         diverged.push({ target, file: rel, reason: 'mode' });
@@ -87,15 +120,33 @@ function parseArgs(argv) {
       process.exit(2);
     }
   }
-  if (!opts.sourceDir) {
-    opts.sourceDir = path.join(repoRoot, 'packages', 'plugin-core', 'scripts');
+  if (opts.sourceDir || opts.targetDirs.length > 0) {
+    opts.sourceDir = opts.sourceDir || path.join(repoRoot, 'packages', 'plugin-core', 'scripts');
+    if (opts.targetDirs.length === 0) {
+      opts.targetDirs = [path.join(repoRoot, 'autopm', '.claude', 'scripts'), path.join(repoRoot, '.claude', 'scripts')];
+    }
+    opts.jobs = [{ sourceDir: opts.sourceDir, targetDirs: opts.targetDirs }];
+    return opts;
   }
-  if (opts.targetDirs.length === 0) {
-    opts.targetDirs = [
-      path.join(repoRoot, 'autopm', '.claude', 'scripts'),
-      path.join(repoRoot, '.claude', 'scripts')
-    ];
-  }
+  opts.jobs = [
+    {
+      sourceDir: path.join(repoRoot, 'packages', 'plugin-core', 'scripts'),
+      targetDirs: [path.join(repoRoot, 'autopm', '.claude', 'scripts'), path.join(repoRoot, '.claude', 'scripts')]
+    },
+    {
+      sourceDir: path.join(repoRoot, 'packages', 'plugin-pm', 'scripts', 'pm'),
+      targetDirs: [
+        path.join(repoRoot, 'autopm', '.claude', 'scripts', 'pm'),
+        path.join(repoRoot, '.claude', 'scripts', 'pm')
+      ]
+    },
+    {
+      sourceDir: path.join(repoRoot, 'lib'),
+      targetDirs: [path.join(repoRoot, 'autopm', '.claude', 'lib', 'pm-engines')],
+      files: PM_ENGINES,
+      transform: engineTransform
+    }
+  ];
   return opts;
 }
 
@@ -103,25 +154,34 @@ function main() {
   const opts = parseArgs(process.argv.slice(2));
 
   if (opts.check) {
-    const { files, diverged } = checkSync(opts);
-    if (diverged.length > 0) {
-      console.error('❌ Script copies diverged from packages/plugin-core/scripts:');
-      for (const d of diverged) {
-        console.error(`  - ${path.join(d.target, d.file)} (${d.reason})`);
+    let failed = false;
+    for (const job of opts.jobs) {
+      const { files, diverged } = checkSync(job);
+      if (diverged.length > 0) {
+        failed = true;
+        console.error(`❌ Copies diverged from ${job.sourceDir}:`);
+        for (const d of diverged) {
+          console.error(`  - ${path.join(d.target, d.file)} (${d.reason})`);
+        }
+      } else {
+        console.log(`✅ In sync: ${files.length} files x ${job.targetDirs.length} targets from ${job.sourceDir}`);
       }
+    }
+    if (failed) {
       console.error('Fix with: npm run sync:scripts');
       process.exit(1);
     }
-    console.log(`✅ In sync: ${files.length} files x ${opts.targetDirs.length} targets`);
     return;
   }
 
-  const { files } = syncScripts(opts);
-  console.log(`✅ Synced ${files.length} files to ${opts.targetDirs.length} targets`);
+  for (const job of opts.jobs) {
+    const { files } = syncScripts(job);
+    console.log(`✅ Synced ${files.length} files to ${job.targetDirs.length} targets from ${job.sourceDir}`);
+  }
 }
 
 if (require.main === module) {
   main();
 }
 
-module.exports = { collectFiles, syncScripts, checkSync, parseArgs };
+module.exports = { collectFiles, syncScripts, checkSync, parseArgs, engineTransform, PM_ENGINES };
