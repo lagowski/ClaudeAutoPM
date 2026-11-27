@@ -49,19 +49,12 @@ function validateAgentFiles(agents, projectRoot) {
 
   // Check if agents directory exists
   if (!fs.existsSync(agentsDir)) {
-    // If in framework development, check autopm directory
-    const autopmAgentsDir = path.join(projectRoot, 'autopm', '.claude', 'agents');
-    if (!fs.existsSync(autopmAgentsDir)) {
-      console.warn('⚠️  Warning: Agents directory not found');
-      return missingAgents; // Return empty array to continue
-    }
+    console.warn('⚠️  Warning: Agents directory not found');
+    return missingAgents; // Return empty array to continue
   }
 
   agents.forEach(agent => {
-    const agentPath = path.join(agentsDir, agent);
-    const autopmAgentPath = path.join(projectRoot, 'autopm', '.claude', 'agents', agent);
-
-    if (!fs.existsSync(agentPath) && !fs.existsSync(autopmAgentPath)) {
+    if (!fs.existsSync(path.join(agentsDir, agent))) {
       missingAgents.push(agent);
     }
   });

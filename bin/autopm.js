@@ -19,36 +19,46 @@ function main() {
 
   cli
     // Main commands
-    .command('install [preset]', 'Install ClaudeAutoPM framework in current project directory',
+    .command('install', 'Install ClaudeAutoPM framework in current project directory',
       (yargs) => {
         return yargs
-          .positional('preset', {
-            describe: 'Installation preset (1-5)',
-            type: 'number'
-          })
           .option('force', {
             describe: 'Force overwrite existing files',
             type: 'boolean',
             default: false
           })
+          .option('merge', {
+            describe: 'Merge with existing CLAUDE.md',
+            type: 'boolean',
+            default: false
+          })
+          .option('check-env', {
+            describe: 'Check environment dependencies and exit',
+            type: 'boolean',
+            default: false
+          })
+          .option('setup-hooks', {
+            describe: 'Set up git hooks after installation',
+            type: 'boolean',
+            default: false
+          })
           .option('scenario', {
-            describe: 'Installation scenario (lite, github, azure, docker, full, performance)',
-            type: 'string'
+            describe: 'Installation scenario',
+            type: 'string',
+            choices: ['lite', 'github', 'azure', 'docker', 'full', 'full-azure', 'performance', 'obsidian']
           });
       },
       (argv) => {
         // Delegate to install.js directly (not install.sh) to pass flags
         const { execFileSync } = require('child_process');
         const installJsPath = path.join(__dirname, '..', 'install', 'install.js');
-        const args = [];
-        if (argv.force) args.push('--force');
+        const args = ['force', 'merge', 'check-env', 'setup-hooks']
+          .filter(flag => argv[flag])
+          .map(flag => `--${flag}`);
         if (argv.scenario) args.push(`--scenario=${argv.scenario}`);
         try {
           // Pass arguments as an array (no shell) to prevent command injection
-          execFileSync('node', [installJsPath, ...args], {
-            stdio: 'inherit',
-            env: { ...process.env, AUTOPM_PRESET: argv.preset || '' }
-          });
+          execFileSync('node', [installJsPath, ...args], { stdio: 'inherit' });
         } catch (error) {
           console.error('Installation failed:', error.message);
           process.exit(1);

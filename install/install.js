@@ -191,7 +191,8 @@ class Installer {
 ${this.colors.BOLD}ClaudeAutoPM Installation Script${this.colors.NC}
 
 ${this.colors.BOLD}Usage:${this.colors.NC}
-  install.sh [TARGET_DIR] [OPTIONS]
+  autopm install [OPTIONS]
+  node install/install.js [TARGET_DIR] [OPTIONS]
 
 ${this.colors.BOLD}Options:${this.colors.NC}
   --help, -h         Show this help message
@@ -210,12 +211,13 @@ ${this.colors.BOLD}Scenarios:${this.colors.NC}
   full               Full DevOps with GitHub (recommended, 10 plugins)
   full-azure         Full DevOps with GitHub + Azure (11 plugins)
   performance        Maximum parallelization (12 plugins)
+  obsidian           Local PM with Obsidian vault sync (3 plugins)
 
 ${this.colors.BOLD}Examples:${this.colors.NC}
-  install.sh                    Install in current directory
-  install.sh /path/to/project   Install in specific directory
-  install.sh --scenario=full    Install with full DevOps features
-  install.sh --force --merge    Force install and merge CLAUDE.md
+  autopm install                          Install in current directory
+  autopm install --scenario=full          Install with full DevOps features
+  autopm install --force --merge          Force install and merge CLAUDE.md
+  node install/install.js /path/to/proj   Install in specific directory
 `);
   }
 
