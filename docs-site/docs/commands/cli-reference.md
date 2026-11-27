@@ -40,10 +40,12 @@ the CLI's own help is authoritative.
 
 | Option | Effect |
 |--------|--------|
-| `--help`, `-h` | Show help (for a command: `autopm <command> --help`) |
+| `--help` | Show help (for a command: `autopm <command> --help`) |
 | `--version`, `-v` | Print the installed version |
 | `--verbose` | Verbose logging |
 | `--debug` | Debug output |
+
+The short form `-h` works only at the top level and for: `install`, `update`, `guide`, `team`, `config`, `mcp`, `plugin`, `validate`.
 
 ## Framework
 
