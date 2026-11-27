@@ -18,9 +18,10 @@ const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const INSTALL_JS = path.join(ROOT, 'install', 'install.js');
+const Installer = require(INSTALL_JS);
 
-function install(project, scenario) {
-  const r = spawnSync('node', [INSTALL_JS, `--scenario=${scenario}`, project], {
+function install(project, scenario, ...flags) {
+  const r = spawnSync('node', [INSTALL_JS, `--scenario=${scenario}`, ...flags, project], {
     cwd: project,
     env: { ...process.env, AUTOPM_TEST_MODE: '1' },
     encoding: 'utf8'
@@ -58,15 +59,33 @@ describe('install registers framework hooks in .claude/settings.json (#859)', ()
     for (const entry of pre) expect(typeof entry.matcher).toBe('string');
 
     const scripts = scriptsOf(project, pre);
-    expect(scripts.map(s => path.basename(s)).sort())
-      .toEqual(['docker-first-enforcement.sh', 'enforce-agents.cjs']);
+    expect(scripts.map(s => path.basename(s))).toEqual(['docker-first-enforcement.sh']);
     for (const s of scripts) expect(fs.existsSync(s)).toBe(true);
   }, 60000);
 
-  test('a scenario without docker does not register the docker-first hook', () => {
+  test('a default install registers enforce-agents.cjs nowhere', () => {
     install(project, 'lite');
-    const names = scriptsOf(project, settingsOf(project).hooks.PreToolUse).map(s => path.basename(s));
-    expect(names).toEqual(['enforce-agents.cjs']);
+    expect(settingsOf(project).hooks).toBeUndefined();
+    const config = JSON.parse(fs.readFileSync(path.join(project, '.claude', 'config.json'), 'utf8'));
+    expect(config.features?.enforce_agents).toBeUndefined();
+  }, 60000);
+
+  test('--enforce-agents opts in: the hook is registered and the choice is saved for update', () => {
+    install(project, 'docker', '--enforce-agents');
+    const pre = settingsOf(project).hooks.PreToolUse;
+    expect(scriptsOf(project, pre).map(s => path.basename(s)).sort())
+      .toEqual(['docker-first-enforcement.sh', 'enforce-agents.cjs']);
+    expect(pre.find(e => /enforce-agents\.cjs/.test(e.hooks[0].command)).matcher).toBe('Bash|Read');
+    const config = JSON.parse(fs.readFileSync(path.join(project, '.claude', 'config.json'), 'utf8'));
+    expect(config.features.enforce_agents).toBe(true);
+
+    // update.sh re-registers from .claude/config.json: opted in stays in, opted out drops it
+    expect(Installer.registerClaudeHooks(project, config).sort())
+      .toEqual(['docker-first-enforcement.sh', 'enforce-agents.cjs']);
+    expect(Installer.registerClaudeHooks(project, { tools: config.tools }))
+      .toEqual(['docker-first-enforcement.sh']);
+    expect(scriptsOf(project, settingsOf(project).hooks.PreToolUse).map(s => path.basename(s)))
+      .toEqual(['docker-first-enforcement.sh']);
   }, 60000);
 
   test('re-install keeps user hook entries and other settings, without duplicating ours', () => {
@@ -87,7 +106,7 @@ describe('install registers framework hooks in .claude/settings.json (#859)', ()
     expect(settings.permissions).toEqual({ allow: ['Bash(ls:*)'] });
     expect(settings.hooks.Stop).toEqual([{ hooks: [{ type: 'command', command: 'echo stop' }] }]);
     expect(settings.hooks.PreToolUse).toContainEqual(userEntry);
-    expect(scriptsOf(project, settings.hooks.PreToolUse)).toHaveLength(2);
+    expect(scriptsOf(project, settings.hooks.PreToolUse)).toHaveLength(1);
   }, 60000);
 
   test('reminder-only and duplicate hooks are no longer shipped', () => {

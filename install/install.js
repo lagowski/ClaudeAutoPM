@@ -67,6 +67,7 @@ class Installer {
       merge: false,
       checkEnv: false,
       setupHooks: false,
+      enforceAgents: false,
       scenario: null,
       targetDir: null
     };
@@ -86,6 +87,8 @@ class Installer {
         this.options.checkEnv = true;
       } else if (arg === '--setup-hooks') {
         this.options.setupHooks = true;
+      } else if (arg === '--enforce-agents') {
+        this.options.enforceAgents = true;
       } else if (arg.startsWith('--scenario=')) {
         this.options.scenario = arg.split('=')[1];
       } else if (!arg.startsWith('-')) {
@@ -201,6 +204,7 @@ ${this.colors.BOLD}Options:${this.colors.NC}
   --merge            Merge with existing CLAUDE.md
   --check-env        Check environment dependencies
   --setup-hooks      Setup git hooks after installation
+  --enforce-agents   Register the enforce-agents hook (blocks verbose test runs, log reads, big-file reads)
   --scenario=NAME    Use predefined installation scenario
 
 ${this.colors.BOLD}Scenarios:${this.colors.NC}
@@ -822,6 +826,7 @@ ${this.colors.BOLD}Select installation scenario:${this.colors.NC}
 
     const configPath = path.join(configDir, 'config.json');
     const config = this.generateConfig(scenario);
+    if (this.options.enforceAgents) config.features = { ...config.features, enforce_agents: true };
 
     // Store for use in CLAUDE.md generation
     this.currentScenario = scenario;
@@ -1771,6 +1776,7 @@ const FRAMEWORK_HOOK_SCRIPTS = [
 /**
  * Merge the framework's PreToolUse hooks into `<targetDir>/.claude/settings.json`, keeping every
  * user entry and setting. A hook is registered only if its script exists in `.claude/hooks/`.
+ * `enforce-agents.cjs` is opt-in: only when `config.features.enforce_agents === true` (`--enforce-agents`).
  * Docker scenarios also get `pre-push-docker-tests.sh` as the git pre-push hook unless one exists.
  * Returns the registered script names. Used by install and by `install/update.sh`.
  */
@@ -1778,7 +1784,7 @@ Installer.registerClaudeHooks = function registerClaudeHooks(targetDir, config =
   const hooksDir = path.join(targetDir, '.claude', 'hooks');
   const dockerEnabled = config.tools?.docker?.enabled === true;
   const wanted = [
-    { script: 'enforce-agents.cjs', matcher: 'Bash|Read', runner: 'node' },
+    config.features?.enforce_agents === true && { script: 'enforce-agents.cjs', matcher: 'Bash|Read', runner: 'node' },
     dockerEnabled && { script: 'docker-first-enforcement.sh', matcher: 'Bash', runner: 'bash' }
   ].filter(h => h && fs.existsSync(path.join(hooksDir, h.script)));
 

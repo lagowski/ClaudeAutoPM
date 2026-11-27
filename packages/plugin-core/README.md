@@ -73,9 +73,11 @@ Universal rules that apply to all projects:
 
 ### 🪝 Hooks (1)
 
-- `enforce-agents.cjs` - Blocks direct test runs, code searches and large-file reads in favour of
-  an agent (BLOCKING). The installer registers it as a `PreToolUse` hook (matcher `Bash|Read`) in
-  the project's `.claude/settings.json`, keeping your own entries there.
+- `enforce-agents.cjs` - Opt-in (BLOCKING). Blocks test suite runs that print their full output
+  (`npm test`, `pytest`; `-q`/`--silent` runs pass), reading `*.log`/`*.out` files, and reading a
+  file over 1000 lines without a limit, in favour of an agent. Registered as a `PreToolUse` hook
+  (matcher `Bash|Read`) in `.claude/settings.json` only when you install with `--enforce-agents`,
+  or set `"features": {"enforce_agents": true}` in `.claude/config.json` and run `autopm update`.
 
 ### 📦 Scripts (10)
 
