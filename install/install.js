@@ -40,6 +40,7 @@ class Installer {
       '.claude/rules',
       '.claude/hooks',
       '.claude/scripts',
+      '.claude/lib',  // engines and helpers that .claude/scripts require (#848)
       '.claude/checklists',
       '.claude/strategies',
       '.claude/mcp',
