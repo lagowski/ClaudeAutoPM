@@ -46,6 +46,8 @@ cd your-project
 autopm install
 ```
 
+Without a global install: `npx -p claude-autopm autopm install --scenario=lite` (the command is `autopm`, so npx needs `-p`).
+
 Choose your scenario during installation:
 
 | Scenario | Agents | Use case |
