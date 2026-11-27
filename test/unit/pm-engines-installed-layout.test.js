@@ -1,6 +1,7 @@
 /**
- * #848: analytics.js and sync-batch.js must load in an installed project,
- * which has `.claude/` only and no repo `lib/`.
+ * #848 / #899: analytics.js and sync-batch.js must work in a project made by a real
+ * `autopm install`, which has `.claude/` only: no repo `lib/` and no repo node_modules.
+ * NODE_PATH is deliberately emptied so nothing from this repo leaks in (#899).
  */
 const fs = require('fs');
 const os = require('os');
@@ -8,105 +9,156 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '../..');
-const ENGINES = [
-  'analytics-engine',
-  'burndown-chart',
-  'dependency-analyzer',
-  'filter-engine',
-  'batch-processor',
-  'batch-processor-integration'
-];
-const SCRIPTS = ['analytics.js', 'sync-batch.js'];
 
-function copyDir(src, dst) {
-  fs.cpSync(src, dst, { recursive: true });
+/** Environment with no route back to this repo's node_modules. */
+function isolatedEnv(extra = {}) {
+  const env = { ...process.env, ...extra };
+  delete env.NODE_PATH;
+  return env;
 }
 
-/** Lay out a project the way `autopm install` does: <proj>/.claude/{scripts,lib}. */
-function makeInstalledProject(pmScriptsSource) {
-  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'autopm-848-'));
-  copyDir(path.join(ROOT, 'autopm/.claude/scripts'), path.join(proj, '.claude/scripts'));
-  copyDir(path.join(ROOT, 'autopm/.claude/lib'), path.join(proj, '.claude/lib'));
-  if (pmScriptsSource) {
-    copyDir(pmScriptsSource, path.join(proj, '.claude/scripts/pm'));
-  }
-  return proj;
-}
-
-function loadIn(proj, script) {
-  const target = path.join(proj, '.claude/scripts/pm', script);
-  return spawnSync(process.execPath, ['-e', `require(${JSON.stringify(target)})`], {
+function run(proj, args, extra = {}) {
+  return spawnSync(process.execPath, args, {
     cwd: proj,
     encoding: 'utf8',
-    // npm deps (yaml, @octokit/rest) are the project's to install; lib/ is not.
-    env: { ...process.env, NODE_PATH: path.join(ROOT, 'node_modules') }
+    timeout: 60000,
+    env: isolatedEnv(extra)
   });
 }
 
-describe('pm engines in an installed project (#848)', () => {
-  const projects = [];
-  afterAll(() => projects.forEach((p) => fs.rmSync(p, { recursive: true, force: true })));
+describe('pm engines in a real `autopm install --scenario=minimal` (#899)', () => {
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'autopm-899-install-'));
+  afterAll(() => fs.rmSync(proj, { recursive: true, force: true }));
 
-  describe.each([
-    ['autopm payload', null],
-    ['plugin-pm source', path.join(ROOT, 'packages/plugin-pm/scripts/pm')]
-  ])('%s', (_label, source) => {
-    const proj = makeInstalledProject(source);
-    projects.push(proj);
+  spawnSync('git', ['init', '-q'], { cwd: proj });
+  const install = spawnSync(
+    process.execPath,
+    [path.join(ROOT, 'install/install.js'), proj, '--scenario=minimal'],
+    { encoding: 'utf8', input: '', timeout: 120000, env: isolatedEnv({ AUTOPM_TEST_MODE: '1' }) }
+  );
 
-    test('has no repo lib/ above the project', () => {
-      expect(fs.existsSync(path.join(proj, 'lib/analytics-engine.js'))).toBe(false);
-    });
-
-    test.each(SCRIPTS)('%s loads without MODULE_NOT_FOUND', (script) => {
-      const res = loadIn(proj, script);
-      expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module/);
-      expect(res.status).toBe(0);
-    });
+  test('installer succeeds, ships pm-engines, and the project has no yaml/@octokit/rest', () => {
+    expect(install.status).toBe(0);
+    expect(fs.existsSync(path.join(proj, '.claude/lib/pm-engines/analytics-engine.js'))).toBe(true);
+    expect(fs.existsSync(path.join(proj, 'lib/analytics-engine.js'))).toBe(false);
+    expect(fs.existsSync(path.join(proj, 'node_modules/yaml'))).toBe(false);
+    expect(fs.existsSync(path.join(proj, 'node_modules/@octokit/rest'))).toBe(false);
   });
 
-  describe('real `autopm install` output', () => {
-    const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'autopm-848-install-'));
-    projects.push(proj);
-    spawnSync('git', ['init', '-q'], { cwd: proj });
-    const install = spawnSync(
-      process.execPath,
-      [path.join(ROOT, 'install/install.js'), proj, '--scenario=minimal'],
-      { encoding: 'utf8', input: '', timeout: 120000, env: { ...process.env, AUTOPM_TEST_MODE: '1' } }
+  test('analytics.js exports real epic analytics (parses frontmatter without npm deps)', () => {
+    const epicDir = path.join(proj, '.claude/epics/epic-899');
+    fs.mkdirSync(epicDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(epicDir, 'epic.md'),
+      '---\nid: epic-899\ntitle: "Real install"\nstatus: in-progress\ncreated: 2026-11-20T10:00:00Z\n---\n# Epic\n'
     );
+    fs.writeFileSync(
+      path.join(epicDir, 'task-001.md'),
+      '---\nid: task-001\ntitle: Done task\nstatus: closed\ncreated: 2026-11-21T10:00:00Z\ncompleted: 2026-11-22T10:00:00Z\n---\n# T1\n'
+    );
+    fs.writeFileSync(
+      path.join(epicDir, 'task-002.md'),
+      '---\nid: task-002\ntitle: Open task\nstatus: open\ndependencies: [task-001]\n---\n# T2\n'
+    );
+    const out = path.join(proj, 'analytics.json');
+    const res = run(proj, ['.claude/scripts/pm/analytics.js', 'export', 'epic-899', '--format', 'json', '--output', out]);
+    expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module/);
+    expect(res.status).toBe(0);
+    const data = JSON.parse(fs.readFileSync(out, 'utf8'));
+    expect(data.title).toBe('Real install');
+    expect(data.status.total).toBe(2);
+    expect(data.status.completed).toBe(1);
+  });
 
-    test('installer succeeds and ships .claude/lib/pm-engines', () => {
-      expect(install.status).toBe(0);
-      expect(fs.existsSync(path.join(proj, '.claude/lib/pm-engines/analytics-engine.js'))).toBe(true);
-    });
+  test('sync-batch.js exits with a clear @octokit/rest message, not MODULE_NOT_FOUND', () => {
+    const res = run(proj, ['.claude/scripts/pm/sync-batch.js', '--dry-run'], { GITHUB_TOKEN: 'dummy' });
+    expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module/);
+    expect(res.stderr).toMatch(/@octokit\/rest/);
+    expect(res.stderr).toMatch(/npm install @octokit\/rest/);
+    expect(res.status).toBe(1);
+  });
+});
 
-    test.each(SCRIPTS)('%s loads in the installed project', (script) => {
-      const res = loadIn(proj, script);
-      expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module|PM engine '/);
-      expect(res.status).toBe(0);
+describe('pm-engines yaml fallback (#899)', () => {
+  const parseBuiltin = (text) => require('../../autopm/.claude/lib/pm-engines/yaml-parse').parseBuiltin(text);
+
+  test('parses the frontmatter shapes PM files use', () => {
+    expect(
+      parseBuiltin(
+        [
+          'id: task-001',
+          'title: "Quoted: with colon"',
+          "owner: 'single'",
+          'estimate: 3',
+          'ratio: 0.5',
+          'done: true',
+          'blocked: false',
+          'parent: null',
+          'empty:',
+          'created: 2026-11-20T10:00:00Z',
+          'tags: [a, "b c", 3]',
+          'dependencies:',
+          '  - task-002',
+          '  - "task-003"',
+          '# a comment',
+          'note: value # trailing comment'
+        ].join('\n')
+      )
+    ).toEqual({
+      id: 'task-001',
+      title: 'Quoted: with colon',
+      owner: 'single',
+      estimate: 3,
+      ratio: 0.5,
+      done: true,
+      blocked: false,
+      parent: null,
+      empty: null,
+      created: '2026-11-20T10:00:00Z',
+      tags: ['a', 'b c', 3],
+      dependencies: ['task-002', 'task-003'],
+      note: 'value'
     });
   });
 
-  test('engine copies under autopm/.claude/lib/pm-engines match lib/', () => {
-    for (const name of ENGINES) {
-      const normalise = (s) =>
-        s.replace("require('../../scripts/pm-sync-upload-local')", "require('../.claude/scripts/pm-sync-upload-local')");
-      const copy = fs.readFileSync(path.join(ROOT, 'autopm/.claude/lib/pm-engines', `${name}.js`), 'utf8');
-      const orig = fs.readFileSync(path.join(ROOT, 'lib', `${name}.js`), 'utf8');
-      expect({ name, same: normalise(copy) === orig }).toEqual({ name, same: true });
+  test('parses a one-level nested map', () => {
+    expect(parseBuiltin('meta:\n  owner: me\n  points: 5')).toEqual({ meta: { owner: 'me', points: 5 } });
+  });
+});
+
+describe('sync coverage of the vendored copies (#899)', () => {
+  test('npm run sync:scripts:check covers pm-engines and plugin-pm/scripts/pm', () => {
+    const { parseArgs } = require('../../scripts/sync-plugin-scripts');
+    const jobs = parseArgs([]).jobs;
+    const sources = jobs.map((j) => path.relative(ROOT, j.sourceDir));
+    const targets = jobs.flatMap((j) => j.targetDirs.map((t) => path.relative(ROOT, t)));
+    expect(sources).toEqual(expect.arrayContaining(['packages/plugin-core/scripts', 'packages/plugin-pm/scripts/pm', 'lib']));
+    expect(targets).toEqual(
+      expect.arrayContaining(['autopm/.claude/scripts/pm', '.claude/scripts/pm', 'autopm/.claude/lib/pm-engines'])
+    );
+    const res = spawnSync(process.execPath, [path.join(ROOT, 'scripts/sync-plugin-scripts.js'), '--check'], {
+      encoding: 'utf8'
+    });
+    expect(res.stderr).toBe('');
+    expect(res.status).toBe(0);
+  });
+
+  test('--check flags a hand-edited engine copy', () => {
+    const { parseArgs, checkSync } = require('../../scripts/sync-plugin-scripts');
+    const job = parseArgs([]).jobs.find((j) => path.relative(ROOT, j.sourceDir) === 'lib');
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'autopm-899-engines-'));
+    try {
+      fs.cpSync(job.targetDirs[0], tmp, { recursive: true });
+      fs.appendFileSync(path.join(tmp, 'filter-engine.js'), '\n// drift\n');
+      const { diverged } = checkSync({ ...job, targetDirs: [tmp] });
+      expect(diverged).toEqual([{ target: tmp, file: 'filter-engine.js', reason: 'content' }]);
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
     }
   });
 
   test('resolver names the missing engine and where it looked', () => {
     const { requireEngine } = require('../../packages/plugin-pm/scripts/pm/lib/require-engine');
     expect(() => requireEngine('no-such-engine')).toThrow(/no-such-engine.*\.claude\/lib\/pm-engines/s);
-  });
-
-  test('autopm copies of the pm scripts match packages/plugin-pm', () => {
-    for (const rel of [...SCRIPTS, 'lib/require-engine.js']) {
-      const a = fs.readFileSync(path.join(ROOT, 'packages/plugin-pm/scripts/pm', rel), 'utf8');
-      const b = fs.readFileSync(path.join(ROOT, 'autopm/.claude/scripts/pm', rel), 'utf8');
-      expect({ rel, same: a === b }).toEqual({ rel, same: true });
-    }
   });
 });
