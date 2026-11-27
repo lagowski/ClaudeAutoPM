@@ -298,8 +298,8 @@ MIT © ClaudeAutoPM Team
 
 ## Support
 
-- **Issues**: https://github.com/rafeekpro/ClaudeAutoPM/issues
-- **Documentation**: https://github.com/rafeekpro/ClaudeAutoPM/tree/main/packages/plugin-ai
+- **Issues**: https://github.com/lagowski/ClaudeAutoPM/issues
+- **Documentation**: https://github.com/lagowski/ClaudeAutoPM/tree/main/packages/plugin-ai
 
 ## Resources
 

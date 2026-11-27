@@ -9,10 +9,10 @@
     "category": "Cloud Infrastructure",
     "author": "ClaudeAutoPM Team",
     "license": "MIT",
-    "homepage": "https://github.com/rafeekpro/ClaudeAutoPM",
+    "homepage": "https://github.com/lagowski/ClaudeAutoPM",
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/rafeekpro/ClaudeAutoPM.git",
+      "url": "git+https://github.com/lagowski/ClaudeAutoPM.git",
       "directory": "packages/plugin-cloud"
     },
     "size": "~15 KB (gzipped)",

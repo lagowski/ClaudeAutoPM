@@ -73,6 +73,8 @@ autopm/.claude/agents/       ← 7 core agents (always available)
 packages/plugin-*/agents/    ← 50+ specialized agents (per plugin)
 ```
 
+These are repo paths. In an installed project, agents live in `.claude/agents/`.
+
 **Token savings**: Lite installs use 73% fewer agent tokens vs full.
 
 ### XML Rules Engine

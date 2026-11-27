@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM.git",
+    "url": "https://github.com/lagowski/ClaudeAutoPM.git",
     "directory": "packages/plugin-pm-github"
   },
   "keywords": [

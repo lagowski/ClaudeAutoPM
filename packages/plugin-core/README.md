@@ -265,8 +265,8 @@ MIT
 
 ## Support
 
-- **Issues:** https://github.com/rafeekpro/ClaudeAutoPM/issues
-- **Documentation:** https://github.com/rafeekpro/ClaudeAutoPM#readme
+- **Issues:** https://github.com/lagowski/ClaudeAutoPM/issues
+- **Documentation:** https://github.com/lagowski/ClaudeAutoPM#readme
 - **Changelog:** See [CHANGELOG.md](../../CHANGELOG.md)
 
 ---

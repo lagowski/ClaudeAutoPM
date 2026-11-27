@@ -65,6 +65,23 @@ autopm install --scenario=github
 autopm install --scenario=full-azure
 ```
 
+One command, no global install:
+
+```bash
+npx claude-autopm install --scenario=lite
+```
+
+`--scenario` skips the scenario menu, but the installer can still ask yes/no questions
+(for example, whether to overwrite existing files). For CI or scripts, set one of:
+
+- `AUTOPM_AUTO_ACCEPT=1`: answer yes to every confirmation prompt.
+- `AUTOPM_TEST_MODE=1`: answer yes to every confirmation prompt and, when no
+  `--scenario` is given, pick `lite` instead of showing the menu.
+
+```bash
+AUTOPM_TEST_MODE=1 npx claude-autopm install --scenario=lite
+```
+
 ## Installation Scenarios
 
 ClaudeAutoPM offers 7 predefined scenarios + Custom. Each installs a different set of plugins from the `@claudeautopm` npm scope.
