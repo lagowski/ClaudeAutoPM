@@ -88,16 +88,22 @@ describe('docs match the real CLI (#847, #900)', () => {
     expect(topHelp).not.toMatch(/without AI/i);
   });
 
-  test('cli-reference lists -h as a global option only if every command accepts it', () => {
-    const noShortHelp = [...commands].filter((cmd) => {
+  test('cli-reference says -h works only where it does', () => {
+    const shortHelp = (cmd) => {
       try {
-        return !execFileSync('node', [CLI, cmd, '-h'], { encoding: 'utf8', cwd: ROOT, stdio: 'pipe' })
+        return execFileSync('node', [CLI, cmd, '-h'], { encoding: 'utf8', cwd: ROOT, stdio: 'pipe' })
           .startsWith(`autopm.js ${cmd}`);
-      } catch { return true; }
-    });
-    const row = read('docs-site/docs/commands/cli-reference.md').split('\n').find((l) => l.startsWith('| `--help`'));
+      } catch { return false; }
+    };
+    const page = read('docs-site/docs/commands/cli-reference.md');
+    const row = page.split('\n').find((l) => l.startsWith('| `--help`'));
     expect(row).toBeDefined();
+    const noShortHelp = [...commands].filter((cmd) => !shortHelp(cmd));
     if (noShortHelp.length) expect(row).not.toMatch(/`-h`/);
+    const note = page.split('\n').find((l) => /`-h` works only/.test(l)) || '';
+    const named = [...note.matchAll(/`([a-z][\w-]*)`/g)].map((m) => m[1]);
+    expect(named.filter((cmd) => !shortHelp(cmd))).toEqual([]);
+    expect(noShortHelp.filter((cmd) => named.includes(cmd))).toEqual([]);
   });
 
   test('./scripts/ paths in docs-site/docs exist', () => {
