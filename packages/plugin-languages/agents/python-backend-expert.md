@@ -1,6 +1,7 @@
 ---
 name: python-backend-expert
-description: ## Description Comprehensive Python backend development specialist supporting multiple frameworks and architectural patterns.
+description: "Comprehensive Python backend development specialist supporting multiple frameworks and architectural patterns."
+tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: green
 ---

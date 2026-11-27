@@ -284,6 +284,18 @@ done
 # Clean up temp directories
 rm -rf "$TEMP_PRESERVE_DIR" "$TEMP_PROJECT_DIR" 2>/dev/null || true
 
+# Register the enforcement hooks in .claude/settings.json, keeping the user's own entries (#859)
+if [ -f "$AUTOPM_ROOT/install/install.js" ] && command -v node >/dev/null 2>&1; then
+    echo -e "${YELLOW}🪝 Registering Claude Code hooks...${NC}"
+    PROJECT_DIR="$PWD" INSTALL_JS="$AUTOPM_ROOT/install/install.js" node -e '
+      const fs = require("fs"), path = require("path");
+      const dir = process.env.PROJECT_DIR;
+      let config = {};
+      try { config = JSON.parse(fs.readFileSync(path.join(dir, ".claude", "config.json"), "utf8")); } catch {}
+      require(process.env.INSTALL_JS).registerClaudeHooks(dir, config);
+    ' || echo -e "${YELLOW}   ⚠️  Could not register hooks in .claude/settings.json${NC}"
+fi
+
 # Update scripts permissions
 if [ -d "$CLAUDE_DIR/scripts" ]; then
     echo -e "${YELLOW}🔧 Setting script permissions...${NC}"
