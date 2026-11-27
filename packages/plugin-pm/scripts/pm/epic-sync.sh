@@ -75,7 +75,10 @@ echo ""
 echo "📋 Step 2/4: Creating Task Issues"
 echo "─────────────────────────────────────────"
 
-task_mapping_file=$(bash "$SCRIPT_DIR/epic-sync/create-task-issues.sh" "$EPIC_NAME" "$epic_number")
+# A shortfall exits non-zero but still prints the mapping, so the issues that
+# were created get their files renamed before we report the failure.
+tasks_rc=0
+task_mapping_file=$(bash "$SCRIPT_DIR/epic-sync/create-task-issues.sh" "$EPIC_NAME" "$epic_number") || tasks_rc=$?
 
 if [[ ! -f "$task_mapping_file" ]]; then
     echo ""
@@ -83,8 +86,14 @@ if [[ ! -f "$task_mapping_file" ]]; then
     exit 1
 fi
 
+created_count=$(wc -l < "$task_mapping_file" | tr -d ' ')
+
 echo ""
-echo "✅ Task issues created"
+if [[ $tasks_rc -ne 0 || $created_count -ne $task_count ]]; then
+    echo "⚠️  Only $created_count of $task_count task issues created"
+else
+    echo "✅ Task issues created"
+fi
 echo "   Mapping: $task_mapping_file"
 echo ""
 
@@ -116,7 +125,7 @@ echo "════════════════════════�
 echo ""
 echo "📊 Summary:"
 echo "  Epic: #$epic_number - $EPIC_NAME"
-echo "  Tasks: $task_count issues created"
+echo "  Tasks: $created_count of $task_count issues created"
 echo "  Files: Renamed to GitHub issue numbers"
 echo ""
 echo "🔗 Links:"
@@ -135,3 +144,8 @@ echo "     /pm:issue-start <issue_number>"
 echo "  3. Or start the full epic in parallel:"
 echo "     /pm:epic-start $EPIC_NAME"
 echo ""
+
+if [[ $tasks_rc -ne 0 || $created_count -ne $task_count ]]; then
+    echo "❌ Epic sync incomplete: $((task_count - created_count)) task issue(s) not created"
+    exit 1
+fi

@@ -31,6 +31,20 @@ REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || echo "
 
 echo "🔗 Updating task references and renaming files"
 
+# Keep only numeric "old new" pairs: the values end up in file names and regexes
+VALID_MAPPING=$(mktemp)
+trap 'rm -f "$VALID_MAPPING"' EXIT
+while read -r old_name new_number _; do
+    [[ -z "${old_name:-}" ]] && continue
+    if [[ "$old_name" =~ ^[0-9]+$ && "${new_number:-}" =~ ^[0-9]+$ ]]; then
+        echo "$old_name $new_number" >> "$VALID_MAPPING"
+    else
+        echo "⚠️  Skipping invalid mapping entry: $old_name ${new_number:-}"
+    fi
+done < "$MAPPING_FILE"
+
+failed=0
+
 # First pass: Rename files and update frontmatter
 while read -r old_name new_number; do
     old_file="$EPIC_DIR/$old_name.md"
@@ -50,8 +64,8 @@ while read -r old_name new_number; do
     github_url="https://github.com/$REPO/issues/$new_number"
     timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-    # Update frontmatter
-    awk -v url="$github_url" -v ts="$timestamp" '
+    # Update frontmatter; only a successful awk replaces the original
+    if awk -v url="$github_url" -v ts="$timestamp" '
     BEGIN { in_front=0; front_done=0 }
     /^---$/ {
         if (!front_done) {
@@ -70,50 +84,42 @@ while read -r old_name new_number; do
         next
     }
     { print }
-    ' "$old_file" > "$new_file"
-
-    # Remove old file if new file was created successfully
-    if [[ -f "$new_file" ]]; then
-        rm "$old_file"
-        rm "$old_file.backup"
+    ' "$old_file" > "$new_file.tmp" && mv "$new_file.tmp" "$new_file"; then
+        rm "$old_file" "$old_file.backup"
         echo "✓"
     else
-        # Restore from backup if something went wrong
+        # awk or mv failed: keep the original, drop the partial output
         mv "$old_file.backup" "$old_file"
+        rm -f "$new_file.tmp"
         echo "FAILED"
+        failed=$((failed + 1))
     fi
 
-done < "$MAPPING_FILE"
+done < "$VALID_MAPPING"
 
 # Second pass: Update cross-references within renamed files
 echo ""
 echo "   Updating cross-references within task files..."
 
-# Read all renamed files
+# One pass per file with every mapping in a single regex, so replaced text is
+# never matched again (no chaining like #10 -> #20 -> #30). perl, not sed: \b
+# and case-insensitive flags are not portable to BSD/macOS sed.
 find "$EPIC_DIR" -name "[0-9]*.md" -type f | while read -r task_file; do
-    # Create temp file for updates
-    cp "$task_file" "$task_file.tmp"
-
-    # Update all task references using the mapping
-    while read -r old_name new_number; do
-        # Update patterns like "task 001", "Task 001", "#001", "issue 001"
-        sed "s/\btask $old_name\b/task #$new_number/gi" "$task_file.tmp" > "$task_file.tmp2"
-        mv "$task_file.tmp2" "$task_file.tmp"
-
-        sed "s/#$old_name\b/#$new_number/g" "$task_file.tmp" > "$task_file.tmp2"
-        mv "$task_file.tmp2" "$task_file.tmp"
-
-        sed "s/\bissue $old_name\b/issue #$new_number/gi" "$task_file.tmp" > "$task_file.tmp2"
-        mv "$task_file.tmp2" "$task_file.tmp"
-
-        # Update dependency format: "depends on 001" -> "depends on #46"
-        sed "s/depends on $old_name\b/depends on #$new_number/gi" "$task_file.tmp" > "$task_file.tmp2"
-        mv "$task_file.tmp2" "$task_file.tmp"
-    done < "$MAPPING_FILE"
-
-    # Replace original with updated version
-    mv "$task_file.tmp" "$task_file"
+    perl -e '
+        open(my $m, "<", shift) or die "mapping: $!";
+        my %map = map { chomp; split / / } <$m>;
+        exit 0 unless %map;
+        my $ids = join "|", sort { length($b) <=> length($a) } keys %map;
+        while (<STDIN>) {
+            s/(\b(?:task|issue|depends on) |#)($ids)\b/($1 eq "#" ? "#" : "$1#") . $map{$2}/gie;
+            print;
+        }
+    ' "$VALID_MAPPING" < "$task_file" > "$task_file.tmp" && mv "$task_file.tmp" "$task_file"
 done
 
 echo ""
+if [[ $failed -gt 0 ]]; then
+    echo "❌ $failed task file(s) could not be renamed"
+    exit 1
+fi
 echo "✅ Task files renamed and frontmatter updated"

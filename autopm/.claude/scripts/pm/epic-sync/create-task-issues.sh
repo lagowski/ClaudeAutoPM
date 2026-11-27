@@ -39,15 +39,19 @@ task_count=$(echo "$task_files" | wc -l)
 echo "   Found $task_count tasks to create" >&2
 
 current=0
+created=0
 
 # Create issues for each task
 for task_file in $task_files; do
-    ((current++))
+    current=$((current + 1))
 
     task_basename=$(basename "$task_file" .md)
 
-    # Strip frontmatter and get content (stops counting --- after frontmatter closes)
-    task_content=$(awk 'BEGIN{p=0; done=0} /^---$/ && !done {p++; if(p==2) done=1; next} p>=2{print}' "$task_file")
+    # Strip frontmatter; a file whose first line is not --- has none and is kept whole
+    task_content=$(awk 'NR==1 && !/^---$/ {body=1} body {print; next} /^---$/ {if (++n==2) body=1}' "$task_file")
+    if [[ -z "$task_content" ]]; then
+        echo "⚠️  Warning: task body is empty: $task_file" >&2
+    fi
 
     # Extract title from first heading or use basename
     task_title=$(echo "$task_content" | grep -m1 "^#" | sed 's/^# *//' || true)
@@ -70,17 +74,19 @@ $task_content
 EOF
 
     # Create task issue and extract number from URL
+    # A failed create is reported per task below instead of aborting the run
     issue_url=$(gh issue create \
         --title "$task_title" \
         --body-file "$body_tmpfile" \
         --label "task" \
-        --label "epic:$EPIC_NAME")
+        --label "epic:$EPIC_NAME") || issue_url=""
     rm -f "$body_tmpfile"
 
-    issue_number=$(echo "$issue_url" | grep -o '[0-9]\+$')
+    issue_number=$(echo "$issue_url" | grep -o '[0-9]\+$' || true)
 
     if [[ -n "$issue_number" ]]; then
         echo "#$issue_number ✓" >&2
+        created=$((created + 1))
         # Save mapping: old_name -> new_number
         echo "$task_basename $issue_number" >> "$MAPPING_FILE"
 
@@ -115,8 +121,13 @@ EOF
 done
 
 echo "" >&2
-echo "✅ Created $current task issues" >&2
 echo "   Mapping saved to: $MAPPING_FILE" >&2
 
-# Output the mapping file path for next script
+# Output the mapping file path for next script, even on a shortfall
 echo "$MAPPING_FILE"
+
+if [[ $created -ne $task_count ]]; then
+    echo "❌ Created $created of $task_count task issues" >&2
+    exit 1
+fi
+echo "✅ Created $created of $task_count task issues" >&2

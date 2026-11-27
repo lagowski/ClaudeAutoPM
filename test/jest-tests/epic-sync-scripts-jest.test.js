@@ -336,4 +336,136 @@ Just content, no heading.
       expect(result).toBe('Task fallback');
     });
   });
+
+  // AI-gate findings on promotion #920 (fix round of #899): run the scripts
+  // for real against a fake `gh` on PATH.
+  describe('gate findings #920: scripts run under set -euo pipefail', () => {
+    const { spawnSync } = require('child_process');
+    const EPIC = 'demo';
+    let binDir;
+    let epicDir;
+    let ghLog;
+
+    const FAKE_GH = `#!/bin/bash
+log="$FAKE_GH_LOG"
+case "$1 $2" in
+  "auth status") exit 0 ;;
+  "repo view") echo "o/r"; exit 0 ;;
+  "issue comment") shift 2; num="$1"; shift
+    while [[ $# -gt 0 ]]; do [[ "$1" == --body-file ]] && { echo "COMMENT $num"; cat "$2"; } >> "$log"; shift; done
+    exit 0 ;;
+  "issue create") shift 2; title=""; labels=""; body=""
+    while [[ $# -gt 0 ]]; do
+      case "$1" in --title) title="$2"; shift ;; --label) labels="$labels $2"; shift ;; --body-file) body="$(cat "$2")"; shift ;; esac
+      shift
+    done
+    if [[ -n "\${FAKE_GH_FAIL_TITLE:-}" && "$title" == "$FAKE_GH_FAIL_TITLE" ]]; then echo "boom" >&2; exit 1; fi
+    n=$(( $(cat "$FAKE_GH_LOG.n" 2>/dev/null || echo 100) + 1 )); echo "$n" > "$FAKE_GH_LOG.n"
+    { echo "CREATE $n title=$title labels=$labels"; echo "$body"; echo "END"; } >> "$log"
+    echo "https://github.com/o/r/issues/$n"; exit 0 ;;
+esac
+exit 0
+`;
+
+    const run = (script, args, env = {}) => spawnSync('bash', [script, ...args], {
+      cwd: tempDir,
+      encoding: 'utf8',
+      env: { ...process.env, PATH: `${binDir}:${process.env.PATH}`, FAKE_GH_LOG: ghLog, ...env }
+    });
+    const write = (rel, content) => fs.writeFileSync(path.join(epicDir, rel), content);
+    const log = () => (fs.existsSync(ghLog) ? fs.readFileSync(ghLog, 'utf8') : '');
+
+    beforeEach(() => {
+      binDir = path.join(tempDir, 'bin');
+      epicDir = path.join(tempDir, '.claude', 'epics', EPIC);
+      ghLog = path.join(tempDir, 'gh.log');
+      fs.mkdirSync(binDir, { recursive: true });
+      fs.mkdirSync(epicDir, { recursive: true });
+      fs.writeFileSync(path.join(binDir, 'gh'), FAKE_GH, { mode: 0o755 });
+    });
+
+    test('update-references:76 restores the backup and prints FAILED when awk fails', () => {
+      write('001.md', '---\nname: t\n---\n# Task one\n');
+      write('.map', '001 46\n');
+      // An awk that writes partial output and fails.
+      fs.writeFileSync(path.join(binDir, 'awk'), '#!/bin/sh\necho partial\nexit 2\n', { mode: 0o755 });
+      const r = run(path.join(SCRIPTS_DIR, 'update-references.sh'), [EPIC, path.join(epicDir, '.map')]);
+      expect(r.stdout).toContain('FAILED');
+      expect(r.status).not.toBe(0);
+      expect(fs.readFileSync(path.join(epicDir, '001.md'), 'utf8')).toBe('---\nname: t\n---\n# Task one\n');
+      expect(fs.existsSync(path.join(epicDir, '46.md'))).toBe(false);
+      expect(fs.existsSync(path.join(epicDir, '001.md.backup'))).toBe(false);
+    });
+
+    test('update-references:97 does one validated pass, so substitutions never chain', () => {
+      write('10.md', '---\nname: t\n---\n# Ten\n');
+      write('99.md', 'See #10 and task 20, depends on 10. Not #0x1.\n');
+      // 10->20 then 20->30 would chain #10 -> #20 -> #30; "0.1" is not a valid id.
+      write('.map', '10 20\n20 30\n0.1 7\n');
+      const r = run(path.join(SCRIPTS_DIR, 'update-references.sh'), [EPIC, path.join(epicDir, '.map')]);
+      expect(r.status).toBe(0);
+      expect(fs.readFileSync(path.join(epicDir, '99.md'), 'utf8'))
+        .toBe('See #20 and task #30, depends on #20. Not #0x1.\n');
+      expect(r.stdout + r.stderr).toMatch(/invalid mapping/i);
+    });
+
+    test('create-task-issues:45 does not abort on the first loop iteration', () => {
+      write('001.md', '---\nname: t\n---\n# Task one\n');
+      const r = run(path.join(SCRIPTS_DIR, 'create-task-issues.sh'), [EPIC, '7']);
+      expect(r.status).toBe(0);
+      expect(fs.readFileSync(path.join(epicDir, '.task-mapping.txt'), 'utf8')).toBe('001 101\n');
+    });
+
+    test('create-task-issues:55 keeps the body of a task file without frontmatter', () => {
+      write('001.md', '# Plain task\n\nBody text stays.\n');
+      const r = run(path.join(SCRIPTS_DIR, 'create-task-issues.sh'), [EPIC, '7']);
+      expect(r.status).toBe(0);
+      expect(log()).toContain('title=Plain task');
+      expect(log()).toContain('Body text stays.');
+    });
+
+    test('create-task-issues:113 counts only created issues and exits non-zero on a shortfall', () => {
+      write('001.md', '# One\n');
+      write('002.md', '# Two\n');
+      const r = run(path.join(SCRIPTS_DIR, 'create-task-issues.sh'), [EPIC, '7'], { FAKE_GH_FAIL_TITLE: 'Two' });
+      expect(r.status).not.toBe(0);
+      expect(r.stderr).toContain('Created 1 of 2 task issues');
+      expect(r.stdout.trim()).toBe('.claude/epics/demo/.task-mapping.txt');
+    });
+
+    test('create-epic-issue:89 a missing prd: does not orphan the epic issue', () => {
+      write('epic.md', '---\nname: demo\nstatus: backlog\n---\n# Demo\n');
+      const r = run(path.join(SCRIPTS_DIR, 'create-epic-issue.sh'), [EPIC]);
+      expect(r.status).toBe(0);
+      expect(r.stdout.trim()).toBe('101');
+      expect(log()).toContain('.claude/prds/demo.md');
+    });
+
+    test('create-epic-issue:89 reads a one-line prd: value', () => {
+      write('epic.md', '---\nname: demo\nprd: my-prd\nstatus: backlog\n---\n# Demo\n');
+      const r = run(path.join(SCRIPTS_DIR, 'create-epic-issue.sh'), [EPIC]);
+      expect(r.status).toBe(0);
+      expect(log()).toContain('.claude/prds/my-prd.md');
+    });
+
+    test('create-epic-issue:47 classifies bug/feature on whole words only', () => {
+      write('epic.md', '---\nname: demo\n---\n# Sync GitHub issues\n\nHandle errors and prefix lines.\n');
+      expect(run(path.join(SCRIPTS_DIR, 'create-epic-issue.sh'), [EPIC]).status).toBe(0);
+      expect(log()).toMatch(/labels= epic feature/);
+      fs.rmSync(ghLog);
+      write('epic.md', '---\nname: demo\n---\n# Login bug\n');
+      expect(run(path.join(SCRIPTS_DIR, 'create-epic-issue.sh'), [EPIC]).status).toBe(0);
+      expect(log()).toMatch(/labels= epic bug/);
+    });
+
+    test('epic-sync.sh:120 summary counts created tasks and exits non-zero on a shortfall', () => {
+      write('epic.md', '---\nname: demo\n---\n# Demo\n');
+      write('001.md', '# One\n');
+      write('002.md', '# Two\n');
+      const r = run(path.join(SCRIPTS_DIR, '..', 'epic-sync.sh'), [EPIC], { FAKE_GH_FAIL_TITLE: 'Two' });
+      expect(r.status).not.toBe(0);
+      expect(r.stdout).toContain('Tasks: 1 of 2 issues created');
+      expect(r.stdout).not.toContain('Tasks: 2 issues created');
+    });
+  });
 });
