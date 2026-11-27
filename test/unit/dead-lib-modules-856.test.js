@@ -1,7 +1,10 @@
 /**
- * #856 (part 1): the deprecated `autopm guide` command with lib/guide/, and the
- * test-only lib/services/interfaces.js and lib/validators/email-validator.js are
- * removed, and nothing requires them. The other dead modules are a later part.
+ * #856: test-only lib modules are removed and nothing requires them.
+ * Part 1: the deprecated `autopm guide` command with lib/guide/, and
+ * lib/services/interfaces.js and lib/validators/email-validator.js.
+ * Part 2: the unused Azure DevOps Resources/Cli/Rest clients (the live path is
+ * AzureDevOpsProvider.js), conflict/query/visual-diff modules and their examples.
+ * lib/batch-processor*.js stay: /pm:sync-batch uses them.
  */
 const fs = require('fs');
 const path = require('path');
@@ -18,6 +21,18 @@ const REMOVED = [
   // an installed project, so they could never run there.
   'autopm/.claude/lib/commands/user/guide.js',
   '.claude/lib/commands/user/guide.js',
+  // Part 2
+  'lib/providers/AzureDevOpsResourcesProvider.js',
+  'lib/providers/AzureDevOpsCliWrapper.js',
+  'lib/providers/AzureDevOpsRestClient.js',
+  'lib/conflict-history.js',
+  'lib/conflict-resolver.js',
+  'lib/query-parser.js',
+  'lib/visual-diff.js',
+  'lib/README-FILTER-SEARCH.md',
+  'examples/batch-sync-example.js',
+  'examples/conflict-resolution-integration.js',
+  'examples/filter-search-cli-integration.js',
 ];
 
 const MODULE_NAMES = [
@@ -25,6 +40,13 @@ const MODULE_NAMES = [
   'guide/manager',
   'email-validator',
   'services/interfaces',
+  'AzureDevOpsResourcesProvider',
+  'AzureDevOpsCliWrapper',
+  'AzureDevOpsRestClient',
+  'conflict-history',
+  'conflict-resolver',
+  'query-parser',
+  'visual-diff',
 ];
 
 describe('#856 dead lib modules removed', () => {
@@ -37,6 +59,19 @@ describe('#856 dead lib modules removed', () => {
     expect(src).not.toMatch(/\.command\(\s*['"]guide\b/);
   });
 
+  test('the azure:vg-* prompts do not name the removed provider', () => {
+    let out = '';
+    try {
+      out = execFileSync(
+        'git',
+        ['grep', '-n', 'AzureDevOpsResourcesProvider', '--', 'packages', 'autopm'],
+        { cwd: ROOT, encoding: 'utf8' }
+      );
+    } catch (e) {
+      if (e.status !== 1) throw e; // 1 = no match
+    }
+    expect(out).toBe('');
+  });
 
   test('no require of a removed module in bin/, lib/, packages/, autopm/', () => {
     const pattern = `require\\([^)]*(${MODULE_NAMES.join('|')})`;
