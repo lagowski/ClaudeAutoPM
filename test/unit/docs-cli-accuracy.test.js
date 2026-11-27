@@ -45,7 +45,7 @@ const cliErrors = (text, label) => {
   const bad = [];
   text.split('\n').forEach((line, i) => {
     const code = line.replace(/\s#.*$/, '');
-    for (const m of code.matchAll(/\bautopm[ \t]+([a-z][\w:-]*)([^`|]*)/g)) {
+    for (const m of code.matchAll(/(?<![\w-])autopm[ \t]+([a-z][\w:-]*)([^`|]*)/g)) {
       const where = `${label}:${i + 1}`;
       const words = [m[1]];
       if (!commands.has(m[1])) { bad.push(`${where} autopm ${m[1]}`); continue; }
@@ -78,6 +78,11 @@ describe('docs match the real CLI (#847, #900)', () => {
   test('every autopm command, sub-command and flag in docs-site/docs exists', () => {
     const bad = listMd(DOCS).flatMap((f) => cliErrors(fs.readFileSync(f, 'utf8'), path.relative(ROOT, f)));
     expect(bad).toEqual([]);
+  });
+
+  test('`npx -p claude-autopm autopm <command>` is read as that command, not `autopm autopm`', () => {
+    expect(cliErrors('npx -p claude-autopm autopm install', 'npx form')).toEqual([]);
+    expect(cliErrors('npx -p claude-autopm autopm no-such-command', 'npx form')).not.toEqual([]);
   });
 
   test('every autopm command, sub-command and flag in the help banner exists', () => {
