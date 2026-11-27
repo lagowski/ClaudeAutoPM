@@ -1,6 +1,6 @@
 ---
 name: react-ui-expert
-description: ## Description Unified React UI component development specialist supporting multiple UI frameworks and design systems.
+description: "Unified React UI component development specialist supporting multiple UI frameworks and design systems."
 model: sonnet
 color: purple
 ---

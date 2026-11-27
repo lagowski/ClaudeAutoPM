@@ -1,6 +1,6 @@
 ---
 name: e2e-test-engineer
-description: ## Documentation Access via MCP Context7
+description: "Unified end-to-end test engineering specialist covering Playwright automation, MCP browser control, visual testing, and comprehensive test strategies."
 model: sonnet
 color: purple
 ---
