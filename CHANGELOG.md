@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Code nothing live loaded (#856, part 1): `lib/guide/` with the deprecated `autopm guide` command, `lib/validators/email-validator.js`, `lib/services/interfaces.js`, and their tests. Also removed: the `user/guide.js` command module, whose only job was to require `lib/guide/` through a path that does not exist in an installed project.
+- More code nothing live loaded (#856, part 2): the `AzureDevOpsResourcesProvider`, `AzureDevOpsCliWrapper` and `AzureDevOpsRestClient` clients under `lib/providers/` (the live path is `AzureDevOpsProvider.js`), `lib/conflict-history.js`, `lib/conflict-resolver.js`, `lib/query-parser.js`, `lib/visual-diff.js`, `lib/README-FILTER-SEARCH.md`, the three `examples/*.js` that only demoed them, and their tests. The `/azure:vg-*` prompts and the `azure-devops-specialist` agent now describe `az pipelines variable-group` instead of the removed provider.
 
 ### Fixed
 - `autopm update` no longer deletes and recopies the framework directories, which silently undid local edits and trims to rules, agents and commands (#790). Install and update now record each shipped file's sha256 in `.claude/.autopm-manifest`; update keeps a file you edited (the shipped version lands next to it as `<file>.autopm-new`), does not reinstall a shipped file you deleted, and leaves files the framework never shipped alone.
