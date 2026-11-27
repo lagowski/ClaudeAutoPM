@@ -1,3 +1,4 @@
+// GENERATED from lib/batch-processor-integration.js by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.
 /**
  * Batch Processor Integration Examples
  *
