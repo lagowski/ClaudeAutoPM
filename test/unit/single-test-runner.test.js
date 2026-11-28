@@ -39,8 +39,12 @@ describe('jest is the only test runner (#869)', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('test/jest-tests/ is gone', () => {
-    expect(fs.existsSync(path.join(root, 'test/jest-tests'))).toBe(false);
+  // Part 1 of #869 (#941). The last ten retired files in test/jest-tests/ are deleted by
+  // part 2 (item/869-retire-jest-tests-2), which puts back the "is gone" assertion.
+  it('no jest config runs test/jest-tests/', () => {
+    const config = require(path.join(root, 'jest.config.js'));
+    const runs = (config.testMatch || []).some((m) => m.includes('jest-tests'));
+    expect(runs).toBe(false);
   });
 
   it('jest.config.clean.js is gone', () => {
