@@ -1,3 +1,4 @@
+// GENERATED from lib/filter-engine.js by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.
 /**
  * FilterEngine - Apply filters and search to PRD/Epic/Task collections
  *
@@ -43,7 +44,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-const yaml = require('yaml');
+const yaml = require('../../scripts/pm/lib/yaml-parse');
 
 class FilterEngine {
   /**
