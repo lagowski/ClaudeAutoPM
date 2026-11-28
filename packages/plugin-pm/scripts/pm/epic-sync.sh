@@ -47,6 +47,32 @@ if [[ $task_count -eq 0 ]]; then
     exit 1
 fi
 
+# A task file is already synced when its frontmatter github: holds an issue URL
+is_synced() {
+    awk 'NR==1 && !/^---$/ {exit} /^---$/ {if (++n==2) exit; next}
+         /^github:[[:space:]]*https?:\/\/[^[:space:]]+\/issues\/[0-9]+/ {f=1; exit}
+         END {exit !f}' "$1"
+}
+
+# A re-run would create a second epic issue and duplicate task issues.
+# The epic issue is created first, so a run that died before any task synced
+# leaves only epic.md marked: check it as well as the task files.
+if is_synced "$EPIC_DIR/epic.md"; then
+    echo "❌ Error: epic already synced (epic.md frontmatter github: holds an issue URL)"
+    echo "   Re-running would create a duplicate epic issue. Sync remaining tasks by hand."
+    exit 1
+fi
+
+synced=""
+for f in $(find "$EPIC_DIR" -name "[0-9]*.md" -type f | sort); do
+    if is_synced "$f"; then synced="$synced $(basename "$f")"; fi
+done
+if [[ -n "$synced" ]]; then
+    echo "❌ Error: epic already synced (tasks with an issue URL:$synced)"
+    echo "   Re-running would create a duplicate epic issue. Sync remaining tasks by hand."
+    exit 1
+fi
+
 echo ""
 echo "🚀 Starting Epic Sync"
 echo "═══════════════════════════════════════════"
@@ -75,7 +101,10 @@ echo ""
 echo "📋 Step 2/4: Creating Task Issues"
 echo "─────────────────────────────────────────"
 
-task_mapping_file=$(bash "$SCRIPT_DIR/epic-sync/create-task-issues.sh" "$EPIC_NAME" "$epic_number")
+# A shortfall exits non-zero but still prints the mapping, so the issues that
+# were created get their files renamed before we report the failure.
+tasks_rc=0
+task_mapping_file=$(bash "$SCRIPT_DIR/epic-sync/create-task-issues.sh" "$EPIC_NAME" "$epic_number") || tasks_rc=$?
 
 if [[ ! -f "$task_mapping_file" ]]; then
     echo ""
@@ -83,8 +112,14 @@ if [[ ! -f "$task_mapping_file" ]]; then
     exit 1
 fi
 
+created_count=$(wc -l < "$task_mapping_file" | tr -d ' ')
+
 echo ""
-echo "✅ Task issues created"
+if [[ $tasks_rc -ne 0 || $created_count -ne $task_count ]]; then
+    echo "⚠️  Only $created_count of $task_count task issues created"
+else
+    echo "✅ Task issues created"
+fi
 echo "   Mapping: $task_mapping_file"
 echo ""
 
@@ -116,7 +151,7 @@ echo "════════════════════════�
 echo ""
 echo "📊 Summary:"
 echo "  Epic: #$epic_number - $EPIC_NAME"
-echo "  Tasks: $task_count issues created"
+echo "  Tasks: $created_count of $task_count issues created"
 echo "  Files: Renamed to GitHub issue numbers"
 echo ""
 echo "🔗 Links:"
@@ -135,3 +170,8 @@ echo "     /pm:issue-start <issue_number>"
 echo "  3. Or start the full epic in parallel:"
 echo "     /pm:epic-start $EPIC_NAME"
 echo ""
+
+if [[ $tasks_rc -ne 0 || $created_count -ne $task_count ]]; then
+    echo "❌ Epic sync incomplete: $((task_count - created_count)) task issue(s) not created"
+    exit 1
+fi

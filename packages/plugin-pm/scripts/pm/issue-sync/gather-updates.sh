@@ -6,10 +6,12 @@ set -euo pipefail
 
 # Load libraries
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../../lib/logging-utils.sh"
-source "${SCRIPT_DIR}/../../lib/frontmatter-utils.sh"
-source "${SCRIPT_DIR}/../../lib/validation-utils.sh"
-source "${SCRIPT_DIR}/../../lib/datetime-utils.sh"
+# The libs live in .claude/scripts/lib; resolve once, since a lib may reset SCRIPT_DIR
+LIB_DIR="$(cd "${SCRIPT_DIR}/../../lib" && pwd)"
+source "${LIB_DIR}/logging-utils.sh"
+source "${LIB_DIR}/frontmatter-utils.sh"
+source "${LIB_DIR}/validation-utils.sh"
+source "${LIB_DIR}/datetime-utils.sh"
 
 # Script configuration
 readonly ISSUE_NUMBER="${1:-}"
@@ -22,7 +24,8 @@ declare -g gathered_updates=""
 
 # Main function
 main() {
-    print_banner "Issue Updates Gatherer" "1.0.0"
+    # Banner and results go to stderr: stdout carries only the consolidated file path
+    print_banner "Issue Updates Gatherer" "1.0.0" >&2
 
     # Validate inputs
     log_info "Gathering updates for issue #$ISSUE_NUMBER"
@@ -52,7 +55,7 @@ main() {
         consolidate_updates
 
     # Output results
-    display_results
+    display_results >&2
 
     # Return path to consolidated updates file
     echo "$gathered_updates"
@@ -103,7 +106,7 @@ gather_progress_updates() {
 
     if [[ ! -f "$progress_file" ]]; then
         log_warning "Progress file not found: $progress_file"
-        echo "No progress updates available" > "$progress_output"
+        : > "$progress_output"
         log_function_exit "gather_progress_updates"
         return 0
     fi
@@ -119,14 +122,16 @@ gather_progress_updates() {
     fi
 
     # Get completion percentage
-    local completion
-    completion=$(get_frontmatter_field "$progress_file" "completion" 2>/dev/null || echo "0%")
+    # Get completion percentage; an unreadable value is omitted, never shown as 0%
+    local completion=""
+    if ! completion=$(get_frontmatter_field "$progress_file" "completion" 2>/dev/null) || [[ -z "$completion" ]]; then
+        log_warning "Could not read completion from $progress_file; omitting Current Progress"
+    else
+        cat >> "$progress_output" << EOF
 
-    # Add completion info to progress updates
-    cat >> "$progress_output" << EOF
-
-**Current Progress:** $completion
+**Current Progress:** ${completion%\%}%
 EOF
+    fi
 
     log_success "Progress updates gathered"
     log_function_exit "gather_progress_updates"
@@ -141,7 +146,7 @@ gather_technical_notes() {
 
     if [[ ! -f "$notes_file" ]]; then
         log_debug "Notes file not found: $notes_file"
-        echo "No technical notes available" > "$notes_output"
+        : > "$notes_output"
         log_function_exit "gather_technical_notes"
         return 0
     fi
@@ -221,7 +226,7 @@ gather_recent_commits_automatically() {
     fi
 
     if [[ "$commits_found" != "true" ]]; then
-        echo "No recent commits found" > "$output_file"
+        : > "$output_file"
         log_debug "No recent commits found"
     fi
 
@@ -237,7 +242,7 @@ gather_acceptance_criteria() {
 
     if [[ ! -f "$criteria_file" ]]; then
         log_debug "Acceptance criteria file not found: $criteria_file"
-        echo "No acceptance criteria updates available" > "$criteria_output"
+        : > "$criteria_output"
         log_function_exit "gather_acceptance_criteria"
         return 0
     fi
@@ -275,7 +280,7 @@ gather_next_steps_and_blockers() {
             strip_frontmatter "$next_steps_file" "$next_steps_output"
         fi
     else
-        echo "No specific next steps documented" > "$next_steps_output"
+        : > "$next_steps_output"
     fi
 
     # Gather blockers
@@ -287,7 +292,7 @@ gather_next_steps_and_blockers() {
             strip_frontmatter "$blockers_file" "$blockers_output"
         fi
     else
-        echo "No current blockers reported" > "$blockers_output"
+        : > "$blockers_output"
     fi
 
     log_success "Next steps and blockers gathered"
@@ -302,16 +307,15 @@ extract_content_since_sync() {
 
     log_function_entry "extract_content_since_sync" "$(basename "$input_file")" "$last_sync"
 
-    # For now, extract all content (incremental extraction is complex)
-    # TODO: Implement proper incremental extraction with sync markers
+    # Incremental extraction is not implemented: the whole file (minus
+    # frontmatter) is sent, and the label says so instead of claiming a delta.
     strip_frontmatter "$input_file" "$output_file"
 
-    # Add note about sync timing
-    if [[ -s "$output_file" ]]; then
+    if [[ -n "$(tr -d '[:space:]' < "$output_file")" ]]; then
         echo "" >> "$output_file"
-        echo "*Updates since last sync at $last_sync*" >> "$output_file"
+        echo "*Full file content (last sync at $last_sync); not limited to changes since then*" >> "$output_file"
     else
-        echo "No updates since last sync at $last_sync" > "$output_file"
+        : > "$output_file"
     fi
 
     log_function_exit "extract_content_since_sync"
@@ -352,13 +356,20 @@ EOF
                 ;;
             *)
                 log_debug "Found additional update file: $basename_file"
-                add_section_if_content "$(echo "$basename_file" | tr '-' ' ' | sed 's/\b\w/\u&/g')" "$update_file"
+                local extra_output="$temp_dir/extra-${basename_file}.md"
+                strip_frontmatter "$update_file" "$extra_output"
+                add_section_if_content "$(title_case "$basename_file")" "$extra_output"
                 ;;
         esac
     done
 
     log_success "Updates consolidated into: $gathered_updates"
     log_function_exit "consolidate_updates"
+}
+
+# "next-sprint-plan" -> "Next Sprint Plan" (POSIX awk; GNU sed's \u is not portable)
+title_case() {
+    echo "$1" | tr '-' ' ' | awk '{for (i = 1; i <= NF; i++) $i = toupper(substr($i, 1, 1)) substr($i, 2); print}'
 }
 
 # Add section to consolidated file if it has meaningful content
@@ -370,11 +381,11 @@ add_section_if_content() {
         return 0
     fi
 
-    # Check if file has meaningful content (more than just "No ... available")
+    # Sections with nothing to report are written as empty files; skip them
     local content
     content=$(cat "$section_file")
 
-    if [[ -n "$content" ]] && [[ ! "$content" =~ ^[[:space:]]*No.*available[[:space:]]*$ ]]; then
+    if [[ -n "${content//[[:space:]]/}" ]]; then
         cat >> "$gathered_updates" << EOF
 
 ## $section_title

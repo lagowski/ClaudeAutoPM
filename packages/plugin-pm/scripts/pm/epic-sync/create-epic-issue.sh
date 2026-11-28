@@ -37,17 +37,23 @@ if ! gh auth status &> /dev/null; then
     exit 1
 fi
 
-# Strip frontmatter and get content (stops counting --- after frontmatter closes)
-epic_content=$(awk 'BEGIN{p=0; done=0} /^---$/ && !done {p++; if(p==2) done=1; next} p>=2{print}' "$EPIC_FILE")
+# Strip frontmatter; a file whose first line is not --- has none and is kept whole
+epic_content=$(awk 'NR==1 && !/^---$/ {body=1} body {print; next} /^---$/ {if (++n==2) body=1}' "$EPIC_FILE")
+if [[ -z "$epic_content" ]]; then
+    echo "⚠️  Warning: epic body is empty: $EPIC_FILE" >&2
+fi
 
 # Count tasks
 task_count=$(find ".claude/epics/$EPIC_NAME" -name "[0-9]*.md" -type f 2>/dev/null | wc -l)
 
-# Detect epic type (bug vs feature)
-if echo "$epic_content" | grep -qi "bug\|fix\|error\|issue"; then
-    epic_type="bug"
-else
-    epic_type="feature"
+# Detect epic type: an explicit frontmatter type: wins, else whole words bug/bugfix
+epic_type=$(awk 'NR==1 && !/^---$/ {exit} /^---$/ {if (++n==2) exit; next} /^type:/ {sub(/^type:[ ]*/, ""); print; exit}' "$EPIC_FILE")
+if [[ "$epic_type" != "bug" && "$epic_type" != "feature" ]]; then
+    if grep -qiw -e bug -e bugfix <<< "$epic_content"; then
+        epic_type="bug"
+    else
+        epic_type="feature"
+    fi
 fi
 
 # Create issue
@@ -75,7 +81,7 @@ issue_url=$(gh issue create \
     --label "$epic_type")
 rm -f "$body_tmpfile"
 
-epic_number=$(echo "$issue_url" | grep -o '[0-9]\+$')
+epic_number=$(echo "$issue_url" | grep -o '[0-9]\+$' || true)
 
 if [[ -z "$epic_number" ]]; then
     echo "❌ Error: Failed to create epic issue" >&2
@@ -86,7 +92,7 @@ fi
 echo "📎 Adding local documentation links to issue #$epic_number..." >&2
 
 # Extract PRD name from epic file
-prd_name=$(grep -A 5 "^prd:" "$EPIC_FILE" | grep -v "^prd:" | head -1 | tr -d ' ')
+prd_name=$(awk '/^---$/ {if (++n==2) exit; next} n==1 && /^prd:/ {sub(/^prd:[ ]*/, ""); gsub(/[ \t\r]/, ""); print; exit}' "$EPIC_FILE")
 if [[ -z "$prd_name" ]]; then
     prd_name="$EPIC_NAME"
 fi
