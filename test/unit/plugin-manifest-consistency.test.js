@@ -1,13 +1,14 @@
 /**
  * Plugin manifests, agent files and AGENT-REGISTRY.md agree (#863).
  *
- * - every file listed in a packages/<plugin>/plugin.json exists
+ * - every file listed in a packages/<plugin>/.claude-plugin/plugin.json (metadata) exists
  * - every agent file under packages/<plugin>/agents/ is listed in that plugin.json
  * - no agent basename is owned by two plugins (installs pick whichever copy lands last)
  * - AGENT-REGISTRY.md lists exactly the agents that exist, at their installed location
  */
 const fs = require('fs');
 const path = require('path');
+const PluginManager = require('../../lib/plugins/PluginManager');
 
 const ROOT = path.resolve(__dirname, '../..');
 const PACKAGES = path.join(ROOT, 'packages');
@@ -24,11 +25,11 @@ function walk(dir) {
 
 const plugins = fs
   .readdirSync(PACKAGES)
-  .filter((p) => fs.existsSync(path.join(PACKAGES, p, 'plugin.json')))
+  .filter((p) => PluginManager.manifestPath(path.join(PACKAGES, p)))
   .map((p) => ({
     name: p,
     dir: path.join(PACKAGES, p),
-    manifest: JSON.parse(fs.readFileSync(path.join(PACKAGES, p, 'plugin.json'), 'utf8'))
+    manifest: PluginManager.readManifest(path.join(PACKAGES, p))
   }));
 
 // Installed path, mirroring PluginManager.installAgents (agentDir/<category>/<file>);

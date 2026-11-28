@@ -1,0 +1,339 @@
+{
+  "name": "ml",
+  "version": "2.0.0",
+  "description": "Comprehensive machine learning plugin with 10 specialist agents: TensorFlow/Keras, PyTorch, RL (Gymnasium/Stable-Baselines3), Scikit-learn, Neural Network Architecture Design, Gradient Boosting (XGBoost/LightGBM/CatBoost), Computer Vision (OpenCV), NLP Transformers (BERT/GPT), Time Series Forecasting, and AutoML. Context7-verified patterns for production ML.",
+  "author": {
+    "name": "ClaudeAutoPM Team"
+  },
+  "repository": "https://github.com/lagowski/ClaudeAutoPM",
+  "license": "MIT",
+  "keywords": [
+    "claudeautopm",
+    "plugin",
+    "machine-learning",
+    "deep-learning",
+    "tensorflow",
+    "keras",
+    "pytorch",
+    "reinforcement-learning",
+    "gymnasium",
+    "stable-baselines3",
+    "scikit-learn",
+    "neural-networks",
+    "xgboost",
+    "lightgbm",
+    "catboost",
+    "computer-vision",
+    "opencv",
+    "nlp",
+    "transformers",
+    "bert",
+    "gpt",
+    "time-series",
+    "prophet",
+    "automl",
+    "autogluon",
+    "ml-ops",
+    "context7"
+  ],
+  "dependencies": [
+    "core"
+  ],
+  "metadata": {
+    "packageName": "@claudeautopm/plugin-ml",
+    "schemaVersion": "2.0",
+    "displayName": "Machine Learning",
+    "category": "machine-learning",
+    "agents": [
+      {
+        "name": "tensorflow-keras-expert",
+        "file": "agents/tensorflow-keras-expert.md",
+        "category": "ml",
+        "description": "TensorFlow and Keras deep learning expert for model building, training, optimization, and deployment. Expert in Sequential/Functional/Subclassing APIs, callbacks, XLA compilation, distributed training (MirroredStrategy/TPUStrategy), and TensorFlow Lite conversion.",
+        "version": "2.0.0",
+        "tags": [
+          "tensorflow",
+          "keras",
+          "deep-learning",
+          "neural-networks",
+          "distributed-training"
+        ],
+        "mcp": [],
+        "context7": [
+          "/tensorflow/tensorflow",
+          "/tensorflow/docs"
+        ]
+      },
+      {
+        "name": "pytorch-expert",
+        "file": "agents/pytorch-expert.md",
+        "category": "ml",
+        "description": "PyTorch deep learning expert for model building, training optimization, and distributed training. Expert in torch.nn.Module, DataLoaders, Autograd, torch.compile, DDP (DistributedDataParallel), mixed precision (AMP), and CUDA optimization.",
+        "version": "2.0.0",
+        "tags": [
+          "pytorch",
+          "deep-learning",
+          "neural-networks",
+          "cuda",
+          "distributed-training"
+        ],
+        "mcp": [],
+        "context7": [
+          "/pytorch/pytorch",
+          "/rocm/pytorch",
+          "/lightning-ai/pytorch-lightning"
+        ]
+      },
+      {
+        "name": "reinforcement-learning-expert",
+        "file": "agents/reinforcement-learning-expert.md",
+        "category": "ml",
+        "description": "Reinforcement Learning expert for training agents with Gymnasium environments and Stable-Baselines3 algorithms (PPO, SAC, TD3, DQN). Expert in custom environments, policy training, reward engineering, Q-Learning, policy gradients, and multi-agent systems.",
+        "version": "2.0.0",
+        "tags": [
+          "reinforcement-learning",
+          "gymnasium",
+          "stable-baselines3",
+          "rl-algorithms",
+          "policy-gradient"
+        ],
+        "mcp": [],
+        "context7": [
+          "/farama-foundation/gymnasium",
+          "/dlr-rm/stable-baselines3",
+          "/openai/gym"
+        ]
+      },
+      {
+        "name": "scikit-learn-expert",
+        "file": "agents/scikit-learn-expert.md",
+        "category": "ml",
+        "description": "Classical machine learning expert with scikit-learn for pipelines, model selection, preprocessing, cross-validation, and hyperparameter tuning. Expert in classification, regression, clustering, dimensionality reduction, and feature engineering.",
+        "version": "2.0.0",
+        "tags": [
+          "scikit-learn",
+          "classical-ml",
+          "pipelines",
+          "cross-validation",
+          "feature-engineering"
+        ],
+        "mcp": [],
+        "context7": [
+          "/scikit-learn/scikit-learn"
+        ]
+      },
+      {
+        "name": "neural-network-architect",
+        "file": "agents/neural-network-architect.md",
+        "category": "ml",
+        "description": "Neural network architecture design specialist for CNNs, ResNets, Transformers, RNNs, attention mechanisms, and hybrid models. Expert in architecture patterns, layer selection, skip connections, normalization strategies, and model scaling for optimal performance.",
+        "version": "2.0.0",
+        "tags": [
+          "neural-networks",
+          "architecture-design",
+          "cnn",
+          "transformer",
+          "resnet"
+        ],
+        "mcp": [],
+        "context7": [
+          "/huggingface/transformers",
+          "/pytorch/pytorch",
+          "/huggingface/pytorch-image-models"
+        ]
+      },
+      {
+        "name": "gradient-boosting-expert",
+        "file": "agents/gradient-boosting-expert.md",
+        "category": "ml",
+        "description": "Gradient boosting specialist for XGBoost, LightGBM, and CatBoost. Expert in hyperparameter tuning, feature importance, early stopping, categorical feature handling, and model interpretation. Specializes in tabular data and competition-winning models.",
+        "version": "2.0.0",
+        "tags": [
+          "xgboost",
+          "lightgbm",
+          "catboost",
+          "gradient-boosting",
+          "tabular-data"
+        ],
+        "mcp": [],
+        "context7": [
+          "/dmlc/xgboost"
+        ]
+      },
+      {
+        "name": "computer-vision-expert",
+        "file": "agents/computer-vision-expert.md",
+        "category": "ml",
+        "description": "Computer vision specialist using OpenCV, PIL/Pillow, and deep learning integration. Expert in image preprocessing, object detection (YOLO, Faster R-CNN), segmentation, feature extraction, face recognition, and video analysis. Production CV pipelines and real-time processing.",
+        "version": "2.0.0",
+        "tags": [
+          "computer-vision",
+          "opencv",
+          "object-detection",
+          "segmentation",
+          "face-recognition"
+        ],
+        "mcp": [],
+        "context7": [
+          "/opencv/opencv",
+          "/ultralytics/ultralytics"
+        ]
+      },
+      {
+        "name": "nlp-transformer-expert",
+        "file": "agents/nlp-transformer-expert.md",
+        "category": "ml",
+        "description": "NLP transformer specialist for BERT, GPT, T5, RoBERTa. Expert in fine-tuning, tokenization, pipeline API, text classification, question answering, NER, text generation, and inference optimization. Production NLP pipelines and model deployment.",
+        "version": "2.0.0",
+        "tags": [
+          "nlp",
+          "transformers",
+          "bert",
+          "gpt",
+          "text-classification"
+        ],
+        "mcp": [],
+        "context7": [
+          "/huggingface/transformers",
+          "/huggingface/tokenizers",
+          "/huggingface/datasets"
+        ]
+      },
+      {
+        "name": "time-series-expert",
+        "file": "agents/time-series-expert.md",
+        "category": "ml",
+        "description": "Time series forecasting specialist with Prophet, ARIMA, LSTM, Temporal Fusion Transformer. Expert in trend analysis, seasonality decomposition, anomaly detection, and multi-step ahead prediction. Production forecasting pipelines.",
+        "version": "2.0.0",
+        "tags": [
+          "time-series",
+          "forecasting",
+          "prophet",
+          "arima",
+          "lstm"
+        ],
+        "mcp": [],
+        "context7": [
+          "/facebook/prophet",
+          "/statsmodels/statsmodels"
+        ]
+      },
+      {
+        "name": "automl-expert",
+        "file": "agents/automl-expert.md",
+        "category": "ml",
+        "description": "Automated machine learning specialist with AutoGluon, FLAML, AutoKeras, H2O AutoML. Expert in automated model selection, hyperparameter tuning, ensemble methods, and rapid prototyping. Get best models with minimal code.",
+        "version": "2.0.0",
+        "tags": [
+          "automl",
+          "autogluon",
+          "flaml",
+          "hyperparameter-tuning",
+          "ensemble"
+        ],
+        "mcp": [],
+        "context7": [
+          "/autogluon/autogluon"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "subdirectory": "commands/",
+        "description": "Machine Learning commands (6 total)",
+        "type": "collection",
+        "discovery": "auto",
+        "tags": [
+          "ml",
+          "training",
+          "optimization",
+          "hyperparameters",
+          "distributed",
+          "amp",
+          "model-comparison",
+          "evaluation",
+          "mlflow",
+          "benchmarking",
+          "feature-engineering",
+          "feature-selection",
+          "data-transformation",
+          "data-pipeline",
+          "etl",
+          "kedro",
+          "airflow",
+          "feature-store",
+          "data-quality",
+          "great-expectations"
+        ]
+      }
+    ],
+    "rules": [],
+    "hooks": [],
+    "scripts": [],
+    "features": {
+      "tensorflow_keras": {
+        "enabled": true,
+        "description": "TensorFlow and Keras deep learning with distributed training"
+      },
+      "pytorch": {
+        "enabled": true,
+        "description": "PyTorch deep learning with torch.compile and DDP"
+      },
+      "reinforcement_learning": {
+        "enabled": true,
+        "description": "RL with Gymnasium and Stable-Baselines3 algorithms"
+      },
+      "scikit_learn": {
+        "enabled": true,
+        "description": "Classical ML with scikit-learn pipelines and tuning"
+      },
+      "neural_architecture_design": {
+        "enabled": true,
+        "description": "Neural network architecture patterns (CNNs, ResNets, Transformers)"
+      },
+      "gradient_boosting": {
+        "enabled": true,
+        "description": "XGBoost, LightGBM, CatBoost for tabular data"
+      },
+      "computer_vision": {
+        "enabled": true,
+        "description": "OpenCV, object detection, segmentation, face recognition"
+      },
+      "nlp_transformers": {
+        "enabled": true,
+        "description": "BERT, GPT, T5 for NLP tasks with HuggingFace Transformers"
+      },
+      "time_series": {
+        "enabled": true,
+        "description": "Prophet, ARIMA, LSTM for forecasting"
+      },
+      "automl": {
+        "enabled": true,
+        "description": "AutoGluon, FLAML for automated ML"
+      },
+      "context7_integration": {
+        "enabled": true,
+        "description": "All patterns verified against official documentation via Context7"
+      }
+    },
+    "mcpServers": {
+      "recommended": [
+        "context7"
+      ],
+      "optional": []
+    },
+    "compatibleWith": ">=3.0.0",
+    "categoryLabel": "Machine Learning",
+    "size": "~15 KB (gzipped)",
+    "required": false,
+    "tags": [
+      "machine-learning",
+      "deep-learning",
+      "tensorflow",
+      "pytorch",
+      "reinforcement-learning",
+      "scikit-learn",
+      "neural-networks"
+    ]
+  }
+}

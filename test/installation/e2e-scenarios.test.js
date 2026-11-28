@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const PluginManager = require('../../lib/plugins/PluginManager');
 
 const originalArgv = process.argv;
 let Installer;
@@ -44,10 +45,8 @@ function runScenario(scenario) {
 
   for (const pluginName of pluginsToInstall) {
     const pluginPath = path.join(packagesDir, pluginName);
-    const pluginJsonPath = path.join(pluginPath, 'plugin.json');
-    if (!fs.existsSync(pluginJsonPath)) continue;
-
-    const metadata = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf-8'));
+    const metadata = PluginManager.readManifest(pluginPath);
+    if (!metadata) continue;
 
     // Copy agents
     if (metadata.agents) {

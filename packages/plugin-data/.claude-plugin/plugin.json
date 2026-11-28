@@ -1,0 +1,258 @@
+{
+  "name": "data",
+  "version": "2.0.0",
+  "description": "Data engineering, ETL pipelines, and ML workflow specialists with Airflow, Kedro, LangGraph, Kafka, dbt, and pandas",
+  "author": {
+    "name": "ClaudeAutoPM Team"
+  },
+  "repository": "https://github.com/lagowski/ClaudeAutoPM",
+  "license": "MIT",
+  "keywords": [
+    "claudeautopm",
+    "plugin",
+    "data-engineering",
+    "ml",
+    "machine-learning",
+    "etl",
+    "analytics",
+    "airflow",
+    "kedro",
+    "langgraph",
+    "kafka",
+    "dbt",
+    "pandas"
+  ],
+  "dependencies": [
+    "core"
+  ],
+  "metadata": {
+    "packageName": "@claudeautopm/plugin-data",
+    "schemaVersion": "2.0",
+    "displayName": "Data Engineering & ML",
+    "category": "data",
+    "agents": [
+      {
+        "name": "airflow-orchestration-expert",
+        "file": "agents/airflow-orchestration-expert.md",
+        "category": "data",
+        "description": "Apache Airflow workflow orchestration with DAG development, task dependencies, TaskFlow API, operators, sensors, and executors. Expert in data pipelines and ETL/ELT processes.",
+        "version": "2.0.0",
+        "tags": [
+          "airflow",
+          "orchestration",
+          "dag",
+          "etl",
+          "data-pipeline"
+        ],
+        "mcp": [],
+        "context7": [
+          "/apache/airflow"
+        ]
+      },
+      {
+        "name": "kedro-pipeline-expert",
+        "file": "agents/kedro-pipeline-expert.md",
+        "category": "data",
+        "description": "Kedro data pipeline development with project structure, data catalog, pipeline orchestration, nodes, and configuration. Expert in reproducible data science workflows and MLOps.",
+        "version": "2.0.0",
+        "tags": [
+          "kedro",
+          "pipeline",
+          "data-science",
+          "mlops",
+          "reproducible"
+        ],
+        "mcp": [],
+        "context7": [
+          "/kedro-org/kedro",
+          "/kedro-org/kedro-plugins"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "subdirectory": "commands/",
+        "description": "Data Engineering & ML commands (4 total)",
+        "type": "collection",
+        "discovery": "auto",
+        "tags": [
+          "airflow",
+          "dag",
+          "scaffold",
+          "etl",
+          "taskflow",
+          "lineage",
+          "openlineage",
+          "data-catalog",
+          "governance",
+          "data-quality",
+          "great-expectations",
+          "validation"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "name": "data-quality-standards",
+        "file": "rules/data-quality-standards.md",
+        "priority": "high",
+        "description": "Comprehensive data quality standards with Context7-verified best practices: validation, completeness, consistency, accuracy, timeliness for Airflow, Kedro, pandas, dbt",
+        "tags": [
+          "data-quality",
+          "validation",
+          "standards",
+          "testing",
+          "metrics"
+        ],
+        "appliesTo": [
+          "commands",
+          "agents"
+        ],
+        "enforcesOn": [
+          "airflow-orchestration-expert",
+          "kedro-pipeline-expert",
+          "langgraph-workflow-expert"
+        ]
+      },
+      {
+        "name": "etl-pipeline-standards",
+        "file": "rules/etl-pipeline-standards.md",
+        "priority": "high",
+        "description": "ETL/ELT pipeline best practices with Context7-verified patterns: idempotency, incremental processing, error handling, data lineage, monitoring for all frameworks",
+        "tags": [
+          "etl",
+          "pipeline",
+          "standards",
+          "best-practices",
+          "idempotency"
+        ],
+        "appliesTo": [
+          "commands",
+          "agents"
+        ],
+        "enforcesOn": [
+          "airflow-orchestration-expert",
+          "kedro-pipeline-expert"
+        ]
+      }
+    ],
+    "scripts": [
+      {
+        "name": "airflow-dag-example",
+        "file": "scripts/examples/airflow-dag-example.py",
+        "description": "Airflow DAG example demonstrating Context7 patterns: TaskFlow API, task dependencies, sensors, parallel extraction, error handling",
+        "type": "example",
+        "executable": true,
+        "category": "data",
+        "tags": [
+          "airflow",
+          "dag",
+          "example",
+          "taskflow",
+          "context7"
+        ]
+      },
+      {
+        "name": "kafka-streaming-example",
+        "file": "scripts/examples/kafka-streaming-example.py",
+        "description": "Kafka producer/consumer example demonstrating Context7 patterns: reliable configuration, callbacks, manual commits, graceful shutdown",
+        "type": "example",
+        "executable": true,
+        "category": "data",
+        "tags": [
+          "kafka",
+          "streaming",
+          "example",
+          "producer",
+          "consumer",
+          "context7"
+        ]
+      },
+      {
+        "name": "dbt-transform-example",
+        "file": "scripts/examples/dbt-transform-example.sql",
+        "description": "dbt transformation example demonstrating Context7 patterns: Jinja macros, ref/source, materializations, tests, documentation",
+        "type": "example",
+        "executable": true,
+        "category": "data",
+        "tags": [
+          "dbt",
+          "transformation",
+          "example",
+          "jinja",
+          "context7"
+        ]
+      },
+      {
+        "name": "pandas-etl-example",
+        "file": "scripts/examples/pandas-etl-example.py",
+        "description": "pandas ETL example demonstrating Context7 patterns: vectorized operations, GroupBy aggregations, efficient merging, data validation, quality metrics",
+        "type": "example",
+        "executable": true,
+        "category": "data",
+        "tags": [
+          "pandas",
+          "etl",
+          "example",
+          "validation",
+          "context7"
+        ]
+      }
+    ],
+    "features": {
+      "airflow_orchestration": {
+        "enabled": true,
+        "description": "Apache Airflow workflow orchestration with DAGs and TaskFlow API"
+      },
+      "kedro_pipelines": {
+        "enabled": true,
+        "description": "Kedro reproducible data science pipelines and MLOps"
+      },
+      "langgraph_workflows": {
+        "enabled": true,
+        "description": "LangGraph stateful AI workflows and multi-agent systems"
+      },
+      "kafka_streaming": {
+        "enabled": true,
+        "description": "Apache Kafka event streaming and real-time data pipelines"
+      },
+      "dbt_transformations": {
+        "enabled": true,
+        "description": "dbt data transformations with Jinja and SQL"
+      },
+      "pandas_etl": {
+        "enabled": true,
+        "description": "pandas data manipulation and ETL processing"
+      },
+      "data_quality": {
+        "enabled": true,
+        "description": "Comprehensive data quality validation and monitoring"
+      },
+      "etl_standards": {
+        "enabled": true,
+        "description": "ETL/ELT pipeline best practices and standards"
+      }
+    },
+    "mcpServers": {
+      "recommended": [
+        "context7"
+      ],
+      "optional": []
+    },
+    "compatibleWith": ">=3.0.0",
+    "categoryLabel": "Data Engineering & ML",
+    "size": "~25 KB (gzipped)",
+    "required": false,
+    "tags": [
+      "data-engineering",
+      "ml",
+      "etl",
+      "airflow",
+      "kedro",
+      "langgraph",
+      "kafka",
+      "dbt",
+      "pandas"
+    ]
+  }
+}

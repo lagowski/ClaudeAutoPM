@@ -2,20 +2,20 @@
   "name": "@claudeautopm/plugin-obsidian",
   "version": "2.0.1",
   "description": "Obsidian vault integration plugin for ClaudeAutoPM \u2014 sync, Dataview, Mermaid, and Excalidraw support",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "files": [
     "commands/",
     "scripts/",
     "templates/",
     "claude-md/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'"
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'"
   },
   "keywords": [
     "claudeautopm",

@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync, spawnSync } = require('child_process');
 const readline = require('readline');
+const PluginManager = require('../lib/plugins/PluginManager');
 
 class Installer {
   constructor() {
@@ -1096,14 +1097,12 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
     // Collect all agents from installed plugins
     for (const plugin of this.currentConfig.installedPlugins) {
       const pluginPath = path.join(packagesDir, plugin.name);
-      const pluginJsonPath = path.join(pluginPath, 'plugin.json');
-
-      if (!fs.existsSync(pluginJsonPath)) {
+      if (!PluginManager.manifestPath(pluginPath)) {
         continue;
       }
 
       try {
-        const metadata = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf-8'));
+        const metadata = PluginManager.readManifest(pluginPath);
 
         if (metadata.agents && metadata.agents.length > 0) {
           for (const agent of metadata.agents) {
@@ -1160,11 +1159,11 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
     const categoryOrder = ['languages', 'frameworks', 'testing', 'integration', 'devops', 'cloud', 'databases', 'data', 'ai', 'ml'];
 
     for (const pluginName of installedPlugins) {
-      const pluginJsonPath = path.join(packagesDir, pluginName, 'plugin.json');
-      if (!fs.existsSync(pluginJsonPath)) continue;
+      const pluginDir = path.join(packagesDir, pluginName);
+      if (!PluginManager.manifestPath(pluginDir)) continue;
 
       try {
-        const metadata = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf-8'));
+        const metadata = PluginManager.readManifest(pluginDir);
         if (!metadata.agents) continue;
 
         for (const agent of metadata.agents) {
@@ -1243,11 +1242,11 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
     const names = new Set();
 
     for (const pluginName of pluginNames) {
-      const pluginJsonPath = path.join(packagesDir, pluginName, 'plugin.json');
-      if (!fs.existsSync(pluginJsonPath)) continue;
+      const pluginDir = path.join(packagesDir, pluginName);
+      if (!PluginManager.manifestPath(pluginDir)) continue;
 
       try {
-        const metadata = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf-8'));
+        const metadata = PluginManager.readManifest(pluginDir);
         for (const rule of metadata.rules || []) {
           if (rule.file) names.add(path.basename(rule.file));
         }
@@ -1325,13 +1324,11 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
         this.printStep(`Installing ${pluginName}...`);
 
         const pluginPath = path.join(packagesDir, pluginName);
-        const pluginJsonPath = path.join(pluginPath, 'plugin.json');
-
-        if (!fs.existsSync(pluginJsonPath)) {
-          throw new Error(`Plugin metadata not found: ${pluginJsonPath}`);
+        if (!PluginManager.manifestPath(pluginPath)) {
+          throw new Error(`Plugin metadata not found: ${path.join(pluginPath, '.claude-plugin', 'plugin.json')}`);
         }
 
-        const metadata = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf-8'));
+        const metadata = PluginManager.readManifest(pluginPath);
         let agentsInstalled = 0;
         let commandsInstalled = 0;
         let rulesInstalled = 0;
