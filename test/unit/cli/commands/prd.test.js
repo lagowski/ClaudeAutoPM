@@ -11,12 +11,12 @@
 
 const prdCommands = require('../../../../lib/cli/commands/prd');
 const PRDService = require('../../../../lib/services/PRDService');
-const fs = require('fs-extra');
+const fs = require('../../../../lib/utils/fs');
 const ora = require('ora');
 
 // Mock dependencies
 jest.mock('../../../../lib/services/PRDService');
-jest.mock('fs-extra');
+jest.mock('../../../../lib/utils/fs');
 jest.mock('ora');
 
 describe('PRD Commands', () => {

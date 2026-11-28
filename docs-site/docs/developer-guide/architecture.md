@@ -21,8 +21,7 @@ ClaudeAutoPM v4.0.0 follows a plugin-based architecture with 14 npm packages, a 
 │  ├── AgentService      │ PRDService                             │
 │  ├── ContextService    │ TaskService                            │
 │  ├── EpicService       │ UtilityService                         │
-│  ├── IssueService      │ WorkflowService                        │
-│  └── ServiceFactory (dependency injection)                      │
+│  └── IssueService      │ WorkflowService                        │
 ├─────────────────────────────────────────────────────────────────┤
 │  Plugin System (lib/plugins/)                                   │
 │  └── PluginManager (discovery, loading, installation)           │
