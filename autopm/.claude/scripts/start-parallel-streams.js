@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const yaml = require('js-yaml');
+const yaml = require('./pm/lib/yaml-parse');
 
 /**
  * Start parallel execution of decomposed issue streams
@@ -39,7 +39,7 @@ function startParallelStreams(issueNumber) {
     // Parse YAML front matter
     const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
     if (frontMatterMatch) {
-      const frontMatter = yaml.load(frontMatterMatch[1]);
+      const frontMatter = yaml.parse(frontMatterMatch[1]);
       const streamLetter = String.fromCharCode(65 + index);
 
       streams.push({

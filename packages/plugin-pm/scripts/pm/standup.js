@@ -25,6 +25,14 @@ async function standup() {
     }
   }
 
+  // Preamble
+  try {
+    const { loadPreamble, formatPreamble } = require(path.join(process.cwd(), '.claude', 'lib', 'preamble'));
+    const preamble = loadPreamble(process.cwd());
+    addMessage(formatPreamble(preamble));
+    addMessage('');
+  } catch (e) { /* preamble not available */ }
+
   const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
 
   // Scan epics for task data

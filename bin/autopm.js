@@ -79,7 +79,7 @@ function main() {
       },
       (argv) => {
         // Delegate to the update script
-        const { execSync } = require('child_process');
+        const { execFileSync } = require('child_process');
         const updatePath = path.join(__dirname, '..', 'install', 'update.sh');
         try {
           const env = {
@@ -88,105 +88,12 @@ function main() {
             AUTOPM_BACKUP: argv.backup ? '1' : '0',
             AUTOPM_PRESERVE_CONFIG: argv.preserveConfig ? '1' : '0'
           };
-          execSync(`bash ${updatePath}`, {
+          execFileSync('bash', [updatePath], {
             stdio: 'inherit',
             env
           });
         } catch (error) {
           console.error('Update failed:', error.message);
-          process.exit(1);
-        }
-      }
-    )
-    .command('guide [action]', 'Interactive setup guide and documentation generator (deprecated: use --help)',
-      (yargs) => {
-        return yargs
-          .positional('action', {
-            describe: 'Guide action (default: show enhanced help)',
-            type: 'string',
-            choices: ['quickstart', 'install', 'config', 'tutorial', 'examples', 'faq'],
-            default: 'quickstart'
-          })
-          .option('platform', {
-            describe: 'Target platform for installation guide',
-            type: 'string',
-            choices: ['node', 'docker', 'kubernetes'],
-            default: 'node'
-          })
-          .option('topic', {
-            describe: 'Tutorial topic',
-            type: 'string'
-          })
-          .example('autopm --help', 'Show comprehensive usage guide (recommended)')
-          .example('autopm guide', 'Show enhanced help (same as --help)')
-          .example('autopm guide config', 'Generate configuration documentation');
-      },
-      async (argv) => {
-        try {
-          if (argv.action && argv.action !== 'quickstart') {
-            // Legacy documentation generation for specific actions
-            const GuideManager = require('../lib/guide/manager');
-            const manager = new GuideManager();
-
-            console.log('\n🎯 ClaudeAutoPM Documentation Generator');
-            console.log('=====================================\n');
-
-            switch (argv.action) {
-              case 'install': {
-                console.log(`📦 Generating Installation Guide for ${argv.platform}...\n`);
-                const installResult = await manager.generateInstallationGuide(argv.platform, argv);
-                console.log(`✅ Installation guide created: ${installResult.path}`);
-                console.log(`🖥️  Platform: ${installResult.platform}\n`);
-                break;
-              }
-
-              case 'config': {
-                console.log('⚙️  Generating Configuration Guide...\n');
-                const configResult = await manager.generateConfigGuide(argv);
-                console.log(`✅ Configuration guide created: ${configResult.path}\n`);
-                break;
-              }
-
-              case 'tutorial': {
-                const topic = argv.topic || 'basics';
-                console.log(`🎓 Creating ${topic} Tutorial...\n`);
-                const tutorialResult = await manager.createTutorial(topic, argv);
-                console.log(`✅ Tutorial created: ${tutorialResult.path}\n`);
-                break;
-              }
-
-              case 'examples': {
-                console.log('💡 Generating Code Examples...\n');
-                const examplesResult = await manager.generateExamples(argv.category || 'general', argv);
-                console.log(`✅ Examples created: ${examplesResult.path}\n`);
-                break;
-              }
-
-              case 'faq': {
-                console.log('❓ Generating FAQ Document...\n');
-                const faqResult = await manager.generateFAQ(argv);
-                console.log(`✅ FAQ created: ${faqResult.path}\n`);
-                break;
-              }
-
-              default:
-                console.log('❌ Unknown guide action. Use: autopm guide --help');
-            }
-          } else {
-            // Backward compatibility: redirect to enhanced help
-            console.log('💡 The interactive guide has been replaced with enhanced help.\n');
-            console.log('📖 For comprehensive usage information, use: autopm --help\n');
-            console.log('🔧 For specific documentation generation, use:');
-            console.log('   autopm guide config    # Generate configuration docs');
-            console.log('   autopm guide tutorial  # Create tutorials');
-            console.log('   autopm guide examples  # Generate examples\n');
-
-            // Show the enhanced help
-            process.argv = ['node', 'autopm', '--help'];
-            cli.showHelp();
-          }
-        } catch (error) {
-          console.error(`❌ Guide error: ${error.message}`);
           process.exit(1);
         }
       }
@@ -269,8 +176,8 @@ function main() {
    2. autopm config set provider github # Configure your provider
    3. claude --dangerously-skip-permissions .  # Open Claude Code
 
-🆕 NEW in v2.1.0 - STANDALONE Commands:
-   autopm prd parse <name>              # Parse PRD without AI overhead
+🧰 STANDALONE Commands (run in the terminal):
+   autopm prd parse <name>              # Parse PRD (AI when a provider is set)
    autopm prd extract-epics <name>      # Extract epics from PRD
    autopm prd summarize <name>          # Generate PRD summary
    autopm prd validate <name>           # Validate PRD structure
@@ -362,7 +269,6 @@ function main() {
 📊 Epic Status (Read-Only Utilities):
    autopm epic list                 # List all available epics
    autopm epic status <name>        # Show epic progress and metrics
-   autopm epic breakdown <name>     # Show detailed task breakdown
 
    💡 Note: To CREATE or MODIFY epics, use Claude Code /pm:* commands
 
@@ -393,7 +299,7 @@ function main() {
 
 🔍 Using STANDALONE Commands:
 
-   # Parse PRD without AI (fast, deterministic)
+   # Parse PRD (uses the configured AI provider, else basic parsing)
    autopm prd parse my-feature
 
    # AI-powered parsing with streaming output
@@ -401,7 +307,7 @@ function main() {
 
    # Extract and validate
    autopm prd extract-epics my-feature
-   autopm prd validate my-feature --fix
+   autopm prd validate my-feature
 
    # Task management
    autopm task list epic-001
@@ -413,7 +319,6 @@ function main() {
 
 🛠️  Troubleshooting:
    autopm validate                  # Check installation & config
-   autopm validate --fix            # Auto-fix common issues
    autopm mcp diagnose              # Check MCP server health
    autopm install --force           # Reinstall framework
 

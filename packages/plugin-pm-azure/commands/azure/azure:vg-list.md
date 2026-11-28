@@ -24,17 +24,7 @@ AZURE_DEVOPS_PROJECT=<your-project>
 
 ## Required Documentation Access
 
-**MANDATORY:** Before listing variable groups, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/azure-devops/pipelines` - Pipelines and variable groups
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/project-management/inventory` - Asset inventory patterns
-
-**Why This is Required:**
-- Ensures proper filtering and display patterns
-- Validates variable group type handling
-- Prevents performance issues with large lists
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 
@@ -52,7 +42,7 @@ Type: **$TYPE**
 
 Follow the complete workflow:
 1. Validate Azure CLI authentication
-2. List variable groups using AzureDevOpsResourcesProvider
+2. List variable groups with `az pipelines variable-group list`
 3. Apply filters if specified
 4. Display in formatted table
 5. Show variable count and pipeline links")
@@ -73,21 +63,13 @@ Follow the complete workflow:
 
 #### 2. List Variable Groups
 
-Use `AzureDevOpsResourcesProvider.listVariableGroups()`:
+Use `az pipelines variable-group list`:
 
-```javascript
-const provider = new AzureDevOpsResourcesProvider({
-  token: process.env.AZURE_DEVOPS_PAT,
-  organization: process.env.AZURE_DEVOPS_ORG,
-  project: process.env.AZURE_DEVOPS_PROJECT
-});
-
-const filters = {};
-if (filterPattern) {
-  filters.name = filterPattern;
-}
-
-const variableGroups = await provider.listVariableGroups(filters);
+```bash
+export AZURE_DEVOPS_EXT_PAT="$AZURE_DEVOPS_PAT"
+az pipelines variable-group list \
+  --org "https://dev.azure.com/$AZURE_DEVOPS_ORG" --project "$AZURE_DEVOPS_PROJECT" \
+  ${FILTER:+--group-name "$FILTER"} -o json
 ```
 
 #### 3. Display Output

@@ -1,7 +1,4 @@
 {
-  "hooks": {
-    "tool-use": ".claude/hooks/pre-action-agent-reminder.js"
-  },
   "settings": {
     "enforce_agents": true,
     "agent_first_policy": "strict"

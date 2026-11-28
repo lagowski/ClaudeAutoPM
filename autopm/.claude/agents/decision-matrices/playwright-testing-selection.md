@@ -1,10 +1,6 @@
 # Playwright Testing Agent Decision Matrix
 
-**Documentation Queries:**
-
-- `mcp://context7/playwright/testing` - Playwright testing framework
-- `mcp://context7/testing/e2e` - End-to-end testing patterns
-- `mcp://context7/testing/visual` - Visual regression testing
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: playwright.
 
 ## Quick Selection Guide
 

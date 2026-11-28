@@ -45,21 +45,7 @@ Comprehensive hyperparameter tuning system supporting:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before hyperparameter tuning, query Context7 for optimization best practices:
-
-**Documentation Queries:**
-- `mcp://context7/optuna/optimization` - Optuna Bayesian optimization, TPE sampler, pruning strategies
-- `mcp://context7/ray-tune/tuning` - Ray Tune distributed tuning, ASHA/Hyperband schedulers
-- `mcp://context7/scikit-learn/grid-search` - GridSearchCV, RandomizedSearchCV patterns
-- `mcp://context7/hyperopt/bayesian-optimization` - Bayesian optimization with Tree-structured Parzen Estimator
-- `mcp://context7/wandb/sweeps` - Weights & Biases hyperparameter sweeps and visualization
-
-**Why This is Required:**
-- Ensures optimization strategies follow official documentation
-- Applies latest Optuna and Ray Tune patterns for efficient tuning
-- Validates parameter space definitions and search algorithms
-- Prevents inefficient search strategies and resource waste
-- Confirms proper early stopping and pruning configurations
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: optuna, ray-tune, scikit-learn, hyperopt, wandb.
 
 **WARNING:** This command was implemented without Context7 MCP verification due to MCP unavailability. All patterns should be re-verified against Context7 documentation before production use.
 

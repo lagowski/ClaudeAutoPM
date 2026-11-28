@@ -15,9 +15,7 @@ Import variable group configuration from JSON or YAML file.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups
-- `mcp://context7/infrastructure/configuration-management` - Config patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

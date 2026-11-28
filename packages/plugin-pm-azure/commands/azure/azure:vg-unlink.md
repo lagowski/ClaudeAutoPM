@@ -14,9 +14,7 @@ Unlink a variable group from a pipeline using REST API.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/pipelines` - Pipelines documentation
-- `mcp://context7/azure-devops/variable-groups` - Variable groups
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 
@@ -26,7 +24,7 @@ Use azure-devops-specialist agent for all operations.
 
 1. Validate variable group and pipeline exist
 2. Check if currently linked
-3. Unlink using AzureDevOpsResourcesProvider.unlinkVariableGroupFromPipeline()
+3. Unlink via the pipeline's `variablegroups` REST endpoint (`az pipelines variable-group` has no unlink subcommand); call it with `az devops invoke` or `curl`
 4. Confirm unlinking
 5. Show remaining links
 

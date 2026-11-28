@@ -70,32 +70,33 @@ ClaudeAutoPM uses Jest for all testing. Jest provides:
 
 The project uses multiple Jest configurations:
 
-**jest.config.quick.js** - Quick tests for development:
+**jest.config.quick.js** - Quick smoke allowlist (`npm run test:quick`), excerpt:
 ```javascript
 module.exports = {
   testEnvironment: 'node',
-  testMatch: ['**/test/**/*.test.js'],
-  testPathIgnorePatterns: ['/node_modules/', '/test/e2e/'],
-  coverageDirectory: 'coverage',
-  forceExit: true,
-  testTimeout: 10000
+  testMatch: [
+    '**/test/templates/agent-registry-consistency.test.js',
+    '**/test/core/PluginManager.test.js',
+    // ...a short allowlist of fast suites
+  ],
+  testTimeout: 10000,
+  maxWorkers: 1
 };
 ```
 
-**jest.config.clean.js** - Full test suite:
+**jest.config.clean.js** - Wider `*-jest.test.js` set (`npm run test:full`), excerpt:
 ```javascript
 module.exports = {
   testEnvironment: 'node',
-  testMatch: ['**/test/**/*.test.js'],
-  coverageDirectory: 'coverage',
-  collectCoverageFrom: ['lib/**/*.js'],
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80
-    }
-  }
+  testMatch: [
+    '**/test/jest-tests/*-jest.test.js',
+    '**/test/unit/*-jest.test.js',
+    '**/test/integration/*-jest.test.js',
+    '**/test/cli/*.test.js'
+    // ...
+  ],
+  collectCoverageFrom: ['autopm/.claude/scripts/**/*.js'],
+  testTimeout: 15000
 };
 ```
 
@@ -129,11 +130,11 @@ npm run test:coverage
 # Unit tests
 npm run test:unit
 
-# Integration tests
-npm run test:integration
+# Integration tests (Azure DevOps sync)
+npm run test:integration:azure
 
-# End-to-end tests
-npm run test:e2e
+# CLI tests
+npm run test:cli
 
 # Security tests
 npm run test:security
@@ -172,7 +173,6 @@ npm run test:comprehensive:ci
 ```
 test/
 ├── cli/                    # CLI command tests
-│   ├── autopm-commands.test.js
 │   ├── basic-commands.test.js
 │   ├── config-command.test.js
 │   └── epic-command.test.js

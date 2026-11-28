@@ -1,3 +1,9 @@
+---
+name: anthropic-claude-expert
+description: "Use this agent for Anthropic Claude API integration with the Messages API, tool use, prompt caching, vision, and streaming. Expert in cost optimization, async patterns, and production deployment."
+model: sonnet
+---
+
 # Anthropic Claude Expert Agent
 
 ## Identity
@@ -75,20 +81,7 @@ Design, implement, and optimize applications using Anthropic's Claude API with f
 
 ## Documentation Queries
 
-**MANDATORY:** Before implementing Claude integration, query Context7 for latest patterns:
-
-**Documentation Queries:**
-- `mcp://context7/anthropic/anthropic-sdk-python` - Python SDK patterns, Messages API, streaming
-- `mcp://context7/anthropic/anthropic-sdk-typescript` - TypeScript SDK patterns
-- `mcp://context7/anthropic/claude-api` - Claude API reference, models, capabilities
-- `mcp://context7/websites/docs_anthropic` - Official docs for tool use, prompt caching, vision
-
-**Why This is Required:**
-- Claude API evolves rapidly with new features
-- Prompt caching syntax and best practices change
-- Tool use patterns have specific requirements
-- Vision capabilities have format constraints
-- Token counting differs by model version
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: anthropic.
 
 ## Implementation Patterns
 
@@ -102,7 +95,7 @@ import os
 client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 message = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Explain quantum computing"}
@@ -116,7 +109,7 @@ async_client = AsyncAnthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 async def chat():
     message = await async_client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-sonnet-5-5",
         max_tokens=1024,
         messages=[
             {"role": "user", "content": "Explain quantum computing"}
@@ -155,7 +148,7 @@ tools = [
 ]
 
 message = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     tools=tools,
     messages=[
@@ -172,7 +165,7 @@ if message.stop_reason == "tool_use":
 
     # Continue conversation with tool result
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-sonnet-5-5",
         max_tokens=1024,
         tools=tools,
         messages=[
@@ -201,7 +194,7 @@ client = Anthropic()
 
 # System prompt with cache control
 message = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     system=[
         {
@@ -242,7 +235,7 @@ from anthropic import Anthropic
 client = Anthropic()
 
 with client.messages.stream(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Write a long essay about AI"}
@@ -265,7 +258,7 @@ with open("image.jpg", "rb") as f:
     image_data = base64.standard_b64encode(f.read()).decode("utf-8")
 
 message = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     messages=[
         {
@@ -304,7 +297,7 @@ def call_claude_with_retry(messages, max_retries=3):
     for attempt in range(max_retries):
         try:
             return client.messages.create(
-                model="claude-3-5-sonnet-20241022",
+                model="claude-sonnet-5-5",
                 max_tokens=1024,
                 messages=messages
             )
@@ -334,7 +327,7 @@ async_client = AsyncAnthropic()
 async def process_batch(prompts):
     tasks = [
         async_client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-5-5",
             max_tokens=1024,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -357,15 +350,15 @@ from typing import Dict
 client = Anthropic()
 
 class CostTracker:
-    # Pricing per 1M tokens (as of Oct 2024)
+    # Pricing per 1M tokens (illustrative: check https://www.anthropic.com/pricing for current rates)
     PRICING = {
-        "claude-3-5-sonnet-20241022": {
+        "claude-sonnet-5-5": {
             "input": 3.00,
             "output": 15.00,
             "cache_write": 3.75,
             "cache_read": 0.30
         },
-        "claude-3-haiku-20240307": {
+        "claude-haiku-5-5": {
             "input": 0.25,
             "output": 1.25,
             "cache_write": 0.30,
@@ -401,7 +394,7 @@ print(f"Request cost: ${cost:.4f}")
 
 ## Model Selection Guide
 
-### Claude 3.5 Sonnet (claude-3-5-sonnet-20241022)
+### Claude Sonnet 5.5 (claude-sonnet-5-5)
 **Use for:**
 - Complex reasoning tasks
 - Code generation and analysis
@@ -414,7 +407,7 @@ print(f"Request cost: ${cost:.4f}")
 - Strong coding abilities
 - Fast inference
 
-### Claude 3 Opus (claude-3-opus-20240229)
+### Claude Opus 5.5 (claude-opus-5-5)
 **Use for:**
 - Most complex tasks
 - Research and analysis
@@ -427,7 +420,7 @@ print(f"Request cost: ${cost:.4f}")
 - Slower but most accurate
 - Higher cost
 
-### Claude 3 Haiku (claude-3-haiku-20240307)
+### Claude Haiku 5.5 (claude-haiku-5-5)
 **Use for:**
 - Simple queries
 - Classification tasks
@@ -494,7 +487,7 @@ def test_real_claude_call():
     client = Anthropic()
 
     message = client.messages.create(
-        model="claude-3-haiku-20240307",  # Use Haiku for testing
+        model="claude-haiku-5-5",  # Use Haiku for testing
         max_tokens=100,
         messages=[{"role": "user", "content": "Say 'test passed'"}]
     )

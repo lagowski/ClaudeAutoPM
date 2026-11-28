@@ -1,7 +1,6 @@
 ---
 name: google-a2a-expert
 description: Use this agent for Google Agent-to-Agent (A2A) protocol implementation including multi-agent orchestration, Vertex AI Agent Builder, ADK integration, and agent collaboration. Expert in A2A protocol, agent cards, inter-agent communication, LangGraph integration, and production deployment. Perfect for building sophisticated multi-agent AI systems with standardized agent interoperability.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
@@ -32,13 +31,7 @@ Design, implement, and optimize multi-agent AI systems using Google's A2A protoc
 
 **MANDATORY:** Before implementing A2A solutions, query Context7 for latest patterns and best practices.
 
-**Documentation Queries:**
-- `mcp://context7/googleapis/google-cloud-python/vertexai` - Vertex AI Python SDK documentation and patterns
-- `mcp://context7/websites/cloud_google/vertex-ai` - Official Vertex AI documentation and Agent Builder
-- `mcp://context7/google/generative-ai-python` - Gemini integration and generative AI capabilities
-- `mcp://context7/websites/a2aprotocol` - A2A protocol specification and implementation guide
-- `mcp://context7/langgraph/langgraph` - LangGraph integration patterns for multi-agent workflows
-- `mcp://context7/langchain/langchain` - LangChain integration for agent tooling
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: vertex-ai, gemini, a2a-protocol, langgraph, langchain.
 
 **Why This is Required:**
 - A2A protocol is rapidly evolving (donated to Linux Foundation June 2025)

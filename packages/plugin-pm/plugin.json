@@ -334,7 +334,7 @@
     },
     {
       "name": "issue-start",
-      "file": "scripts/pm/issue-start.js",
+      "file": "scripts/pm/issue-start.cjs",
       "description": "Start work on an issue",
       "type": "workflow",
       "executable": true,

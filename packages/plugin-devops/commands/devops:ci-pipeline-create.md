@@ -14,20 +14,7 @@ Generates comprehensive CI/CD pipeline configurations following industry best pr
 
 ## Required Documentation Access
 
-**MANDATORY:** Before creating pipelines, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/github/actions-best-practices` - GitHub Actions patterns
-- `mcp://context7/azure-devops/pipelines` - Azure Pipelines best practices
-- `mcp://context7/docker/ci-cd` - Container CI/CD patterns
-- `mcp://context7/kubernetes/ci-cd` - Kubernetes deployment strategies
-- `mcp://context7/security/ci-cd-security` - CI/CD security best practices
-
-**Why This is Required:**
-- Ensures pipelines follow platform-specific best practices
-- Applies latest security and performance patterns
-- Validates deployment strategies
-- Prevents common CI/CD anti-patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: github, azure-devops, docker, kubernetes.
 
 ## Usage
 

@@ -45,25 +45,7 @@ Comprehensive ML data pipeline setup covering:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before pipeline setup, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/kedro-org/kedro` - Kedro project structure, data catalog, pipelines, nodes
-- `mcp://context7/kedro-org/kedro-plugins` - Kedro Airflow integration, deployment
-- `mcp://context7/apache/airflow` - Airflow DAG authoring, operators, sensors, scheduling
-- `mcp://context7/prefecthq/prefect` - Prefect flow orchestration patterns
-- `mcp://context7/feast-dev/feast` - Feast feature store configuration and usage
-- `mcp://context7/great-expectations/great_expectations` - Data validation and expectation suites
-- `mcp://context7/getdbt/dbt-core` - dbt transformation patterns (if using dbt)
-
-**Why This is Required:**
-- Ensures pipeline follows official framework documentation
-- Applies latest orchestration patterns from Kedro/Airflow/Prefect
-- Validates feature store integration patterns (Feast/Tecton)
-- Implements proper data validation with Great Expectations
-- Prevents anti-patterns in pipeline architecture
-- Ensures reproducible, production-ready data pipelines
-- Validates MLOps best practices for data engineering
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kedro, airflow, prefect, feast, great-expectations, dbt.
 
 ## Usage
 

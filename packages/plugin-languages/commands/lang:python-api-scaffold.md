@@ -17,20 +17,7 @@ Generate production-ready FastAPI application with Context7-verified best practi
 
 ## Required Documentation Access
 
-**MANDATORY:** Before scaffolding, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/websites/fastapi_tiangolo` - FastAPI async endpoints, Pydantic validation, dependency injection
-- `mcp://context7/python/cpython` - Type hints (AsyncIterator, ParamSpec), async patterns
-- `mcp://context7/agile/api-design` - REST API design patterns
-- `mcp://context7/project-management/project-structure` - Python project organization
-
-**Why This is Required:**
-- Ensures use of latest FastAPI async patterns
-- Applies correct Pydantic v2 validation techniques
-- Follows current Python type hinting standards (AsyncIterator, ParamSpec, TypeIs)
-- Implements proper dependency injection patterns
-- Uses OAuth2 scopes and security best practices
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: fastapi, python.
 
 ## Purpose
 

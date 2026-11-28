@@ -28,8 +28,30 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-const { Octokit } = require('@octokit/rest');
-const { batchSyncAll, batchSyncPRDs, batchSyncEpics, batchSyncTasks } = require('../../../../lib/batch-processor-integration');
+const { requireEngine } = require('./lib/require-engine');
+
+// npm packages sync needs; an installed project does not ship them (#899).
+// yaml: .claude/lib/frontmatter.js, loaded by the batch-processor-integration engine.
+const SYNC_PACKAGES = ['@octokit/rest', 'yaml'];
+
+/** Load Octokit and the sync engine, or exit naming the packages to install (#899). */
+function loadSyncDeps() {
+  const missing = SYNC_PACKAGES.filter((name) => {
+    try {
+      require.resolve(name);
+      return false;
+    } catch {
+      return true;
+    }
+  });
+  if (missing.length > 0) {
+    console.error(`❌ Error: sync-batch needs npm packages that are not installed: ${missing.join(', ')}`);
+    console.error('\nInstall them in this project:');
+    console.error(`  npm install ${missing.join(' ')}`);
+    process.exit(1);
+  }
+  return { Octokit: require('@octokit/rest').Octokit, ...requireEngine('batch-processor-integration') };
+}
 
 class SyncBatchCommand {
   constructor() {
@@ -57,6 +79,10 @@ class SyncBatchCommand {
         repo: match[2]
       };
     } catch (error) {
+      // Preserve the specific parse error instead of shadowing it (#608)
+      if (error.message === 'Could not parse GitHub repository URL') {
+        throw error;
+      }
       throw new Error('Failed to get repository info. Are you in a Git repository with GitHub remote?');
     }
   }
@@ -181,6 +207,8 @@ Environment:
         console.error('  GITHUB_TOKEN=your_token_here');
         process.exit(1);
       }
+
+      const { Octokit, batchSyncAll, batchSyncPRDs, batchSyncEpics, batchSyncTasks } = loadSyncDeps();
 
       // Get repository info
       console.log('🔍 Detecting repository...');

@@ -360,7 +360,8 @@ describe('Performance and Resource Limit Tests', () => {
       assert.strictEqual(bucket.tryConsume(5), true);
       assert.strictEqual(bucket.tryConsume(5), false);
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // 5 tokens/s: wait a little over 1 s, a timer that fires a millisecond early leaves 4.99 tokens
+      await new Promise(resolve => setTimeout(resolve, 1100));
 
       assert.strictEqual(bucket.tryConsume(5), true);
     });

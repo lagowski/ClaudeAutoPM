@@ -4,19 +4,7 @@ Generate a production-ready Apache Kafka streaming pipeline with Context7-verifi
 
 ## Required Documentation Access
 
-**MANDATORY:** Before scaffolding a Kafka pipeline, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/apache/kafka` - Topic: "producers, consumers, topics, partitions, configuration"
-- `mcp://context7/apache/kafka` - Topic: "Kafka Streams, processors, state stores, windowing"
-- `mcp://context7/apache/kafka` - Topic: "error handling, exactly-once semantics, monitoring"
-
-**Why This is Required:**
-- Ensures pipelines follow latest Kafka patterns and configuration
-- Applies Context7-verified error handling and retry mechanisms
-- Validates producer/consumer configuration for performance
-- Confirms proper topic and partition management
-- Prevents data loss with proper commit strategies
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kafka.
 
 ## Command Usage
 

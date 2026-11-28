@@ -19,23 +19,7 @@ Comprehensive A2A protocol implementation following Google Cloud best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before setup, query Context7 for Google A2A best practices:
-
-**Documentation Queries:**
-- `mcp://context7/googleapis/google-cloud-python/vertexai` - Vertex AI Agent Builder
-- `mcp://context7/google-cloud/agent-builder` - Agent creation and management
-- `mcp://context7/google-cloud/a2a-protocol` - A2A protocol specification
-- `mcp://context7/google-cloud/multi-agent` - Multi-agent orchestration
-- `mcp://context7/google-cloud/grpc-patterns` - gRPC communication patterns
-- `mcp://context7/langchain/google-vertex` - LangChain Vertex AI integration
-
-**Why This is Required:**
-- Ensures setup follows official Google Cloud documentation
-- Applies proven A2A protocol patterns
-- Validates agent orchestration strategies
-- Prevents integration issues
-- Implements proper security and auth
-- Optimizes multi-agent performance
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: vertex-ai, google-cloud, langchain.
 
 ## Usage
 

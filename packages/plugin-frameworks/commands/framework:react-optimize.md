@@ -14,19 +14,7 @@ Analyzes and optimizes React applications following official React best practice
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for React best practices:
-
-**Documentation Queries:**
-- `mcp://context7/react/performance` - React performance optimization
-- `mcp://context7/react/hooks` - useMemo, useCallback, memo patterns
-- `mcp://context7/react/rendering` - Rendering optimization strategies
-- `mcp://context7/react/profiling` - React Profiler and performance analysis
-
-**Why This is Required:**
-- Ensures optimization follows official React documentation
-- Applies latest performance patterns from React team
-- Validates hook usage and dependency arrays
-- Prevents anti-patterns and common mistakes
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react.
 
 ## Usage
 

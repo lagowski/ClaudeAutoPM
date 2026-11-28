@@ -1,7 +1,6 @@
 ---
 name: kedro-pipeline-expert
 description: Use this agent for Kedro data pipeline development including project structure, data catalog, and pipeline orchestration. Expert in nodes, pipelines, datasets, and configuration. Specializes in reproducible data science workflows and MLOps.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: orange
 ---
@@ -35,10 +34,7 @@ You are a senior Kedro expert specializing in reproducible data science pipeline
 4. Review modular pipeline patterns and testing approaches
 5. Consult deployment integrations (Airflow, Kubernetes, cloud)
 
-**Documentation Queries:**
-- `mcp://context7/kedro-org/kedro` - Topic: "project structure, data catalog, pipelines, nodes"
-- `mcp://context7/kedro-org/kedro` - Topic: "configuration, parameters, credentials, testing"
-- `mcp://context7/kedro-org/kedro-plugins` - Topic: "Airflow integration, deployment"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kedro.
 
 ### Context7-Verified Best Practices
 

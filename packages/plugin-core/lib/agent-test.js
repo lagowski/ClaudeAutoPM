@@ -166,8 +166,8 @@ function checkDocumentation(content) {
   // Check for Examples section
   result.hasExamples = /## Examples/i.test(content);
 
-  // Check for Context7 section
-  result.hasContext7Section = /\*\*Documentation Queries:\*\*/i.test(content);
+  // Check for the Context7 pointer to the shared rule (#862)
+  result.hasContext7Section = /context7-required\.md/.test(content);
 
   // Check for Tools section or tools list
   result.hasToolsList = /## Tools/i.test(content) ||
@@ -197,9 +197,9 @@ function parseMarkdownSections(content) {
 }
 
 /**
- * Validate Context7 documentation queries
+ * Validate the Context7 libraries an agent names
  *
- * @param {Array<string>} queries - Array of Context7 query strings
+ * @param {Array<string>} queries - Library names (resolve-library-id input)
  * @param {Object} options - Validation options
  * @param {string} options.agentPurpose - Agent purpose for relevance checking
  * @returns {Object} Validation results
@@ -221,7 +221,7 @@ function validateContext7Queries(queries, options = {}) {
   }
 
   // Validate format
-  const validPattern = /^mcp:\/\/context7\/.+/;
+  const validPattern = /^[a-z0-9][a-z0-9.+_-]*$/i;
   queries.forEach(query => {
     if (!validPattern.test(query)) {
       result.validFormat = false;
@@ -243,17 +243,15 @@ function validateContext7Queries(queries, options = {}) {
 }
 
 /**
- * Extract Context7 queries from content
+ * Extract the Context7 libraries from the pointer line
+ * ("Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: a, b.")
  *
  * @param {string} content - Agent content
- * @returns {Array<string>} Array of extracted query strings
+ * @returns {Array<string>} Library names
  */
 function extractContext7Queries(content) {
-  const queryPattern = /`mcp:\/\/context7\/[^`]+`/g;
-  const matches = content.match(queryPattern) || [];
-
-  // Remove backticks
-  return matches.map(match => match.replace(/`/g, ''));
+  const match = content.match(/Libraries: ([^\n]+?)\.?\s*$/m);
+  return match ? match[1].split(/,\s*/).filter(Boolean) : [];
 }
 
 /**

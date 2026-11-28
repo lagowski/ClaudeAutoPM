@@ -15,10 +15,7 @@ Update an existing variable group in Azure DevOps.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/infrastructure/secrets-management` - Secrets security
-- `mcp://context7/infrastructure/configuration-management` - Config updates
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 
@@ -28,7 +25,7 @@ Use azure-devops-specialist agent for all operations.
 
 1. Validate variable group exists
 2. Parse update parameters (variables, secrets, description)
-3. Update using AzureDevOpsResourcesProvider
+3. Update with `az pipelines variable-group update --group-id <id>` (name, description) and `az pipelines variable-group variable create|update|delete` (variables; add `--secret true` for secrets)
 4. Display updated configuration
 5. Show Azure DevOps link
 

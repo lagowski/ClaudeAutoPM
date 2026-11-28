@@ -15,21 +15,7 @@ Execute comprehensive incident response workflows with automated diagnostics, se
 
 ## Required Documentation Access
 
-**MANDATORY:** Before incident response, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/observability/incident-management` - Incident response frameworks and SRE practices
-- `mcp://context7/kubernetes/troubleshooting` - K8s debugging, pod diagnostics, and log analysis
-- `mcp://context7/prometheus/alerting` - Alert investigation and metrics correlation
-- `mcp://context7/distributed-tracing/debugging` - Tracing-based root cause analysis
-- `mcp://context7/devops/runbooks` - Runbook automation and decision tree patterns
-
-**Why This is Required:**
-- Ensures incident response follows SRE best practices and incident command structure
-- Applies proven diagnostic workflows for Kubernetes and microservices architectures
-- Validates rollback/remediation decisions against production safety standards
-- Prevents premature or incorrect remediation actions during high-pressure incidents
-- Implements proper communication patterns for stakeholder updates
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kubernetes, prometheus.
 
 ## Usage
 

@@ -113,26 +113,6 @@
       ]
     },
     {
-      "name": "gemini-api-expert",
-      "file": "agents/gemini-api-expert.md",
-      "category": "ai-integration",
-      "description": "Google Gemini API integration and AI application development",
-      "version": "2.0.0",
-      "tags": [
-        "gemini",
-        "google",
-        "ai",
-        "api",
-        "llm"
-      ],
-      "mcp": [
-        "gcp"
-      ],
-      "context7": [
-        "/websites/cloud_google_architecture"
-      ]
-    },
-    {
       "name": "kubernetes-orchestrator",
       "file": "agents/kubernetes-orchestrator.md",
       "category": "orchestration",
@@ -150,26 +130,6 @@
       ],
       "context7": [
         "/kubernetes/kubernetes"
-      ]
-    },
-    {
-      "name": "openai-python-expert",
-      "file": "agents/openai-python-expert.md",
-      "category": "ai-integration",
-      "description": "OpenAI API integration with Python for AI applications",
-      "version": "2.0.0",
-      "tags": [
-        "openai",
-        "python",
-        "ai",
-        "api",
-        "gpt"
-      ],
-      "mcp": [
-        "openai"
-      ],
-      "context7": [
-        "/openai/openai-python"
       ]
     },
     {
@@ -381,7 +341,8 @@
   },
   "dependencies": [],
   "peerPlugins": [
-    "@claudeautopm/plugin-core"
+    "@claudeautopm/plugin-core",
+    "@claudeautopm/plugin-ai"
   ],
   "mcpServers": {
     "recommended": [

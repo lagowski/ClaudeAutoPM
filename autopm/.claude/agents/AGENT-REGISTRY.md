@@ -128,12 +128,6 @@ Unless otherwise specified, all agents use: Glob, Grep, LS, Read, WebFetch, Todo
 **Location**: `.claude/agents/frameworks/nats-messaging-expert.md`
 **Description**: Use this agent for NATS messaging system including pub/sub, request/reply, and queue groups.
 
-### message-queue-engineer
-**Location**: `.claude/agents/integration/message-queue-engineer.md`
-**Description**: Use this agent for implementing message queuing, event streaming, and pub/sub architectures. Specializes in Kafka, RabbitMQ, AWS SQS/SNS, Redis Pub/Sub, and other message broker systems.
-**Scope**: Message broker setup, producer/consumer implementation, event-driven patterns, SAGA orchestration, dead letter queues
-**NOT for**: Simple NATS setups (use nats-messaging-expert), database events (use database-specific agents)
-
 ## Language Agents
 
 ### python-backend-expert
@@ -258,19 +252,81 @@ Unless otherwise specified, all agents use: Glob, Grep, LS, Read, WebFetch, Todo
 **Location**: `.claude/agents/data/kedro-pipeline-expert.md`
 **Description**: Use this agent for Kedro data pipeline development including project structure, data catalog, and pipeline orchestration.
 
-### langgraph-workflow-expert
-**Location**: `.claude/agents/data/langgraph-workflow-expert.md`
-**Description**: Use this agent for LangGraph workflow orchestration including state machines, conditional routing, and multi-agent collaboration.
+## AI Agents (plugin-ai)
 
-## AI/API Agents
-
-### gemini-api-expert
-**Location**: `.claude/agents/cloud/gemini-api-expert.md`
-**Description**: Use this agent for Google Gemini API integration including text generation, multimodal inputs, function calling, and safety controls.
+### anthropic-claude-expert
+**Location**: `.claude/agents/ai/anthropic-claude-expert.md`
+**Description**: Anthropic Claude API integration with Messages API, tool use, prompt caching, vision, and streaming. Expert in cost optimization, async patterns, and production deployment.
 
 ### openai-python-expert
-**Location**: `.claude/agents/cloud/openai-python-expert.md`
-**Description**: Use this agent for OpenAI Python SDK integration including GPT models, embeddings, fine-tuning, and assistants API.
+**Location**: `.claude/agents/ai/openai-python-expert.md`
+**Description**: OpenAI Python SDK integration with GPT models, embeddings, fine-tuning, and assistants API. Expert in chat completions, function calling, vision, audio processing, and production deployment.
+
+### azure-openai-expert
+**Location**: `.claude/agents/ai/azure-openai-expert.md`
+**Description**: Azure OpenAI Service integration with enterprise features, managed identities, private endpoints, and compliance. Expert in multi-tenant architecture, cost allocation, and hybrid deployments.
+
+### gemini-api-expert
+**Location**: `.claude/agents/ai/gemini-api-expert.md`
+**Description**: Google Gemini API integration with text generation, multimodal inputs, function calling, and safety controls. Expert in Gemini Pro/Flash models, structured outputs, streaming responses, and production deployment.
+
+### langchain-expert
+**Location**: `.claude/agents/ai/langchain-expert.md`
+**Description**: LangChain framework expert with LCEL, chains, agents, memory, RAG, and tools. Expert in async patterns, structured outputs, and production optimization.
+
+### langgraph-workflow-expert
+**Location**: `.claude/agents/ai/langgraph-workflow-expert.md`
+**Description**: LangGraph workflow orchestration with state machines, conditional routing, multi-agent collaboration, and graph-based AI workflows. Expert in stateful applications and complex decision trees.
+
+### google-a2a-expert
+**Location**: `.claude/agents/ai/google-a2a-expert.md`
+**Description**: Google Agent-to-Agent (A2A) protocol expert with Vertex AI Agent Builder, multi-agent orchestration, and agent collaboration. Expert in A2A SDK, ADK workflows, and distributed agent systems.
+
+### huggingface-expert
+**Location**: `.claude/agents/ai/huggingface-expert.md`
+**Description**: HuggingFace ecosystem expert with Transformers, Datasets, Model Hub, quantization, and inference optimization. Expert in model deployment, fine-tuning, and production serving.
+
+## Machine Learning Agents (plugin-ml)
+
+### tensorflow-keras-expert
+**Location**: `.claude/agents/machine-learning/tensorflow-keras-expert.md`
+**Description**: TensorFlow and Keras deep learning expert for model building, training, optimization, and deployment. Expert in Sequential/Functional/Subclassing APIs, callbacks, XLA compilation, distributed training (MirroredStrategy/TPUStrategy), and TensorFlow Lite conversion.
+
+### pytorch-expert
+**Location**: `.claude/agents/machine-learning/pytorch-expert.md`
+**Description**: PyTorch deep learning expert for model building, training optimization, and distributed training. Expert in torch.nn.Module, DataLoaders, Autograd, torch.compile, DDP (DistributedDataParallel), mixed precision (AMP), and CUDA optimization.
+
+### reinforcement-learning-expert
+**Location**: `.claude/agents/machine-learning/reinforcement-learning-expert.md`
+**Description**: Reinforcement Learning expert for training agents with Gymnasium environments and Stable-Baselines3 algorithms (PPO, SAC, TD3, DQN). Expert in custom environments, policy training, reward engineering, Q-Learning, policy gradients, and multi-agent systems.
+
+### scikit-learn-expert
+**Location**: `.claude/agents/machine-learning/scikit-learn-expert.md`
+**Description**: Classical machine learning expert with scikit-learn for pipelines, model selection, preprocessing, cross-validation, and hyperparameter tuning. Expert in classification, regression, clustering, dimensionality reduction, and feature engineering.
+
+### neural-network-architect
+**Location**: `.claude/agents/machine-learning/neural-network-architect.md`
+**Description**: Neural network architecture design specialist for CNNs, ResNets, Transformers, RNNs, attention mechanisms, and hybrid models. Expert in architecture patterns, layer selection, skip connections, normalization strategies, and model scaling for optimal performance.
+
+### gradient-boosting-expert
+**Location**: `.claude/agents/machine-learning/gradient-boosting-expert.md`
+**Description**: Gradient boosting specialist for XGBoost, LightGBM, and CatBoost. Expert in hyperparameter tuning, feature importance, early stopping, categorical feature handling, and model interpretation. Specializes in tabular data and competition-winning models.
+
+### computer-vision-expert
+**Location**: `.claude/agents/machine-learning/computer-vision-expert.md`
+**Description**: Computer vision specialist using OpenCV, PIL/Pillow, and deep learning integration. Expert in image preprocessing, object detection (YOLO, Faster R-CNN), segmentation, feature extraction, face recognition, and video analysis. Production CV pipelines and real-time processing.
+
+### nlp-transformer-expert
+**Location**: `.claude/agents/machine-learning/nlp-transformer-expert.md`
+**Description**: NLP transformer specialist for BERT, GPT, T5, RoBERTa. Expert in fine-tuning, tokenization, pipeline API, text classification, question answering, NER, text generation, and inference optimization. Production NLP pipelines and model deployment.
+
+### time-series-expert
+**Location**: `.claude/agents/machine-learning/time-series-expert.md`
+**Description**: Time series forecasting specialist with Prophet, ARIMA, LSTM, Temporal Fusion Transformer. Expert in trend analysis, seasonality decomposition, anomaly detection, and multi-step ahead prediction. Production forecasting pipelines.
+
+### automl-expert
+**Location**: `.claude/agents/machine-learning/automl-expert.md`
+**Description**: Automated machine learning specialist with AutoGluon, FLAML, AutoKeras, H2O AutoML. Expert in automated model selection, hyperparameter tuning, ensemble methods, and rapid prototyping. Get best models with minimal code.
 
 ## Decision Matrices (Not Agents)
 
@@ -298,15 +354,16 @@ When adding agents to the main system prompt, use this format:
 
 ### Active Agents by Category
 - **Core**: 7 agents (agent-manager, file-analyzer, code-analyzer, test-runner, parallel-worker, mcp-manager, context-optimizer)
-- **Frameworks/Testing**: 8 agents (react-ui-expert, react-frontend-engineer, ux-design-expert, tailwindcss-expert, e2e-test-engineer, frontend-testing-engineer, nats-messaging-expert, message-queue-engineer)
+- **Frameworks/Testing**: 7 agents (react-ui-expert, react-frontend-engineer, ux-design-expert, tailwindcss-expert, e2e-test-engineer, frontend-testing-engineer, nats-messaging-expert)
 - **Languages**: 5 agents (python-backend-expert, python-backend-engineer, javascript-frontend-engineer, nodejs-backend-engineer, bash-scripting-expert)
-- **Cloud**: 7 agents (AWS, Azure, GCP, Kubernetes, Terraform, Cloud Functions)
+- **Cloud**: 6 agents (AWS, Azure, GCP, Kubernetes, Terraform, Cloud Functions)
 - **DevOps**: 7 agents (github-operations-specialist, azure-devops-specialist, mcp-context-manager, docker-containerization-expert, traefik-proxy-expert, ssh-operations-expert, observability-engineer)
 - **Databases**: 5 agents (PostgreSQL, MongoDB, BigQuery, CosmosDB, Redis)
-- **Data Engineering**: 3 agents (Airflow, Kedro, LangGraph)
-- **AI/API**: 2 agents (Gemini, OpenAI)
+- **Data Engineering**: 2 agents (Airflow, Kedro)
+- **AI**: 8 agents (Anthropic Claude, OpenAI, Azure OpenAI, Gemini, LangChain, LangGraph, Google A2A, HuggingFace)
+- **Machine Learning**: 10 agents (TensorFlow/Keras, PyTorch, RL, scikit-learn, neural network architecture, gradient boosting, computer vision, NLP transformers, time series, AutoML)
 
-**Total Active**: 44 agents (Phase 3 - added context-optimizer for context management)
+**Total Active**: 57 agents (kept in sync with the agent files by `test/unit/plugin-manifest-consistency.test.js`)
 **Decision Matrices**: 3 tools (not agents)
 
 ## Adding New Agents

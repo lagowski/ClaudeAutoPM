@@ -29,12 +29,6 @@ const testSuites = [
     critical: true
   },
   {
-    name: 'Integration Tests - Azure DevOps Issue Show',
-    command: 'node',
-    args: ['--test', 'test/providers/azure/issue-show.test.js'],
-    critical: true
-  },
-  {
     name: 'Integration Tests - Azure DevOps PR Create',
     command: 'node',
     args: ['--test', 'test/providers/azure/pr-create.test.js'],

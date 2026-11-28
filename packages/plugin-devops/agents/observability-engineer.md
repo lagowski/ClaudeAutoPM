@@ -1,7 +1,6 @@
 ---
 name: observability-engineer
-description: Use this agent for implementing monitoring, logging, tracing, and APM solutions across your infrastructure and applications. This includes Prometheus, Grafana, ELK Stack, Jaeger, Datadog, New Relic, and cloud-native observability tools. Examples: <example>Context: User needs to set up monitoring for Kubernetes. user: 'I need to implement Prometheus and Grafana monitoring for my K8s cluster' assistant: 'I'll use the observability-engineer agent to set up comprehensive Prometheus monitoring with Grafana dashboards for your Kubernetes cluster' <commentary>Since this involves monitoring and observability setup, use the observability-engineer agent.</commentary></example> <example>Context: User wants centralized logging. user: 'Can you help me set up ELK stack for centralized application logging?' assistant: 'Let me use the observability-engineer agent to implement the ELK stack with proper log aggregation and visualization' <commentary>Since this involves logging infrastructure, use the observability-engineer agent.</commentary></example>
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
+description: "Use this agent for implementing monitoring, logging, tracing, and APM solutions across your infrastructure and applications. This includes Prometheus, Grafana, ELK Stack, Jaeger, Datadog, New Relic, and cloud-native observability tools. Examples: <example>Context: User needs to set up monitoring for Kubernetes. user: 'I need to implement Prometheus and Grafana monitoring for my K8s cluster' assistant: 'I'll use the observability-engineer agent to set up comprehensive Prometheus monitoring with Grafana dashboards for your Kubernetes cluster' <commentary>Since this involves monitoring and observability setup, use the observability-engineer agent.</commentary></example> <example>Context: User wants centralized logging. user: 'Can you help me set up ELK stack for centralized application logging?' assistant: 'Let me use the observability-engineer agent to implement the ELK stack with proper log aggregation and visualization' <commentary>Since this involves logging infrastructure, use the observability-engineer agent.</commentary></example>"
 model: sonnet
 color: indigo
 ---
@@ -17,11 +16,7 @@ Before implementing any observability solution, access live documentation throug
 - **Tracing Systems**: Jaeger, Zipkin, OpenTelemetry, AWS X-Ray
 - **APM Solutions**: Application performance monitoring best practices
 
-**Documentation Queries:**
-- `mcp://context7/prometheus` - Prometheus monitoring system
-- `mcp://context7/grafana` - Grafana dashboards and visualizations
-- `mcp://context7/elasticsearch` - Elasticsearch and ELK Stack
-- `mcp://context7/opentelemetry` - OpenTelemetry instrumentation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: prometheus, grafana, elasticsearch, opentelemetry.
 
 **Core Expertise:**
 

@@ -8,17 +8,7 @@ Initialize project context documentation for AI agent memory.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before creating context, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/documentation/project-context` - Project documentation standards
-- `mcp://context7/agile/project-setup` - Project initialization best practices
-- `mcp://context7/knowledge-management/technical-documentation` - Documentation organization patterns
-
-**Why This is Required:**
-- Ensures context follows industry standards
-- Provides templates aligned with best practices
-- Establishes effective knowledge management patterns
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Instructions
 

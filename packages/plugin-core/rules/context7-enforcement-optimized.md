@@ -7,8 +7,8 @@ WHEN YOU SEE: `/pm:command` or `@agent-name`
 
 YOU MUST:
 1. 📖 ANNOUNCE: "Querying Context7..."
-2. 🔍 READ command/agent file → extract Documentation Queries
-3. 🌐 QUERY Context7 MCP for EACH listed topic
+2. 🔍 READ command/agent file → note the libraries on its Context7 line
+3. 🌐 For EACH library: `resolve-library-id`, then `query-docs` with the topic
 4. 📝 SUMMARIZE key findings
 5. ✅ CONFIRM: "Context7 complete. Proceeding..."
 
@@ -18,9 +18,8 @@ YOU MUST:
 📋 Command: /pm:epic-decompose
 📚 Querying Context7...
 
-   ➜ mcp://context7/agile/epic-decomposition
-   ➜ mcp://context7/agile/task-sizing
-   ➜ mcp://context7/agile/user-stories
+   ➜ resolve-library-id <library>
+   ➜ query-docs <library-id> <topic>
 
 ✅ Context7 complete
 📖 Key findings: [summary]
@@ -50,8 +49,8 @@ Live documentation|Real examples|Current signatures|No guesswork
 
 <context7_cycle>
 <query_phase>
-1. Read command/agent file → extract Documentation Queries
-2. Query EACH Context7 MCP link
+1. Read command/agent file → note the libraries it names
+2. resolve-library-id, then query-docs, for EACH library
 3. Analyze: patterns|APIs|best practices|anti-patterns
 4. Summarize findings before proceeding
 </query_phase>
@@ -74,13 +73,13 @@ Deprecation warnings addressed
 <absolute_requirements>
 <commands>
 MUST read "Required Documentation Access"
-MUST query EVERY mcp:// link before execution
+MUST query Context7 for EVERY library it names before execution
 MUST summarize Context7 findings
 MUST apply Context7 guidance
 </commands>
 
 <agents>
-MUST read "Documentation Queries"
+MUST read the Context7 line (libraries it names)
 MUST query before technical decisions
 MUST verify API signatures
 MUST flag training data conflicts
@@ -129,8 +128,8 @@ User: /pm:epic-decompose feature-name
 
 BEFORE:
 1. Read .claude/commands/pm/epic-decompose.md
-2. Extract Documentation Queries
-3. Query Context7 for EACH link
+2. Note the libraries on its Context7 line
+3. resolve-library-id, then query-docs, for EACH library
 4. Summarize: "Context7 confirms INVEST criteria..."
 5. PROCEED with Context7 guidance
 
@@ -146,8 +145,8 @@ User: @aws-cloud-architect design VPC
 
 BEFORE:
 1. Read .claude/agents/cloud/aws-cloud-architect.md
-2. Extract Documentation Queries
-3. Query Context7 for EACH link
+2. Note the libraries on its Context7 line
+3. resolve-library-id, then query-docs, for EACH library
 4. Summarize: "Context7 shows VPC /16 for staging..."
 5. PROCEED with Context7 knowledge
 

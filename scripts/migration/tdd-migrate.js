@@ -435,10 +435,7 @@ module.exports = ${this.toPascalCase(scriptName)};
     const priorities = {
       'install/autopm.sh': 'P1',
       'scripts/test.sh': 'P2',
-      'scripts/local-test-runner.sh': 'P2',
       'test/installation/integration.test.sh': 'P2',
-      'scripts/clean-ai-contributors.sh': 'P3',
-      'scripts/migrate-from-worktrees.sh': 'P3'
     };
 
     for (const [scriptPath, priority] of Object.entries(priorities)) {
