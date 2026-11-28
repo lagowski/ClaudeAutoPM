@@ -165,18 +165,14 @@ az devops service-endpoint create \
 
 3. **Variable Groups with Secrets**:
 
-```javascript
-// Hybrid: CLI for creation, REST for secrets
-const AzureDevOpsCliWrapper = require('./lib/providers/AzureDevOpsCliWrapper');
-const AzureDevOpsRestClient = require('./lib/providers/AzureDevOpsRestClient');
+```bash
+# Create the group with its plain variables
+VG_ID=$(az pipelines variable-group create --project {project} \
+  --name my-vg --variables VAR1=value1 --query id -o tsv)
 
-// Create with CLI (plain variables)
-const cli = new AzureDevOpsCliWrapper({ token, org, project });
-const vg = await cli.createVariableGroup('my-vg', { VAR1: 'value1' });
-
-// Add secrets with REST (CLI cannot create secrets)
-const rest = new AzureDevOpsRestClient({ token, org, project });
-await rest.addSecretVariables(vg.id, { SECRET1: 'secret123' });
+# Add a secret (the value is stored masked)
+az pipelines variable-group variable create --project {project} \
+  --group-id "$VG_ID" --name SECRET1 --value "$SECRET1" --secret true
 ```
 
 **Pipeline Templates:**

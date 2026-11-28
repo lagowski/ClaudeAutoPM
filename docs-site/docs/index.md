@@ -96,8 +96,8 @@ features:
 # Install globally
 npm install -g claude-autopm
 
-# Run the interactive setup guide
-autopm guide
+# Install the framework into your project
+autopm install
 ```
 
 ## Why ClaudeAutoPM?
