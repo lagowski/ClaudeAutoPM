@@ -82,7 +82,8 @@ description: Dependency task`;
         taskName: 'Blocked Task',
         epicName: 'epic1',
         dependencies: ['2'],
-        openDependencies: ['2']
+        openDependencies: ['2'],
+        since: '—'
       });
     });
 
@@ -172,7 +173,8 @@ description: Completed dependency`;
         taskName: 'Multi-Blocked Task',
         epicName: 'epic1',
         dependencies: ['2', '3'],
-        openDependencies: ['2']
+        openDependencies: ['2'],
+        since: '—'
       });
     });
 
@@ -607,7 +609,8 @@ description: Database schema for users`;
         taskName: 'Implement login UI',
         epicName: 'feature-auth',
         dependencies: ['2', '3'],
-        openDependencies: ['3']
+        openDependencies: ['3'],
+        since: '—'
       });
     });
 

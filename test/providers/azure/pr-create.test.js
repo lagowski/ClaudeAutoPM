@@ -3,10 +3,7 @@
  * Tests the pull request creation functionality with mocked API responses
  */
 
-const { describe, it, beforeEach, afterEach } = require('node:test');
 const assert = require('node:assert');
-const path = require('path');
-const fs = require('fs');
 const child_process = require('child_process');
 
 // Mock environment variables
@@ -15,48 +12,35 @@ process.env.AZURE_DEVOPS_PROJECT = 'test-project';
 process.env.AZURE_DEVOPS_TOKEN = 'test-token';
 process.env.AZURE_DEVOPS_PAT = 'test-token'; // For backward compatibility
 
-// Store original execSync before any modules are loaded
-const originalExecSync = child_process.execSync;
-
-// Global mock for git commands - must be set before module loading
-child_process.execSync = (cmd, options) => {
-  if (cmd.includes('git rev-parse --abbrev-ref HEAD')) {
-    return 'feature/test-branch\n';
-  }
-  if (cmd.includes('git')) {
-    return 'mocked-git-response\n';
-  }
-  return originalExecSync(cmd, options);
-};
+// Mock git commands for this file only (jest.mock is scoped to the test file,
+// so the real child_process seen by other suites is never patched).
+jest.mock('child_process', () => {
+  const actual = jest.requireActual('child_process');
+  return {
+    ...actual,
+    execSync: (cmd, options) => {
+      if (cmd.includes('git rev-parse --abbrev-ref HEAD')) {
+        return 'feature/test-branch\n';
+      }
+      if (cmd.includes('git')) {
+        return 'mocked-git-response\n';
+      }
+      return actual.execSync(cmd, options);
+    }
+  };
+});
 
 // Mock AzureDevOpsClient before loading modules
-const mockAzureDevOpsClient = {
-  connection: null,
-  constructor: function(config) {
-    this.organization = config.organization;
-    this.project = config.project;
-    this.team = config.team || `${config.project} Team`;
-    return this;
+jest.mock('../../../autopm/.claude/providers/azure/lib/client.js', () =>
+  class MockAzureDevOpsClient {
+    constructor(config) {
+      this.organization = config.organization;
+      this.project = config.project;
+      this.team = config.team || `${config.project} Team`;
+      this.connection = { getGitApi: async () => null };
+    }
   }
-};
-
-// Mock the require for AzureDevOpsClient
-const Module = require('module');
-const originalRequire = Module.prototype.require;
-Module.prototype.require = function(id) {
-  if (id === '../../../autopm/.claude/providers/azure/lib/client.js' ||
-      id.includes('azure/lib/client.js')) {
-    return class MockAzureDevOpsClient {
-      constructor(config) {
-        this.organization = config.organization;
-        this.project = config.project;
-        this.team = config.team || `${config.project} Team`;
-        this.connection = { getGitApi: async () => null };
-      }
-    };
-  }
-  return originalRequire.apply(this, arguments);
-};
+);
 
 // Load module after mocking
 const AzurePRCreate = require('../../../autopm/.claude/providers/azure/pr-create.js');
@@ -65,7 +49,6 @@ describe('Azure DevOps pr-create Command', () => {
   let prCreate;
   let mockGitApi;
   let apiCalls;
-  let originalExecSync;
 
   beforeEach(() => {
     apiCalls = [];
@@ -575,10 +558,4 @@ describe('Azure DevOps pr-create Command', () => {
       }
     });
   });
-});
-
-// Restore original execSync and require after all tests
-process.on('exit', () => {
-  child_process.execSync = originalExecSync;
-  Module.prototype.require = originalRequire;
 });

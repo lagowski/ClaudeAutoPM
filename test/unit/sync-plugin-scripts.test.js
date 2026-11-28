@@ -5,20 +5,9 @@
  * scripts. The sync tool copies it into the autopm payload and the repo's
  * own .claude installation, preserving file modes. --check reports
  * divergence without writing.
- *
- * Runs under both jest (npm test) and node --test (npm run test:unit).
  */
 
 'use strict';
-
-if (typeof describe === 'undefined') {
-  // Running under node --test: provide jest-like globals.
-  const nodeTest = require('node:test');
-  globalThis.describe = nodeTest.describe;
-  globalThis.test = nodeTest.test;
-  globalThis.beforeEach = nodeTest.beforeEach;
-  globalThis.afterEach = nodeTest.afterEach;
-}
 
 const assert = require('node:assert');
 const fs = require('node:fs');

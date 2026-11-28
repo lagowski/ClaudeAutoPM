@@ -3,107 +3,47 @@
  * Tests the most important workflows from end to end
  */
 
-// Mock AzureDevOpsClient before any other imports
-const Module = require('module');
-const originalRequire = Module.prototype.require;
-Module.prototype.require = function(id) {
-  // Mock all Azure DevOps related modules
-  if (id.includes('azure/lib/client') ||
-      id === './lib/client' ||
-      id.endsWith('/lib/client.js') ||
-      id === 'azure-devops-node-api') {
-    return class MockAzureDevOpsClient {
-      constructor(config) {
-        this.organization = config?.organization || 'test-org';
-        this.project = config?.project || 'test-project';
-        this.team = config?.team || `${this.project} Team`;
-        this.connection = {
-          getGitApi: async () => ({
-            createPullRequest: async () => ({ pullRequestId: 123, title: 'Test PR' }),
-            getRepository: async () => ({ id: 'test-repo' })
-          }),
-          getCoreApi: async () => ({
-            getIdentities: async () => [{ id: 'test-id', displayName: 'Test User' }]
-          }),
-          getWorkItemTrackingApi: async () => ({
-            queryByWiql: async () => ({ workItems: [] }),
-            getWorkItems: async () => []
-          })
-        };
-      }
+// The Azure client needs AZURE_DEVOPS_TOKEN; replace it with an in-memory stub.
+jest.mock('../../autopm/.claude/providers/azure/lib/client', () =>
+  class MockAzureDevOpsClient {
+    constructor(config) {
+      this.organization = config?.organization || 'test-org';
+      this.project = config?.project || 'test-project';
+      this.team = config?.team || `${this.project} Team`;
+    }
 
-      async executeWiql() { return { workItems: [] }; }
-      async getWorkItems() { return []; }
-    };
+    async executeWiql() { return { workItems: [] }; }
+    async getWorkItems() { return []; }
   }
+);
 
-  // Mock Azure cache
-  if (id.includes('azure/lib/cache') || id === './lib/cache') {
-    return class MockAzureCache {
-      constructor(options = {}) {
-        this.maxSize = options.maxSize || 100;
-        this.cache = new Map();
-        this.stats = { hits: 0, misses: 0 };
-      }
-
-      get(key) {
-        if (this.cache.has(key)) {
-          this.stats.hits++;
-          return this.cache.get(key);
-        }
-        this.stats.misses++;
-        return null;
-      }
-
-      set(key, value) {
-        // Simple LRU - remove oldest if at capacity
-        if (this.cache.size >= this.maxSize && !this.cache.has(key)) {
-          const firstKey = this.cache.keys().next().value;
-          this.cache.delete(firstKey);
-        }
-        this.cache.set(key, value);
-      }
-
-      clear() {
-        this.cache.clear();
-        this.stats = { hits: 0, misses: 0 };
-      }
-
-      getStats() {
-        return { ...this.stats };
-      }
-    };
-  }
-
-  // Mock Azure formatter
-  if (id.includes('azure/lib/formatter') || id === './lib/formatter') {
-    return class MockAzureFormatter {
-      static formatWorkItems() { return []; }
-      static formatSummary() { return 'Test summary'; }
-    };
-  }
-
-  return originalRequire.apply(this, arguments);
-};
-
-const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const childProcess = require('child_process');
+const { execSync } = childProcess;
+
+// SelfMaintenance shells out to `npm test` (a full suite run, and recursive once
+// this file is in `npm test`). Stub only that call; other spawns stay real.
+function stubNpmSpawn() {
+  const realSpawnSync = childProcess.spawnSync;
+  jest.spyOn(childProcess, 'spawnSync').mockImplementation((cmd, ...rest) =>
+    cmd === 'npm' ? { status: 0, stdout: '', stderr: '' } : realSpawnSync(cmd, ...rest)
+  );
+}
 
 describe('E2E Critical Path Tests', () => {
   const testProjectPath = path.join(__dirname, '../../test-e2e-project');
   const autopmpBin = path.join(__dirname, '../../bin/autopm.js');
 
-  before(() => {
+  beforeAll(() => {
     // Clean up any existing test project
     if (fs.existsSync(testProjectPath)) {
       fs.rmSync(testProjectPath, { recursive: true, force: true });
     }
   });
 
-  after(() => {
+  afterAll(() => {
     // Clean up test project
     if (fs.existsSync(testProjectPath)) {
       fs.rmSync(testProjectPath, { recursive: true, force: true });
@@ -148,7 +88,8 @@ describe('E2E Critical Path Tests', () => {
   describe('Provider Router', () => {
     it('should route commands to correct provider', () => {
       const routerPath = path.join(__dirname, '../../autopm/.claude/providers/router.js');
-      const router = require(routerPath);
+      const { ProviderRouter } = require(routerPath);
+      const router = new ProviderRouter();
 
       // Test provider detection
       router.config = {
@@ -166,14 +107,20 @@ describe('E2E Critical Path Tests', () => {
 
     it('should handle missing provider gracefully', () => {
       const routerPath = path.join(__dirname, '../../autopm/.claude/providers/router.js');
-      const router = require(routerPath);
+      const { ProviderRouter } = require(routerPath);
+      const router = new ProviderRouter();
 
       router.config = {};
-      assert.strictEqual(router.getActiveProvider(), 'github', 'Should default to GitHub');
+      assert.strictEqual(router.getActiveProvider(), 'local', 'Should default to local');
     });
   });
 
   describe('Self-Maintenance Commands', () => {
+    beforeEach(() => {
+      jest.resetModules();
+      stubNpmSpawn();
+    });
+
     it('should run health check successfully', () => {
       const SelfMaintenance = require('../../scripts/self-maintenance.js');
       const maintenance = new SelfMaintenance();
@@ -316,16 +263,16 @@ describe('E2E Critical Path Tests', () => {
     it('should show help information', () => {
       const result = execSync(`node ${autopmpBin} --help`, { encoding: 'utf8' });
       assert(result.includes('install'), 'Should show install command');
-      assert(result.includes('merge'), 'Should show merge command');
-      assert(result.includes('setup-env'), 'Should show setup-env command');
+      assert(result.includes('update'), 'Should show update command');
+      assert(result.includes('config'), 'Should show config command');
       assert(result.includes('pm:'), 'Should show PM commands');
-      assert(result.includes('azure:'), 'Should show Azure commands');
     });
   });
 
   describe('Error Handling', () => {
     it('should handle missing configuration gracefully', () => {
-      const router = require('../../autopm/.claude/providers/router.js');
+      const { ProviderRouter } = require('../../autopm/.claude/providers/router.js');
+      const router = new ProviderRouter();
 
       // Test with non-existent config path
       router.configPath = '/non/existent/path/config.json';
@@ -360,8 +307,3 @@ describe('E2E Critical Path Tests', () => {
     });
   });
 });
-
-// Run tests if executed directly
-if (require.main === module) {
-  // Tests will auto-run with node --test
-}

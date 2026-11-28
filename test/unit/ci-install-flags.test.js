@@ -12,18 +12,9 @@
  *
  * If this test fails, fix the dependency conflict — do not re-add the flag to
  * silence it. The whole point is that the conflict becomes visible.
- *
- * Runs under both jest (npm test) and node --test (npm run test:unit).
  */
 
 'use strict';
-
-if (typeof describe === 'undefined') {
-  // Running under node --test: provide jest-like globals.
-  const nodeTest = require('node:test');
-  globalThis.describe = nodeTest.describe;
-  globalThis.test = nodeTest.test;
-}
 
 const assert = require('node:assert');
 const fs = require('node:fs');

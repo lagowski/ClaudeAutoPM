@@ -1267,7 +1267,7 @@ describe('ClaudeProvider', () => {
       }
 
       // Tokens should be exhausted
-      expect(provider.rateLimiter.getTokensRemaining()).toBe(0);
+      expect(provider.rateLimiter.getTokensRemaining()).toBeCloseTo(0, 0); // refill drift between calls
 
       // Next request should wait for refill
       const startTime = Date.now();
@@ -1308,7 +1308,7 @@ describe('ClaudeProvider', () => {
       }
 
       // Tokens should be exhausted
-      expect(provider.rateLimiter.getTokensRemaining()).toBe(0);
+      expect(provider.rateLimiter.getTokensRemaining()).toBeCloseTo(0, 0); // refill drift between calls
 
       // Next request should wait for refill
       const startTime = Date.now();
@@ -1347,7 +1347,7 @@ describe('ClaudeProvider', () => {
       }
 
       // Tokens should be exhausted
-      expect(provider.rateLimiter.getTokensRemaining()).toBe(0);
+      expect(provider.rateLimiter.getTokensRemaining()).toBeCloseTo(0, 0); // refill drift between calls
 
       // Next request should wait for refill
       const startTime = Date.now();

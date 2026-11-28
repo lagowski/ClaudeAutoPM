@@ -14,8 +14,8 @@ projects is a product file, generated from `autopm/.claude/templates/claude-temp
 - Lint: `npm run lint:js` (CI); `npm run lint` adds markdownlint
 - Synced copies: `npm run sync:scripts` and `npm run sync:commands`; check only with
   `npm run sync:scripts:check` and `npm run sync:commands:check`
-- Other runners: `npm run test:quick` (smoke allowlist), `npm run test:full` (`jest.config.clean.js`;
-  `jest.config.js` says many of its suites still fail (verify)), `npm run test:security`, `npm run test:regression`
+- Other suites (Jest only, #869): `npm run test:quick` (smoke allowlist), `npm run test:security`,
+  `npm run test:regression`, `npm run test:cli` (all three run from `posttest`), `npm run test:install` (slow)
 - Release: push a `v*` tag (runs `.github/workflows/npm-publish.yml`)
 
 ## Owner rules

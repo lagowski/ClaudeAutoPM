@@ -5,7 +5,6 @@
  * Provides similar functionality to GitHub issue creation with JSON output
  */
 
-const { describe, it, beforeEach, afterEach } = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs-extra');
 const path = require('path');
@@ -194,7 +193,7 @@ describe('Azure DevOps Work Item Creation Helper', () => {
         description: 'User management epic'
       };
 
-      const result = await azureWorkItemCreate.createEpic(options);
+      await azureWorkItemCreate.createEpic(options);
 
       const createCall = apiCalls.find(c => c.method === 'createWorkItem');
       assert.ok(createCall);

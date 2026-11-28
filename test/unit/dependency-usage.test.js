@@ -41,18 +41,9 @@
  *     ship anyway, say why in a comment and add it to KNOWN_UNUSED.
  *   - "listed in KNOWN_UNUSED but now imported" → drop it from the list.
  *   - "listed in KNOWN_UNUSED but no longer declared" → drop it from the list.
- *
- * Runs under both jest (npm test) and node --test (npm run test:unit).
  */
 
 'use strict';
-
-if (typeof describe === 'undefined') {
-  // Running under node --test: provide jest-like globals.
-  const nodeTest = require('node:test');
-  globalThis.describe = nodeTest.describe;
-  globalThis.test = nodeTest.test;
-}
 
 const assert = require('node:assert');
 const fs = require('node:fs');

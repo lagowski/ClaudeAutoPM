@@ -84,21 +84,9 @@ module.exports = {
 };
 ```
 
-**jest.config.clean.js** - Wider `*-jest.test.js` set (`npm run test:full`), excerpt:
-```javascript
-module.exports = {
-  testEnvironment: 'node',
-  testMatch: [
-    '**/test/jest-tests/*-jest.test.js',
-    '**/test/unit/*-jest.test.js',
-    '**/test/integration/*-jest.test.js',
-    '**/test/cli/*.test.js'
-    // ...
-  ],
-  collectCoverageFrom: ['autopm/.claude/scripts/**/*.js'],
-  testTimeout: 15000
-};
-```
+**jest.config.js** - The default suite (`npm test`): `test/unit`, `test/node-scripts`, `test/providers`,
+`test/helpers`, `test/e2e` and a few cross-cutting suites. After it, the `posttest` hook runs
+`test:security`, `test:regression` and `test:cli`. Jest is the only runner; `node:test` is not used.
 
 ## Running Tests
 
@@ -117,9 +105,6 @@ npm test -- test/core/PluginManager.test.js
 # Run tests matching pattern
 npm test -- --testNamePattern="should discover plugins"
 
-# Run full test suite
-npm run test:full
-
 # Run with coverage
 npm run test:coverage
 ```
@@ -127,14 +112,8 @@ npm run test:coverage
 ### Test Categories
 
 ```bash
-# Unit tests
-npm run test:unit
-
-# Integration tests (Azure DevOps sync)
-npm run test:integration:azure
-
-# CLI tests
-npm run test:cli
+# Smoke allowlist
+npm run test:quick
 
 # Security tests
 npm run test:security
@@ -142,30 +121,11 @@ npm run test:security
 # Regression tests
 npm run test:regression
 
-# Installation tests
-npm run test:install
-
 # CLI tests
 npm run test:cli
 
-# Azure DevOps tests
-npm run test:azure
-
-# GitHub integration tests
-npm run test:github:integration
-```
-
-### Comprehensive Testing
-
-```bash
-# Run all test suites
-npm run test:all
-
-# Run comprehensive tests with report
-npm run test:comprehensive
-
-# CI/CD testing
-npm run test:comprehensive:ci
+# Installation tests (runs install.sh; slow)
+npm run test:install
 ```
 
 ## Test Directory Structure
@@ -181,16 +141,14 @@ test/
 ├── e2e/                    # End-to-end tests
 │   └── critical-paths.test.js
 ├── installation/           # Installation tests
-│   ├── package-based-install.test.js
-│   └── install-scenarios.test.js
+│   ├── e2e-scenarios.test.js
+│   └── package-based-install.test.js
 ├── integration/            # Integration tests
 │   ├── github-sync-integration.test.js
 │   └── azure-sync-integration.test.js
-├── jest-tests/             # Jest-specific tests
-│   ├── ai-providers/
-│   ├── config/
-│   ├── errors/
-│   └── scripts/
+├── node-scripts/           # Epic and issue sync script tests
+├── providers/              # GitHub and Azure DevOps provider tests
+├── unit/                   # Unit tests (the bulk of npm test)
 ├── security/               # Security tests
 │   ├── prompt-injection.test.js
 │   └── integration.test.js

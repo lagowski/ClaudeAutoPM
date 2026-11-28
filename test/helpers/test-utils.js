@@ -34,7 +34,6 @@ function requiresAzureDevOps(testFn) {
  * @returns {Function} describe or describe.skip
  */
 function describeIntegration(name, fn) {
-  const { describe } = require('node:test');
   if (!shouldRunIntegrationTests()) {
     return describe.skip(`${name} - REQUIRES AZURE DEVOPS INTEGRATION`, fn);
   }

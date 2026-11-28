@@ -206,6 +206,8 @@ describe('pm pr-create', () => {
         ]
       };
 
+      // resetModules in beforeEach gave the script a fresh fs mock
+      const fs = require('fs');
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockImplementation((filePath) => {
         if (filePath.includes('active')) return JSON.stringify(activeWork);
