@@ -1,5 +1,4 @@
 const assert = require('assert');
-const { describe, it, beforeEach } = require('node:test');
 
 class PromptInjectionDetector {
   constructor() {

@@ -80,12 +80,12 @@ Every change goes through a pull request, including hotfixes and documentation:
 
 This project follows **strict TDD methodology**. Before submitting any contribution:
 
-1. **Run all tests**
+1. **Run all tests** (Jest is the only runner)
    ```bash
-   npm test                    # Jest unit tests
-   npm run test:node          # Node.js native tests
-   npm run test:security      # Security validation
-   npm run test:regression    # Regression tests
+   npm test                   # default suite, then security, regression and cli (posttest)
+   npm run test:quick         # smoke allowlist
+   npm run test:coverage      # default suite with coverage thresholds
+   npm run test:security      # one extra suite on its own (also test:regression, test:cli)
    ```
 
 2. **Run linting**
@@ -96,14 +96,13 @@ This project follows **strict TDD methodology**. Before submitting any contribut
 
 3. **Test installation scenarios**
    ```bash
-   npm run test:install       # Installation validation
-   npm run test:install:scenarios
+   npm run test:install       # installation suites (runs install.sh scenarios; slow)
    ```
 
 4. **For new features - TDD approach REQUIRED**
    - **Write failing tests FIRST** - Before implementing any code
    - Create test files in `test/` directory
-   - Use Jest framework for new tests
+   - Use Jest for new tests; `node:test` is not used
    - Follow existing patterns in `test/unit/` and `test/integration/`
    - Ensure 100% coverage for new code
 

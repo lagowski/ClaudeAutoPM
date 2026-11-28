@@ -1,5 +1,4 @@
 const assert = require('assert');
-const { describe, it, beforeEach, afterEach } = require('node:test');
 const { performance } = require('perf_hooks');
 
 class PerformanceMonitor {

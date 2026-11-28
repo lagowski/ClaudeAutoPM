@@ -1,11 +1,10 @@
 // Default Jest configuration — what `npm test` runs (#608).
 //
-// Scope: every suite under test/unit plus the stable cross-cutting suites
-// from the old 7-file quick allowlist. The other runners stay available as
-// npm scripts:
-//   test:quick → jest.config.quick.js  (smoke allowlist, explicit files)
-//   test:full  → jest.config.clean.js  (jest-tests/integration/cli — many
-//                suites still failing; repair tracked in epic #605)
+// Jest is the only runner (#869). Scope: every suite under test/unit plus the
+// stable cross-cutting suites. The other suites run through npm scripts:
+//   test:quick      → jest.config.quick.js  (smoke allowlist, explicit files)
+//   test:security / test:regression / test:cli → `posttest`, so CI runs them
+//   test:install    → the installation suites (slow; runs install.sh)
 module.exports = {
   // Test environment
   testEnvironment: 'node',
@@ -16,14 +15,17 @@ module.exports = {
   // Test file patterns
   testMatch: [
     '<rootDir>/test/unit/**/*.test.js',
+    '<rootDir>/test/node-scripts/**/*.test.js',
+    '<rootDir>/test/providers/**/*.test.js',
+    '<rootDir>/test/helpers/**/*.test.js',
+    '<rootDir>/test/e2e/**/*.test.js',
     '<rootDir>/test/templates/agent-registry-consistency.test.js',
     '<rootDir>/test/templates/template-reader.test.js',
     '<rootDir>/test/local-mode/local-issues.test.js',
     '<rootDir>/test/local-mode/local-prd-epic.test.js',
     '<rootDir>/test/core/PluginManager.test.js',
     '<rootDir>/test/installation/generate-agent-xml.test.js',
-    '<rootDir>/test/installation/e2e-scenarios.test.js',
-    '<rootDir>/test/jest-tests/epic-sync-scripts-jest.test.js'
+    '<rootDir>/test/installation/e2e-scenarios.test.js'
   ],
 
   // Parallel agent worktrees must never leak into test discovery or the

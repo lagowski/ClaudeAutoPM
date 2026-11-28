@@ -1,5 +1,4 @@
 const assert = require('assert');
-const { describe, it, before } = require('node:test');
 const fs = require('fs');
 const path = require('path');
 
@@ -249,7 +248,7 @@ describe('Critical Path Protection', () => {
   let validator;
   let report;
 
-  before(() => {
+  beforeAll(() => {
     try {
       validator = new CriticalPathValidator();
       report = validator.generateReport();

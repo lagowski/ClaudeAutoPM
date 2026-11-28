@@ -6,7 +6,6 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const test = require('node:test');
 const assert = require('node:assert');
 
 test('autopm guide should NOT execute installation', () => {
@@ -25,9 +24,9 @@ test('autopm guide should NOT execute installation', () => {
       cwd: tempDir
     });
 
-    // Should create documentation, not install framework
-    assert(output.includes('Quick Start guide created'));
-    assert(output.includes('docs/QUICKSTART.md'));
+    // Bare `guide` is deprecated: it points to --help, it does not install
+    assert(output.includes('replaced with enhanced help'));
+    assert(output.includes('autopm --help'));
 
     // Should NOT contain installation messages
     assert(!output.includes('Installing ClaudeAutoPM'));
@@ -38,9 +37,8 @@ test('autopm guide should NOT execute installation', () => {
     assert.strictEqual(fs.existsSync('.claude'), false);
     assert.strictEqual(fs.existsSync('scripts'), false);
 
-    // Should create docs directory with guide
-    assert.strictEqual(fs.existsSync('docs'), true);
-    assert.strictEqual(fs.existsSync('docs/QUICKSTART.md'), true);
+    // Bare `guide` generates nothing
+    assert.strictEqual(fs.existsSync('docs'), false);
   } finally {
     // Cleanup
     process.chdir(originalCwd);
@@ -62,9 +60,9 @@ test('autopm guide should suggest installation but not execute it', () => {
       cwd: tempDir
     });
 
-    // Should suggest installation as next step
-    assert(output.includes('autopm install'));
-    assert(output.includes('Next steps'));
+    // Should suggest next commands (help, doc generation) as next step
+    assert(output.includes('autopm --help'));
+    assert(output.includes('autopm guide config'));
 
     // But should NOT actually run installation
     assert.strictEqual(fs.existsSync('.claude'), false);
@@ -123,9 +121,9 @@ test('autopm guide should not modify project files', () => {
     // Test file should remain unchanged
     assert.strictEqual(fs.readFileSync('test-file.txt', 'utf8'), originalContent);
 
-    // Should only create docs directory
+    // Should create nothing (bare `guide` only prints help pointers)
     const files = fs.readdirSync('.');
-    assert(files.includes('docs'));
+    assert(!files.includes('docs'));
     assert(files.includes('test-file.txt'));
     assert(!files.includes('.claude'));
     assert(!files.includes('scripts'));
@@ -150,7 +148,7 @@ test('guide command should have proper help text', () => {
     });
 
     // Should indicate it's for documentation, not installation
-    assert(helpOutput.includes('interactive documentation guide'));
+    assert(helpOutput.includes('documentation generator'));
     assert(helpOutput.includes('quickstart'));
     assert(helpOutput.includes('install'));
     assert(helpOutput.includes('config'));

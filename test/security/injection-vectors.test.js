@@ -10,7 +10,6 @@
  * Each test corresponds to a concrete attack vector found in the epic #605 audit.
  */
 
-const test = require('node:test');
 const assert = require('node:assert');
 const path = require('path');
 const fs = require('fs');
