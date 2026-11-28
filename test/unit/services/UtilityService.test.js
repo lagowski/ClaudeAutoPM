@@ -1,10 +1,10 @@
-const fs = require('fs-extra');
+const fs = require('../../../lib/utils/fs');
 const path = require('path');
 const UtilityService = require('../../../lib/services/UtilityService');
 const glob = require('glob');
 
 // Mock dependencies
-jest.mock('fs-extra');
+jest.mock('../../../lib/utils/fs');
 jest.mock('glob');
 
 describe('UtilityService', () => {

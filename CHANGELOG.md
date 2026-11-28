@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- One frontmatter parser in `lib/` (#867): `lib/utils/frontmatter.js` (the `yaml` library) replaces the six parsers in `filter-engine` and the PRD, Epic, Issue, Context and Utility services, and `lib/` no longer requires `js-yaml`. PRD, epic and issue metadata now reads as YAML: `id: 123` is a number, `[a, b]` a list, quotes are removed, and CRLF files parse. A block that is not valid YAML still reads as flat `key: value` strings.
+
 ### Removed
 - The `autopm-poc` bin (#854) and the code only it used: `lib/utils/ServiceFactory.js`, `lib/config/ConfigManager.js` (the `~/.autopm/config.json` store), `lib/utils/Encryption.js`, `scripts/config/*`, `jest.config.poc.js` and the `test:poc` script, with their tests. Use `autopm`.
 - Dead code nobody could run (#855): `bin/commands/epic.js` (shadowed by `lib/cli/commands/epic.js`), `lib/cli/commands/config.js` (never registered; required ESM-only `inquirer` and offered retired models), `lib/ai-providers/base-provider.js` and `lib/ai-providers/TemplateProvider.js`, with their tests.
