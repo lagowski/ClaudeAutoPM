@@ -54,7 +54,15 @@ is_synced() {
          END {exit !f}' "$1"
 }
 
-# A re-run would create a second epic issue and duplicate task issues
+# A re-run would create a second epic issue and duplicate task issues.
+# The epic issue is created first, so a run that died before any task synced
+# leaves only epic.md marked: check it as well as the task files.
+if is_synced "$EPIC_DIR/epic.md"; then
+    echo "❌ Error: epic already synced (epic.md frontmatter github: holds an issue URL)"
+    echo "   Re-running would create a duplicate epic issue. Sync remaining tasks by hand."
+    exit 1
+fi
+
 synced=""
 for f in $(find "$EPIC_DIR" -name "[0-9]*.md" -type f | sort); do
     if is_synced "$f"; then synced="$synced $(basename "$f")"; fi

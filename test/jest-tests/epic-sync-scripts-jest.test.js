@@ -644,5 +644,72 @@ exit 0
       expect(ep.status).toBe(0);
       expect(read('epic.md')).toBe('---\nname: demo\ngithub: https://github.com/o/r/issues/50\n---\n# Demo\n');
     });
+
+    // gate findings #920 round 4: no invented status, honest progress, clean stdout
+    const installIssueSync = () => {
+      const scripts = path.join(tempDir, '.claude', 'scripts');
+      const libSrc = path.join(__dirname, '..', '..', 'packages', 'plugin-core', 'scripts', 'lib');
+      fs.mkdirSync(path.join(scripts, 'pm', 'issue-sync'), { recursive: true });
+      fs.cpSync(libSrc, path.join(scripts, 'lib'), { recursive: true });
+      for (const name of ['format-comment.sh', 'gather-updates.sh']) {
+        fs.copyFileSync(path.join(SCRIPTS_DIR, '..', 'issue-sync', name),
+          path.join(scripts, 'pm', 'issue-sync', name));
+      }
+      return path.join(scripts, 'pm', 'issue-sync');
+    };
+
+    test('epic-sync.sh:57 refuses a re-run when only epic.md holds an issue URL', () => {
+      write('epic.md', '---\nname: demo\ngithub: https://github.com/o/r/issues/50\n---\n# Demo\n');
+      write('001.md', '# One\n');
+      const r = run(path.join(SCRIPTS_DIR, '..', 'epic-sync.sh'), [EPIC]);
+      expect(r.status).not.toBe(0);
+      expect(log()).not.toContain('CREATE');
+      expect(r.stdout + r.stderr).toMatch(/already synced \(epic\.md/);
+    });
+
+    test('format-comment:290 claims nothing for sections the update does not report', () => {
+      const dir = installIssueSync();
+      fs.writeFileSync(path.join(tempDir, 'updates.md'), '# Update\n');
+      fs.writeFileSync(path.join(tempDir, 'progress.md'), '---\ncompletion: 100\n---\n');
+      const r = run(path.join(dir, 'format-comment.sh'), ['12', 'updates.md', 'progress.md', 'true']);
+      expect(r.status).toBe(0);
+      const body = fs.readFileSync(r.stdout.trim(), 'utf8');
+      expect(body).not.toMatch(/Passing|Code reviewed|requirements implemented|Documentation: ✅|✅ Updated/);
+      expect(body).toMatch(/### 🧪 Testing\n- Not reported in this update/);
+      expect(body).toMatch(/### 📚 Documentation\n- Not reported in this update/);
+    });
+
+    test('format-comment:118 reports an unreadable completion as unknown, not 0%', () => {
+      const dir = installIssueSync();
+      fs.writeFileSync(path.join(tempDir, 'updates.md'), '# Update\n');
+      fs.writeFileSync(path.join(tempDir, 'progress.md'), '---\nname: x\n---\n');
+      const r = run(path.join(dir, 'format-comment.sh'), ['12', 'updates.md', 'progress.md']);
+      expect(r.status).toBe(0);
+      const body = fs.readFileSync(r.stdout.trim(), 'utf8');
+      expect(body).toContain('*Progress: unknown |');
+      expect(body).not.toContain('0%');
+    });
+
+    test('gather-updates prints only the path, labels full content, drops placeholders', () => {
+      const dir = installIssueSync();
+      const upd = path.join(tempDir, 'upd');
+      fs.mkdirSync(upd);
+      fs.writeFileSync(path.join(upd, 'progress.md'), '---\nname: x\n---\nDid things\n');
+      fs.writeFileSync(path.join(upd, 'next-sprint-plan.md'), '---\nsecret: fm\n---\nextra body\n');
+      fs.writeFileSync(path.join(upd, 'commits.md'), '- abc fix\n');
+      const r = run(path.join(dir, 'gather-updates.sh'), ['12', upd, '2026-11-01T00:00:00Z']);
+      expect(r.status).toBe(0);
+      const out = r.stdout.trim();
+      expect(out.split('\n')).toHaveLength(1);
+      const body = fs.readFileSync(out, 'utf8');
+      expect(body).not.toMatch(/since last sync at/);
+      expect(body).toContain('*Full file content (last sync at 2026-11-01T00:00:00Z)');
+      expect(body).not.toContain('Current Progress');
+      expect(body).not.toMatch(/^No /m);
+      expect(body).not.toContain('## Technical Notes');
+      expect(body).toContain('## Next Sprint Plan\n\nextra body');
+      expect(body).not.toContain('secret: fm');
+      expect(r.stderr).toMatch(/omitting Current Progress/);
+    });
   });
 });
