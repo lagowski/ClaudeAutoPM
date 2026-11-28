@@ -8,6 +8,10 @@
  * that has a same-basename counterpart in the flat payload commands dir.
  * Plugin-only commands and payload-only commands are left alone.
  *
+ * Plugins whose manifest sets a commands `namePrefix` store files without their namespace prefix
+ * (`commands/issue-start.md`; Claude Code adds `/pm:` from the plugin name).
+ * Their payload counterpart keeps the old name (`pm:issue-start.md`), issue #904.
+ *
  * Usage:
  *   node scripts/sync-plugin-commands.js          # copy plugin -> payload
  *   node scripts/sync-plugin-commands.js --check  # exit 1 if any pair diverges
@@ -26,6 +30,17 @@ const ROOT = path.resolve(__dirname, '..');
 const PAYLOAD_COMMANDS = path.join(ROOT, 'autopm', '.claude', 'commands');
 const PACKAGES_DIR = path.join(ROOT, 'packages');
 
+// The `namePrefix` of a plugin's auto-discovered commands entry
+// (.claude-plugin/plugin.json metadata.commands), e.g. 'pm' for plugin-pm.
+// PluginManager uses the same key when it installs the files (#904).
+function namePrefix(pkg) {
+  const manifest = path.join(PACKAGES_DIR, pkg, '.claude-plugin', 'plugin.json');
+  if (!fs.existsSync(manifest)) return null;
+  const commands = (JSON.parse(fs.readFileSync(manifest, 'utf8')).metadata || {}).commands || [];
+  const entry = commands.find((c) => c.namePrefix);
+  return entry ? entry.namePrefix : null;
+}
+
 function collectMarkdownFiles(dir, result = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
@@ -43,8 +58,11 @@ function pluginCommandFiles() {
   for (const pkg of fs.readdirSync(PACKAGES_DIR)) {
     const commandsDir = path.join(PACKAGES_DIR, pkg, 'commands');
     if (!fs.existsSync(commandsDir) || !fs.statSync(commandsDir).isDirectory()) continue;
+    const prefix = namePrefix(pkg);
     for (const file of collectMarkdownFiles(commandsDir)) {
-      result.push({ plugin: pkg, name: path.basename(file), file });
+      const base = path.basename(file);
+      const name = prefix && !base.includes(':') ? `${prefix}:${base}` : base;
+      result.push({ plugin: pkg, name, file });
     }
   }
   return result;
@@ -94,4 +112,6 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { pluginCommandFiles };
