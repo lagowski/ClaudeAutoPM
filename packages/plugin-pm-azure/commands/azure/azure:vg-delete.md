@@ -27,7 +27,7 @@ Use azure-devops-specialist agent for all operations.
 1. Validate variable group exists
 2. Check if linked to pipelines (WARN if yes)
 3. Prompt for confirmation (unless --confirm)
-4. Delete using AzureDevOpsResourcesProvider
+4. Delete with `az pipelines variable-group delete --group-id <id> --yes`
 5. Confirm deletion
 
 ### Confirmation Prompt

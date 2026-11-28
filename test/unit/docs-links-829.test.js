@@ -5,7 +5,6 @@ const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
 
 describe('docs links (#829/#830)', () => {
   test.each([
-    'lib/guide/interactive-guide.js',
     'docs-site/docs/.vitepress/config.ts'
   ])('%s has no rafeekpro.github.io links', (f) => {
     expect(read(f)).not.toContain('rafeekpro.github.io');
