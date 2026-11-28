@@ -4,7 +4,7 @@
  * installable payload at `autopm/` + `.claude/commands`.
  *
  * Scope: every "*.md" file anywhere under packages/<plugin>/commands/
- * (recursively — e.g. plugin-pm-azure keeps its files in commands/azure/)
+ * (recursively, so a plugin may keep its files in a subdirectory of commands/)
  * that has a same-basename counterpart in the flat payload commands dir.
  * Plugin-only commands and payload-only commands are left alone.
  *

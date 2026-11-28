@@ -1376,10 +1376,13 @@ See: https://github.com/rafeekpro/ClaudeAutoPM
               if (fs.existsSync(commandsSourceDir)) {
                 // Auto-discover all .md files in subdirectory
                 const files = fs.readdirSync(commandsSourceDir);
+                // namePrefix (#904, #905): commands/help.md installs as azure:help.md
+                const prefix = command.namePrefix;
                 for (const file of files) {
                   if (file.endsWith('.md')) {
                     const sourcePath = path.join(commandsSourceDir, file);
-                    const targetPath = path.join(targetDir, file);
+                    const targetName = prefix && !file.includes(':') ? `${prefix}:${file}` : file;
+                    const targetPath = path.join(targetDir, targetName);
 
                     if (fs.existsSync(sourcePath) && (!fs.existsSync(targetPath) || this.options.force)) {
                       fs.copyFileSync(sourcePath, targetPath);

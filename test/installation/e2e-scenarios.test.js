@@ -6,19 +6,6 @@ const PluginManager = require('../../lib/plugins/PluginManager');
 const originalArgv = process.argv;
 let Installer;
 
-function copyDirRecursive(src, dst) {
-  fs.mkdirSync(dst, { recursive: true });
-  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
-    const srcPath = path.join(src, entry.name);
-    const dstPath = path.join(dst, entry.name);
-    if (entry.isDirectory()) {
-      copyDirRecursive(srcPath, dstPath);
-    } else {
-      fs.copyFileSync(srcPath, dstPath);
-    }
-  }
-}
-
 beforeAll(() => {
   process.argv = ['node', 'install.js', '--force'];
   Installer = require('../../install/install.js');
@@ -66,10 +53,13 @@ function runScenario(scenario) {
       fs.mkdirSync(cmdDir, { recursive: true });
       for (const cmd of metadata.commands) {
         if (cmd.subdirectory) {
+          // Flat copy like install.js; namePrefix maps help.md -> azure:help.md (#905)
           const srcDir = path.join(pluginPath, cmd.subdirectory);
           if (fs.existsSync(srcDir)) {
-            const dstDir = path.join(cmdDir, path.basename(cmd.subdirectory));
-            copyDirRecursive(srcDir, dstDir);
+            for (const f of fs.readdirSync(srcDir).filter((n) => n.endsWith('.md'))) {
+              const name = cmd.namePrefix && !f.includes(':') ? `${cmd.namePrefix}:${f}` : f;
+              fs.copyFileSync(path.join(srcDir, f), path.join(cmdDir, name));
+            }
           }
         } else if (cmd.file) {
           const src = path.join(pluginPath, cmd.file);
@@ -138,7 +128,7 @@ describe('E2E: Lite Scenario', () => {
   });
 
   test('no azure commands', () => {
-    expect(dirExists(tempDir, '.claude/commands/azure')).toBe(false);
+    expect(fs.existsSync(path.join(tempDir, '.claude/commands/azure:help.md'))).toBe(false);
   });
 });
 
@@ -162,7 +152,7 @@ describe('E2E: GitHub Scenario', () => {
   });
 
   test('no azure commands', () => {
-    expect(dirExists(tempDir, '.claude/commands/azure')).toBe(false);
+    expect(fs.existsSync(path.join(tempDir, '.claude/commands/azure:help.md'))).toBe(false);
   });
 });
 
@@ -180,7 +170,7 @@ describe('E2E: Azure Scenario', () => {
   });
 
   test('azure commands installed', () => {
-    expect(dirExists(tempDir, '.claude/commands/azure')).toBe(true);
+    expect(fs.existsSync(path.join(tempDir, '.claude/commands/azure:help.md'))).toBe(true);
   });
 });
 
@@ -254,7 +244,7 @@ describe('E2E: Full-Azure Scenario', () => {
   });
 
   test('azure commands installed', () => {
-    expect(dirExists(tempDir, '.claude/commands/azure')).toBe(true);
+    expect(fs.existsSync(path.join(tempDir, '.claude/commands/azure:help.md'))).toBe(true);
   });
 });
 
