@@ -12,8 +12,18 @@ describe('ConfigCommand', () => {
   let cmd;
   let originalCwd;
   let originalEnv;
+  let originalLog;
+  let originalError;
 
   beforeEach(async () => {
+    // Silence command output: under `node --test` the volume of box-drawing
+    // output interleaved with the runner's IPC stream made it fail with
+    // "Unable to deserialize cloned data" (#858). No test asserts on output.
+    originalLog = console.log;
+    originalError = console.error;
+    console.log = () => {};
+    console.error = () => {};
+
     // Create temp directory for tests
     tempDir = fsSync.mkdtempSync(path.join(os.tmpdir(), 'config-test-'));
 
@@ -35,6 +45,8 @@ describe('ConfigCommand', () => {
     // Restore environment and working directory
     process.env = originalEnv;
     process.chdir(originalCwd);
+    console.log = originalLog;
+    console.error = originalError;
 
     // Clean up temp directory
     if (tempDir && fsSync.existsSync(tempDir)) {

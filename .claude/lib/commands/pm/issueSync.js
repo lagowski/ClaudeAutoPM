@@ -115,21 +115,18 @@ function stripFrontmatter(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.split('\n');
 
-  let frontmatterCount = 0;
-  const bodyLines = [];
-
-  for (const line of lines) {
-    if (line === '---') {
-      frontmatterCount++;
-      continue;
-    }
-
-    if (frontmatterCount >= 2) {
-      bodyLines.push(line);
-    }
+  // Frontmatter opens only on line 1; a file without it is all body, and a
+  // '---' after the closing marker is a horizontal rule, not frontmatter (#858)
+  if (lines[0] !== '---') {
+    return content.trim();
   }
 
-  return bodyLines.join('\n').trim();
+  const close = lines.indexOf('---', 1);
+  if (close === -1) {
+    return '';
+  }
+
+  return lines.slice(close + 1).join('\n').trim();
 }
 
 /**

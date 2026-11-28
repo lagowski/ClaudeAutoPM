@@ -42,8 +42,10 @@ describe('AutoPM CLI Basic Commands', () => {
     assert(result.success, `Help command failed: ${result.error}`);
     assert(result.output.includes('Commands:'), 'Help should show commands section');
     assert(result.output.includes('install'), 'Help should list install command');
-    assert(result.output.includes('pm:init'), 'Help should list pm:init command');
-    assert(result.output.includes('azure:'), 'Help should list Azure commands');
+    // pm:init and azure:* left the CLI in the yargs migration (#858)
+    for (const cmd of ['update', 'team', 'config', 'epic', 'issue']) {
+      assert(result.output.includes(cmd), `Help should list ${cmd} command`);
+    }
     console.log('✓ Help command working');
   });
 
@@ -76,20 +78,6 @@ describe('AutoPM CLI Basic Commands', () => {
 
     assert(hasHelp || hasError, 'Should show help or meaningful error for invalid commands');
     console.log('✓ Invalid command handling working');
-  });
-
-  it('should handle pm:init command', () => {
-    const result = execAutopm('pm:init --help');
-
-    // Should show help for pm:init
-    assert(result.success, 'pm:init help should succeed');
-
-    const allOutput = result.output || '';
-    const hasInitCommand = allOutput.includes('pm:init') ||
-                          allOutput.includes('Initialize');
-
-    assert(hasInitCommand, 'Should show pm:init help');
-    console.log('✓ pm:init command available');
   });
 
 });
