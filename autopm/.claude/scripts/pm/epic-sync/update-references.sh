@@ -77,19 +77,24 @@ while read -r old_name new_number; do
     github_url="https://github.com/$REPO/issues/$new_number"
     timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-    # Update frontmatter; only a successful awk replaces the original
+    # Update frontmatter; only a successful awk replaces the original. The
+    # frontmatter opens only on line 1 (a body "---" rule is not a fence, #599),
+    # a missing github: line is inserted, a file without frontmatter gets one
+    # prepended, and an unclosed frontmatter fails (awk exits non-zero).
     if awk -v url="$github_url" -v ts="$timestamp" '
-    BEGIN { in_front=0; front_done=0 }
-    /^---$/ {
-        if (!front_done) {
-            in_front = !in_front
-            if (!in_front) front_done=1
-        }
+    function header() { print "---"; print "github: " url; print "updated: " ts; print "---" }
+    BEGIN { in_front=0; done=0; seen=0 }
+    NR == 1 && /^---$/ { in_front=1; print; next }
+    NR == 1 { header(); done=1 }
+    in_front && /^---$/ {
+        if (!seen) print "github: " url
+        in_front=0; done=1
         print
         next
     }
     in_front && /^github:/ {
         print "github: " url
+        seen=1
         next
     }
     in_front && /^updated:/ {
@@ -97,6 +102,7 @@ while read -r old_name new_number; do
         next
     }
     { print }
+    END { if (NR == 0) { header(); done=1 }; exit !done }
     ' "$old_file" > "$new_file.tmp" && mv "$new_file.tmp" "$new_file"; then
         rm "$old_file" "$old_file.backup"
         echo "✓"
