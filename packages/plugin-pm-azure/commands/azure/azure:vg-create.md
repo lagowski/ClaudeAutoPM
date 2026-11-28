@@ -55,9 +55,9 @@ Description: **$DESCRIPTION**
 
 Follow the complete workflow:
 1. Validate Azure CLI and PAT authentication
-2. Create variable group using AzureDevOpsResourcesProvider
-3. Handle plain variables via CLI
-4. Handle secret variables via REST API
+2. Create variable group with `az pipelines variable-group create`
+3. Pass plain variables with `--variables`
+4. Add each secret with `az pipelines variable-group variable create --secret true`
 5. Display created variable group details with ID
 6. Show link to Azure DevOps UI")
 ```
@@ -94,26 +94,25 @@ SECRETS="$SECRETS"  # e.g., "SECRET1=secret123,SECRET2=password"
 
 **Create Variable Group:**
 
-Use `AzureDevOpsResourcesProvider.createVariableGroupWithSecrets()`:
+Use the Azure CLI (`az pipelines variable-group`):
 
-1. **Step 1**: Create variable group with plain variables using Azure CLI
-2. **Step 2**: Add secret variables using REST API
-3. **Step 3**: Return created variable group with ID
+1. **Step 1**: Create the variable group with its plain variables
+2. **Step 2**: Add each secret variable with `--secret true`
+3. **Step 3**: Return the created variable group with its ID
 
-```javascript
-const provider = new AzureDevOpsResourcesProvider({
-  token: process.env.AZURE_DEVOPS_PAT,
-  organization: process.env.AZURE_DEVOPS_ORG,
-  project: process.env.AZURE_DEVOPS_PROJECT
-});
+```bash
+export AZURE_DEVOPS_EXT_PAT="$AZURE_DEVOPS_PAT"
+az devops configure --defaults \
+  organization="https://dev.azure.com/$AZURE_DEVOPS_ORG" project="$AZURE_DEVOPS_PROJECT"
 
-// Hybrid approach: CLI for plain vars, REST for secrets
-const vg = await provider.createVariableGroupWithSecrets(
-  name,
-  variables,  // {KEY1: "value1"}
-  secrets,    // {SECRET1: "secret123"}
-  description
-);
+# Plain variables (space-separated KEY=value pairs)
+VG_ID=$(az pipelines variable-group create --name "$NAME" \
+  --description "$DESCRIPTION" --variables KEY1=value1 KEY2=value2 \
+  --authorize false --query id -o tsv)
+
+# Secrets, one per call; never echo the value
+az pipelines variable-group variable create --group-id "$VG_ID" \
+  --name SECRET1 --value "$SECRET1" --secret true
 ```
 
 #### 3. Security Considerations
