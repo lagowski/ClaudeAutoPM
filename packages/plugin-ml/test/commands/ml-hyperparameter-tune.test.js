@@ -8,11 +8,7 @@
  *
  * WARNING: Implemented without Context7 MCP verification - Context7 MCP was unavailable
  * TODO: Re-verify against Context7 when available:
- * - mcp://context7/optuna/optimization
- * - mcp://context7/ray-tune/tuning
- * - mcp://context7/scikit-learn/grid-search
- * - mcp://context7/hyperopt/bayesian-optimization
- * - mcp://context7/wandb/sweeps
+ * - optuna, ray-tune, scikit-learn, hyperopt, wandb
  */
 
 const {

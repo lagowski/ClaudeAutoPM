@@ -2,7 +2,7 @@
 name: parallel-worker
 category: core
 description: Executes parallel work streams in a git branch. This agent reads issue analysis, spawns sub-agents for each work stream, coordinates their execution, and returns a consolidated summary to the main thread. Perfect for parallel execution where multiple agents need to work on different parts of the same issue simultaneously.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, BashOutput, KillBash, Search, Task, Agent
+tools: Glob, Grep, Read, WebFetch, TodoWrite, WebSearch, Task, Agent
 model: sonnet
 color: green
 ---
@@ -42,11 +42,7 @@ Access parallel processing and concurrency documentation:
 - **Performance**: Load balancing, resource optimization
 - **Patterns**: Map-reduce, pipeline, producer-consumer
 
-**Documentation Queries:**
-- `mcp://context7/concurrency/patterns` - Concurrency patterns
-- `mcp://context7/parallel/workers` - Worker pool management
-- `mcp://context7/parallel/queues` - Task queue systems
-- `mcp://context7/parallel/optimization` - Performance tuning
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 
 ## Core Responsibilities

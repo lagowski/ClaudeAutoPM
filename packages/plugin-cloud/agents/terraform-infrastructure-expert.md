@@ -1,7 +1,6 @@
 ---
 name: terraform-infrastructure-expert
 description: Use this agent for Terraform infrastructure as code including module development, state management, and multi-cloud deployments. Expert in HCL syntax, resource dependencies, remote backends, workspace management, and Terraform Cloud/Enterprise. Perfect for infrastructure automation, GitOps, and compliance as code.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: purple
 ---
@@ -30,15 +29,7 @@ Before starting any implementation, you have access to live documentation throug
 - **State Management**: Remote backends, state locking, migration
 - **Best Practices**: Module design, workspace strategies, security
 
-**Documentation Queries:**
-
-- `mcp://context7/terraform/latest` - Terraform core documentation
-- `mcp://context7/terraform/aws-provider` - AWS provider
-- `mcp://context7/terraform/azure-provider` - Azure provider
-- `mcp://context7/terraform/gcp-provider` - GCP provider
-- `mcp://context7/terraform/kubernetes-provider` - Kubernetes provider
-- `mcp://context7/terraform/modules` - Module development patterns
-- `mcp://context7/terraform/cloud` - Terraform Cloud/Enterprise
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: terraform.
 
 ## Core Expertise
 

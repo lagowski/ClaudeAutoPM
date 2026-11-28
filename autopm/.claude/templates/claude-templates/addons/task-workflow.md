@@ -47,12 +47,8 @@ git commit -m "refactor: improve feature structure"
 ```
 
 **Integration with Context7:**
-```bash
-# Query documentation BEFORE implementing
-mcp://context7/<framework>/testing-best-practices
-mcp://context7/<framework>/authentication-patterns
-mcp://context7/<language>/test-frameworks
-```
+Query documentation BEFORE implementing: `resolve-library-id` for the framework, then `query-docs`
+with the topic (testing, authentication). See `.claude/rules/context7-required.md`.
 
 **Quality Checks (Step 4):**
 ```bash
@@ -81,7 +77,7 @@ gh pr create --title "Feature: TASK-ID Description" --body "..."
 
 **🚨 HIGHEST PRIORITY:**
 1. **FOLLOW TDD CYCLE** - ZERO TOLERANCE for code without tests
-2. **ALWAYS query Context7** before implementing: `mcp://context7/<framework>/<topic>`
+2. **ALWAYS query Context7** before implementing (`resolve-library-id`, then `query-docs`)
 3. **NEVER commit code before tests** - Test first, code second, refactor third
 4. **ALWAYS use specialized agents** for non-trivial tasks
 
@@ -101,7 +97,7 @@ git checkout -b feature/ID-desc
 
 # During work
 @<agent> <task>
-mcp://context7/<lib>/<topic>
+# Context7: resolve-library-id <lib>, then query-docs <topic>
 git commit -m "type: message"
 
 # Before PR

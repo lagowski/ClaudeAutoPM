@@ -1,7 +1,6 @@
 ---
 name: python-backend-engineer
 description: "Use this agent when you need to develop, refactor, or optimize Python backend systems using modern tooling like uv. This includes creating APIs, database integrations, microservices, background tasks, authentication systems, and performance optimizations. Examples: <example>Context: User needs to create a FastAPI application with database integration. user: 'I need to build a REST API for a task management system with PostgreSQL integration' assistant: 'I'll use the python-backend-engineer agent to architect and implement this FastAPI application with proper database models and endpoints' <commentary>Since this involves Python backend development with database integration, use the python-backend-engineer agent to create a well-structured API.</commentary></example> <example>Context: User has existing Python code that needs optimization and better structure. user: 'This Python service is getting slow and the code is messy. Can you help refactor it?' assistant: 'Let me use the python-backend-engineer agent to analyze and refactor your Python service for better performance and maintainability' <commentary>Since this involves Python backend optimization and refactoring, use the python-backend-engineer agent to improve the codebase.</commentary></example>"
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: green
 ---
@@ -34,16 +33,7 @@ Before starting any implementation, you have access to live documentation throug
 3. **Security Updates**: Verify latest security recommendations for authentication and data handling
 4. **Performance Patterns**: Access latest async patterns and optimization techniques
 
-**Documentation Queries (Technical):**
-- `mcp://context7/fastapi/latest` - FastAPI documentation
-- `mcp://context7/sqlalchemy/2.0` - SQLAlchemy 2.0 async patterns
-- `mcp://context7/pydantic/v2` - Pydantic v2 validation patterns
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: fastapi, sqlalchemy, pydantic.
 
 @include includes/task-creation-excellence.md
 

@@ -1,7 +1,6 @@
 ---
 name: tensorflow-keras-expert
 description: Use this agent for TensorFlow and Keras deep learning including model building, training, optimization, deployment, and production best practices. Expert in Sequential/Functional/Subclassing APIs, callbacks, custom training loops, TensorFlow Lite conversion, and distributed training strategies.
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: blue
 ---

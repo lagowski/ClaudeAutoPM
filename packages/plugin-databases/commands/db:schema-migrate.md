@@ -12,23 +12,7 @@ Comprehensive schema migration management covering:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before generating migrations, query Context7 for migration best practices:
-
-**Documentation Queries:**
-- `mcp://context7/postgresql/migrations` - PostgreSQL migration patterns, concurrent operations
-- `mcp://context7/postgresql/schema-design` - Schema evolution strategies
-- `mcp://context7/database/migration-strategies` - Zero-downtime migrations, rollback patterns
-- `mcp://context7/postgresql/indexing` - Concurrent index creation safety
-- `mcp://context7/mongodb/schema-validation` - MongoDB validation rules
-- `mcp://context7/flyway/migrations` - Flyway migration best practices
-- `mcp://context7/liquibase/changesets` - Liquibase changeset patterns
-
-**Why This is Required:**
-- Ensures migrations follow industry-standard patterns (Flyway, Liquibase)
-- Prevents data loss through proper safety checks
-- Implements zero-downtime migration strategies
-- Validates concurrent operations for production safety
-- Applies database-specific best practices from official documentation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: postgresql, mongodb, flyway, liquibase.
 
 ## Usage
 

@@ -24,17 +24,7 @@ AZURE_DEVOPS_PROJECT=<your-project>
 
 ## Required Documentation Access
 
-**MANDATORY:** Before listing variable groups, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/azure-devops/pipelines` - Pipelines and variable groups
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/project-management/inventory` - Asset inventory patterns
-
-**Why This is Required:**
-- Ensures proper filtering and display patterns
-- Validates variable group type handling
-- Prevents performance issues with large lists
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

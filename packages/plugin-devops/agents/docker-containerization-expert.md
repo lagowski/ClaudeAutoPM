@@ -1,7 +1,6 @@
 ---
 name: docker-containerization-expert
 description: "Comprehensive Docker containerization specialist covering Dockerfile optimization, Compose orchestration, and development environments."
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: yellow
 ---
@@ -30,11 +29,7 @@ Before implementing any containerization solution, access live documentation thr
 - **Registries**: Docker Hub, ECR, GCR, ACR documentation
 - **Security**: Container scanning, image signing, runtime security
 
-**Documentation Queries:**
-- `mcp://context7/docker/dockerfile` - Dockerfile reference
-- `mcp://context7/docker/compose` - Docker Compose specification
-- `mcp://context7/docker/security` - Container security best practices
-- `mcp://context7/docker/swarm` - Docker Swarm orchestration
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: docker.
 
 ## Capabilities
 

@@ -13,20 +13,7 @@ Convert PRD to technical implementation epic.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before converting PRDs to epics, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/product-management/prd-to-epic` - PRD to epic conversion patterns
-- `mcp://context7/agile/epic-structure` - Epic structure and organization
-- `mcp://context7/architecture/technical-design` - Technical architecture decisions
-- `mcp://context7/project-management/task-breakdown` - Task breakdown strategies
-- `mcp://context7/agile/estimation` - Effort estimation and timeline planning
-
-**Why This is Required:**
-- Ensures proper PRD-to-epic translation following industry standards
-- Applies proven architecture decision frameworks
-- Validates task breakdown completeness and accuracy
-- Prevents missing critical technical considerations
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Instructions
 

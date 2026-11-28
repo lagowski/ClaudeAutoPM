@@ -66,44 +66,8 @@ describe('/cloud:cost-alert Command', () => {
   });
 
   describe('Required Documentation Access', () => {
-    test('command should have Required Documentation Access section', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/## Required Documentation Access/i);
-    });
-
-    test('should include AWS Cost Explorer Context7 documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-
-      // Check for mandatory Context7 queries
-      expect(content).toMatch(/mcp:\/\/context7.*aws.*cost-explorer/i);
-    });
-
-    test('should include GCP Cloud Billing Context7 documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/mcp:\/\/context7.*gcp.*billing/i);
-    });
-
-    test('should include Azure Cost Management Context7 documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/mcp:\/\/context7.*azure.*cost-management/i);
-    });
-
-    test('should include Prometheus alerting Context7 documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/mcp:\/\/context7.*prometheus.*alerting/i);
-    });
-
-    test('should include Grafana dashboards Context7 documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/mcp:\/\/context7.*grafana.*dashboards/i);
-    });
-
-    test('should explain why Context7 queries are required', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-
-      // Should have "Why This is Required" section
-      expect(content).toMatch(/Why This is Required:/i);
-      expect(content).toMatch(/best practices|API patterns|configurations/i);
+    test('points to the shared Context7 rule', () => {
+      expect(fs.readFileSync(commandPath, 'utf-8')).toContain('.claude/rules/context7-required.md');
     });
   });
 

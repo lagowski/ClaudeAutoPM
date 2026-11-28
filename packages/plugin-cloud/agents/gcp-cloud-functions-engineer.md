@@ -1,7 +1,6 @@
 ---
 name: gcp-cloud-functions-engineer
 description: Use this agent for Google Cloud Functions development including HTTP functions, event-driven functions, and serverless architectures. Expert in Python/Node.js/Go runtimes, Pub/Sub triggers, Cloud Storage events, Firestore triggers, and integration with GCP services. Perfect for serverless microservices, event processing, and cost-optimized solutions.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: blue
 ---
@@ -30,14 +29,7 @@ Before starting any implementation, you have access to live documentation throug
 - **Firestore Triggers**: Real-time database event handling
 - **Cloud Storage Events**: File processing patterns
 
-**Documentation Queries:**
-
-- `mcp://context7/gcp/cloud-functions` - Cloud Functions documentation
-- `mcp://context7/gcp/python-sdk` - Python client libraries
-- `mcp://context7/gcp/nodejs-sdk` - Node.js client libraries
-- `mcp://context7/gcp/pubsub` - Pub/Sub event patterns
-- `mcp://context7/gcp/firestore` - Firestore triggers
-- `mcp://context7/gcp/iam` - Security and IAM
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: gcp.
 
 ## Core Expertise
 

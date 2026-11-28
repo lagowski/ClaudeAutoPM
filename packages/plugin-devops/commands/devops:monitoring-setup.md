@@ -14,22 +14,7 @@ Deploy a complete observability stack with automatic service discovery, pre-buil
 
 ## Required Documentation Access
 
-**MANDATORY:** Before executing monitoring setup, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/prometheus/setup` - Prometheus installation and configuration
-- `mcp://context7/grafana/dashboards` - Dashboard creation and best practices
-- `mcp://context7/observability/metrics` - Metrics collection patterns and SLOs
-- `mcp://context7/kubernetes/monitoring` - Kubernetes monitoring (Prometheus Operator)
-- `mcp://context7/alertmanager/configuration` - AlertManager routing and receivers
-- `mcp://context7/docker/monitoring` - Docker container monitoring
-
-**Why This is Required:**
-- Ensures monitoring setup follows industry-standard observability practices
-- Applies proven Prometheus and Grafana configuration patterns
-- Validates alerting rules against SRE best practices
-- Prevents misconfiguration and alert fatigue
-- Implements proper service discovery and scrape configurations
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: prometheus, grafana, kubernetes, alertmanager, docker.
 
 ## Usage
 

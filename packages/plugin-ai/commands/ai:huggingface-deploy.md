@@ -18,23 +18,7 @@ Comprehensive HuggingFace model deployment following official best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before deployment, query Context7 for HuggingFace best practices:
-
-**Documentation Queries:**
-- `mcp://context7/huggingface/transformers` - Transformers library patterns
-- `mcp://context7/huggingface/inference-endpoints` - Managed inference deployment
-- `mcp://context7/huggingface/quantization` - GPTQ, AWQ, GGUF quantization
-- `mcp://context7/huggingface/optimum` - Hardware-optimized inference
-- `mcp://context7/huggingface/vllm` - vLLM high-throughput serving
-- `mcp://context7/huggingface/tgi` - Text Generation Inference
-
-**Why This is Required:**
-- Ensures deployment follows official HuggingFace documentation
-- Applies proven quantization techniques
-- Validates inference optimization strategies
-- Prevents performance bottlenecks
-- Optimizes resource usage and costs
-- Implements production-ready patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: transformers, huggingface, optimum, vllm.
 
 ## Usage
 

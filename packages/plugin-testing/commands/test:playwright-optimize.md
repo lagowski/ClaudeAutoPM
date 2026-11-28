@@ -14,21 +14,7 @@ Comprehensive Playwright performance optimization following official Microsoft b
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Playwright best practices:
-
-**Documentation Queries:**
-- `mcp://context7/playwright/parallel-execution` - Parallel test execution patterns
-- `mcp://context7/playwright/sharding` - Test sharding strategies
-- `mcp://context7/playwright/browser-contexts` - Browser context optimization
-- `mcp://context7/playwright/ci-cd` - CI/CD pipeline optimization
-- `mcp://context7/playwright/performance` - Performance best practices
-
-**Why This is Required:**
-- Ensures optimization follows official Microsoft Playwright documentation
-- Applies proven parallel execution patterns
-- Validates sharding strategies for distributed testing
-- Prevents flaky tests and race conditions
-- Optimizes CI/CD resource utilization
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: playwright.
 
 ## Usage
 

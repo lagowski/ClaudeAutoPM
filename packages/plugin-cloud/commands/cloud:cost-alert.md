@@ -45,21 +45,7 @@ Comprehensive cloud cost monitoring and alerting solution that:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before implementing cost alerting, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/aws/cost-explorer` - AWS Cost Explorer API patterns and cost retrieval
-- `mcp://context7/gcp/billing` - GCP Cloud Billing API and cost data access
-- `mcp://context7/azure/cost-management` - Azure Cost Management API integration
-- `mcp://context7/prometheus/alerting` - Alert rule configuration and alert manager setup
-- `mcp://context7/grafana/dashboards` - Cost dashboard patterns and visualization
-
-**Why This is Required:**
-- Ensures correct API usage for each cloud provider's billing APIs
-- Applies proven alerting configurations and thresholds
-- Validates cost data retrieval patterns against current provider APIs
-- Prevents alert fatigue through best practice alert tuning
-- Implements industry-standard cost monitoring dashboards
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, gcp, azure, prometheus, grafana.
 
 ## Instructions
 

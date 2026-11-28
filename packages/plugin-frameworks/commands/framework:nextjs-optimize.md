@@ -14,20 +14,7 @@ Comprehensive Next.js optimization following official Vercel best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Next.js best practices:
-
-**Documentation Queries:**
-- `mcp://context7/nextjs/image-optimization` - Image component and optimization
-- `mcp://context7/nextjs/font-optimization` - Font loading and optimization
-- `mcp://context7/nextjs/performance` - Performance best practices
-- `mcp://context7/nextjs/production` - Production configuration
-- `mcp://context7/nextjs/app-router` - App Router optimization patterns
-
-**Why This is Required:**
-- Ensures optimization follows official Next.js documentation
-- Applies latest performance patterns from Vercel
-- Validates configuration and production setup
-- Prevents anti-patterns and common mistakes
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: nextjs.
 
 ## Usage
 

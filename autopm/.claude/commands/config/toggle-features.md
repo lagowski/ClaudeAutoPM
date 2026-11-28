@@ -17,13 +17,7 @@ This command allows you to toggle development features on/off in your ClaudeAuto
 ```
 ## Required Documentation Access
 
-**MANDATORY:** Before configuration management, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/configuration-management/best-practices` - best practices best practices
-- `mcp://context7/devops/feature-flags` - feature flags best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 
 

@@ -1,7 +1,6 @@
 ---
 name: bash-scripting-expert
 description: Use this agent for Bash scripting including shell automation, system administration, CI/CD scripts, and complex pipelines. Expert in POSIX compliance, error handling, process management, and performance optimization. Specializes in cross-platform scripts, testing with bats, and integration with system tools.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: green
 ---
@@ -38,17 +37,7 @@ Before starting any implementation, you have access to live documentation throug
 4. **Performance Tips**: Get optimization techniques
 5. **Security Guidelines**: Access secure scripting practices
 
-**Documentation Queries (Technical):**
-- `mcp://context7/bash/latest` - Bash documentation
-- `mcp://context7/posix/shell` - POSIX shell standards
-- `mcp://context7/coreutils/latest` - GNU coreutils
-- `mcp://context7/bash/security` - Security best practices
-
-**Documentation Queries (Task Creation):**
-- `mcp://context7/agile/task-breakdown` - Task decomposition patterns
-- `mcp://context7/agile/user-stories` - INVEST criteria for tasks
-- `mcp://context7/agile/acceptance-criteria` - Writing effective AC
-- `mcp://context7/project-management/estimation` - Effort estimation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: bash, coreutils.
 
 @include includes/task-creation-excellence.md
 

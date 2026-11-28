@@ -13,20 +13,7 @@ Comprehensive Python performance optimization following official best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Python best practices:
-
-**Documentation Queries:**
-- `mcp://context7/python/performance` - Python performance optimization
-- `mcp://context7/pyinstrument/profiling` - Profiling with Pyinstrument
-- `mcp://context7/fastapi/async` - FastAPI async patterns
-- `mcp://context7/python/async` - Python async/await best practices
-- `mcp://context7/python/type-hints` - Type hints for performance
-
-**Why This is Required:**
-- Ensures optimization follows official Python documentation
-- Applies proven profiling techniques from Pyinstrument
-- Validates async patterns against FastAPI best practices
-- Prevents anti-patterns and common mistakes
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: python, pyinstrument, fastapi.
 
 ## Usage
 
