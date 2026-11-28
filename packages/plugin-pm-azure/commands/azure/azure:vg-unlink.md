@@ -26,7 +26,7 @@ Use azure-devops-specialist agent for all operations.
 
 1. Validate variable group and pipeline exist
 2. Check if currently linked
-3. Unlink using AzureDevOpsResourcesProvider.unlinkVariableGroupFromPipeline()
+3. Unlink via the pipeline's `variablegroups` REST endpoint (`az pipelines variable-group` has no unlink subcommand); call it with `az devops invoke` or `curl`
 4. Confirm unlinking
 5. Show remaining links
 
