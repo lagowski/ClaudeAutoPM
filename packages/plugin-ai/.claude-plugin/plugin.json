@@ -1,0 +1,409 @@
+{
+  "name": "ai",
+  "version": "2.0.0",
+  "description": "Complete AI/ML plugin with Claude, OpenAI, Azure OpenAI, Gemini, LangChain, HuggingFace, and A2A agents. Includes RAG systems, model deployment, prompt engineering, and MLOps patterns with Context7-verified best practices.",
+  "author": {
+    "name": "ClaudeAutoPM Team"
+  },
+  "repository": "https://github.com/lagowski/ClaudeAutoPM",
+  "license": "MIT",
+  "keywords": [
+    "claudeautopm",
+    "plugin",
+    "ai",
+    "ml",
+    "machine-learning",
+    "anthropic",
+    "claude",
+    "openai",
+    "azure-openai",
+    "gemini",
+    "langchain",
+    "langgraph",
+    "huggingface",
+    "transformers",
+    "a2a",
+    "agent-to-agent",
+    "vertex-ai",
+    "mlflow",
+    "rag",
+    "llm",
+    "gpt",
+    "embeddings",
+    "prompt-engineering",
+    "mlops",
+    "quantization",
+    "vllm",
+    "tool-use",
+    "function-calling",
+    "prompt-caching",
+    "context7"
+  ],
+  "dependencies": [
+    "core"
+  ],
+  "metadata": {
+    "packageName": "@claudeautopm/plugin-ai",
+    "schemaVersion": "2.0",
+    "displayName": "AI & Machine Learning",
+    "category": "ai",
+    "agents": [
+      {
+        "name": "anthropic-claude-expert",
+        "file": "agents/anthropic-claude-expert.md",
+        "category": "ai",
+        "description": "Anthropic Claude API integration with Messages API, tool use, prompt caching, vision, and streaming. Expert in cost optimization, async patterns, and production deployment.",
+        "version": "2.0.0",
+        "tags": [
+          "anthropic",
+          "claude",
+          "llm",
+          "tool-use",
+          "prompt-caching",
+          "vision"
+        ],
+        "mcp": [],
+        "context7": [
+          "/anthropic/anthropic-sdk-python",
+          "/anthropic/anthropic-sdk-typescript",
+          "/websites/docs_anthropic"
+        ]
+      },
+      {
+        "name": "openai-python-expert",
+        "file": "agents/openai-python-expert.md",
+        "category": "ai",
+        "description": "OpenAI Python SDK integration with GPT models, embeddings, fine-tuning, and assistants API. Expert in chat completions, function calling, vision, audio processing, and production deployment.",
+        "version": "2.0.0",
+        "tags": [
+          "openai",
+          "gpt",
+          "llm",
+          "embeddings",
+          "function-calling"
+        ],
+        "mcp": [],
+        "context7": [
+          "/openai/openai-python"
+        ]
+      },
+      {
+        "name": "azure-openai-expert",
+        "file": "agents/azure-openai-expert.md",
+        "category": "ai",
+        "description": "Azure OpenAI Service integration with enterprise features, managed identities, private endpoints, and compliance. Expert in multi-tenant architecture, cost allocation, and hybrid deployments.",
+        "version": "2.0.0",
+        "tags": [
+          "azure",
+          "openai",
+          "enterprise",
+          "compliance",
+          "managed-identity"
+        ],
+        "mcp": [],
+        "context7": [
+          "/azure/azure-sdk-for-python/openai",
+          "/websites/azure/openai-service"
+        ]
+      },
+      {
+        "name": "gemini-api-expert",
+        "file": "agents/gemini-api-expert.md",
+        "category": "ai",
+        "description": "Google Gemini API integration with text generation, multimodal inputs, function calling, and safety controls. Expert in Gemini Pro/Flash models, structured outputs, streaming responses, and production deployment.",
+        "version": "2.0.0",
+        "tags": [
+          "gemini",
+          "google",
+          "llm",
+          "multimodal",
+          "safety"
+        ],
+        "mcp": [],
+        "context7": [
+          "/google/generative-ai-python"
+        ]
+      },
+      {
+        "name": "langchain-expert",
+        "file": "agents/langchain-expert.md",
+        "category": "ai",
+        "description": "LangChain framework expert with LCEL, chains, agents, memory, RAG, and tools. Expert in async patterns, structured outputs, and production optimization.",
+        "version": "2.0.0",
+        "tags": [
+          "langchain",
+          "lcel",
+          "chains",
+          "agents",
+          "rag",
+          "memory"
+        ],
+        "mcp": [],
+        "context7": [
+          "/langchain-ai/langchain",
+          "/websites/python_langchain"
+        ]
+      },
+      {
+        "name": "langgraph-workflow-expert",
+        "file": "agents/langgraph-workflow-expert.md",
+        "category": "ai",
+        "description": "LangGraph workflow orchestration with state machines, conditional routing, multi-agent collaboration, and graph-based AI workflows. Expert in stateful applications and complex decision trees.",
+        "version": "2.0.0",
+        "tags": [
+          "langgraph",
+          "workflow",
+          "state-machine",
+          "multi-agent",
+          "orchestration"
+        ],
+        "mcp": [],
+        "context7": [
+          "/langchain-ai/langgraph",
+          "/websites/langchain-ai_github_io_langgraph"
+        ]
+      },
+      {
+        "name": "google-a2a-expert",
+        "file": "agents/google-a2a-expert.md",
+        "category": "ai",
+        "description": "Google Agent-to-Agent (A2A) protocol expert with Vertex AI Agent Builder, multi-agent orchestration, and agent collaboration. Expert in A2A SDK, ADK workflows, and distributed agent systems.",
+        "version": "2.0.0",
+        "tags": [
+          "a2a",
+          "agent-to-agent",
+          "vertex-ai",
+          "multi-agent",
+          "google-cloud"
+        ],
+        "mcp": [],
+        "context7": [
+          "/googleapis/google-cloud-python/vertexai",
+          "/websites/cloud_google/vertex-ai",
+          "/websites/a2aprotocol"
+        ]
+      },
+      {
+        "name": "huggingface-expert",
+        "file": "agents/huggingface-expert.md",
+        "category": "ai",
+        "description": "HuggingFace ecosystem expert with Transformers, Datasets, Model Hub, quantization, and inference optimization. Expert in model deployment, fine-tuning, and production serving.",
+        "version": "2.0.0",
+        "tags": [
+          "huggingface",
+          "transformers",
+          "model-hub",
+          "quantization",
+          "inference"
+        ],
+        "mcp": [],
+        "context7": [
+          "/huggingface/transformers",
+          "/huggingface/datasets",
+          "/websites/huggingface/docs"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "subdirectory": "commands/",
+        "description": "AI & Machine Learning commands (9 total)",
+        "type": "collection",
+        "discovery": "auto",
+        "tags": [
+          "rag",
+          "langchain",
+          "retrieval",
+          "embeddings",
+          "scaffold"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "name": "ai-model-standards",
+        "file": "rules/ai-model-standards.md",
+        "priority": "high",
+        "description": "Comprehensive AI model development standards with Context7-verified best practices: model selection, async operations, error handling, caching, monitoring across OpenAI, HuggingFace, MLflow",
+        "tags": [
+          "ai",
+          "standards",
+          "best-practices",
+          "async",
+          "monitoring"
+        ],
+        "appliesTo": [
+          "commands",
+          "agents"
+        ],
+        "enforcesOn": [
+          "openai-python-expert",
+          "gemini-api-expert",
+          "langgraph-workflow-expert"
+        ]
+      },
+      {
+        "name": "prompt-engineering-standards",
+        "file": "rules/prompt-engineering-standards.md",
+        "priority": "high",
+        "description": "Comprehensive prompt engineering standards with Context7-verified best practices: system prompts, few-shot learning, chain-of-thought, structured outputs, RAG prompts, injection prevention",
+        "tags": [
+          "prompts",
+          "engineering",
+          "standards",
+          "cot",
+          "few-shot"
+        ],
+        "appliesTo": [
+          "commands",
+          "agents"
+        ],
+        "enforcesOn": [
+          "openai-python-expert",
+          "gemini-api-expert",
+          "langgraph-workflow-expert"
+        ]
+      }
+    ],
+    "scripts": [
+      {
+        "name": "openai-chat-example",
+        "file": "scripts/examples/openai-chat-example.py",
+        "description": "OpenAI chat example demonstrating Context7 patterns: AsyncOpenAI, streaming, function calling, error handling with retry, response caching",
+        "type": "example",
+        "executable": true,
+        "category": "ai",
+        "tags": [
+          "openai",
+          "chat",
+          "example",
+          "async",
+          "context7"
+        ]
+      },
+      {
+        "name": "langchain-rag-example",
+        "file": "scripts/examples/langchain-rag-example.py",
+        "description": "LangChain RAG example demonstrating Context7 patterns: RunnablePassthrough.assign(), MMR retrieval, document chunking, vector stores, RAG chains",
+        "type": "example",
+        "executable": true,
+        "category": "ai",
+        "tags": [
+          "langchain",
+          "rag",
+          "example",
+          "retrieval",
+          "context7"
+        ]
+      },
+      {
+        "name": "huggingface-inference-example",
+        "file": "scripts/examples/huggingface-inference-example.py",
+        "description": "HuggingFace inference example demonstrating Context7 patterns: pipeline API, AutoTokenizer, AutoModel, device management, efficient batch processing",
+        "type": "example",
+        "executable": true,
+        "category": "ai",
+        "tags": [
+          "huggingface",
+          "inference",
+          "example",
+          "transformers",
+          "context7"
+        ]
+      },
+      {
+        "name": "mlflow-tracking-example",
+        "file": "scripts/examples/mlflow-tracking-example.py",
+        "description": "MLflow tracking example demonstrating Context7 patterns: experiment tracking, parameter/metric logging, model registry, run comparison, artifact storage",
+        "type": "example",
+        "executable": true,
+        "category": "ai",
+        "tags": [
+          "mlflow",
+          "tracking",
+          "example",
+          "mlops",
+          "context7"
+        ]
+      }
+    ],
+    "features": {
+      "anthropic_integration": {
+        "enabled": true,
+        "description": "Anthropic Claude API with prompt caching, tool use, and vision"
+      },
+      "openai_integration": {
+        "enabled": true,
+        "description": "OpenAI GPT models, embeddings, and function calling"
+      },
+      "azure_openai_integration": {
+        "enabled": true,
+        "description": "Azure OpenAI Service with enterprise features and compliance"
+      },
+      "gemini_integration": {
+        "enabled": true,
+        "description": "Google Gemini multimodal AI with safety controls"
+      },
+      "langchain_framework": {
+        "enabled": true,
+        "description": "LangChain LCEL, chains, agents, memory, and RAG patterns"
+      },
+      "langgraph_workflows": {
+        "enabled": true,
+        "description": "LangGraph stateful AI workflows and multi-agent systems"
+      },
+      "a2a_protocol": {
+        "enabled": true,
+        "description": "Google Agent-to-Agent protocol with Vertex AI Agent Builder"
+      },
+      "huggingface_ecosystem": {
+        "enabled": true,
+        "description": "HuggingFace Transformers, Datasets, quantization, and deployment"
+      },
+      "rag_systems": {
+        "enabled": true,
+        "description": "Retrieval-Augmented Generation with LangChain and optimization"
+      },
+      "model_deployment": {
+        "enabled": true,
+        "description": "Production AI model deployment with vLLM, TGI, and FastAPI"
+      },
+      "prompt_engineering": {
+        "enabled": true,
+        "description": "Comprehensive prompt engineering standards and patterns"
+      },
+      "mlops_tracking": {
+        "enabled": true,
+        "description": "ML experiment tracking and model registry with MLflow"
+      }
+    },
+    "mcpServers": {
+      "recommended": [
+        "context7"
+      ],
+      "optional": []
+    },
+    "compatibleWith": ">=3.0.0",
+    "categoryLabel": "AI & Machine Learning",
+    "size": "~35 KB (gzipped)",
+    "required": false,
+    "tags": [
+      "ai",
+      "ml",
+      "machine-learning",
+      "anthropic",
+      "claude",
+      "openai",
+      "azure-openai",
+      "gemini",
+      "langchain",
+      "langgraph",
+      "huggingface",
+      "a2a",
+      "vertex-ai",
+      "mlflow",
+      "rag",
+      "llm"
+    ]
+  }
+}

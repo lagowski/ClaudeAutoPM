@@ -14,9 +14,7 @@ Unlink a variable group from a pipeline using REST API.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/pipelines` - Pipelines documentation
-- `mcp://context7/azure-devops/variable-groups` - Variable groups
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

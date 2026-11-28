@@ -45,25 +45,7 @@ Enterprise-grade ML model comparison supporting:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before comparing models, query Context7 for ML evaluation best practices:
-
-**Documentation Queries:**
-- `mcp://context7/mlflow/model-registry` - MLflow model registry and comparison
-- `mcp://context7/scikit-learn/model-selection` - Scikit-learn model evaluation and selection
-- `mcp://context7/tensorflow/keras/models` - TensorFlow/Keras model evaluation
-- `mcp://context7/pytorch/evaluation` - PyTorch model evaluation and metrics
-- `mcp://context7/wandb/experiment-tracking` - Weights & Biases comparison
-- `mcp://context7/xgboost/evaluation` - XGBoost model evaluation
-- `mcp://context7/lightgbm/evaluation` - LightGBM model metrics
-- `mcp://context7/scikit-learn/metrics` - Classification and regression metrics
-
-**Why This is Required:**
-- Ensures comparison uses official framework evaluation APIs
-- Applies latest metrics calculation methods from ML libraries
-- Validates statistical testing approaches against best practices
-- Prevents metric calculation errors and misinterpretations
-- Uses proven model selection methodologies
-- Ensures compatibility with model registries (MLflow, W&B)
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: mlflow, scikit-learn, tensorflow, pytorch, wandb, xgboost, lightgbm.
 
 ## Usage
 

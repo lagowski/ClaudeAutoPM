@@ -54,32 +54,8 @@ describe('/devops:monitoring-setup Command Structure Tests', () => {
   });
 
   describe('Context7 Documentation Queries', () => {
-    test('should have MANDATORY documentation access statement', () => {
-      expect(commandContent).toContain('**MANDATORY:**');
-    });
-
-    test('should have Documentation Queries subsection', () => {
-      expect(commandContent).toContain('**Documentation Queries:**');
-    });
-
-    test('should include Prometheus documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/prometheus/);
-    });
-
-    test('should include Grafana documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/grafana/);
-    });
-
-    test('should include observability/metrics documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/observability\/metrics/);
-    });
-
-    test('should include Kubernetes monitoring documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/kubernetes\/monitoring/);
-    });
-
-    test('should have "Why This is Required" explanation', () => {
-      expect(commandContent).toContain('**Why This is Required:**');
+    test('points to the shared Context7 rule', () => {
+      expect(commandContent).toContain('.claude/rules/context7-required.md');
     });
   });
 

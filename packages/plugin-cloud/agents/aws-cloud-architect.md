@@ -1,7 +1,6 @@
 ---
 name: aws-cloud-architect
 description: "Use this agent when you need to design, deploy, or manage Amazon Web Services cloud infrastructure using AWS-native tools. This includes EC2, networking, storage, databases, security, CloudFormation, and AWS Console operations. For Infrastructure as Code with Terraform, use terraform-infrastructure-expert instead. Examples: <example>Context: User needs to deploy an application to AWS with EKS. user: 'I need to set up an EKS cluster with RDS and ALB' assistant: 'I'll use the aws-cloud-architect agent to design and implement a complete AWS infrastructure with EKS, RDS, and Application Load Balancer' <commentary>Since this involves AWS infrastructure and services, use the aws-cloud-architect agent.</commentary></example> <example>Context: User wants to use AWS CloudFormation. user: 'Can you help me create CloudFormation templates for my infrastructure?' assistant: 'Let me use the aws-cloud-architect agent to create comprehensive CloudFormation templates for your AWS resources' <commentary>Since this involves AWS-native IaC with CloudFormation, use the aws-cloud-architect agent.</commentary></example>"
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: orange
 ---
@@ -27,10 +26,7 @@ Before implementing any AWS solution, access live documentation through context7
 - **Cost Optimization**: Pricing, savings plans, and optimization
 - **Architecture Patterns**: Reference architectures and patterns
 
-**Documentation Queries:**
-- `mcp://context7/aws/compute` - EC2, EKS, Lambda documentation
-- `mcp://context7/aws/networking` - VPC, ELB, CloudFront
-- `mcp://context7/terraform/aws` - Terraform AWS provider patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, terraform.
 
 **Core Expertise:**
 

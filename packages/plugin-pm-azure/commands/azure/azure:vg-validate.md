@@ -14,10 +14,7 @@ Validate variable group configuration and check for issues.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups
-- `mcp://context7/infrastructure/validation` - Validation patterns
-- `mcp://context7/security/secrets-validation` - Secrets validation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

@@ -2,20 +2,20 @@
   "name": "@claudeautopm/plugin-frameworks",
   "version": "4.0.1",
   "description": "Complete frontend frameworks plugin with React, Vue, Tailwind CSS agents, UI commands, performance rules, and optimization scripts for ClaudeAutoPM",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "files": [
     "agents/",
     "commands/",
     "rules/",
     "scripts/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'"
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'"
   },
   "keywords": [
     "claudeautopm",

@@ -486,7 +486,7 @@ All exceptions MUST:
 - JavaScript: [Airbnb Style Guide](https://github.com/airbnb/javascript)
 - Node.js: [Best Practices](https://github.com/goldbergyoni/nodebestpractices)
 - Bash: [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
-- Context7: Query `mcp://context7/<language>/style-guide` for latest standards
+- Context7: resolve the language's library ID, then query its style guide (`.claude/rules/context7-required.md`)
 
 ---
 

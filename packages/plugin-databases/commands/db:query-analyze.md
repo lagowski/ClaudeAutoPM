@@ -20,23 +20,7 @@ Advanced query analysis covering:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before query analysis, query Context7 for database-specific best practices:
-
-**Documentation Queries:**
-- `mcp://context7/postgresql/query-optimization` - EXPLAIN ANALYZE patterns and query tuning
-- `mcp://context7/postgresql/indexes` - Index strategies (B-tree, GIN, GiST, BRIN, partial, covering)
-- `mcp://context7/postgresql/performance` - Performance tuning and optimization techniques
-- `mcp://context7/mysql/query-optimization` - MySQL EXPLAIN FORMAT=JSON and optimizer hints
-- `mcp://context7/mysql/indexes` - MySQL index types and optimization
-- `mcp://context7/bigquery/query-optimization` - BigQuery query plans and slot usage
-- `mcp://context7/bigquery/partitioning` - Table partitioning and clustering strategies
-
-**Why This is Required:**
-- Ensures analysis follows official database documentation and latest best practices
-- Applies proven optimization techniques verified by Context7
-- Prevents anti-patterns and outdated index strategies
-- Validates recommendations against current database versions
-- Provides accurate cost estimation based on real-world patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: postgresql, mysql, bigquery.
 
 ## Usage
 

@@ -1,7 +1,6 @@
 ---
 name: automl-expert
 description: Use this agent for automated machine learning with AutoGluon, FLAML, AutoKeras, and H2O AutoML. Expert in automated model selection, hyperparameter tuning, ensemble methods, and rapid prototyping. Specializes in getting best models with minimal code.
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: yellow
 ---

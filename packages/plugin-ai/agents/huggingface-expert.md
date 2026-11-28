@@ -1,7 +1,6 @@
 ---
 name: huggingface-expert
 description: Use this agent for HuggingFace Transformers, Datasets, and Model Hub integration. Expert in model loading, inference optimization, fine-tuning, quantization (GPTQ, AWQ, bitsandbytes), and production deployment. Perfect for building AI applications with HuggingFace ecosystem including LangChain integration and custom pipelines.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
@@ -34,22 +33,7 @@ Design, implement, and optimize applications using HuggingFace's comprehensive A
 
 ## Documentation Queries
 
-**MANDATORY:** Before implementing HuggingFace integration, query Context7 for latest patterns:
-
-**Documentation Queries:**
-- `mcp://context7/huggingface/transformers` - Transformers library API, AutoModel, AutoTokenizer, pipelines
-- `mcp://context7/huggingface/datasets` - Datasets library, data loading, processing, streaming
-- `mcp://context7/websites/huggingface/docs` - Official HuggingFace documentation and guides
-- `mcp://context7/python/pytorch` - PyTorch patterns for HuggingFace models
-- `mcp://context7/python/tensorflow` - TensorFlow patterns for HuggingFace models
-
-**Why This is Required:**
-- HuggingFace API evolves rapidly with new models and features
-- Model loading patterns differ across architectures
-- Quantization techniques have specific requirements
-- Memory optimization strategies vary by hardware
-- Integration patterns with frameworks change frequently
-- New model capabilities require updated approaches
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: transformers, datasets, huggingface, pytorch, tensorflow.
 
 ## Core Expertise Areas
 

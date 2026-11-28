@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const PluginManager = require('../../lib/plugins/PluginManager');
 
 const AUTOPM_DIR = path.join(__dirname, '..', '..', 'autopm', '.claude', 'agents');
 const PACKAGES_DIR = path.join(__dirname, '..', '..', 'packages');
@@ -22,10 +23,9 @@ function parseXmlAgents(xmlContent) {
 }
 
 function getPluginAgents(pluginDir) {
-  const pluginJsonPath = path.join(pluginDir, 'plugin.json');
-  if (!fs.existsSync(pluginJsonPath)) return [];
   try {
-    const metadata = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf8'));
+    const metadata = PluginManager.readManifest(pluginDir);
+    if (!metadata) return [];
     return (metadata.agents || []).map(a => ({
       name: a.name,
       file: a.file,

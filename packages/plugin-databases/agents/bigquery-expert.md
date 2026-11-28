@@ -1,7 +1,6 @@
 ---
 name: bigquery-expert
 description: Use this agent for BigQuery data warehouse design, SQL optimization, and analytics engineering. Expert in partitioning, clustering, materialized views, BigQuery ML, and cost optimization. Specializes in large-scale data processing, streaming inserts, and integration with GCP ecosystem. Perfect for data warehousing, analytics, and ML workloads.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: blue
 ---
@@ -37,10 +36,7 @@ You are a senior BigQuery expert specializing in petabyte-scale data warehousing
 4. **BigQuery ML**: Retrieve model types and training patterns
 5. **Streaming**: Access real-time ingestion and batch loading patterns
 
-**Documentation Queries:**
-- `mcp://context7/websites/cloud_google-bigquery` - Topic: "partitioning clustering query optimization cost optimization"
-- `mcp://context7/googleapis/python-bigquery` - Topic: "streaming batch loading client best practices"
-- `mcp://context7/googleapis/nodejs-bigquery` - Topic: "query execution performance"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: bigquery.
 
 ### Context7-Verified Best Practices
 

@@ -8,7 +8,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "validate": "node -e \"import('./plugin.json', { with: { type: 'json' } })\" && echo 'plugin.json is valid'"
+    "validate": "node -e \"import('./.claude-plugin/plugin.json', { with: { type: 'json' } })\" && echo '.claude-plugin/plugin.json is valid'"
   },
   "keywords": [
     "claude",
@@ -41,7 +41,7 @@
     "hooks/",
     "scripts/",
     "lib/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md"
   ],
   "engines": {

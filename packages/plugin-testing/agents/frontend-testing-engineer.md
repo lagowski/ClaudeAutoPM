@@ -1,7 +1,6 @@
 ---
 name: frontend-testing-engineer
 description: "Use this agent for frontend unit and integration testing across React, Vue, Angular, and vanilla JavaScript applications. This includes component testing, snapshot testing, DOM testing, and test coverage optimization. Examples: <example>Context: User needs to write React component tests. user: 'I need to test my UserProfile React component with different props and states' assistant: 'I'll use the frontend-testing-engineer agent to create comprehensive React Testing Library tests for your UserProfile component' <commentary>Since this involves React component testing, use the frontend-testing-engineer agent.</commentary></example> <example>Context: User wants to set up Vue component tests. user: 'Can you help me write unit tests for my Vue 3 components using Vitest?' assistant: 'Let me use the frontend-testing-engineer agent to set up Vitest and create unit tests for your Vue 3 components' <commentary>Since this involves Vue component testing, use the frontend-testing-engineer agent.</commentary></example>"
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: teal
 ---
@@ -26,11 +25,7 @@ Before implementing any testing solution, access live documentation through cont
 - **Coverage Tools**: Istanbul, c8, coverage reporting
 - **Best Practices**: Testing patterns, mocking strategies, assertion libraries
 
-**Documentation Queries:**
-- `mcp://context7/javascript/jest` - Jest testing framework
-- `mcp://context7/react/testing-library` - React Testing Library
-- `mcp://context7/vue/test-utils` - Vue Test Utils
-- `mcp://context7/angular/testing` - Angular testing utilities
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: javascript, react, vue, angular.
 
 **Core Expertise:**
 

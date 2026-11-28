@@ -1,297 +1,96 @@
 {
-  "name": "ClaudeAutoPM Framework",
-  "description": "Autonomous Project Management Framework - Advanced AI-powered development automation with 53 agents, 112 commands, and comprehensive DevOps integration",
-  "version": "1.30.0",
+  "name": "claudeautopm",
   "owner": {
     "name": "ClaudeAutoPM Team",
-    "email": "autopm@example.com",
-    "url": "https://github.com/rafeekpro/ClaudeAutoPM"
+    "url": "https://github.com/lagowski/ClaudeAutoPM"
   },
-  "homepage": "https://github.com/rafeekpro/ClaudeAutoPM",
-  "repository": "https://github.com/rafeekpro/ClaudeAutoPM",
-  "license": "MIT",
-  "pluginRoot": "./plugins",
+  "metadata": {
+    "description": "ClaudeAutoPM: project management, agents and domain plugins for Claude Code"
+  },
   "plugins": [
     {
-      "name": "core-agents",
-      "source": "./plugins/core-agents",
-      "description": "Essential AI agents: agent-manager, code-analyzer, file-analyzer, test-runner",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Core",
-      "keywords": ["agents", "core", "analysis", "testing"],
-      "agents": [
-        "@agent-manager",
-        "@code-analyzer",
-        "@file-analyzer",
-        "@test-runner"
-      ],
-      "commands": [],
-      "hooks": [],
-      "mcpServers": []
+      "name": "core",
+      "source": "./packages/plugin-core",
+      "description": "Core framework: universal agents, rules, hooks and utilities",
+      "category": "core"
     },
     {
-      "name": "devops-suite",
-      "source": "./plugins/devops-suite",
-      "description": "Complete DevOps automation: Docker, GitHub, Azure DevOps, SSH operations, observability",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "DevOps",
-      "keywords": ["devops", "automation", "ci-cd", "docker", "github"],
-      "agents": [
-        "@docker-containerization-expert",
-        "@github-operations-specialist",
-        "@azure-devops-specialist",
-        "@ssh-operations-expert",
-        "@observability-engineer",
-        "@traefik-proxy-expert",
-        "@mcp-context-manager"
-      ],
-      "commands": [
-        "/devops:docker-build",
-        "/devops:ci-setup",
-        "/devops:deploy"
-      ],
-      "hooks": ["pre-commit-ci", "post-deploy"],
-      "mcpServers": []
+      "name": "ai",
+      "source": "./packages/plugin-ai",
+      "description": "AI/ML: OpenAI, Gemini, LangChain agents, RAG, prompt engineering and MLOps",
+      "category": "ai"
     },
     {
-      "name": "cloud-architects",
-      "source": "./plugins/cloud-architects",
-      "description": "Multi-cloud architecture: AWS, Azure, GCP specialists with IaC expertise",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Cloud",
-      "keywords": ["cloud", "aws", "azure", "gcp", "infrastructure", "terraform"],
-      "agents": [
-        "@aws-cloud-architect",
-        "@azure-cloud-architect",
-        "@gcp-cloud-architect",
-        "@terraform-infrastructure-expert"
-      ],
-      "commands": [
-        "/cloud:provision",
-        "/cloud:optimize",
-        "/cloud:migrate"
-      ],
-      "hooks": [],
-      "mcpServers": []
+      "name": "cloud",
+      "source": "./packages/plugin-cloud",
+      "description": "Cloud infrastructure: AWS, Azure, GCP, Kubernetes and Terraform",
+      "category": "cloud"
     },
     {
-      "name": "database-experts",
-      "source": "./plugins/database-experts",
-      "description": "Database specialists: PostgreSQL, MongoDB, Redis, BigQuery, CosmosDB",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Databases",
-      "keywords": ["database", "sql", "nosql", "postgresql", "mongodb", "redis"],
-      "agents": [
-        "@postgresql-expert",
-        "@mongodb-expert",
-        "@redis-expert",
-        "@bigquery-expert",
-        "@cosmosdb-expert"
-      ],
-      "commands": [
-        "/db:optimize",
-        "/db:migrate",
-        "/db:backup"
-      ],
-      "hooks": [],
-      "mcpServers": []
+      "name": "data",
+      "source": "./packages/plugin-data",
+      "description": "Data engineering: Airflow, Kedro, LangGraph, Kafka, dbt and pandas",
+      "category": "data"
     },
     {
-      "name": "testing-framework",
-      "source": "./plugins/testing-framework",
-      "description": "Comprehensive testing: E2E, TDD, performance, security testing with multiple frameworks",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Testing",
-      "keywords": ["testing", "e2e", "tdd", "playwright", "cypress", "jest"],
-      "agents": [
-        "@e2e-test-engineer",
-        "@tdd-specialist",
-        "@performance-testing-expert",
-        "@security-testing-specialist"
-      ],
-      "commands": [
-        "/test:e2e",
-        "/test:unit",
-        "/test:coverage",
-        "/test:security"
-      ],
-      "hooks": ["pre-commit-test", "pre-push-test"],
-      "mcpServers": ["playwright"]
+      "name": "db",
+      "source": "./packages/plugin-databases",
+      "description": "Databases: PostgreSQL, MongoDB, Redis, BigQuery and Cosmos DB",
+      "category": "databases"
     },
     {
-      "name": "pm-commands",
-      "source": "./plugins/pm-commands",
-      "description": "Project Management workflows: Epic decomposition, task management, release planning",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Project Management",
-      "keywords": ["project-management", "agile", "scrum", "planning", "workflow"],
-      "agents": [
-        "@project-manager",
-        "@agile-coach"
-      ],
-      "commands": [
-        "/pm:epic-decompose",
-        "/pm:sprint-plan",
-        "/pm:release",
-        "/pm:validate",
-        "/pm:optimize"
-      ],
-      "hooks": ["pre-release"],
-      "mcpServers": []
+      "name": "devops",
+      "source": "./packages/plugin-devops",
+      "description": "DevOps: CI/CD, Docker, GitHub, observability and infrastructure automation",
+      "category": "devops"
     },
     {
-      "name": "azure-devops",
-      "source": "./plugins/azure-devops",
-      "description": "Complete Azure DevOps integration: Boards, Repos, Pipelines, Artifacts",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Azure",
-      "keywords": ["azure", "devops", "boards", "pipelines", "repos"],
-      "agents": [
-        "@azure-devops-specialist",
-        "@azure-boards-manager"
-      ],
-      "commands": [
-        "/azure:work-item-create",
-        "/azure:epic-decompose",
-        "/azure:pipeline-run",
-        "/azure:pr-create"
-      ],
-      "hooks": ["azure-sync"],
-      "mcpServers": ["azure-devops"]
+      "name": "framework",
+      "source": "./packages/plugin-frameworks",
+      "description": "Frontend frameworks: React, Vue and Tailwind CSS",
+      "category": "frameworks"
     },
     {
-      "name": "github-automation",
-      "source": "./plugins/github-automation",
-      "description": "GitHub workflow automation: Actions, releases, PR management",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "GitHub",
-      "keywords": ["github", "actions", "ci-cd", "automation", "workflow"],
-      "agents": [
-        "@github-operations-specialist"
-      ],
-      "commands": [
-        "/github:release",
-        "/github:pr-create",
-        "/github:action-create"
-      ],
-      "hooks": ["pre-commit", "pre-push"],
-      "mcpServers": ["github"]
+      "name": "lang",
+      "source": "./packages/plugin-languages",
+      "description": "Languages: Python, JavaScript, Node.js and Bash",
+      "category": "languages"
     },
     {
-      "name": "language-specialists",
-      "source": "./plugins/language-specialists",
-      "description": "Language experts: Node.js, JavaScript, TypeScript, Python, Bash scripting",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Languages",
-      "keywords": ["nodejs", "javascript", "typescript", "python", "bash"],
-      "agents": [
-        "@nodejs-backend-engineer",
-        "@javascript-frontend-engineer",
-        "@typescript-specialist",
-        "@python-backend-engineer",
-        "@bash-scripting-expert"
-      ],
-      "commands": [],
-      "hooks": [],
-      "mcpServers": []
+      "name": "ml",
+      "source": "./packages/plugin-ml",
+      "description": "Machine learning: TensorFlow, PyTorch, scikit-learn, NLP, vision and AutoML",
+      "category": "ml"
     },
     {
-      "name": "framework-specialists",
-      "source": "./plugins/framework-specialists",
-      "description": "Framework experts: React, Vue, Angular, Next.js, Django, FastAPI",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Frameworks",
-      "keywords": ["react", "vue", "angular", "nextjs", "django", "fastapi"],
-      "agents": [
-        "@react-specialist",
-        "@vue-specialist",
-        "@angular-specialist",
-        "@nextjs-expert",
-        "@django-expert",
-        "@fastapi-expert"
-      ],
-      "commands": [
-        "/framework:scaffold",
-        "/framework:optimize"
-      ],
-      "hooks": [],
-      "mcpServers": []
+      "name": "obsidian",
+      "source": "./packages/plugin-obsidian",
+      "description": "Obsidian vault integration: sync, Dataview, Mermaid and Excalidraw",
+      "category": "integrations"
     },
     {
-      "name": "data-engineering",
-      "source": "./plugins/data-engineering",
-      "description": "Data engineering: ETL pipelines, data modeling, analytics",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Data",
-      "keywords": ["data", "etl", "analytics", "pipelines", "modeling"],
-      "agents": [
-        "@data-engineer",
-        "@etl-specialist"
-      ],
-      "commands": [
-        "/data:pipeline-create",
-        "/data:model-design"
-      ],
-      "hooks": [],
-      "mcpServers": []
+      "name": "pm",
+      "source": "./packages/plugin-pm",
+      "description": "Project management: PRDs, epics, issue tracking and release workflows",
+      "category": "pm"
     },
     {
-      "name": "security-auditing",
-      "source": "./plugins/security-auditing",
-      "description": "Security tools: Code auditing, vulnerability scanning, compliance checks",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Security",
-      "keywords": ["security", "audit", "vulnerability", "compliance", "scanning"],
-      "agents": [
-        "@security-testing-specialist",
-        "@security-auditor"
-      ],
-      "commands": [
-        "/security:audit",
-        "/security:scan",
-        "/security:compliance"
-      ],
-      "hooks": ["pre-commit-security"],
-      "mcpServers": []
+      "name": "github",
+      "source": "./packages/plugin-pm-github",
+      "description": "GitHub provider for the pm plugin",
+      "category": "pm"
     },
     {
-      "name": "full-framework",
-      "source": "./plugins/full-framework",
-      "description": "Complete ClaudeAutoPM framework - all 53 agents, 112 commands, all features",
-      "version": "1.30.0",
-      "author": "ClaudeAutoPM Team",
-      "category": "Complete",
-      "keywords": ["all", "complete", "framework", "full-stack"],
-      "agents": ["*"],
-      "commands": ["*"],
-      "hooks": ["*"],
-      "mcpServers": ["*"],
-      "dependencies": [
-        "core-agents",
-        "devops-suite",
-        "cloud-architects",
-        "database-experts",
-        "testing-framework",
-        "pm-commands",
-        "azure-devops",
-        "github-automation",
-        "language-specialists",
-        "framework-specialists",
-        "data-engineering",
-        "security-auditing"
-      ]
+      "name": "azure",
+      "source": "./packages/plugin-pm-azure",
+      "description": "Azure DevOps provider for the pm plugin",
+      "category": "pm"
+    },
+    {
+      "name": "test",
+      "source": "./packages/plugin-testing",
+      "description": "Testing: frameworks, E2E testing and quality assurance",
+      "category": "testing"
     }
   ]
 }

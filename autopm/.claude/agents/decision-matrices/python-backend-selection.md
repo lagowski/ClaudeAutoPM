@@ -1,11 +1,6 @@
 # Python Backend Framework Selection Guide
 
-**Documentation Queries:**
-
-- `mcp://context7/python/frameworks` - Python web frameworks comparison
-- `mcp://context7/python/async` - Async patterns and best practices
-- `mcp://context7/python/fastapi` - FastAPI framework
-- `mcp://context7/python/django` - Django framework
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: python.
 
 ## Quick Selection Guide
 

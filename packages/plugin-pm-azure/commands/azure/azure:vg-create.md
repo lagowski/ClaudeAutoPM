@@ -24,18 +24,7 @@ AZURE_DEVOPS_PROJECT=<your-project>
 
 ## Required Documentation Access
 
-**MANDATORY:** Before creating variable groups, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups best practices
-- `mcp://context7/infrastructure/secrets-management` - Secrets handling and security
-- `mcp://context7/azure-devops/pipelines` - Pipeline integration patterns
-
-**Why This is Required:**
-- Ensures proper secret handling and security practices
-- Prevents anti-patterns in variable group configuration
-- Validates pipeline integration approach
-- Reduces errors from incorrect configurations
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

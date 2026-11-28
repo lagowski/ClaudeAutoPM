@@ -262,7 +262,7 @@ AI-powered recommendations for next actions and workflow optimization.
 ```
 @claudeautopm/plugin-pm/
 ├── package.json              # npm package metadata
-├── plugin.json               # v2.0 schema with all PM scripts
+├── .claude-plugin/plugin.json # manifest; v2.0 lists under `metadata`
 ├── README.md                 # This file
 ├── LICENSE                   # MIT license
 └── scripts/

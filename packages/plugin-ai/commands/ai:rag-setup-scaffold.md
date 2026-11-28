@@ -2,21 +2,7 @@
 
 ## Required Documentation Access
 
-**MANDATORY:** Before scaffolding RAG system, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/langchain/rag` - Retrieval-Augmented Generation patterns
-- `mcp://context7/langchain/retrievers` - Vector store retrievers and search
-- `mcp://context7/langchain/embeddings` - Embedding models and optimization
-- `mcp://context7/langchain/vector-stores` - Vector database integration
-- `mcp://context7/openai/embeddings` - OpenAI embeddings API
-
-**Why This is Required:**
-- Ensures RAG implementation follows current LangChain best practices
-- Prevents anti-patterns like naive context concatenation
-- Applies Context7-verified retrieval strategies
-- Uses optimized embedding and chunking techniques
-- Implements proper vector store selection and configuration
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langchain, openai.
 
 ## Command Description
 

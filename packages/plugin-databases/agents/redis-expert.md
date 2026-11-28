@@ -1,7 +1,6 @@
 ---
 name: redis-expert  
 description: Use this agent for Redis caching, pub/sub messaging, and data structure operations. Expert in Redis Cluster, persistence strategies, Lua scripting, and performance optimization. Specializes in session management, real-time leaderboards, rate limiting, and distributed locks.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: red
 ---
@@ -38,10 +37,7 @@ You are a senior Redis expert specializing in high-performance caching, real-tim
 4. **Pub/Sub**: Retrieve messaging patterns and channel management
 5. **Performance**: Access memory optimization and eviction policies
 
-**Documentation Queries:**
-- `mcp://context7/websites/redis_io` - Topic: "caching patterns pub/sub data structures persistence"
-- `mcp://context7/redis/node-redis` - Topic: "connection pooling pipelining transactions"
-- `mcp://context7/redis/go-redis` - Topic: "cluster configuration performance"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: redis.
 
 ### Context7-Verified Best Practices
 

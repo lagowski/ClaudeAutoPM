@@ -309,14 +309,14 @@ function checkDockerCompose() {
 function remindContext7() {
   header('Context7 Documentation Queries');
 
-  info('Before building, ensure you have queried Context7 for:');
+  info('Before building, query Context7 (resolve-library-id, then query-docs) for:');
   console.log('');
 
   const queries = [
-    'mcp://context7/docker/best-practices - Docker image best practices',
-    'mcp://context7/docker/multi-stage-builds - Multi-stage build patterns',
-    'mcp://context7/docker/security - Docker security hardening',
-    'mcp://context7/docker/buildkit - BuildKit optimization features',
+    'docker: best-practices',
+    'docker: multi-stage-builds',
+    'docker: security',
+    'docker: buildkit',
   ];
 
   queries.forEach(query => {

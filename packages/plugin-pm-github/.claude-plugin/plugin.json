@@ -1,0 +1,77 @@
+{
+  "name": "github",
+  "version": "1.0.0",
+  "description": "GitHub integration plugin with issues, PRs, sync, and workflow automation",
+  "author": {
+    "name": "ClaudeAutoPM Team"
+  },
+  "repository": "https://github.com/lagowski/ClaudeAutoPM",
+  "license": "MIT",
+  "keywords": [
+    "claudeautopm",
+    "github",
+    "issues",
+    "pull-requests",
+    "sync",
+    "workflows",
+    "integration"
+  ],
+  "dependencies": [
+    "core",
+    "pm"
+  ],
+  "metadata": {
+    "packageName": "@claudeautopm/plugin-pm-github",
+    "schemaVersion": "2.0",
+    "displayName": "GitHub Integration",
+    "category": "project-management",
+    "commands": [
+      {
+        "subdirectory": "commands/",
+        "namePrefix": "github",
+        "description": "GitHub workflow commands (1 total; the pm:* GitHub commands live in plugin pm)",
+        "type": "collection",
+        "categories": {
+          "github": "GitHub workflow commands (1)"
+        },
+        "discovery": "auto",
+        "tags": [
+          "github",
+          "issues",
+          "sync",
+          "epic",
+          "pull-requests"
+        ]
+      }
+    ],
+    "features": {
+      "github_issues": {
+        "enabled": true,
+        "description": "GitHub issue management and tracking"
+      },
+      "github_sync": {
+        "enabled": true,
+        "description": "Bidirectional GitHub synchronization"
+      },
+      "github_workflows": {
+        "enabled": true,
+        "description": "GitHub Actions workflow creation"
+      },
+      "epic_github_integration": {
+        "enabled": true,
+        "description": "Epic sync with GitHub issues"
+      }
+    },
+    "compatibleWith": ">=3.0.0",
+    "categoryLabel": "Project Management",
+    "size": "~15 KB (gzipped)",
+    "required": false,
+    "tags": [
+      "github",
+      "issues",
+      "pull-requests",
+      "sync",
+      "integration"
+    ]
+  }
+}
