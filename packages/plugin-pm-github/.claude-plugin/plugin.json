@@ -28,10 +28,10 @@
     "commands": [
       {
         "subdirectory": "commands/",
-        "description": "GitHub integration commands (18 total)",
+        "namePrefix": "github",
+        "description": "GitHub workflow commands (1 total; the pm:* GitHub commands live in plugin pm)",
         "type": "collection",
         "categories": {
-          "pm": "GitHub issue and epic sync commands (17)",
           "github": "GitHub workflow commands (1)"
         },
         "discovery": "auto",
