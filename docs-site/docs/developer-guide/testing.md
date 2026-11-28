@@ -173,7 +173,6 @@ npm run test:comprehensive:ci
 ```
 test/
 ├── cli/                    # CLI command tests
-│   ├── autopm-commands.test.js
 │   ├── basic-commands.test.js
 │   ├── config-command.test.js
 │   └── epic-command.test.js

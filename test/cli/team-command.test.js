@@ -109,7 +109,7 @@ describe('Team Command CLI', () => {
 
       // Check CLAUDE.md contains frontend agents
       const claudeMd = fs.readFileSync(claudeMdPath, 'utf8');
-      expect(claudeMd).toContain('react-ui-expert.md');
+      expect(claudeMd).toContain('react-frontend-engineer.md');
       expect(claudeMd).toContain('javascript-frontend-engineer.md');
       // Should also contain base agents due to inheritance
       expect(claudeMd).toContain('code-analyzer.md');
@@ -123,9 +123,9 @@ describe('Team Command CLI', () => {
 
       const claudeMd = fs.readFileSync(claudeMdPath, 'utf8');
       // Should contain agents from frontend
-      expect(claudeMd).toContain('react-ui-expert.md');
+      expect(claudeMd).toContain('react-frontend-engineer.md');
       // Should contain agents from python_backend
-      expect(claudeMd).toContain('python-backend-expert.md');
+      expect(claudeMd).toContain('python-backend-engineer.md');
       // Should contain base agents
       expect(claudeMd).toContain('code-analyzer.md');
     });
@@ -179,8 +179,8 @@ describe('Team Command CLI', () => {
 
       // Test fullstack team (should include frontend + python_backend + base)
       const fullstackAgents = resolveAgents('fullstack', teamsConfig);
-      expect(fullstackAgents).toContain('react-ui-expert.md'); // from frontend
-      expect(fullstackAgents).toContain('python-backend-expert.md'); // from python_backend
+      expect(fullstackAgents).toContain('react-frontend-engineer.md'); // from frontend
+      expect(fullstackAgents).toContain('python-backend-engineer.md'); // from python_backend
       expect(fullstackAgents).toContain('code-analyzer.md'); // from base
     });
 
