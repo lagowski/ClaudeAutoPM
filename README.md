@@ -139,7 +139,7 @@ full file, which Claude reads when the work needs it; they are not loaded into c
 | **plugin-data** | 3 | airflow-orchestration-expert, kedro-pipeline-expert |
 | **plugin-testing** | 1 | frontend-testing-engineer |
 | **plugin-ml** | 10 | pytorch-expert, tensorflow-keras-expert, scikit-learn-expert |
-| **plugin-pm** | — | 29 PM commands (PRD, epic, issue management) |
+| **plugin-pm** | — | 46 PM commands (PRD, epic, issue management) |
 
 ---
 
