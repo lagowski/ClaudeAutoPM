@@ -62,4 +62,29 @@ describe('plugin-pm-azure file names (#905)', () => {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
   });
+
+  test('autopm install (azure scenario) keeps azure:* and pm:* names apart', async () => {
+    const originalArgv = process.argv;
+    process.argv = ['node', 'install.js', '--force'];
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'install-905-'));
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+    try {
+      const Installer = require('../../install/install');
+      const installer = new Installer();
+      installer.targetDir = tempDir;
+      installer.options.force = true;
+      installer.installFramework();
+      installer.installConfig('azure');
+      installer.currentConfig = installer.generateConfig('azure');
+      await installer.installPlugins();
+      const dir = path.join(tempDir, '.claude', 'commands');
+      expect(fs.existsSync(path.join(dir, 'azure:help.md'))).toBe(true);
+      expect(fs.existsSync(path.join(dir, 'pm:help.md'))).toBe(true);
+      expect(fs.existsSync(path.join(dir, 'help.md'))).toBe(false);
+    } finally {
+      log.mockRestore();
+      process.argv = originalArgv;
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
 });
