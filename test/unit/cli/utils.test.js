@@ -6,10 +6,10 @@
  */
 
 const path = require('path');
-const fs = require('fs-extra');
+const fs = require('../../../lib/utils/fs');
 const utils = require('../../../lib/cli/utils');
 
-jest.mock('fs-extra');
+jest.mock('../../../lib/utils/fs');
 
 describe('lib/cli/utils', () => {
   describe('path helpers', () => {

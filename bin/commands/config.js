@@ -5,7 +5,7 @@
  * Manage and display ClaudeAutoPM configuration
  */
 
-const fs = require('fs-extra');
+const fs = require('../../lib/utils/fs');
 const path = require('path');
 const dotenv = require('dotenv');
 
