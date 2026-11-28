@@ -181,7 +181,8 @@ Content
 
     const files = await engine.loadFiles(prdsDir);
     expect(files).toHaveLength(1);
-    expect(files[0].frontmatter).toEqual({});
+    // Invalid YAML reads as flat key: value strings, like every lib/ reader (#867)
+    expect(files[0].frontmatter).toEqual({ 'invalid yaml content': '[unclosed' });
   });
 });
 

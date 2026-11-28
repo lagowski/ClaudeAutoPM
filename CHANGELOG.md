@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- One frontmatter parser in `lib/` (#867): `lib/utils/frontmatter.js` (the `yaml` library) replaces the six parsers in `filter-engine` and the PRD, Epic, Issue, Context and Utility services, and `lib/` no longer requires `js-yaml`. PRD, epic and issue metadata now reads as YAML: `id: 123` is a number, `[a, b]` a list, quotes are removed, and CRLF files parse. A block that is not valid YAML still reads as flat `key: value` strings.
+
 ### Removed
 - Dead code nobody could run (#855): `bin/commands/epic.js` (shadowed by `lib/cli/commands/epic.js`), `lib/cli/commands/config.js` (never registered; required ESM-only `inquirer` and offered retired models), `lib/ai-providers/base-provider.js` and `lib/ai-providers/TemplateProvider.js`, with their tests.
 - Code nothing live loaded (#856, part 1): `lib/guide/` with the deprecated `autopm guide` command, `lib/validators/email-validator.js`, `lib/services/interfaces.js`, and their tests. Also removed: the `user/guide.js` command module, whose only job was to require `lib/guide/` through a path that does not exist in an installed project.
