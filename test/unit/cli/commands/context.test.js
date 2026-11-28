@@ -3,16 +3,16 @@
  *
  * Covers the previously untested lib/cli/commands/context.js:
  * happy path + error path for create/prime/update/show.
- * ContextService, fs-extra and ora are mocked.
+ * ContextService, lib/utils/fs and ora are mocked.
  */
 
 const contextCommand = require('../../../../lib/cli/commands/context');
 const ContextService = require('../../../../lib/services/ContextService');
-const fs = require('fs-extra');
+const fs = require('../../../../lib/utils/fs');
 const ora = require('ora');
 
 jest.mock('../../../../lib/services/ContextService');
-jest.mock('fs-extra');
+jest.mock('../../../../lib/utils/fs');
 jest.mock('ora');
 
 describe('Context Commands', () => {
