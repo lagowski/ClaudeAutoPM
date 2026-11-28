@@ -49,20 +49,7 @@ The `/core:agent-test` command provides comprehensive testing capabilities for C
 
 ## Required Documentation Access
 
-**MANDATORY:** Before testing agents, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/jest/testing` - Jest testing patterns and best practices
-- `mcp://context7/testing-library/best-practices` - Testing library standards
-- `mcp://context7/yaml/validation` - YAML validation and frontmatter parsing
-- `mcp://context7/markdown/parsing` - Markdown parsing and structure validation
-
-**Why This is Required:**
-- Ensures tests follow industry-standard Jest patterns
-- Validates agent configurations against current YAML/Markdown standards
-- Prevents test anti-patterns and flaky tests
-- Applies proven testing methodologies for agent validation
-- Ensures comprehensive coverage of agent capabilities
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: jest, testing-library.
 
 ## Usage
 
@@ -306,26 +293,19 @@ const hasExamples = content.includes('## Examples');
 const exampleCount = countCodeBlocks(content);
 const exampleValidation = validateExamples(content);
 
-// Validate Context7 queries
-const hasContext7 = content.includes('**Documentation Queries:**');
-const queries = extractContext7Queries(content);
+// Validate the Context7 pointer
+const hasContext7 = content.includes('context7-required.md');
 ```
 
 ### 4. Context7 Validation
 
 ```javascript
-// Extract queries
-const queryPattern = /mcp:\/\/context7\/[\w\/-]+/g;
-const queries = content.match(queryPattern) || [];
+// The agent points to the shared rule instead of listing query URIs
+const hasPointer = content.includes('.claude/rules/context7-required.md');
 
-// Validate format
-const validFormat = queries.every(q => q.startsWith('mcp://context7/'));
-
-// Check relevance
-const agentPurpose = frontmatter.description.toLowerCase();
-const relevant = queries.some(q =>
-  q.toLowerCase().includes(agentPurpose.split(' ')[0])
-);
+// Libraries named on the pointer line, e.g. "Libraries: react, nextjs."
+const libsLine = content.match(/Libraries: ([^\n]+)\./);
+const libraries = libsLine ? libsLine[1].split(/,\s*/) : [];
 ```
 
 ### 5. Tool Verification

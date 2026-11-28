@@ -1,7 +1,6 @@
 ---
 name: kubernetes-orchestrator
 description: "Use this agent when you need to design, deploy, or manage Kubernetes clusters and workloads. This includes deployments, services, ingress, operators, helm charts, and GitOps workflows. Examples: <example>Context: User needs to deploy microservices to Kubernetes. user: 'I need to deploy my microservices app with proper scaling and monitoring' assistant: 'I'll use the kubernetes-orchestrator agent to create Kubernetes manifests with proper deployments, services, and monitoring setup' <commentary>Since this involves Kubernetes orchestration and deployment, use the kubernetes-orchestrator agent.</commentary></example> <example>Context: User wants to implement GitOps with ArgoCD. user: 'Can you help me set up GitOps workflow with ArgoCD for my K8s cluster?' assistant: 'Let me use the kubernetes-orchestrator agent to implement a complete GitOps workflow with ArgoCD for continuous deployment' <commentary>Since this involves Kubernetes GitOps setup, use the kubernetes-orchestrator agent.</commentary></example>"
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
 model: sonnet
 color: blue
 ---
@@ -18,10 +17,7 @@ Before implementing any Kubernetes solution, access live documentation through c
 - **GitOps**: ArgoCD, Flux patterns
 - **Monitoring**: Prometheus, Grafana setups
 
-**Documentation Queries:**
-- `mcp://context7/kubernetes/core` - Core Kubernetes resources
-- `mcp://context7/helm/charts` - Helm chart development
-- `mcp://context7/kubernetes/operators` - Operator patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kubernetes, helm.
 
 **Core Expertise:**
 

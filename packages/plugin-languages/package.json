@@ -2,20 +2,20 @@
   "name": "@claudeautopm/plugin-languages",
   "version": "4.0.1",
   "description": "Complete programming languages plugin with Python, JavaScript, Node.js, Bash experts, language rules, and example scripts for ClaudeAutoPM",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "files": [
     "agents/",
     "commands/",
     "rules/",
     "scripts/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'",
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'",
     "lint:python": "find scripts/examples -name '*.py' -exec python3 -m py_compile {} \\;",
     "lint:bash": "shellcheck scripts/examples/*.sh || true",
     "lint:js": "eslint scripts/examples/*.js || true"

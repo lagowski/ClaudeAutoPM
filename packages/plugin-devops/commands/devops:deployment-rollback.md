@@ -13,21 +13,7 @@ Performs safe deployment rollback across multiple platforms (Kubernetes, Docker,
 
 ## Required Documentation Access
 
-**MANDATORY:** Before executing rollback, query Context7 for platform-specific best practices:
-
-**Documentation Queries:**
-- `mcp://context7/kubernetes/deployments` - Kubernetes rollback strategies and rollout undo
-- `mcp://context7/docker/deployment` - Docker service rollback patterns
-- `mcp://context7/github-actions/deployment` - GitHub deployment rollback and workflow re-run
-- `mcp://context7/aws/code-deploy` - AWS CodeDeploy rollback patterns
-- `mcp://context7/devops/blue-green-deployment` - Blue-green rollback and traffic switching
-
-**Why This is Required:**
-- Ensures platform-specific rollback commands are correct
-- Validates rollback strategies match deployment architecture
-- Applies latest safety patterns and validation checks
-- Prevents common rollback anti-patterns and data loss
-- Ensures proper smoke tests for each platform
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kubernetes, docker, github-actions, aws.
 
 ## Usage
 

@@ -23,17 +23,7 @@ AZURE_DEVOPS_PROJECT=<your-project>
 
 ## Required Documentation Access
 
-**MANDATORY:** Before showing variable groups, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/security/secrets-display` - Secrets display security
-- `mcp://context7/azure-devops/pipelines` - Pipeline integration
-
-**Why This is Required:**
-- Ensures secure handling of secret values
-- Validates what information can be displayed
-- Prevents accidental secret exposure
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 

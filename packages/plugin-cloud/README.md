@@ -56,15 +56,8 @@ autopm plugin install cloud
   - Integration with GCP services
 
 ### AI & APIs
-- **gemini-api-expert** - Google Gemini API integration
-  - Gemini Pro and Pro Vision integration
-  - Prompt engineering for Gemini models
-  - Multi-modal capabilities
-
-- **openai-python-expert** - OpenAI API with Python
-  - GPT-4, GPT-3.5 integration
-  - Assistant API, Embeddings, Fine-tuning
-  - Best practices for production use
+`gemini-api-expert` and `openai-python-expert` are owned by
+[`@claudeautopm/plugin-ai`](../plugin-ai/README.md) (a peer plugin of this one); install it for them.
 
 ### Infrastructure & Orchestration
 - **kubernetes-orchestrator** - Kubernetes orchestration

@@ -94,9 +94,7 @@ Reference Context7 documentation in your agents:
 ## MCP Servers Used
 
 This agent uses Context7 for up-to-date documentation:
-- `mcp://context7/react/latest` - React documentation
-- `mcp://context7/nextjs/14` - Next.js 14 documentation
-- `mcp://context7/typescript/latest` - TypeScript reference
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react, nextjs, typescript.
 ```
 
 ## 🧪 Testing
@@ -179,9 +177,7 @@ mcpServers:
 # React Expert Agent
 
 This agent has access to:
-- `mcp://context7/react/latest` - Current React documentation
-- `mcp://context7/react-router/latest` - React Router docs
-- `mcp://context7/redux/latest` - Redux documentation
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react, react-router, redux.
 ```
 
 ## 🎓 Best Practices

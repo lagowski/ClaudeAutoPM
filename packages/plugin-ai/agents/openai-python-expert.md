@@ -1,7 +1,6 @@
 ---
 name: openai-python-expert
 description: Use this agent for OpenAI Python SDK integration including GPT models, embeddings, fine-tuning, and assistants API. Expert in chat completions, function calling, vision, audio processing, and production deployment. Perfect for building AI-powered applications with OpenAI's latest capabilities and best practices.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
@@ -1070,10 +1069,7 @@ async def production_example():
 2. **Model Capabilities**: Access current model specifications and limits
 3. **Best Practices**: Review production deployment and optimization guides
 
-**Documentation Queries:**
-- `mcp://context7/openai/latest` - OpenAI API documentation
-- `mcp://context7/openai/models` - Available models and capabilities
-- `mcp://context7/openai/production` - Production best practices
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: openai.
 
 ## Self-Verification Protocol
 

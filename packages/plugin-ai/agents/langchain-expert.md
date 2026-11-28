@@ -1,7 +1,6 @@
 ---
 name: langchain-expert
 description: Use this agent for LangChain framework expertise including LCEL chains, agents, RAG patterns, memory systems, and production deployments. Expert in LangChain Expression Language, retrieval pipelines, tool integration, and async patterns. Perfect for building sophisticated AI applications with latest 2024-2025 best practices.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
@@ -140,23 +139,7 @@ Design, implement, and optimize applications using LangChain with focus on:
 
 ## Documentation Queries
 
-**MANDATORY:** Before implementing LangChain solutions, query Context7 for latest patterns:
-
-**Documentation Queries:**
-- `mcp://context7/langchain-ai/langchain` - Core LangChain library and LCEL
-- `mcp://context7/websites/python_langchain` - Official LangChain documentation
-- `mcp://context7/langchain-ai/langgraph` - For advanced stateful workflows
-- `mcp://context7/langchain-ai/langchain-core` - Core abstractions and interfaces
-- `mcp://context7/langchain-ai/langchain-community` - Community integrations
-
-**Why This is Required:**
-- LangChain evolves rapidly with breaking changes
-- LCEL patterns supersede legacy Chain API
-- RAG patterns have new best practices
-- Agent implementations change frequently
-- Vector store integrations have specific requirements
-- Tool calling syntax varies by LLM provider
-- Memory patterns have performance implications
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langchain, langgraph.
 
 ## Implementation Patterns
 
@@ -168,7 +151,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_anthropic import ChatAnthropic
 
 # LCEL chain with pipe operator (preferred over legacy LLMChain)
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant."),
@@ -224,7 +207,7 @@ Question: {question}
 Answer:"""
 
 prompt = ChatPromptTemplate.from_template(template)
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 # LCEL RAG chain with RunnablePassthrough.assign() pattern
 rag_chain = (
@@ -289,7 +272,7 @@ def get_current_time() -> str:
 tools = [search_wikipedia, calculate, get_current_time]
 
 # Create ReAct agent
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022", temperature=0)
+llm = ChatAnthropic(model="claude-sonnet-5-5", temperature=0)
 
 # ReAct prompt template
 prompt = PromptTemplate.from_template("""Answer the following questions as best you can. You have access to the following tools:
@@ -343,7 +326,7 @@ prompt = ChatPromptTemplate.from_messages([
     ("human", "{input}")
 ])
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 # Chain with memory
 def get_history(input_dict):
@@ -376,7 +359,7 @@ print(chat("What is my name?"))  # Will remember "Alice"
 from langchain.memory import ConversationSummaryMemory
 
 summary_memory = ConversationSummaryMemory(
-    llm=ChatAnthropic(model="claude-3-haiku-20240307"),  # Use cheaper model for summaries
+    llm=ChatAnthropic(model="claude-haiku-5-5"),  # Use cheaper model for summaries
     return_messages=True
 )
 ```
@@ -389,7 +372,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_anthropic import ChatAnthropic
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 prompt = ChatPromptTemplate.from_template("Explain {topic} in one sentence.")
 
 chain = prompt | llm | StrOutputParser()
@@ -454,7 +437,7 @@ class CostTrackingCallback(AsyncCallbackHandler):
             token_usage = response.llm_output.get("token_usage", {})
             self.total_tokens += token_usage.get("total_tokens", 0)
 
-            # Calculate cost (Claude 3.5 Sonnet pricing)
+            # Calculate cost (Claude Sonnet 5.5 pricing)
             input_tokens = token_usage.get("prompt_tokens", 0)
             output_tokens = token_usage.get("completion_tokens", 0)
 
@@ -508,7 +491,7 @@ vectorstore = Chroma.from_documents(docs, OpenAIEmbeddings())
 base_retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
 
 # Compression with LLM
-compressor_llm = ChatAnthropic(model="claude-3-haiku-20240307")  # Use cheaper model
+compressor_llm = ChatAnthropic(model="claude-haiku-5-5")  # Use cheaper model
 compressor = LLMChainExtractor.from_llm(compressor_llm)
 
 # Compression retriever
@@ -527,7 +510,7 @@ rag_chain = (
         "question": RunnablePassthrough()
     }
     | prompt
-    | ChatAnthropic(model="claude-3-5-sonnet-20241022")
+    | ChatAnthropic(model="claude-sonnet-5-5")
     | StrOutputParser()
 )
 
@@ -536,7 +519,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 
 multi_query_retriever = MultiQueryRetriever.from_llm(
     retriever=base_retriever,
-    llm=ChatAnthropic(model="claude-3-5-sonnet-20241022")
+    llm=ChatAnthropic(model="claude-sonnet-5-5")
 )
 
 # Ensemble retriever (combine multiple retrievers)
@@ -566,7 +549,7 @@ class Person(BaseModel):
     skills: list[str] = Field(description="List of skills")
 
 # Create chain with structured output
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "Extract person information from the text."),
@@ -601,7 +584,7 @@ from langchain_core.runnables import RunnableParallel, RunnablePassthrough
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_anthropic import ChatAnthropic
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 # Create parallel chains
 summary_chain = (
@@ -644,7 +627,7 @@ from langchain_core.runnables import RunnableBranch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_anthropic import ChatAnthropic
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 # Define specialized chains
 technical_chain = (
@@ -709,8 +692,8 @@ async def call_llm_with_retry(chain, input_data):
 # Fallback chains
 from langchain_core.runnables import RunnableWithFallbacks
 
-primary_llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
-fallback_llm = ChatAnthropic(model="claude-3-haiku-20240307")
+primary_llm = ChatAnthropic(model="claude-sonnet-5-5")
+fallback_llm = ChatAnthropic(model="claude-haiku-5-5")
 
 chain_with_fallback = (prompt | primary_llm).with_fallbacks(
     [prompt | fallback_llm]
@@ -877,11 +860,11 @@ def estimate_tokens(text: str) -> int:
     """Rough token estimation (4 chars per token)"""
     return len(text) // 4
 
-def estimate_cost(input_text: str, model: str = "claude-3-5-sonnet-20241022") -> float:
+def estimate_cost(input_text: str, model: str = "claude-sonnet-5-5") -> float:
     """Estimate request cost"""
     pricing = {
-        "claude-3-5-sonnet-20241022": {"input": 3.00, "output": 15.00},
-        "claude-3-haiku-20240307": {"input": 0.25, "output": 1.25}
+        "claude-sonnet-5-5": {"input": 3.00, "output": 15.00},
+        "claude-haiku-5-5": {"input": 0.25, "output": 1.25}
     }
 
     input_tokens = estimate_tokens(input_text)
@@ -987,7 +970,7 @@ async def monitored_chain_call(chain, input_data):
         output = await chain.ainvoke(input_data)
         # Extract metrics from response if available
         tokens = 1000  # Get from callback
-        cost = estimate_cost(str(input_data), "claude-3-5-sonnet-20241022")
+        cost = estimate_cost(str(input_data), "claude-sonnet-5-5")
     except Exception as e:
         error = str(e)
         raise
@@ -1000,20 +983,20 @@ async def monitored_chain_call(chain, input_data):
 
 ## Model Selection Guide
 
-### Claude 3.5 Sonnet (Recommended for Most Use Cases)
+### Claude Sonnet 5.5 (Recommended for Most Use Cases)
 **Use with ChatAnthropic:**
 ```python
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022", temperature=0)
+llm = ChatAnthropic(model="claude-sonnet-5-5", temperature=0)
 ```
 - Best performance/cost ratio
 - Excellent for RAG and agents
 - Strong reasoning and code generation
 - 200K context window
 
-### Claude 3 Haiku (Cost-Optimized)
+### Claude Haiku 5.5 (Cost-Optimized)
 **Use for high-volume operations:**
 ```python
-llm = ChatAnthropic(model="claude-3-haiku-20240307", temperature=0)
+llm = ChatAnthropic(model="claude-haiku-5-5", temperature=0)
 ```
 - Fastest and cheapest
 - Perfect for summarization, classification
@@ -1128,7 +1111,7 @@ async def test_real_chain():
     from langchain_core.prompts import ChatPromptTemplate
     from langchain_core.output_parsers import StrOutputParser
 
-    llm = ChatAnthropic(model="claude-3-haiku-20240307")  # Use cheap model
+    llm = ChatAnthropic(model="claude-haiku-5-5")  # Use cheap model
     prompt = ChatPromptTemplate.from_template("Say 'test passed'")
     chain = prompt | llm | StrOutputParser()
 
@@ -1233,7 +1216,7 @@ def create_autopm_rag_chain():
     Answer with specific examples and file paths when relevant.
     """)
 
-    llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+    llm = ChatAnthropic(model="claude-sonnet-5-5")
 
     return (
         {"context": retriever | format_docs, "question": RunnablePassthrough()}
@@ -1281,7 +1264,7 @@ def get_project_status(project_id: str) -> str:
 # Create PM agent
 pm_tools = [create_epic, decompose_epic, assign_task, get_project_status]
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022", temperature=0)
+llm = ChatAnthropic(model="claude-sonnet-5-5", temperature=0)
 
 pm_agent = create_openai_functions_agent(llm, pm_tools, prompt)
 pm_executor = AgentExecutor(agent=pm_agent, tools=pm_tools, verbose=True)
@@ -1313,7 +1296,7 @@ Code:
 Provide analysis as JSON with keys: bugs, security, performance, best_practices
 """)
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+llm = ChatAnthropic(model="claude-sonnet-5-5")
 
 code_analysis_chain = (
     code_analysis_prompt
@@ -1341,11 +1324,6 @@ print(f"Security issues: {analysis['security']}")
 - LangGraph: https://langchain-ai.github.io/langgraph/
 
 ### Context7 Libraries (MANDATORY)
-- `mcp://context7/langchain-ai/langchain` - Core library and LCEL
-- `mcp://context7/websites/python_langchain` - Official documentation
-- `mcp://context7/langchain-ai/langgraph` - Stateful workflows
-- `mcp://context7/langchain-ai/langchain-core` - Core abstractions
-- `mcp://context7/langchain-ai/langchain-community` - Community integrations
 
 ### GitHub Repositories
 - LangChain: https://github.com/langchain-ai/langchain

@@ -10,14 +10,7 @@ Deploys applications to Kubernetes clusters.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before Kubernetes deployment, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/kubernetes/deployment` - deployment best practices
-- `mcp://context7/kubernetes/best-practices` - best practices best practices
-- `mcp://context7/devops/container-orchestration` - container orchestration best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: kubernetes.
 
 
 **Example**: `/kubernetes:deploy my-app --chart=helm --namespace=production --gitops=argocd`

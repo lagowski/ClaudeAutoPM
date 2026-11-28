@@ -14,21 +14,7 @@ Comprehensive LLM optimization following industry best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for LLM best practices:
-
-**Documentation Queries:**
-- `mcp://context7/llm/model-selection` - Model selection strategies
-- `mcp://context7/llm/prompt-engineering` - Prompt optimization
-- `mcp://context7/llm/inference-optimization` - Inference acceleration
-- `mcp://context7/llm/token-optimization` - Token usage reduction
-- `mcp://context7/llm/context-management` - Context window strategies
-
-**Why This is Required:**
-- Ensures optimization follows industry best practices
-- Applies proven model selection criteria
-- Validates prompt engineering techniques
-- Prevents performance bottlenecks
-- Optimizes cost and latency
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Usage
 

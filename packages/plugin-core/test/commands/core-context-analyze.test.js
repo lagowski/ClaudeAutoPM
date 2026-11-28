@@ -75,35 +75,8 @@ describe('/core:context-analyze Command', () => {
   });
 
   describe('Required Documentation Access', () => {
-    test('command should have Required Documentation Access section', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/## Required Documentation Access/i);
-    });
-
-    test('should include Claude API Context7 documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-
-      // Check for mandatory Context7 queries
-      expect(content).toMatch(/mcp:\/\/context7\/anthropic\/claude-api/i);
-      expect(content).toMatch(/context.*limit/i);
-    });
-
-    test('should include context management documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/mcp:\/\/context7\/langchain\/context-management/i);
-    });
-
-    test('should include tokenization documentation queries', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-      expect(content).toMatch(/mcp:\/\/context7\/tiktoken\/tokenization/i);
-    });
-
-    test('should explain why Context7 queries are required', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-
-      // Should have "Why This is Required" section
-      expect(content).toMatch(/Why This is Required:/i);
-      expect(content).toMatch(/best practices/i);
+    test('points to the shared Context7 rule', () => {
+      expect(fs.readFileSync(commandPath, 'utf-8')).toContain('.claude/rules/context7-required.md');
     });
   });
 
@@ -293,24 +266,8 @@ describe('/core:context-analyze Command', () => {
   });
 
   describe('Context7 Integration Compliance', () => {
-    test('should follow Context7 enforcement pattern', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-
-      // Must have MANDATORY keyword
-      expect(content).toMatch(/MANDATORY.*Context7/i);
-
-      // Must list specific MCP queries
-      expect(content).toMatch(/mcp:\/\/context7/);
-
-      // Must explain requirement
-      expect(content).toMatch(/Why This is Required/i);
-    });
-
-    test('should include Context7 verification in instructions', () => {
-      const content = fs.readFileSync(commandPath, 'utf-8');
-
-      expect(content).toMatch(/Query Context7|context7.*documentation/i);
-      expect(content).toMatch(/before.*implementation|first.*step/i);
+    test('points to the shared Context7 rule', () => {
+      expect(fs.readFileSync(commandPath, 'utf-8')).toContain('.claude/rules/context7-required.md');
     });
   });
 });

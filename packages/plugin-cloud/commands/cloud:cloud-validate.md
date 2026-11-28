@@ -13,20 +13,7 @@ Performs comprehensive validation of cloud infrastructure setup including:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before executing validation, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/aws/best-practices` - AWS Well-Architected Framework
-- `mcp://context7/azure/best-practices` - Azure Cloud Adoption Framework
-- `mcp://context7/gcp/best-practices` - Google Cloud Architecture Framework
-- `mcp://context7/terraform/validation` - Terraform validation and testing patterns
-- `mcp://context7/security/cloud-security` - Cloud security hardening guidelines
-
-**Why This is Required:**
-- Ensures validation follows cloud provider best practices
-- Applies latest security recommendations
-- Validates against current compliance standards
-- Prevents misconfigurations and vulnerabilities
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, azure, gcp, terraform.
 
 ## Usage
 

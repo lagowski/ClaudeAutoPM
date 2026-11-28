@@ -19,23 +19,7 @@ Comprehensive LangChain optimization following official best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for LangChain best practices:
-
-**Documentation Queries:**
-- `mcp://context7/langchain-ai/langchain` - LangChain core documentation
-- `mcp://context7/websites/python_langchain` - Python LangChain patterns
-- `mcp://context7/langchain/lcel-patterns` - LCEL composition patterns
-- `mcp://context7/langchain/async-streaming` - Async and streaming optimization
-- `mcp://context7/langchain/caching-strategies` - Cache optimization
-- `mcp://context7/langchain/rag-optimization` - RAG pipeline tuning
-
-**Why This is Required:**
-- Ensures optimization follows official LangChain documentation
-- Applies proven LCEL composition patterns
-- Validates async and streaming strategies
-- Prevents performance bottlenecks
-- Optimizes memory and cache usage
-- Implements best practices for production RAG
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: langchain.
 
 ## Usage
 

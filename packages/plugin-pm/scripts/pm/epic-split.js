@@ -2,7 +2,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-const yaml = require('js-yaml');
+const yaml = require('./lib/yaml-parse');
 
 /**
  * Epic Split - Automatically split a PRD into multiple epics
@@ -229,7 +229,7 @@ function generateEpicContent(epic, dependencies, prdPath, index) {
   };
 
   const content = `---
-${yaml.dump(frontmatter).trim()}
+${yaml.stringify(frontmatter).trim()}
 ---
 
 # Epic ${index + 1}: ${template.name}
@@ -323,7 +323,7 @@ function generateMetaFile(epics, featureName) {
   };
 
   return `---
-${yaml.dump(meta).trim()}
+${yaml.stringify(meta).trim()}
 ---
 
 # Multi-Epic Structure: ${featureName}

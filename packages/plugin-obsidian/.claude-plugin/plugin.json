@@ -1,0 +1,137 @@
+{
+  "name": "obsidian",
+  "version": "1.0.0",
+  "description": "Obsidian vault mirror integration with Dataview, Mermaid, Excalidraw and canonical frontmatter support",
+  "author": {
+    "name": "ClaudeAutoPM Team"
+  },
+  "repository": "https://github.com/lagowski/ClaudeAutoPM",
+  "license": "MIT",
+  "keywords": [
+    "claudeautopm",
+    "obsidian",
+    "vault",
+    "sync",
+    "dataview",
+    "mermaid",
+    "excalidraw"
+  ],
+  "dependencies": [
+    "core"
+  ],
+  "metadata": {
+    "packageName": "@claudeautopm/plugin-obsidian",
+    "schemaVersion": "2.0",
+    "displayName": "Obsidian Vault Integration",
+    "category": "integration",
+    "scripts": [
+      {
+        "name": "setup",
+        "file": "scripts/obsidian/setup.js",
+        "description": "Interactive vault configuration wizard",
+        "type": "workflow",
+        "executable": true,
+        "category": "setup",
+        "tags": [
+          "setup",
+          "wizard",
+          "vault"
+        ]
+      },
+      {
+        "name": "doctor",
+        "file": "scripts/obsidian/doctor.js",
+        "description": "Diagnostic checks for common integration issues",
+        "type": "utility",
+        "executable": true,
+        "category": "diagnostics",
+        "tags": [
+          "doctor",
+          "diagnostics",
+          "vault"
+        ]
+      },
+      {
+        "name": "sync-to-obsidian",
+        "file": "scripts/obsidian/sync-to-obsidian.sh",
+        "description": "Cross-platform rsync-based project-to-vault sync",
+        "type": "utility",
+        "executable": true,
+        "category": "sync",
+        "tags": [
+          "sync",
+          "rsync",
+          "vault"
+        ]
+      },
+      {
+        "name": "sync-to-obsidian-node",
+        "file": "scripts/obsidian/sync-to-obsidian.js",
+        "description": "Node.js fallback for sync engine",
+        "type": "utility",
+        "executable": true,
+        "category": "sync",
+        "tags": [
+          "sync",
+          "node",
+          "vault"
+        ]
+      },
+      {
+        "name": "link-vault",
+        "file": "scripts/obsidian/link-vault.js",
+        "description": "Inject wikilinks into project files for Obsidian Graph View",
+        "type": "utility",
+        "executable": true,
+        "category": "linking",
+        "tags": [
+          "wikilinks",
+          "graph",
+          "vault"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "subdirectory": "commands/",
+        "description": "Obsidian vault management commands",
+        "type": "collection",
+        "categories": {
+          "obsidian": "Obsidian vault integration commands"
+        },
+        "discovery": "auto",
+        "tags": [
+          "obsidian",
+          "vault",
+          "sync"
+        ]
+      }
+    ],
+    "features": {
+      "vault_sync": {
+        "enabled": true,
+        "description": "Unidirectional project-to-vault sync"
+      },
+      "setup_wizard": {
+        "enabled": true,
+        "description": "Interactive vault configuration wizard"
+      },
+      "diagnostics": {
+        "enabled": true,
+        "description": "Doctor command for troubleshooting"
+      }
+    },
+    "rules": [],
+    "compatibleWith": ">=3.0.0",
+    "categoryLabel": "Integration",
+    "size": "~10 KB (gzipped)",
+    "required": false,
+    "tags": [
+      "obsidian",
+      "vault",
+      "sync",
+      "dataview",
+      "integration"
+    ]
+  }
+}

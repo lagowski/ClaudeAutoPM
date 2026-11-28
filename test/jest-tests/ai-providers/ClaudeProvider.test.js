@@ -210,16 +210,32 @@ describe('ClaudeProvider', () => {
 
   describe('Abstract Method Implementations', () => {
     describe('getDefaultModel()', () => {
-      test('should return Claude Sonnet 4 model', () => {
+      const savedModel = process.env.ANTHROPIC_MODEL;
+      afterEach(() => {
+        if (savedModel === undefined) delete process.env.ANTHROPIC_MODEL;
+        else process.env.ANTHROPIC_MODEL = savedModel;
+      });
+
+      test('should return the current Sonnet alias (no dated snapshot id)', () => {
+        delete process.env.ANTHROPIC_MODEL;
         const provider = new ClaudeProvider('test-key');
 
-        expect(provider.getDefaultModel()).toBe('claude-sonnet-4-20250514');
+        expect(provider.getDefaultModel()).toBe(ClaudeProvider.DEFAULT_MODEL);
+        expect(ClaudeProvider.DEFAULT_MODEL).toBe('claude-sonnet-5-5');
       });
 
       test('should be used as default model in constructor', () => {
+        delete process.env.ANTHROPIC_MODEL;
         const provider = new ClaudeProvider({ apiKey: 'test-key' });
 
-        expect(provider.model).toBe('claude-sonnet-4-20250514');
+        expect(provider.model).toBe('claude-sonnet-5-5');
+      });
+
+      test('ANTHROPIC_MODEL overrides the default', () => {
+        process.env.ANTHROPIC_MODEL = 'claude-opus-5-5';
+        const provider = new ClaudeProvider({ apiKey: 'test-key' });
+
+        expect(provider.model).toBe('claude-opus-5-5');
       });
     });
 
@@ -825,7 +841,7 @@ describe('ClaudeProvider', () => {
     test('getModel() should still work (legacy method)', () => {
       const provider = new ClaudeProvider('test-key');
 
-      expect(provider.getModel()).toBe('claude-sonnet-4-20250514');
+      expect(provider.getModel()).toBe(provider.getDefaultModel());
     });
 
     test('getModel() should return default model', () => {
@@ -835,7 +851,7 @@ describe('ClaudeProvider', () => {
       });
 
       // getModel() returns the default, not instance model
-      expect(provider.getModel()).toBe('claude-sonnet-4-20250514');
+      expect(provider.getModel()).toBe(provider.getDefaultModel());
       expect(provider.model).toBe('custom-model');
     });
 

@@ -13,20 +13,7 @@ Comprehensive JavaScript performance optimization following web.dev best practic
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for JavaScript best practices:
-
-**Documentation Queries:**
-- `mcp://context7/web-dev/performance` - Web performance optimization
-- `mcp://context7/javascript/bundling` - Bundle optimization techniques
-- `mcp://context7/web-dev/critical-rendering-path` - Rendering optimization
-- `mcp://context7/javascript/web-workers` - Background processing
-- `mcp://context7/web-dev/resource-hints` - Resource loading optimization
-
-**Why This is Required:**
-- Ensures optimization follows web.dev best practices
-- Applies proven bundling and minification techniques
-- Validates resource loading strategies
-- Prevents common JavaScript performance pitfalls
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: javascript.
 
 ## Usage
 

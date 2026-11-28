@@ -63,12 +63,4 @@ Create new: /pm:prd-new {feature_name}
 
 ## Required Documentation Access
 
-**MANDATORY:** Before displaying PRD, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/agile/product-requirements` - PRD best practices
-- `mcp://context7/project-management/documentation` - documentation standards
-
-**Why This is Required:**
-- Ensures PRD format follows industry standards
-- Validates PRD completeness against best practices
+Query Context7 first: see `.claude/rules/context7-required.md`.

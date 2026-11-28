@@ -10,15 +10,7 @@ Deploys infrastructure to cloud providers using Terraform.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before deploying infrastructure, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/infrastructure/deployment` - deployment best practices
-- `mcp://context7/cloud/best-practices` - best practices best practices
-- `mcp://context7/devops/automation` - automation best practices
-- `mcp://context7/infrastructure/configuration` - configuration best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 
 **Example**: `/cloud:infra-deploy --provider=aws --env=staging --services=eks,rds,s3`

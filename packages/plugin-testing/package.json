@@ -31,7 +31,7 @@
   },
   "files": [
     "agents/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md"
   ],
   "peerDependencies": {

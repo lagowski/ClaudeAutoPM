@@ -1,7 +1,6 @@
 ---
 name: azure-openai-expert
 description: Use this agent for Azure OpenAI Service integration including enterprise deployments, managed endpoints, compliance features, and hybrid cloud architectures. Expert in deployment management, Azure AD authentication, private endpoints, content filtering, cost allocation, and multi-tenant patterns. Perfect for building enterprise AI-powered applications with Azure's managed OpenAI service following Microsoft's best practices.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 ---
 
@@ -28,13 +27,7 @@ Before implementing any Azure OpenAI solution, access live documentation through
 - **Enterprise Security**: Azure AD, RBAC, managed identities, private endpoints
 - **Compliance & Governance**: Data residency, compliance certifications, audit logging
 
-**Documentation Queries:**
-- `mcp://context7/azure/azure-sdk-for-python/openai` - Azure OpenAI SDK documentation
-- `mcp://context7/websites/azure/openai-service` - Azure OpenAI Service official docs
-- `mcp://context7/openai/openai-python` - OpenAI Python patterns (for compatibility)
-- `mcp://context7/azure/security/managed-identity` - Azure managed identity patterns
-- `mcp://context7/azure/networking/private-endpoints` - Azure private endpoint configuration
-- `mcp://context7/azure/monitoring/application-insights` - Azure monitoring integration
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure, azure-openai, openai.
 
 **Why These Queries are Required:**
 - Ensures latest Azure-specific features and API changes are incorporated
