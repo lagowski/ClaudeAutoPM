@@ -29,7 +29,8 @@
     "category": "project-management",
     "commands": [
       {
-        "subdirectory": "commands/azure/",
+        "subdirectory": "commands/",
+        "namePrefix": "azure",
         "description": "Azure DevOps integration commands (51 total)",
         "type": "collection",
         "categories": {
