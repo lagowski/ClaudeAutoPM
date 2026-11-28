@@ -7,8 +7,7 @@
     "packages/*"
   ],
   "bin": {
-    "autopm": "./bin/autopm.js",
-    "autopm-poc": "./bin/autopm-poc.js"
+    "autopm": "./bin/autopm.js"
   },
   "scripts": {
     "postinstall": "echo '\ud83c\udf89 ClaudeAutoPM installed! Run: autopm --help'",
@@ -17,6 +16,8 @@
     "sync:scripts": "node scripts/sync-plugin-scripts.js",
     "sync:scripts:check": "node scripts/sync-plugin-scripts.js --check",
     "test": "jest",
+    "posttest": "npm run test:extra",
+    "test:extra": "npm run test:security && npm run test:regression && npm run test:cli && npm run test:node && npm run test:azure",
     "test:quick": "jest --config jest.config.quick.js",
     "test:full": "jest --config jest.config.clean.js",
     "test:watch": "jest --watch",
@@ -46,9 +47,9 @@
     "test:install:scenarios": "node --test test/installation/install-scenarios.test.js",
     "test:install:validate": "node test/installation/validate-install.js",
     "test:install:behavior": "node test/installation/fresh-install-behavior.test.js",
-    "test:cli": "node --test test/cli/*.test.js",
-    "test:cli:basic": "node test/cli/autopm-commands.test.js",
-    "test:all": "npm test && npm run test:security && npm run test:regression",
+    "test:cli": "node --test test/cli/basic-commands.test.js test/cli/config-command.test.js test/cli/mcp-command.test.js && jest --testMatch '**/test/cli/{epic-commands,team-command}.test.js'",
+    "test:cli:basic": "node --test test/cli/basic-commands.test.js",
+    "test:all": "npm test",
     "test:comprehensive": "node test/run-all-tests.js",
     "test:comprehensive:quick": "TEST_TIMEOUT=30000 node test/run-all-tests.js",
     "test:comprehensive:ci": "CI=true CI_TEST_TIMEOUT=600000 node test/run-all-tests.js",
@@ -60,7 +61,6 @@
     "test:azure:quick": "node test/integration/test-azure-manual.js",
     "test:unit": "node --test $(find test/unit -name '*.test.js' ! -name '*-jest.test.js')",
     "test:unit:coverage": "c8 node --test $(find test/unit -name '*.test.js' ! -name '*-jest.test.js')",
-    "test:poc": "jest --config jest.config.poc.js",
     "lint": "npm run lint:md && npm run lint:js",
     "lint:md": "markdownlint *.md .claude/**/*.md install/*.md",
     "lint:js": "eslint bin lib scripts test",
@@ -126,16 +126,13 @@
   ],
   "dependencies": {
     "@anthropic-ai/sdk": "^1.3.0",
-    "@modelcontextprotocol/sdk": "^1.29.0",
     "@octokit/rest": "^22.0.0",
     "azure-devops-node-api": "^17.0.0",
     "chalk": "4.1.2",
     "dotenv": "^18.0.2",
-    "fs-extra": "^11.3.2",
     "glob": "^14.0.3",
     "inquirer": "^14.0.2",
     "js-yaml": "^4.1.0",
-    "markdown-it": "^15.0.0",
     "ora": "~5.4.1",
     "yaml": "^2.8.1",
     "yargs": "^18.0.0"
@@ -144,18 +141,17 @@
     "@eslint/js": "^9.39.4",
     "@jest/globals": "^30.1.2",
     "@types/jest": "^30.0.0",
-    "axios": "^1.12.2",
     "c8": "^12.0.0",
     "eslint": "^10.6.0",
+    "fs-extra": "^11.4.1",
     "globals": "^17.6.0",
     "jest": "^30.1.3",
     "jest-diff": "^30.1.2",
     "jest-extended": "^7.0.0",
     "jest-html-reporter": "^4.3.0",
     "jest-junit": "^17.0.0",
-    "jest-watch-typeahead": "^3.0.1",
+    "markdown-it": "^15.0.3",
     "markdownlint-cli": "^0.50.0",
-    "nock": "^15.0.1",
     "prettier": "^3.0.0"
   },
   "optionalDependencies": {

@@ -70,6 +70,15 @@ describe('pm engines in a real `autopm install --scenario=minimal` (#899)', () =
     expect(data.status.completed).toBe(1);
   });
 
+  test('installed filter-engine reads frontmatter through the shipped shared parser (#867)', () => {
+    const script =
+      "const F = require('./.claude/lib/pm-engines/filter-engine');" +
+      "process.stdout.write(JSON.stringify(new F().parseFrontmatter('---\\r\\nid: 7\\r\\ntitle: \"A: B\"\\r\\n---\\r\\nbody')))";
+    const res = run(proj, ['-e', script]);
+    expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module/);
+    expect(JSON.parse(res.stdout)).toEqual({ frontmatter: { id: 7, title: 'A: B' }, content: 'body' });
+  });
+
   test('sync-batch.js exits naming the npm packages to install, not MODULE_NOT_FOUND', () => {
     const res = run(proj, ['.claude/scripts/pm/sync-batch.js', '--dry-run'], { GITHUB_TOKEN: 'dummy' });
     expect(res.stderr).not.toMatch(/MODULE_NOT_FOUND|Cannot find module/);

@@ -50,14 +50,17 @@ const PM_ENGINES = [
   'batch-processor.js',
   'burndown-chart.js',
   'dependency-analyzer.js',
-  'filter-engine.js'
+  'filter-engine.js',
+  'utils/frontmatter.js' // required by filter-engine.js (#867)
 ];
 
 /** Rewrite a lib/ engine for <proj>/.claude/lib/pm-engines/. */
 function engineTransform(content, rel) {
+  // <proj>/.claude/scripts, seen from the engine's own directory under pm-engines/
+  const scripts = `${'../'.repeat(rel.split('/').length + 1)}scripts`;
   const rewritten = content
-    .replace("require('../.claude/scripts/pm-sync-upload-local')", "require('../../scripts/pm-sync-upload-local')")
-    .replace("require('yaml')", "require('../../scripts/pm/lib/yaml-parse')");
+    .replace("require('../.claude/scripts/pm-sync-upload-local')", `require('${scripts}/pm-sync-upload-local')`)
+    .replace("require('yaml')", `require('${scripts}/pm/lib/yaml-parse')`);
   return Buffer.from(
     `// GENERATED from lib/${rel} by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.\n` +
       rewritten
