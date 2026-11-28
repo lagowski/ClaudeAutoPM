@@ -171,6 +171,13 @@ This is the body content.
 
       assert.strictEqual(body, '# Content\n\nJust content.');
     });
+
+    it('should keep horizontal rules in the body (#858)', () => {
+      const testFile = path.join(tempDir, 'hr.md');
+      fs.writeFileSync(testFile, '---\nname: x\n---\nAbove\n\n---\n\nBelow');
+
+      assert.strictEqual(stripFrontmatter(testFile), 'Above\n\n---\n\nBelow');
+    });
   });
 
   describe('gatherUpdates', () => {

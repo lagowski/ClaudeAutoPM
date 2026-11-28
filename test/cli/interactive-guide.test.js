@@ -5,12 +5,19 @@
 
 const { execSync } = require('child_process');
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 
 describe('Interactive Guide', () => {
   const autopmPath = path.join(__dirname, '../../bin/autopm.js');
+  // guide config/install/faq write docs/*.md into the cwd: run the CLI in a
+  // scratch dir so the suite never writes into the repo (#858)
+  let workDir;
+  beforeAll(() => { workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'guide-test-')); });
+  afterAll(() => { fs.rmSync(workDir, { recursive: true, force: true }); });
 
   test('should show help for guide command', () => {
-    const result = execSync(`node ${autopmPath} guide --help`, { encoding: 'utf8' });
+    const result = execSync(`node ${autopmPath} guide --help`, { encoding: 'utf8', cwd: workDir });
 
     expect(result).toContain('Interactive setup guide');
     expect(result).toContain('guide');
@@ -21,7 +28,7 @@ describe('Interactive Guide', () => {
 
   test('should show deprecation notice for interactive guide', () => {
     // Interactive guide has been replaced with enhanced help
-    const result = execSync(`node ${autopmPath} guide`, { encoding: 'utf8' });
+    const result = execSync(`node ${autopmPath} guide`, { encoding: 'utf8', cwd: workDir });
 
     expect(result).toContain('The interactive guide has been replaced');
     expect(result).toContain('autopm --help');
@@ -31,7 +38,7 @@ describe('Interactive Guide', () => {
   });
 
   test('should generate legacy documentation when specific action provided', () => {
-    const result = execSync(`node ${autopmPath} guide config`, { encoding: 'utf8' });
+    const result = execSync(`node ${autopmPath} guide config`, { encoding: 'utf8', cwd: workDir });
 
     expect(result).toContain('ClaudeAutoPM Documentation Generator');
     expect(result).toContain('Generating Configuration Guide');
@@ -39,7 +46,7 @@ describe('Interactive Guide', () => {
   });
 
   test('should handle install guide generation', () => {
-    const result = execSync(`node ${autopmPath} guide install --platform docker`, { encoding: 'utf8' });
+    const result = execSync(`node ${autopmPath} guide install --platform docker`, { encoding: 'utf8', cwd: workDir });
 
     expect(result).toContain('ClaudeAutoPM Documentation Generator');
     expect(result).toContain('Generating Installation Guide for docker');
@@ -48,7 +55,7 @@ describe('Interactive Guide', () => {
   });
 
   test('should handle FAQ generation', () => {
-    const result = execSync(`node ${autopmPath} guide faq`, { encoding: 'utf8' });
+    const result = execSync(`node ${autopmPath} guide faq`, { encoding: 'utf8', cwd: workDir });
 
     expect(result).toContain('ClaudeAutoPM Documentation Generator');
     expect(result).toContain('Generating FAQ Document');
@@ -57,7 +64,7 @@ describe('Interactive Guide', () => {
 
   test('should show deprecation notice even with input', () => {
     // Interactive guide has been deprecated, should show deprecation message
-    const result = execSync(`printf "1\\n\\n" | node ${autopmPath} guide`, { encoding: 'utf8' });
+    const result = execSync(`printf "1\\n\\n" | node ${autopmPath} guide`, { encoding: 'utf8', cwd: workDir });
 
     expect(result).toContain('The interactive guide has been replaced');
     expect(result).toContain('autopm --help');
