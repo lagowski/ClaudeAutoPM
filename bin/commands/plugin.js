@@ -63,7 +63,7 @@ Installation:
 
 Usage:
   After installation, use 'autopm team load' to include plugin agents
-  or manually add @include directives to CLAUDE.md
+  or reference agent files from CLAUDE.md (e.g. @.claude/agents/<category>/<agent>.md)
       `);
   },
 
@@ -298,7 +298,7 @@ async function handleInstall(manager, pluginName, argv) {
   console.log(chalk.bold('Next steps:'));
   console.log(`  1. Load agents: ${chalk.cyan('autopm team load <team>')}`);
   console.log(`  2. Or manually add to CLAUDE.md:`);
-  console.log(`     ${chalk.gray(`- @include .claude/agents/${result.category}/<agent>.md`)}`);
+  console.log(`     ${chalk.gray(`@.claude/agents/${result.category}/<agent>.md`)}`);
   console.log('');
 }
 

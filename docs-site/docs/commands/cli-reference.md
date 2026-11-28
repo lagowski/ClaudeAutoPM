@@ -34,16 +34,17 @@ the CLI's own help is authoritative.
 | `autopm agent <action>` | List, search and invoke agents |
 | `autopm context <action>` | Manage project context files |
 | `autopm obsidian <action>` | Obsidian vault integration |
-| `autopm guide [action]` | Setup guide (deprecated; use `--help`) |
 
 ### Global options
 
 | Option | Effect |
 |--------|--------|
-| `--help`, `-h` | Show help (for a command: `autopm <command> --help`) |
+| `--help` | Show help (for a command: `autopm <command> --help`) |
 | `--version`, `-v` | Print the installed version |
 | `--verbose` | Verbose logging |
 | `--debug` | Debug output |
+
+The short form `-h` works only at the top level and for: `install`, `update`, `team`, `config`, `mcp`, `plugin`, `validate`.
 
 ## Framework
 

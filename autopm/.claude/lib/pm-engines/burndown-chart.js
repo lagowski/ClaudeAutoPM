@@ -1,3 +1,4 @@
+// GENERATED from lib/burndown-chart.js by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.
 /**
  * BurndownChart - ASCII burndown chart generator
  *

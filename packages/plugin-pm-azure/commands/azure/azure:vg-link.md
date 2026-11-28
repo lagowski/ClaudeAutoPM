@@ -46,7 +46,7 @@ Confirm: **$CONFIRM**
 Follow the complete workflow:
 1. Validate both variable group and pipeline exist
 2. Check if already linked (idempotent operation)
-3. Link using AzureDevOpsResourcesProvider.linkVariableGroupToPipeline()
+3. Link via the pipeline's `variablegroups` REST endpoint (`az pipelines variable-group` has no link subcommand)
 4. Display success with confirmation
 5. Show all pipelines now using this variable group")
 ```
@@ -85,18 +85,9 @@ if (alreadyLinked) {
 
 #### 2. Link Variable Group to Pipeline
 
-Use `AzureDevOpsResourcesProvider.linkVariableGroupToPipeline()`:
-
-```javascript
-const provider = new AzureDevOpsResourcesProvider({
-  token: process.env.AZURE_DEVOPS_PAT,
-  organization: process.env.AZURE_DEVOPS_ORG,
-  project: process.env.AZURE_DEVOPS_PROJECT
-});
-
-// REST API is REQUIRED for this operation!
-await provider.linkVariableGroupToPipeline(variableGroupId, pipelineId);
-```
+Check the group exists with `az pipelines variable-group show --group-id <id>`, then link it.
+`az pipelines variable-group` has no link subcommand, so the REST API is REQUIRED for this operation
+(call it with `curl` using the PAT, or `az devops invoke`).
 
 **REST API Call:**
 ```http

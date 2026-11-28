@@ -1,3 +1,4 @@
+// GENERATED from lib/dependency-analyzer.js by scripts/sync-plugin-scripts.js (npm run sync:scripts). Do not edit.
 /**
  * DependencyAnalyzer - Dependency graph analysis and bottleneck detection
  *
