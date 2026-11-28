@@ -22,11 +22,11 @@
 
 const EpicService = require('../../../lib/services/EpicService');
 const GitHubProvider = require('../../../lib/providers/GitHubProvider');
-const fs = require('fs-extra');
+const fs = require('../../../lib/utils/fs');
 const path = require('path');
 
 // Mock dependencies
-jest.mock('fs-extra');
+jest.mock('../../../lib/utils/fs');
 jest.mock('../../../lib/providers/GitHubProvider');
 
 describe('EpicService - GitHub Epic Synchronization', () => {

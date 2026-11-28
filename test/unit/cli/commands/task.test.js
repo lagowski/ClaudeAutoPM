@@ -9,12 +9,12 @@
 
 const taskCommands = require('../../../../lib/cli/commands/task');
 const TaskService = require('../../../../lib/services/TaskService');
-const fs = require('fs-extra');
+const fs = require('../../../../lib/utils/fs');
 const ora = require('ora');
 
 // Mock dependencies
 jest.mock('../../../../lib/services/TaskService');
-jest.mock('fs-extra');
+jest.mock('../../../../lib/utils/fs');
 jest.mock('ora');
 
 describe('Task Commands', () => {
