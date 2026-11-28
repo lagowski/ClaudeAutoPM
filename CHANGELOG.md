@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Removed
+- The `autopm-poc` bin (#854) and the code only it used: `lib/utils/ServiceFactory.js`, `lib/config/ConfigManager.js` (the `~/.autopm/config.json` store), `lib/utils/Encryption.js`, `scripts/config/*`, `jest.config.poc.js` and the `test:poc` script, with their tests. Use `autopm`.
 - Dead code nobody could run (#855): `bin/commands/epic.js` (shadowed by `lib/cli/commands/epic.js`), `lib/cli/commands/config.js` (never registered; required ESM-only `inquirer` and offered retired models), `lib/ai-providers/base-provider.js` and `lib/ai-providers/TemplateProvider.js`, with their tests.
 
 ### Fixed

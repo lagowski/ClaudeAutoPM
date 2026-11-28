@@ -7,8 +7,7 @@
     "packages/*"
   ],
   "bin": {
-    "autopm": "./bin/autopm.js",
-    "autopm-poc": "./bin/autopm-poc.js"
+    "autopm": "./bin/autopm.js"
   },
   "scripts": {
     "postinstall": "echo '\ud83c\udf89 ClaudeAutoPM installed! Run: autopm --help'",
@@ -62,7 +61,6 @@
     "test:azure:quick": "node test/integration/test-azure-manual.js",
     "test:unit": "node --test $(find test/unit -name '*.test.js' ! -name '*-jest.test.js')",
     "test:unit:coverage": "c8 node --test $(find test/unit -name '*.test.js' ! -name '*-jest.test.js')",
-    "test:poc": "jest --config jest.config.poc.js",
     "lint": "npm run lint:md && npm run lint:js",
     "lint:md": "markdownlint *.md .claude/**/*.md install/*.md",
     "lint:js": "eslint bin lib scripts test",
