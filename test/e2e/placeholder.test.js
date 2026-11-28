@@ -3,7 +3,6 @@
  * Real E2E tests disabled due to readline hanging issues
  */
 
-const { describe, it } = require('node:test');
 const assert = require('node:assert');
 
 describe('E2E Tests Placeholder', () => {

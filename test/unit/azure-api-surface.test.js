@@ -16,18 +16,9 @@
  * handle, and checks them against the installed library's prototypes. It
  * discovers calls rather than restating a hand-written list, so a new bad call
  * is caught without anyone remembering to update this file.
- *
- * Runs under both jest (npm test) and node --test (npm run test:unit).
  */
 
 'use strict';
-
-if (typeof describe === 'undefined') {
-  // Running under node --test: provide jest-like globals.
-  const nodeTest = require('node:test');
-  globalThis.describe = nodeTest.describe;
-  globalThis.test = nodeTest.test;
-}
 
 const assert = require('node:assert');
 const fs = require('node:fs');

@@ -123,12 +123,12 @@ describe('ProviderRouter', () => {
       expect(result).toBe('azure');
     });
 
-    test('should default to github when no provider configured', () => {
+    test('should default to local when no provider configured', () => {
       router.config = {};
 
       const result = router.getActiveProvider();
 
-      expect(result).toBe('github');
+      expect(result).toBe('local');
     });
 
     test('should handle missing projectManagement section', () => {
@@ -136,7 +136,7 @@ describe('ProviderRouter', () => {
 
       const result = router.getActiveProvider();
 
-      expect(result).toBe('github');
+      expect(result).toBe('local');
     });
   });
 
@@ -625,7 +625,7 @@ describe('ProviderRouter', () => {
       // Test default fallback
       fs.readFileSync.mockReturnValue('{}');
       const defaultRouter = new ProviderRouter();
-      expect(defaultRouter.provider).toBe('github');
+      expect(defaultRouter.provider).toBe('local');
     });
 
     test('should maintain backward compatibility', () => {

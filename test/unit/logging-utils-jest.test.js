@@ -2,8 +2,7 @@
  * Tests for autopm/.claude/scripts/lib/logging-utils.sh (#608)
  *
  * Follows the frontmatter-utils.test.js pattern: source the library in bash
- * and assert on exit codes/output. Named with the -jest suffix so the
- * node:test runner (`npm run test:unit`) skips it.
+ * and assert on exit codes/output. Jest suite; the -jest suffix is historical.
  */
 
 const path = require('path');

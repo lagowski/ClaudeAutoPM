@@ -6,7 +6,7 @@
  * test that the module exports correctly.
  */
 
-const interfaces = require('../../lib/services/interfaces');
+const interfaces = require('../../../lib/services/interfaces');
 
 describe('Service Interfaces Module', () => {
   describe('Module Exports', () => {

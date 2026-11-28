@@ -5,9 +5,7 @@
  * Handles the limitation that gh issue create doesn't support --json flag
  */
 
-const { describe, it, beforeEach, afterEach, mock } = require('node:test');
 const assert = require('node:assert');
-const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
 const os = require('os');
@@ -136,7 +134,7 @@ describe('GitHub Issue Creation Helper', () => {
         assignee: '@me'
       };
 
-      const result = await ghIssueCreate.createIssue(options);
+      await ghIssueCreate.createIssue(options);
 
       const createCall = execSyncCalls.find(c => c.command.includes('gh issue create'));
       assert.ok(createCall.command.includes('--assignee "@me"'));

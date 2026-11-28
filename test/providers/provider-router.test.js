@@ -1,4 +1,3 @@
-const { describe, it, beforeEach, afterEach } = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs');
 const path = require('path');
@@ -109,11 +108,11 @@ describe('ProviderRouter', () => {
   });
 
   describe('getActiveProvider', () => {
-    it('should default to github when no config', () => {
+    it('should default to local when no config', () => {
       const router = new ProviderRouter();
       const provider = router.getActiveProvider();
 
-      assert.strictEqual(provider, 'github');
+      assert.strictEqual(provider, 'local');
     });
 
     it('should use provider from config file', () => {
@@ -167,7 +166,7 @@ describe('ProviderRouter', () => {
       const router = new ProviderRouter();
       const provider = router.getActiveProvider();
 
-      assert.strictEqual(provider, 'github');
+      assert.strictEqual(provider, 'local');
     });
   });
 

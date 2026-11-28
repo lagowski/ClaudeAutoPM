@@ -31,18 +31,9 @@
  *
  * To fix a failure: update the peer range in the named package.json to match
  * plugin-core's current major, then regenerate package-lock.json.
- *
- * Runs under both jest (npm test) and node --test (npm run test:unit).
  */
 
 'use strict';
-
-if (typeof describe === 'undefined') {
-  // Running under node --test: provide jest-like globals.
-  const nodeTest = require('node:test');
-  globalThis.describe = nodeTest.describe;
-  globalThis.test = nodeTest.test;
-}
 
 const assert = require('node:assert');
 const fs = require('node:fs');

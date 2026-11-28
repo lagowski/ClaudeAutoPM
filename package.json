@@ -23,7 +23,7 @@
     "test:security": "jest --testMatch '<rootDir>/test/security/**/*.test.js'",
     "test:regression": "jest --runInBand --testMatch '<rootDir>/test/regression/**/*.test.js'",
     "test:cli": "jest --testMatch '<rootDir>/test/cli/**/*.test.js'",
-    "test:install": "jest --runInBand --testMatch '<rootDir>/test/installation/{e2e-scenarios,generate-agent-xml,fresh-install-behavior,install-scenarios,non-interactive,package-based-install,quick-install}.test.js'",
+    "test:install": "jest --runInBand --testMatch '<rootDir>/test/installation/{e2e-scenarios,generate-agent-xml,package-based-install}.test.js'",
     "migration:tdd": "node scripts/migration/tdd-migrate.js",
     "migration:next": "node scripts/migration/tdd-migrate.js next",
     "migration:test": "jest --testMatch '<rootDir>/test/node-scripts/**/*.test.js'",

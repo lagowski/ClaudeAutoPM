@@ -22,18 +22,9 @@
  * To fix a failure: correct the ecosystem/update-type comparisons in the
  * workflow's `Decide auto-merge (grouped-aware)` step. Do NOT relax this test —
  * the strings come from fetch-metadata and are not ours to choose.
- *
- * Runs under both jest (npm test) and node --test (npm run test:unit).
  */
 
 'use strict';
-
-if (typeof describe === 'undefined') {
-  // Running under node --test: provide jest-like globals.
-  const nodeTest = require('node:test');
-  globalThis.describe = nodeTest.describe;
-  globalThis.test = nodeTest.test;
-}
 
 const assert = require('node:assert');
 const fs = require('node:fs');

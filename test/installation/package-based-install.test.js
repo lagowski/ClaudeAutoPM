@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const { describe, it, beforeEach, afterEach } = require('node:test');
 const assert = require('assert');
 const fs = require('fs').promises;
 const path = require('path');

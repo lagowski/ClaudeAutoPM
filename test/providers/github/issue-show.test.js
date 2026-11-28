@@ -1,4 +1,3 @@
-const { describe, it, beforeEach, afterEach } = require('node:test');
 const assert = require('node:assert');
 
 const {
@@ -17,8 +16,9 @@ describe('GitHub Issue Show Provider', () => {
     // Save original environment
     originalEnv = { ...process.env };
 
-    // Ensure mock mode is enabled for tests
-    process.env.AUTOPM_USE_REAL_API = 'false';
+    // Ensure mock mode is enabled for tests (issue-show uses the mock
+    // implementation only when AUTOPM_USE_REAL_API is unset)
+    delete process.env.AUTOPM_USE_REAL_API;
   });
 
   afterEach(() => {

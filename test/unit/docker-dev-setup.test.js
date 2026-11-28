@@ -3,7 +3,7 @@ jest.mock('fs');
 jest.mock('child_process');
 
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const DockerDevSetup = require('../../autopm/.claude/scripts/docker-dev-setup.js');
 
 describe('DockerDevSetup', () => {
@@ -18,8 +18,8 @@ describe('DockerDevSetup', () => {
     fs.existsSync.mockReturnValue(false);
     fs.writeFileSync.mockImplementation(() => {});
 
-    // Mock execSync
-    execSync.mockReturnValue('');
+    // Mock execFileSync
+    execFileSync.mockReturnValue('');
   });
 
   describe('Constructor', () => {
@@ -175,18 +175,18 @@ describe('DockerDevSetup', () => {
 
   describe('checkDocker()', () => {
     it('should return true when Docker is available', () => {
-      execSync.mockReturnValue('Docker version 20.10.0');
+      execFileSync.mockReturnValue('Docker version 20.10.0');
 
       const setup = new DockerDevSetup();
       jest.spyOn(setup, 'print');
       const result = setup.checkDocker();
 
       expect(result).toBe(true);
-      expect(execSync).toHaveBeenCalledWith('docker version', { stdio: 'ignore' });
+      expect(execFileSync).toHaveBeenCalledWith('docker', ['version'], { stdio: 'ignore' });
     });
 
     it('should return false when Docker is not available', () => {
-      execSync.mockImplementation(() => {
+      execFileSync.mockImplementation(() => {
         throw new Error('Docker not found');
       });
 
@@ -298,7 +298,7 @@ describe('DockerDevSetup', () => {
   describe('run()', () => {
     beforeEach(() => {
       // Setup successful Docker check by default
-      execSync.mockReturnValue('Docker version 20.10.0');
+      execFileSync.mockReturnValue('Docker version 20.10.0');
       fs.existsSync.mockReturnValue(false);
     });
 
@@ -357,7 +357,7 @@ describe('DockerDevSetup', () => {
     });
 
     it('should exit when Docker is not available', async () => {
-      execSync.mockImplementation(() => {
+      execFileSync.mockImplementation(() => {
         throw new Error('Docker not found');
       });
 
@@ -478,7 +478,7 @@ describe('DockerDevSetup', () => {
 
     it('should handle realistic Node.js project setup', async () => {
       fs.existsSync.mockImplementation(file => file === 'package.json');
-      execSync.mockReturnValue('Docker version 20.10.0');
+      execFileSync.mockReturnValue('Docker version 20.10.0');
 
       const setup = new DockerDevSetup();
       jest.spyOn(setup, 'print');
@@ -494,7 +494,7 @@ describe('DockerDevSetup', () => {
       fs.existsSync.mockImplementation(file =>
         file === 'requirements.txt' || file === 'Dockerfile'
       );
-      execSync.mockReturnValue('Docker version 20.10.0');
+      execFileSync.mockReturnValue('Docker version 20.10.0');
 
       const setup = new DockerDevSetup();
       jest.spyOn(setup, 'print');

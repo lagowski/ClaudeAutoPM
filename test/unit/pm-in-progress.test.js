@@ -184,9 +184,11 @@ description: Epic in progress`;
 
       expect(result.activeEpics).toHaveLength(1);
       expect(result.activeEpics[0]).toEqual({
+        epicName: 'epic1',
         name: 'Active Epic',
         status: 'in-progress',
-        progress: '75%'
+        progress: '75%',
+        updated: '—'
       });
     });
 
@@ -217,9 +219,11 @@ description: Active epic`;
 
       expect(result.activeEpics).toHaveLength(1);
       expect(result.activeEpics[0]).toEqual({
+        epicName: 'epic1',
         name: 'Active Epic',
         status: 'active',
-        progress: '0%'
+        progress: '0%',
+        updated: '—'
       });
     });
 
@@ -534,9 +538,11 @@ status: in-progress`;
       });
 
       expect(result.activeEpics[0]).toEqual({
+        epicName: 'feature-auth',
         name: 'Authentication Feature',
         status: 'in-progress',
-        progress: '55%'
+        progress: '55%',
+        updated: '—'
       });
     });
 
