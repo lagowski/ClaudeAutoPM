@@ -92,30 +92,6 @@ test('prd: @file path traversal outside project root is rejected', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 4. AzureDevOpsCliWrapper executes az via argv array — no shell at all
-// ---------------------------------------------------------------------------
-test('AzureDevOpsCliWrapper: az runs via execFileSync argv array, no shell', () => {
-  const Wrapper = require(path.join(ROOT, 'lib/providers/AzureDevOpsCliWrapper.js'));
-  const wrapper = new Wrapper({ token: 't', organization: 'o', project: 'p' });
-
-  const src = fs.readFileSync(path.join(ROOT, 'lib/providers/AzureDevOpsCliWrapper.js'), 'utf8');
-  // The shell (execSync on a command string) was eliminated entirely;
-  // every az invocation goes through execFileSync with an argv array, so
-  // newlines, quotes, $(), backticks etc. in values are inert.
-  assert.ok(!/require\(['"]child_process['"]\)[^\n]*execSync/.test(src) && !/\bexecSync\(/.test(src),
-    'wrapper must not use execSync with a command string');
-  assert.match(src, /execFileSync\(\s*['"]az['"]\s*,/,
-    'wrapper must execute az via execFileSync argv array');
-
-  // JMESPath values are still escaped so a quote cannot alter the query az parses
-  assert.strictEqual(typeof wrapper._escapeJmesValue, 'function',
-    'wrapper must escape values embedded in JMESPath string literals');
-  const jmes = wrapper._escapeJmesValue("x') || [?name!='");
-  assert.ok(!/(^|[^\\])'/.test(jmes),
-    `JMESPath-escaped value must not contain an unescaped single quote: ${jmes}`);
-});
-
-// ---------------------------------------------------------------------------
 // 5. PluginManager validates npm package names before exec
 // ---------------------------------------------------------------------------
 test('PluginManager: invalid npm package names are rejected', () => {

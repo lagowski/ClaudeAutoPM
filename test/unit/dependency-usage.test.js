@@ -8,8 +8,8 @@
  *
  * `simple-git` was exactly that: declared since the early days, imported
  * nowhere, and still bumped by Dependabot. The repo does git by shelling out
- * (`execSync('git …')` in lib/services/ContextService.js and
- * lib/guide/interactive-guide.js), never through a library. PR #785 (v3 → v4,
+ * (`execSync('git …')` in lib/services/ContextService.js),
+ * never through a library. PR #785 (v3 → v4,
  * a major with breaking export changes) drew a review warning that call sites
  * needed migrating; there were no call sites to migrate. This guard is what
  * would have said so.
