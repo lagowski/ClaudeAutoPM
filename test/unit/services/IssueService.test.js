@@ -13,11 +13,11 @@
  */
 
 const IssueService = require('../../../lib/services/IssueService');
-const fs = require('fs-extra');
+const fs = require('../../../lib/utils/fs');
 const path = require('path');
 
-// Mock fs-extra for isolated testing
-jest.mock('fs-extra');
+// Mock lib/utils/fs for isolated testing
+jest.mock('../../../lib/utils/fs');
 
 describe('IssueService', () => {
   let service;
