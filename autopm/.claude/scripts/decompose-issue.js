@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const yaml = require('js-yaml');
+const yaml = require('./pm/lib/yaml-parse');
 
 class IssueDecomposer {
   constructor(projectPath = process.cwd()) {
@@ -317,7 +317,7 @@ Update stream status in the stream file header when state changes.
   loadTemplate(filename) {
     const filepath = path.join(this.templatesPath, filename);
     const content = fs.readFileSync(filepath, 'utf8');
-    return yaml.load(content);
+    return yaml.parse(content);
   }
 
   /**

@@ -2,7 +2,9 @@
  * Shipped scripts load `yaml`, else `js-yaml`, else the built-in parser in
  * plugin-pm/scripts/pm/lib/yaml-parse.js; none requires `js-yaml` outright
  * (#867, #945). Each case runs in a child node with both modules stubbed to
- * throw MODULE_NOT_FOUND, as in a project that installed neither.
+ * throw MODULE_NOT_FOUND, as in a project that installed neither. The
+ * plugin-pm sources are ESM-scoped (package "type": "module"), so the
+ * synced CommonJS copies under autopm/.claude/scripts/pm (what ships) run.
  */
 const { spawnSync } = require('child_process');
 const fs = require('fs');
@@ -10,8 +12,8 @@ const os = require('os');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..', '..');
-const YAML_PARSE = path.join(ROOT, 'packages/plugin-pm/scripts/pm/lib/yaml-parse.js');
-const EPIC_SPLIT = path.join(ROOT, 'packages/plugin-pm/scripts/pm/epic-split.js');
+const YAML_PARSE = path.join(ROOT, 'autopm/.claude/scripts/pm/lib/yaml-parse.js');
+const EPIC_SPLIT = path.join(ROOT, 'autopm/.claude/scripts/pm/epic-split.js');
 const STREAMS = path.join(ROOT, 'autopm/.claude/scripts/start-parallel-streams.js');
 const DECOMPOSE = path.join(ROOT, 'autopm/.claude/scripts/decompose-issue.js');
 const TEMPLATES = path.join(ROOT, 'autopm/.claude/templates/issue-decomposition');
