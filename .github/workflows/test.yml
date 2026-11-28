@@ -37,6 +37,23 @@ jobs:
     - name: Check test coverage
       run: npm run test:coverage
 
+    # node:test suites outside the Jest allowlist: suites that never run rot
+    # silently (#858)
+    - name: Run security tests
+      run: npm run test:security
+
+    - name: Run regression tests
+      run: npm run test:regression
+
+    - name: Run CLI tests
+      run: npm run test:cli
+
+    - name: Run node-scripts tests
+      run: npm run test:node
+
+    - name: Run Azure provider tests
+      run: npm run test:azure
+
   # Summary job that branch protection can depend on
   test:
     name: test
