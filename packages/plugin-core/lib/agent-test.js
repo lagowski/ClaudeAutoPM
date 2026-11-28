@@ -494,16 +494,16 @@ function verifyRegistryConsistency(agentName, options = {}) {
 
   try {
     // Try to load plugin registry
-    const pluginJsonPath = path.join(__dirname, '../plugin.json');
+    const pluginJsonPath = path.join(__dirname, '../.claude-plugin/plugin.json');
     if (!fs.existsSync(pluginJsonPath)) {
-      result.errors.push('plugin.json not found');
+      result.errors.push('.claude-plugin/plugin.json not found');
       return result;
     }
 
     const pluginJson = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf8'));
 
-    // Check if agent in registry
-    const agentEntry = pluginJson.agents?.find(a => a.name === agentName);
+    // Check if agent in registry (homemade keys live under `metadata`, #903)
+    const agentEntry = pluginJson.metadata?.agents?.find(a => a.name === agentName);
 
     if (!agentEntry) {
       result.errors.push('Agent not found in registry');

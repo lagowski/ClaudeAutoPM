@@ -1,0 +1,102 @@
+{
+  "name": "azure",
+  "version": "3.0.0",
+  "description": "Azure DevOps integration plugin with work items, sprints, features, user stories, tasks, and variable groups management",
+  "author": {
+    "name": "ClaudeAutoPM Team"
+  },
+  "repository": "https://github.com/lagowski/ClaudeAutoPM",
+  "license": "MIT",
+  "keywords": [
+    "claudeautopm",
+    "azure-devops",
+    "work-items",
+    "sprints",
+    "agile",
+    "project-management",
+    "integration",
+    "variable-groups",
+    "pipelines"
+  ],
+  "dependencies": [
+    "core",
+    "pm"
+  ],
+  "metadata": {
+    "packageName": "@claudeautopm/plugin-pm-azure",
+    "schemaVersion": "2.0",
+    "displayName": "Azure DevOps Integration",
+    "category": "project-management",
+    "commands": [
+      {
+        "subdirectory": "commands/azure/",
+        "description": "Azure DevOps integration commands (51 total)",
+        "type": "collection",
+        "categories": {
+          "azure": "Azure DevOps work item and resource management"
+        },
+        "discovery": "auto",
+        "tags": [
+          "azure",
+          "devops",
+          "work-items",
+          "sprints",
+          "features",
+          "user-stories",
+          "tasks",
+          "variable-groups",
+          "pipelines"
+        ]
+      }
+    ],
+    "features": {
+      "azure_devops_integration": {
+        "enabled": true,
+        "description": "Full Azure DevOps work item management"
+      },
+      "sprint_management": {
+        "enabled": true,
+        "description": "Sprint planning and tracking"
+      },
+      "feature_decomposition": {
+        "enabled": true,
+        "description": "Feature breakdown into user stories and tasks"
+      },
+      "work_item_sync": {
+        "enabled": true,
+        "description": "Bidirectional sync with Azure DevOps"
+      },
+      "variable_groups": {
+        "enabled": true,
+        "description": "Variable groups management with pipeline linking"
+      },
+      "pipeline_management": {
+        "enabled": true,
+        "description": "Pipeline configuration and variable group linking"
+      },
+      "service_connections": {
+        "enabled": true,
+        "description": "Service connections management"
+      },
+      "resource_management": {
+        "enabled": true,
+        "description": "Azure DevOps resources management"
+      }
+    },
+    "compatibleWith": ">=3.0.0",
+    "categoryLabel": "Project Management",
+    "size": "~15 KB (gzipped)",
+    "required": false,
+    "tags": [
+      "azure-devops",
+      "work-items",
+      "sprints",
+      "agile",
+      "integration",
+      "variable-groups",
+      "pipelines",
+      "service-connections",
+      "resources"
+    ]
+  }
+}

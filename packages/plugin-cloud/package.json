@@ -2,14 +2,14 @@
   "name": "@claudeautopm/plugin-cloud",
   "version": "4.0.1",
   "description": "Complete cloud infrastructure plugin with agents for AWS, Azure, GCP, Kubernetes, Terraform, and infrastructure automation for ClaudeAutoPM",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "files": [
     "agents/",
     "commands/",
     "rules/",
     "scripts/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],
@@ -17,7 +17,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'"
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'"
   },
   "devDependencies": {
     "jest": "^30.4.2"

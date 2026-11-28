@@ -2,7 +2,7 @@
   "name": "@claudeautopm/plugin-data",
   "version": "4.0.1",
   "description": "Complete data engineering plugin with Airflow, Kedro, LangGraph, Kafka, dbt, pandas experts, data quality rules, and example scripts for ClaudeAutoPM",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "keywords": [
     "claudeautopm",
@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'",
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'",
     "lint:python": "find scripts/examples -name '*.py' -exec python3 -m py_compile {} \\;",
     "lint:sql": "echo 'SQL linting not configured'",
     "lint:all": "npm run lint:python && npm run lint:sql"
@@ -56,7 +56,7 @@
     "commands/",
     "rules/",
     "scripts/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],

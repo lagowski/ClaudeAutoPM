@@ -2,7 +2,7 @@
   "name": "@claudeautopm/plugin-ai",
   "version": "4.0.1",
   "description": "Complete AI/ML plugin with OpenAI, Gemini, LangChain agents, RAG systems, model deployment, prompt engineering, and MLOps patterns for ClaudeAutoPM",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "keywords": [
     "claudeautopm",
@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'",
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'",
     "lint:python": "find scripts/examples -name '*.py' -exec python3 -m py_compile {} \\;",
     "lint:all": "npm run lint:python"
   },
@@ -56,7 +56,7 @@
     "commands/",
     "rules/",
     "scripts/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],

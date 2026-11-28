@@ -9,6 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const PluginManager = require('../lib/plugins/PluginManager');
 
 const CHARS_PER_TOKEN = 4;
 
@@ -53,7 +54,8 @@ function generatePluginsSection(installedPlugins, packagesDir) {
   let totalFiles = 0;
 
   installedPlugins.forEach(pluginId => {
-    const pluginPath = path.join(packagesDir, `plugin-${pluginId}`, 'plugin.json');
+    const pluginDir = path.join(packagesDir, `plugin-${pluginId}`);
+    const pluginPath = PluginManager.manifestPath(pluginDir) || path.join(pluginDir, '.claude-plugin', 'plugin.json');
 
     if (!fs.existsSync(pluginPath)) {
       console.warn(`⚠️  Plugin ${pluginId} not found at ${pluginPath}`);
@@ -61,7 +63,7 @@ function generatePluginsSection(installedPlugins, packagesDir) {
     }
 
     try {
-      const pluginData = JSON.parse(fs.readFileSync(pluginPath, 'utf-8'));
+      const pluginData = PluginManager.readManifest(pluginDir);
       const result = generatePluginManifest(pluginData, pluginId);
 
       manifests.push(result.manifest);

@@ -2,21 +2,21 @@
   "name": "@claudeautopm/plugin-devops",
   "version": "4.0.1",
   "description": "Complete DevOps plugin with agents, commands, rules, and scripts for CI/CD, Docker, GitHub, observability, and infrastructure automation for ClaudeAutoPM",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "type": "module",
   "files": [
     "agents/",
     "commands/",
     "rules/",
     "scripts/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "validate": "node -e \"require('./plugin.json')\" && echo 'plugin.json is valid'"
+    "validate": "node -e \"require('./.claude-plugin/plugin.json')\" && echo '.claude-plugin/plugin.json is valid'"
   },
   "devDependencies": {
     "jest": "^30.4.2"

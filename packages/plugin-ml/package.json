@@ -2,7 +2,7 @@
   "name": "@claudeautopm/plugin-ml",
   "version": "4.0.1",
   "description": "Comprehensive Machine Learning plugin with 10 specialist agents: TensorFlow/Keras, PyTorch, RL, Scikit-learn, Neural Architecture, Gradient Boosting, Computer Vision, NLP Transformers, Time Series, and AutoML. Context7-verified patterns.",
-  "main": "plugin.json",
+  "main": ".claude-plugin/plugin.json",
   "scripts": {
     "test": "echo \"No tests for plugin package\" && exit 0"
   },
@@ -36,7 +36,7 @@
   "homepage": "https://github.com/rafeekpro/ClaudeAutoPM/tree/main/packages/plugin-ml#readme",
   "files": [
     "agents/",
-    "plugin.json",
+    ".claude-plugin/",
     "README.md",
     "LICENSE"
   ],
