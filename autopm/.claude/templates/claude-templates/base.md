@@ -96,7 +96,7 @@ Use agents for non-trivial tasks|Agent list: AGENT-REGISTRY.md
 </rule>
 
 <rule id="context7" priority="HIGHEST">
-Query Context7 before implementing|mcp://context7/[lib]/[topic]
+Query Context7 before implementing|resolve-library-id, then query-docs
 📖 Full: .claude/rules/context7.xml
 </rule>
 
@@ -188,7 +188,7 @@ Load: .claude/quick-ref/common-patterns.md
 <step1>Check QUICK REFERENCE for workflow</step1>
 <step2>Trigger: "@python-backend-engineer" → Load agent file</step2>
 <step3>Trigger: "TDD" → Load .claude/quick-ref/tdd-cycle.md</step3>
-<step4>Trigger: "Context7" → Query mcp://context7/fastapi/authentication</step4>
+<step4>Trigger: "Context7" → resolve-library-id fastapi, then query-docs on authentication</step4>
 <step5>Execute: TDD cycle with agent assistance</step5>
 
 <result>

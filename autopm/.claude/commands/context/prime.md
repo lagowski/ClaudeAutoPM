@@ -36,14 +36,7 @@ Do not bother the user with preflight checks progress ("I'm not going to ..."). 
 
 ## Required Documentation Access
 
-**MANDATORY:** Before AI context management, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/ai/context-management` - context management best practices
-- `mcp://context7/llm/prompt-engineering` - prompt engineering best practices
-- `mcp://context7/ai/rag-systems` - rag systems best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 
 ## Instructions

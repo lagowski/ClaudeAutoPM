@@ -29,25 +29,7 @@ Automated feature generation, selection, and transformation following industry b
 
 ## Required Documentation Access
 
-**MANDATORY:** Before feature engineering, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/featuretools/automated-feature-engineering` - Featuretools patterns for Deep Feature Synthesis
-- `mcp://context7/scikit-learn/feature-selection` - RFE, LASSO, mutual information methods
-- `mcp://context7/pandas/transformations` - Data transformation and aggregation patterns
-- `mcp://context7/category-encoders/encoding` - Categorical encoding strategies (one-hot, target, WOE)
-- `mcp://context7/feature-engine/transformers` - Feature engineering transformers and pipelines
-- `mcp://context7/scikit-learn/preprocessing` - Scaling, binning, polynomial features
-- `mcp://context7/time-series/feature-extraction` - Lag, rolling, seasonal features
-- `mcp://context7/nlp/text-features` - TF-IDF, embeddings, text statistics
-
-**Why This is Required:**
-- Ensures use of proven feature engineering methodologies (Featuretools DFS, sklearn pipelines)
-- Prevents feature leakage and data snooping
-- Applies correct encoding strategies for categorical variables
-- Validates feature selection approaches against current research
-- Ensures proper handling of time-series and text data
-- Follows reproducibility best practices for feature definitions
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: featuretools, scikit-learn, pandas, category-encoders, feature-engine.
 
 ## Purpose
 

@@ -22,7 +22,8 @@ module.exports = {
     '<rootDir>/test/local-mode/local-prd-epic.test.js',
     '<rootDir>/test/core/PluginManager.test.js',
     '<rootDir>/test/installation/generate-agent-xml.test.js',
-    '<rootDir>/test/installation/e2e-scenarios.test.js'
+    '<rootDir>/test/installation/e2e-scenarios.test.js',
+    '<rootDir>/test/jest-tests/epic-sync-scripts-jest.test.js'
   ],
 
   // Parallel agent worktrees must never leak into test discovery or the

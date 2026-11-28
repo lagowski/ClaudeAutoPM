@@ -14,20 +14,7 @@ Analyzes and optimizes Docker images and Dockerfiles following industry best pra
 
 ## Required Documentation Access
 
-**MANDATORY:** Before executing optimization, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/docker/best-practices` - Docker image best practices
-- `mcp://context7/docker/multi-stage-builds` - Multi-stage build patterns
-- `mcp://context7/docker/security` - Docker security hardening
-- `mcp://context7/docker/buildkit` - BuildKit optimization features
-- `mcp://context7/containers/security` - Container security standards
-
-**Why This is Required:**
-- Ensures optimization follows official Docker best practices
-- Applies latest BuildKit features and capabilities
-- Validates security hardening measures
-- Prevents anti-patterns and vulnerabilities
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: docker.
 
 ## Usage
 

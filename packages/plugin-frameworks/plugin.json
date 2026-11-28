@@ -101,6 +101,42 @@
       ],
       "mcp": [],
       "context7": []
+    },
+    {
+      "name": "e2e-test-engineer",
+      "file": "agents/e2e-test-engineer.md",
+      "category": "testing",
+      "description": "E2E test engineering with Playwright and Cypress, MCP browser control, visual and accessibility testing",
+      "version": "2.0.0",
+      "tags": [
+        "e2e",
+        "playwright",
+        "cypress",
+        "testing"
+      ],
+      "mcp": [
+        "playwright"
+      ],
+      "context7": [
+        "/microsoft/playwright"
+      ]
+    },
+    {
+      "name": "nats-messaging-expert",
+      "file": "agents/nats-messaging-expert.md",
+      "category": "messaging",
+      "description": "NATS messaging: pub/sub, request/reply, queue groups, JetStream, clustering and security",
+      "version": "2.0.0",
+      "tags": [
+        "nats",
+        "messaging",
+        "jetstream",
+        "pubsub"
+      ],
+      "mcp": [],
+      "context7": [
+        "/nats-io/nats.docs"
+      ]
     }
   ],
   "commands": [

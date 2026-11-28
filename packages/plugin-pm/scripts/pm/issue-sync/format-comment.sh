@@ -6,9 +6,11 @@ set -euo pipefail
 
 # Load libraries
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../lib/logging-utils.sh"
-source "${SCRIPT_DIR}/../lib/frontmatter-utils.sh"
-source "${SCRIPT_DIR}/../lib/datetime-utils.sh"
+# The libs live in .claude/scripts/lib; resolve once, since a lib may reset SCRIPT_DIR
+LIB_DIR="$(cd "${SCRIPT_DIR}/../../lib" && pwd)"
+source "${LIB_DIR}/logging-utils.sh"
+source "${LIB_DIR}/frontmatter-utils.sh"
+source "${LIB_DIR}/datetime-utils.sh"
 
 # Script configuration
 readonly ISSUE_NUMBER="${1:-}"
@@ -22,6 +24,9 @@ declare -g temp_dir=""
 
 # Main function
 main() {
+    # stdout carries only the comment path; banner, logs and results go to stderr
+    exec 3>&1 1>&2
+
     print_banner "GitHub Comment Formatter" "1.0.0"
 
     # Validate inputs
@@ -48,7 +53,7 @@ main() {
     display_results
 
     # Return path to formatted comment
-    echo "$formatted_comment"
+    echo "$formatted_comment" >&3
 }
 
 # Validate script inputs
@@ -110,8 +115,14 @@ format_progress_update_comment() {
     current_datetime=$(get_current_datetime)
 
     # Get completion percentage
+    # A missing or unreadable value is reported as unknown, never as 0%
     local completion
-    completion=$(get_frontmatter_field "$PROGRESS_FILE" "completion" 2>/dev/null || echo "0")
+    if ! completion=$(get_frontmatter_field "$PROGRESS_FILE" "completion" 2>/dev/null) || [[ -z "$completion" ]]; then
+        log_warning "Could not read completion from $PROGRESS_FILE; reporting it as unknown"
+        completion="unknown"
+    else
+        completion="${completion%\%}%"
+    fi
 
     # Parse updates file to extract sections
     parse_updates_file
@@ -126,7 +137,7 @@ format_progress_update_comment() {
 $(get_section "completed" "- No completed items in this update")
 
 ### 🔄 In Progress
-$(get_section "in_progress" "- Continuing work on implementation")
+$(get_section "in_progress" "- Not reported in this update")
 
 ### 📝 Technical Notes
 $(get_section "technical_notes" "- No new technical notes")
@@ -135,16 +146,16 @@ $(get_section "technical_notes" "- No new technical notes")
 $(format_acceptance_criteria)
 
 ### 🚀 Next Steps
-$(get_section "next_steps" "- Continue with planned implementation")
+$(get_section "next_steps" "- Not reported in this update")
 
 ### ⚠️ Blockers
-$(get_section "blockers" "- No current blockers")
+$(get_section "blockers" "- Not reported in this update")
 
 ### 💻 Recent Commits
 $(format_recent_commits)
 
 ---
-*Progress: ${completion}% | Synced from local updates at ${current_datetime}*
+*Progress: ${completion} | Synced from local updates at ${current_datetime}*
 EOF
 
     log_success "Progress update comment formatted"
@@ -174,7 +185,7 @@ format_completion_comment() {
 $(format_acceptance_criteria_completion)
 
 ### 📦 Deliverables
-$(get_section "deliverables" "- Implementation complete\n- Code reviewed and tested")
+$(get_section "deliverables" "- Not reported in this update")
 
 ### 🧪 Testing
 $(format_testing_status)
@@ -271,9 +282,8 @@ format_acceptance_criteria() {
         done
     else
         # Default criteria status
-        echo "- ✅ Initial implementation complete"
-        echo "- 🔄 Testing in progress"
-        echo "- □ Documentation pending"
+        # No criteria reported: claim nothing
+        echo "- Not reported in this update"
     fi
 }
 
@@ -293,9 +303,8 @@ format_acceptance_criteria_completion() {
             fi
         done
     else
-        echo "- ✅ All requirements implemented"
-        echo "- ✅ Code quality standards met"
-        echo "- ✅ Performance requirements satisfied"
+        # No criteria reported: claim nothing
+        echo "- Not reported in this update"
     fi
 }
 
@@ -332,12 +341,8 @@ format_testing_status() {
     if [[ -f "$testing_file" ]] && [[ -s "$testing_file" ]]; then
         cat "$testing_file"
     else
-        # Default testing status
-        cat << EOF
-- Unit tests: ✅ Passing
-- Integration tests: ✅ Passing
-- Manual testing: ✅ Complete
-EOF
+        # No testing section: claim nothing
+        echo "- Not reported in this update"
     fi
 }
 
@@ -348,12 +353,8 @@ format_documentation_status() {
     if [[ -f "$docs_file" ]] && [[ -s "$docs_file" ]]; then
         cat "$docs_file"
     else
-        # Default documentation status
-        cat << EOF
-- Code documentation: ✅ Updated
-- README updates: ✅ Complete
-- API documentation: ✅ Current
-EOF
+        # No documentation section: claim nothing
+        echo "- Not reported in this update"
     fi
 }
 

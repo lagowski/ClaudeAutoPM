@@ -29,7 +29,7 @@ on:
     # that a maintainer labels `safe-to-review` is reviewed by the next sweep, or at once by
     # "Run workflow" on this file (workflow_dispatch reviews every open PR the policy allows).
     types: [opened, synchronize]
-    branches: ["develop","main"]
+    branches: ["develop","main","feature/capm-drain-1128","feature/req-docs-865","feature/req-lib-856","feature/req-packages-860","feature/sweep-2026-11-26"]
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:

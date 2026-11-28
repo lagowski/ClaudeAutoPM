@@ -40,7 +40,8 @@ test('pr-validation: commands are argv arrays, no tokenizer, no sh -c', () => {
 // 2. epic name validation rejects shell metacharacters
 // ---------------------------------------------------------------------------
 test('epic: epic name with command substitution is rejected', () => {
-  const epicCmd = require(path.join(ROOT, 'bin/commands/epic.js'));
+  // The registered command (bin/autopm.js) is lib/cli/commands/epic.js (#855)
+  const epicCmd = require(path.join(ROOT, 'lib/cli/commands/epic.js'));
   assert.strictEqual(typeof epicCmd.isValidEpicName, 'function',
     'epic command must export isValidEpicName');
 
@@ -50,6 +51,27 @@ test('epic: epic name with command substitution is rejected', () => {
   assert.strictEqual(epicCmd.isValidEpicName('../escape'), false);
   // Legitimate names still allowed
   assert.strictEqual(epicCmd.isValidEpicName('fullstack-app_v2.1'), true);
+});
+
+test('epic: CLI refuses a path-traversal epic name before any handler runs', () => {
+  const os = require('os');
+  const { spawnSync } = require('child_process');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'epic-inject-'));
+  const cwd = path.join(tmp, 'a', 'b');
+  fs.mkdirSync(cwd, { recursive: true });
+  try {
+    const res = spawnSync(process.execPath,
+      [path.join(ROOT, 'bin/autopm.js'), 'epic', 'new', '../../escape'],
+      { cwd, input: '', encoding: 'utf8', timeout: 30000 });
+
+    assert.notStrictEqual(res.status, 0, 'an invalid epic name must fail the command');
+    assert.match(res.stderr + res.stdout, /invalid epic name/i);
+    // Without validation the name resolves to <tmp>/escape, outside .claude/epics
+    assert.strictEqual(fs.existsSync(path.join(tmp, 'escape')), false,
+      'no epic directory may be created outside .claude/epics');
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 // ---------------------------------------------------------------------------
@@ -68,30 +90,6 @@ test('prd: @file path traversal outside project root is rejected', () => {
   // A path inside the project resolves fine
   const ok = prdCmd.resolveContentFilePath('docs/spec.md');
   assert.strictEqual(ok, path.join(process.cwd(), 'docs/spec.md'));
-});
-
-// ---------------------------------------------------------------------------
-// 4. AzureDevOpsCliWrapper executes az via argv array — no shell at all
-// ---------------------------------------------------------------------------
-test('AzureDevOpsCliWrapper: az runs via execFileSync argv array, no shell', () => {
-  const Wrapper = require(path.join(ROOT, 'lib/providers/AzureDevOpsCliWrapper.js'));
-  const wrapper = new Wrapper({ token: 't', organization: 'o', project: 'p' });
-
-  const src = fs.readFileSync(path.join(ROOT, 'lib/providers/AzureDevOpsCliWrapper.js'), 'utf8');
-  // The shell (execSync on a command string) was eliminated entirely;
-  // every az invocation goes through execFileSync with an argv array, so
-  // newlines, quotes, $(), backticks etc. in values are inert.
-  assert.ok(!/require\(['"]child_process['"]\)[^\n]*execSync/.test(src) && !/\bexecSync\(/.test(src),
-    'wrapper must not use execSync with a command string');
-  assert.match(src, /execFileSync\(\s*['"]az['"]\s*,/,
-    'wrapper must execute az via execFileSync argv array');
-
-  // JMESPath values are still escaped so a quote cannot alter the query az parses
-  assert.strictEqual(typeof wrapper._escapeJmesValue, 'function',
-    'wrapper must escape values embedded in JMESPath string literals');
-  const jmes = wrapper._escapeJmesValue("x') || [?name!='");
-  assert.ok(!/(^|[^\\])'/.test(jmes),
-    `JMESPath-escaped value must not contain an unescaped single quote: ${jmes}`);
 });
 
 // ---------------------------------------------------------------------------

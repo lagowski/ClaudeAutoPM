@@ -24,10 +24,10 @@
 📋 Command: /pm:epic-decompose
 📚 Querying Context7 for required documentation...
 
-   ➜ mcp://context7/agile/epic-decomposition
-   ➜ mcp://context7/agile/task-sizing
-   ➜ mcp://context7/agile/user-stories
-   ➜ mcp://context7/project-management/task-breakdown
+   ➜ agile: epic-decomposition
+   ➜ agile: task-sizing
+   ➜ agile: user-stories
+   ➜ project-management: task-breakdown
 
 ✅ Context7 queries complete
 📖 Key findings: [summarize what you learned]
@@ -101,7 +101,7 @@ Proceeding with epic decomposition using Context7 best practices...
 
 **For ALL Commands:**
 - MUST read `## Required Documentation Access` section
-- MUST query EVERY `mcp://context7/...` link before execution
+- MUST query Context7 (`resolve-library-id`, then `query-docs`) for every library it names before execution
 - MUST summarize Context7 findings before proceeding
 - MUST apply Context7 guidance in implementation
 
@@ -160,10 +160,10 @@ User executes command: /pm:epic-decompose feature-name
 BEFORE execution:
 1. Read .claude/commands/pm/epic-decompose.md
 2. Extract Documentation Queries section:
-   - mcp://context7/agile/epic-decomposition
-   - mcp://context7/agile/task-sizing
-   - mcp://context7/agile/user-stories
-   - mcp://context7/project-management/task-breakdown
+   - agile: epic-decomposition
+   - agile: task-sizing
+   - agile: user-stories
+   - project-management: task-breakdown
 3. Query Context7 for EACH link
 4. Summarize findings: "Context7 confirms INVEST criteria for user stories..."
 5. PROCEED with command execution using Context7 guidance
@@ -186,9 +186,9 @@ User invokes agent: @aws-cloud-architect design VPC
 BEFORE invocation:
 1. Read .claude/agents/cloud/aws-cloud-architect.md
 2. Extract Documentation Queries section:
-   - mcp://context7/aws/compute
-   - mcp://context7/aws/networking
-   - mcp://context7/terraform/aws
+   - aws: compute
+   - aws: networking
+   - terraform: aws
 3. Query Context7 for EACH link
 4. Summarize: "Context7 shows VPC best practices: /16 for staging, /20 for prod..."
 5. PROCEED with agent work using Context7 knowledge

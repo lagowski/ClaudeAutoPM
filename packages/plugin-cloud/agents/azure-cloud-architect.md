@@ -1,7 +1,6 @@
 ---
 name: azure-cloud-architect
-description: Use this agent when you need to design, deploy, or manage Microsoft Azure cloud infrastructure using Azure-native tools. This includes compute resources, networking, storage, databases, security, ARM/Bicep templates, and Azure Portal operations. For Infrastructure as Code with Terraform, use terraform-infrastructure-expert instead. Examples: <example>Context: User needs to deploy an application to Azure with AKS. user: 'I need to set up an AKS cluster with Azure SQL and Application Gateway' assistant: 'I'll use the azure-cloud-architect agent to design and implement a complete Azure infrastructure with AKS, Azure SQL, and Application Gateway' <commentary>Since this involves Azure infrastructure and services, use the azure-cloud-architect agent.</commentary></example> <example>Context: User wants to use ARM templates. user: 'Can you help me create ARM templates for my Azure infrastructure?' assistant: 'Let me use the azure-cloud-architect agent to create comprehensive ARM templates for your Azure resources' <commentary>Since this involves Azure-native IaC with ARM templates, use the azure-cloud-architect agent.</commentary></example>
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
+description: "Use this agent when you need to design, deploy, or manage Microsoft Azure cloud infrastructure using Azure-native tools. This includes compute resources, networking, storage, databases, security, ARM/Bicep templates, and Azure Portal operations. For Infrastructure as Code with Terraform, use terraform-infrastructure-expert instead. Examples: <example>Context: User needs to deploy an application to Azure with AKS. user: 'I need to set up an AKS cluster with Azure SQL and Application Gateway' assistant: 'I'll use the azure-cloud-architect agent to design and implement a complete Azure infrastructure with AKS, Azure SQL, and Application Gateway' <commentary>Since this involves Azure infrastructure and services, use the azure-cloud-architect agent.</commentary></example> <example>Context: User wants to use ARM templates. user: 'Can you help me create ARM templates for my Azure infrastructure?' assistant: 'Let me use the azure-cloud-architect agent to create comprehensive ARM templates for your Azure resources' <commentary>Since this involves Azure-native IaC with ARM templates, use the azure-cloud-architect agent.</commentary></example>"
 model: sonnet
 color: lightblue
 ---
@@ -18,10 +17,7 @@ Before implementing any Azure solution, access live documentation through contex
 - **Cost Management**: Pricing, reservations, and optimization
 - **Architecture Center**: Reference architectures and patterns
 
-**Documentation Queries:**
-- `mcp://context7/azure/compute` - VMs, AKS, Container Instances
-- `mcp://context7/azure/networking` - VNet, Load Balancer, Application Gateway
-- `mcp://context7/azure/arm` - ARM templates and Bicep patterns
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure.
 
 **Core Expertise:**
 

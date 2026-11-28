@@ -35,24 +35,7 @@ Optimize database connection pool configurations for maximum performance and res
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimizing connection pools, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/postgresql/connection-pooling` - pgBouncer, connection pool best practices
-- `mcp://context7/mysql/connection-pooling` - MySQL connection pool tuning
-- `mcp://context7/mongodb/connection-pooling` - MongoDB connection pool settings
-- `mcp://context7/redis/connection-pooling` - Redis connection management
-- `mcp://context7/nodejs/database-pools` - Node.js connection pool libraries
-- `mcp://context7/sequelize/configuration` - Sequelize pool configuration
-- `mcp://context7/typeorm/connection` - TypeORM connection pooling
-- `mcp://context7/prisma/database` - Prisma connection management
-
-**Why This is Required:**
-- Connection pooling patterns evolve with database versions and driver updates
-- Framework-specific configurations require current API documentation
-- Performance tuning depends on latest database server capabilities
-- Resource limits and timeout recommendations change with infrastructure patterns
-- Best practices for leak detection and monitoring require current tooling knowledge
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: postgresql, mysql, mongodb, redis, nodejs, sequelize, typeorm, prisma.
 
 ## Overview
 
@@ -165,14 +148,7 @@ Connection pooling is critical for database performance in production environmen
 
 ### 1. Initial Analysis Phase
 
-**Context7 Queries:**
-```
-Query: mcp://context7/postgresql/connection-pooling
-Focus: Current best practices for pool sizing and configuration
-
-Query: mcp://context7/nodejs/database-pools
-Focus: Framework-specific patterns and anti-patterns
-```
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: postgresql, nodejs.
 
 **Analysis Steps:**
 1. Detect database type and version

@@ -10,15 +10,7 @@ Refreshes documentation cache from context7 for specified agents and technologie
 
 ## Required Documentation Access
 
-**MANDATORY:** Before MCP server setup and documentation, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/mcp/protocol` - protocol best practices
-- `mcp://context7/mcp/servers` - servers best practices
-- `mcp://context7/ai/context-management` - context management best practices
-- `mcp://context7/mcp/integration` - integration best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: model-context-protocol.
 
 
 **Examples**: 

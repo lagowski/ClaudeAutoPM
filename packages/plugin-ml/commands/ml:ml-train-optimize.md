@@ -14,20 +14,7 @@ Comprehensive ML training optimization covering:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for ML best practices:
-
-**Documentation Queries:**
-- `mcp://context7/scikit-learn/model-selection` - GridSearchCV, cross-validation
-- `mcp://context7/scikit-learn/pipelines` - ML pipelines and preprocessing
-- `mcp://context7/pytorch/training` - PyTorch training optimization
-- `mcp://context7/pytorch/distributed` - Distributed Data Parallel (DDP)
-- `mcp://context7/tensorflow/training` - TensorFlow training patterns
-
-**Why This is Required:**
-- Ensures optimization follows official framework documentation
-- Applies latest performance patterns from ML frameworks
-- Validates distributed training configurations
-- Prevents anti-patterns and training inefficiencies
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: scikit-learn, pytorch, tensorflow.
 
 ## Usage
 

@@ -66,25 +66,6 @@
         "/kedro-org/kedro",
         "/kedro-org/kedro-plugins"
       ]
-    },
-    {
-      "name": "langgraph-workflow-expert",
-      "file": "agents/langgraph-workflow-expert.md",
-      "category": "data",
-      "description": "LangGraph workflow orchestration with state machines, conditional routing, multi-agent collaboration, and graph-based AI workflows. Expert in stateful applications and complex decision trees.",
-      "version": "2.0.0",
-      "tags": [
-        "langgraph",
-        "workflow",
-        "state-machine",
-        "ai",
-        "multi-agent"
-      ],
-      "mcp": [],
-      "context7": [
-        "/langchain-ai/langgraph",
-        "/websites/langchain-ai_github_io_langgraph"
-      ]
     }
   ],
   "commands": [
@@ -253,7 +234,8 @@
   },
   "dependencies": [],
   "peerPlugins": [
-    "@claudeautopm/plugin-core"
+    "@claudeautopm/plugin-core",
+    "@claudeautopm/plugin-ai"
   ],
   "mcpServers": {
     "recommended": [

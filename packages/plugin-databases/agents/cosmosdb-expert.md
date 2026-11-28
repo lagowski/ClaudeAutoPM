@@ -1,7 +1,6 @@
 ---
 name: cosmosdb-expert
 description: Use this agent for Azure Cosmos DB design and optimization across all APIs (Core SQL, MongoDB, Cassandra, Gremlin, Table). Expert in global distribution, consistency levels, partitioning strategies, and cost optimization. Specializes in multi-region deployments, change feed, and serverless architectures.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Bash, Task, Agent
 model: sonnet
 color: purple
 ---
@@ -36,9 +35,7 @@ You are a senior Cosmos DB expert specializing in globally distributed, multi-mo
 4. **RU/s Optimization**: Retrieve partition distribution and evenly-distribute patterns
 5. **Query Optimization**: Access single-partition vs cross-partition query patterns
 
-**Documentation Queries:**
-- `mcp://context7/websites/learn_microsoft-en-us-azure-cosmos-db` - Topic: "partitioning consistency levels global distribution performance"
-- `mcp://context7/microsoftdocs/azure-docs` - Topic: "cosmos db optimization multi-region"
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: cosmos-db, azure.
 
 ### Context7-Verified Best Practices
 

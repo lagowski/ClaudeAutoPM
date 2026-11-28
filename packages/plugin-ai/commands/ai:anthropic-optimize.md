@@ -19,23 +19,7 @@ Comprehensive Claude API optimization following official Anthropic best practice
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Anthropic best practices:
-
-**Documentation Queries:**
-- `mcp://context7/anthropic/anthropic-sdk-python` - Python SDK patterns and best practices
-- `mcp://context7/anthropic/prompt-caching` - Prompt caching for 70-90% cost reduction
-- `mcp://context7/anthropic/streaming` - Streaming response optimization
-- `mcp://context7/anthropic/extended-thinking` - Extended thinking mode for reasoning
-- `mcp://context7/anthropic/model-selection` - Choosing Opus, Sonnet, or Haiku
-- `mcp://context7/anthropic/batching` - Batch processing strategies
-
-**Why This is Required:**
-- Ensures optimization follows official Anthropic documentation
-- Applies proven prompt caching patterns for massive cost reduction
-- Validates model selection strategies
-- Prevents API quota exhaustion
-- Optimizes token usage and costs
-- Implements proper streaming for better UX
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: anthropic.
 
 ## Usage
 
@@ -86,7 +70,7 @@ client = anthropic.Anthropic()
 
 # Cache static context for reuse
 response = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     system=[
         {
@@ -110,7 +94,7 @@ print(response.usage)
 
 # Second request reuses cache
 response2 = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     system=[
         {
@@ -134,7 +118,7 @@ print(response2.usage)
 ```
 
 **Cost Impact:**
-- Input tokens: $3 per MTok (Sonnet 3.5)
+- Input tokens: $3 per MTok (Sonnet 5.5)
 - Cache writes: $3.75 per MTok (25% markup)
 - Cache reads: $0.30 per MTok (90% discount)
 
@@ -171,7 +155,7 @@ message_list = [
 ]
 
 response = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     tools=tools,
     messages=message_list,
@@ -208,21 +192,21 @@ response = client.messages.create(
 ```python
 # Model characteristics (as of 2025)
 MODELS = {
-    "claude-opus-4-20250514": {
+    "claude-opus-5-5": {
         "cost_input": 15.00,   # per MTok
         "cost_output": 75.00,  # per MTok
         "intelligence": "highest",
         "speed": "slowest",
         "use_cases": ["complex reasoning", "advanced coding", "nuanced analysis"]
     },
-    "claude-3-5-sonnet-20241022": {
+    "claude-sonnet-5-5": {
         "cost_input": 3.00,
         "cost_output": 15.00,
         "intelligence": "high",
         "speed": "fast",
         "use_cases": ["general tasks", "code generation", "balanced performance"]
     },
-    "claude-3-5-haiku-20241022": {
+    "claude-haiku-5-5": {
         "cost_input": 0.80,
         "cost_output": 4.00,
         "intelligence": "good",
@@ -235,16 +219,16 @@ def select_model(task_complexity: str, volume: str) -> str:
     """Route to optimal model based on task requirements."""
 
     if task_complexity == "high" and volume == "low":
-        return "claude-opus-4-20250514"  # Best quality
+        return "claude-opus-5-5"  # Best quality
 
     elif task_complexity == "medium" or volume == "medium":
-        return "claude-3-5-sonnet-20241022"  # Balanced
+        return "claude-sonnet-5-5"  # Balanced
 
     elif task_complexity == "low" or volume == "high":
-        return "claude-3-5-haiku-20241022"  # Fast and cheap
+        return "claude-haiku-5-5"  # Fast and cheap
 
     # Default to Sonnet for unknown cases
-    return "claude-3-5-sonnet-20241022"
+    return "claude-sonnet-5-5"
 
 # Example usage
 task = {
@@ -254,7 +238,7 @@ task = {
 }
 
 model = select_model(task["complexity"], task["volume"])
-# Returns: claude-3-5-haiku-20241022
+# Returns: claude-haiku-5-5
 
 response = client.messages.create(
     model=model,
@@ -285,7 +269,7 @@ client = Anthropic()
 
 # Stream response for better UX
 with client.messages.stream(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     messages=[{
         "role": "user",
@@ -315,7 +299,7 @@ client = Anthropic()
 
 # Custom event handlers
 with client.messages.stream(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     messages=[{
         "role": "user",
@@ -337,7 +321,7 @@ import asyncio
 
 async def async_stream():
     async with client.messages.stream(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-sonnet-5-5",
         max_tokens=1024,
         messages=[{
             "role": "user",
@@ -362,7 +346,7 @@ asyncio.run(async_stream())
 ```python
 # Enable extended thinking for complex reasoning
 response = client.messages.create(
-    model="claude-3-7-sonnet-20250219",  # Models with extended thinking
+    model="claude-sonnet-5-5",  # extended thinking
     max_tokens=16000,
     thinking={
         "type": "enabled",
@@ -427,7 +411,7 @@ client = AsyncAnthropic()
 async def process_item(text: str) -> str:
     """Process single item with Claude."""
     response = await client.messages.create(
-        model="claude-3-5-haiku-20241022",  # Fast model for batch
+        model="claude-haiku-5-5",  # Fast model for batch
         max_tokens=100,
         messages=[{
             "role": "user",
@@ -485,7 +469,7 @@ results = asyncio.run(rate_limited_batch(items, max_concurrent=50))
 # Anthropic uses tiktoken for token counting
 import tiktoken
 
-def count_tokens(text: str, model: str = "claude-3-5-sonnet-20241022") -> int:
+def count_tokens(text: str, model: str = "claude-sonnet-5-5") -> int:
     """Count tokens for Anthropic models (uses cl100k_base encoding)."""
     encoding = tiktoken.get_encoding("cl100k_base")
     return len(encoding.encode(text))
@@ -513,7 +497,7 @@ print(f"Optimized: {count_tokens(optimized)} tokens")
 ```
 
 **Cost Impact:**
-- Sonnet 3.5: $3 per 1M input tokens
+- Sonnet 5.5: $3 per 1M input tokens
 - Optimizing 10,000 requests from 8K → 4K tokens
 - Savings: $120 per day
 
@@ -521,7 +505,7 @@ print(f"Optimized: {count_tokens(optimized)} tokens")
 ```python
 # Set appropriate output limits
 response = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-sonnet-5-5",
     max_tokens=150,  # Limit response length
     messages=[{
         "role": "user",
@@ -571,7 +555,7 @@ def get_completion_with_retry(prompt: str) -> str:
     - Attempt 5: 32s wait
     """
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-sonnet-5-5",
         max_tokens=1024,
         messages=[{
             "role": "user",
@@ -608,7 +592,7 @@ Monthly Cost: $600 (input) + $1500 (output) = $2,100
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   Model Usage:
-  - Model: claude-opus-4-20250514 (all tasks)
+  - Model: claude-opus-5-5 (all tasks)
   - Simple tasks: 80% (could use Haiku)
   - Complex tasks: 20%
 

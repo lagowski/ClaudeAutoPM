@@ -19,12 +19,7 @@ This rule applies to:
 
 Before any cloud security operation, Context7 queries are MANDATORY:
 
-**Documentation Queries:**
-- `mcp://context7/security/cloud-security` - Cloud security best practices
-- `mcp://context7/aws/security` - AWS security guidelines
-- `mcp://context7/azure/security` - Azure security center best practices
-- `mcp://context7/gcp/security` - GCP security command center patterns
-- `mcp://context7/compliance/standards` - Industry compliance standards (SOC2, HIPAA, PCI-DSS)
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: aws, azure, gcp.
 
 ## Security Requirements
 

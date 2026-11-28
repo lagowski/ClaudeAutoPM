@@ -14,9 +14,7 @@ Delete a variable group from Azure DevOps.
 
 ## Required Documentation Access
 
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/infrastructure/change-management` - Change control
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 
@@ -27,7 +25,7 @@ Use azure-devops-specialist agent for all operations.
 1. Validate variable group exists
 2. Check if linked to pipelines (WARN if yes)
 3. Prompt for confirmation (unless --confirm)
-4. Delete using AzureDevOpsResourcesProvider
+4. Delete with `az pipelines variable-group delete --group-id <id> --yes`
 5. Confirm deletion
 
 ### Confirmation Prompt

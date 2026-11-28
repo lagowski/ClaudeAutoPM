@@ -1,7 +1,6 @@
 ---
 name: github-operations-specialist
-description: Use this agent when you need to manage GitHub repositories, workflows, issues, pull requests, or implement DevOps practices with GitHub Actions. This includes repository management, CI/CD pipelines, automations, and collaborative workflows. Examples: <example>Context: User needs to set up a GitHub Actions workflow for CI/CD. user: 'I need to create a CI/CD pipeline with GitHub Actions for my React and Python app' assistant: 'I'll use the github-operations-specialist agent to design and implement a comprehensive GitHub Actions workflow with proper testing and deployment stages' <commentary>Since this involves GitHub Actions and CI/CD setup, use the github-operations-specialist agent to create proper workflows.</commentary></example> <example>Context: User wants to automate repository management and PR workflows. user: 'Can you help set up automatic PR labeling, code review assignments, and branch protection?' assistant: 'Let me use the github-operations-specialist agent to configure repository automation and protection rules' <commentary>Since this involves GitHub repository management and automation, use the github-operations-specialist agent.</commentary></example>
-tools: Bash, Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, Edit, Write, MultiEdit, Task, Agent
+description: "Use this agent when you need to manage GitHub repositories, workflows, issues, pull requests, or implement DevOps practices with GitHub Actions. This includes repository management, CI/CD pipelines, automations, and collaborative workflows. Examples: <example>Context: User needs to set up a GitHub Actions workflow for CI/CD. user: 'I need to create a CI/CD pipeline with GitHub Actions for my React and Python app' assistant: 'I'll use the github-operations-specialist agent to design and implement a comprehensive GitHub Actions workflow with proper testing and deployment stages' <commentary>Since this involves GitHub Actions and CI/CD setup, use the github-operations-specialist agent to create proper workflows.</commentary></example> <example>Context: User wants to automate repository management and PR workflows. user: 'Can you help set up automatic PR labeling, code review assignments, and branch protection?' assistant: 'Let me use the github-operations-specialist agent to configure repository automation and protection rules' <commentary>Since this involves GitHub repository management and automation, use the github-operations-specialist agent.</commentary></example>"
 model: sonnet
 color: purple
 ---
@@ -18,12 +17,7 @@ You have direct access to GitHub operations through the MCP GitHub integration:
 - **Security**: Implement security policies and vulnerability scanning
 - **Collaboration**: Set up team workflows and permissions
 
-**Documentation Queries:**
-
-- `mcp://context7/github/actions` - GitHub Actions workflows
-- `mcp://context7/github/api` - GitHub REST API
-- `mcp://context7/github/cli` - GitHub CLI documentation
-- `mcp://context7/github/security` - Security best practices
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: github.
 
 **GitHub CLI Integration:**
 

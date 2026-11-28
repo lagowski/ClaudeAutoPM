@@ -18,9 +18,10 @@
  *   - Export to JSON/CSV
  */
 
-const AnalyticsEngine = require('../../../../lib/analytics-engine');
-const BurndownChart = require('../../../../lib/burndown-chart');
-const DependencyAnalyzer = require('../../../../lib/dependency-analyzer');
+const { requireEngine } = require('./lib/require-engine');
+const AnalyticsEngine = requireEngine('analytics-engine');
+const BurndownChart = requireEngine('burndown-chart');
+const DependencyAnalyzer = requireEngine('dependency-analyzer');
 
 class AnalyticsCommand {
   constructor() {
@@ -151,7 +152,7 @@ class AnalyticsCommand {
 
     try {
       // Get all epics
-      const FilterEngine = require('../../../../lib/filter-engine');
+      const FilterEngine = requireEngine('filter-engine');
       const filterEngine = new FilterEngine({ basePath: this.basePath });
       const epics = await filterEngine.loadFiles(`${this.basePath}/epics/*/epic.md`);
 

@@ -71,32 +71,8 @@ describe('/core:agent-test Command Structure Tests', () => {
   });
 
   describe('Context7 Documentation Queries', () => {
-    test('should have MANDATORY documentation access statement', () => {
-      expect(commandContent).toContain('**MANDATORY:**');
-    });
-
-    test('should have Documentation Queries subsection', () => {
-      expect(commandContent).toContain('**Documentation Queries:**');
-    });
-
-    test('should include Jest testing documentation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/jest\/testing/);
-    });
-
-    test('should include testing best practices query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/testing-library\/best-practices/);
-    });
-
-    test('should include YAML validation query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/yaml\/validation/);
-    });
-
-    test('should include Markdown parsing query', () => {
-      expect(commandContent).toMatch(/mcp:\/\/context7\/markdown\/parsing/);
-    });
-
-    test('should have "Why This is Required" explanation', () => {
-      expect(commandContent).toContain('**Why This is Required:**');
+    test('points to the shared Context7 rule', () => {
+      expect(commandContent).toContain('.claude/rules/context7-required.md');
     });
   });
 
@@ -382,8 +358,7 @@ example code
 
     test('should verify Context7 queries section exists', () => {
       const content = `
-**Documentation Queries:**
-- mcp://context7/test
+Query Context7 first: see \`.claude/rules/context7-required.md\`. Libraries: jest.
 `;
       const result = checkDocumentation(content);
       expect(result.hasContext7Section).toBe(true);
@@ -429,37 +404,29 @@ Content
 
 describe('Context7 Validation', () => {
   describe('validateContext7Queries', () => {
-    test('should verify Context7 queries exist', () => {
-      const queries = [
-        'mcp://context7/jest/testing',
-        'mcp://context7/yaml/validation'
-      ];
-      const result = validateContext7Queries(queries);
+    test('should verify Context7 libraries exist', () => {
+      const result = validateContext7Queries(['jest', 'yaml']);
       expect(result.hasQueries).toBe(true);
       expect(result.queryCount).toBe(2);
     });
 
-    test('should validate query format', () => {
-      const queries = ['mcp://context7/valid/path'];
-      const result = validateContext7Queries(queries);
+    test('should validate library name format', () => {
+      const result = validateContext7Queries(['react-router']);
       expect(result.validFormat).toBe(true);
     });
 
-    test('should detect invalid query format', () => {
-      const queries = ['invalid-query'];
-      const result = validateContext7Queries(queries);
+    test('should detect invalid library name format', () => {
+      const result = validateContext7Queries(['not a library']);
       expect(result.validFormat).toBe(false);
       expect(result.errors).toContain('Invalid query format');
     });
 
-    test('should check query relevance to agent purpose', () => {
-      const queries = ['mcp://context7/jest/testing'];
-      const agentPurpose = 'testing and validation';
-      const result = validateContext7Queries(queries, { agentPurpose });
+    test('should check library relevance to agent purpose', () => {
+      const result = validateContext7Queries(['jest-testing'], { agentPurpose: 'testing and validation' });
       expect(result.relevant).toBe(true);
     });
 
-    test('should detect empty queries list', () => {
+    test('should detect empty libraries list', () => {
       const result = validateContext7Queries([]);
       expect(result.hasQueries).toBe(false);
       expect(result.errors).toContain('No Context7 queries found');
@@ -467,21 +434,13 @@ describe('Context7 Validation', () => {
   });
 
   describe('extractContext7Queries', () => {
-    test('should extract queries from documentation', () => {
-      const content = `
-**Documentation Queries:**
-- \`mcp://context7/jest/testing\` - Jest patterns
-- \`mcp://context7/yaml/validation\` - YAML validation
-`;
-      const queries = extractContext7Queries(content);
-      expect(queries).toHaveLength(2);
-      expect(queries[0]).toMatch(/mcp:\/\/context7\/jest\/testing/);
+    test('should extract libraries from the Context7 pointer', () => {
+      const content = 'Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: jest, yaml.\n';
+      expect(extractContext7Queries(content)).toEqual(['jest', 'yaml']);
     });
 
-    test('should return empty array when no queries found', () => {
-      const content = 'No queries here';
-      const queries = extractContext7Queries(content);
-      expect(queries).toHaveLength(0);
+    test('should return empty array when no libraries found', () => {
+      expect(extractContext7Queries('No queries here')).toHaveLength(0);
     });
   });
 });

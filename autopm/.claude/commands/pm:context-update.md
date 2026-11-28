@@ -8,17 +8,7 @@ Update project context after significant changes to maintain AI agent memory acc
 
 ## Required Documentation Access
 
-**MANDATORY:** Before updating context, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/knowledge-management/documentation-maintenance` - Documentation update strategies
-- `mcp://context7/agile/progress-tracking` - Progress tracking best practices
-- `mcp://context7/project-management/status-reporting` - Status update patterns
-
-**Why This is Required:**
-- Ensures context updates follow documentation best practices
-- Maintains consistency with agile progress tracking
-- Provides effective status reporting patterns
+Query Context7 first: see `.claude/rules/context7-required.md`.
 
 ## Instructions
 

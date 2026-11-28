@@ -23,17 +23,7 @@ AZURE_DEVOPS_PROJECT=<your-project>
 
 ## Required Documentation Access
 
-**MANDATORY:** Before showing variable groups, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/azure-devops/variable-groups` - Variable groups documentation
-- `mcp://context7/security/secrets-display` - Secrets display security
-- `mcp://context7/azure-devops/pipelines` - Pipeline integration
-
-**Why This is Required:**
-- Ensures secure handling of secret values
-- Validates what information can be displayed
-- Prevents accidental secret exposure
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: azure-devops.
 
 ## Instructions
 
@@ -48,7 +38,7 @@ Task(subagent_type="azure-devops-specialist",
 
 Follow the complete workflow:
 1. Validate variable group ID exists
-2. Fetch variable group details using AzureDevOpsResourcesProvider
+2. Fetch variable group details with `az pipelines variable-group show`
 3. Get linked pipelines information
 4. Display formatted output with masked secrets
 5. Show Azure DevOps UI link")
@@ -65,22 +55,17 @@ Follow the complete workflow:
 
 #### 2. Fetch Variable Group Details
 
-Use `AzureDevOpsResourcesProvider.getVariableGroup()` and `getPipelineVariableGroups()`:
+Use `az pipelines variable-group show`:
 
-```javascript
-const provider = new AzureDevOpsResourcesProvider({
-  token: process.env.AZURE_DEVOPS_PAT,
-  organization: process.env.AZURE_DEVOPS_ORG,
-  project: process.env.AZURE_DEVOPS_PROJECT
-});
-
-// Get variable group details
-const vg = await provider.getVariableGroup(variableGroupId);
-
-// Get pipelines using this variable group
-const pipelineVGs = await provider.getPipelineVariableGroups();
-const linkedPipelines = pipelineVGs.filter(p => p.variableGroups.includes(variableGroupId));
+```bash
+export AZURE_DEVOPS_EXT_PAT="$AZURE_DEVOPS_PAT"
+az pipelines variable-group show --group-id "$VG_ID" \
+  --org "https://dev.azure.com/$AZURE_DEVOPS_ORG" --project "$AZURE_DEVOPS_PROJECT" -o json
 ```
+
+Secret values come back as `null`; show them as `***`. Linked pipelines are not part of
+this output: list the pipelines' definitions (`az pipelines list`) and match the group ID,
+or say the links could not be determined.
 
 #### 3. Display Output
 

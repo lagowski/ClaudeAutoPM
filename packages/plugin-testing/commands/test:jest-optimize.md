@@ -14,21 +14,7 @@ Comprehensive Jest performance optimization following official best practices:
 
 ## Required Documentation Access
 
-**MANDATORY:** Before optimization, query Context7 for Jest best practices:
-
-**Documentation Queries:**
-- `mcp://context7/jest/parallel-execution` - Parallel test execution patterns
-- `mcp://context7/jest/sharding` - Test sharding strategies
-- `mcp://context7/nodejs-testing/database` - Database optimization for tests
-- `mcp://context7/nodejs-testing/cleanup` - Test cleanup best practices
-- `mcp://context7/jest/coverage` - Coverage optimization techniques
-
-**Why This is Required:**
-- Ensures optimization follows official Jest documentation
-- Applies proven parallel execution patterns
-- Validates database testing strategies
-- Prevents resource leaks and flaky tests
-- Optimizes CI/CD pipeline performance
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: jest, nodejs.
 
 ## Usage
 

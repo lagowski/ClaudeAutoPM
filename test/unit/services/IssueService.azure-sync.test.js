@@ -22,11 +22,11 @@
 
 const IssueService = require('../../../lib/services/IssueService');
 const AzureDevOpsProvider = require('../../../lib/providers/AzureDevOpsProvider');
-const fs = require('fs-extra');
+const fs = require('../../../lib/utils/fs');
 const path = require('path');
 
 // Mock dependencies
-jest.mock('fs-extra');
+jest.mock('../../../lib/utils/fs');
 jest.mock('../../../lib/providers/AzureDevOpsProvider');
 
 describe('IssueService - Azure DevOps Synchronization', () => {

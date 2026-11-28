@@ -10,15 +10,7 @@ Creates a complete React application with TypeScript and modern tooling.
 
 ## Required Documentation Access
 
-**MANDATORY:** Before scaffolding React applications, query Context7 for best practices:
-
-**Documentation Queries:**
-- `mcp://context7/react/project-setup` - project setup best practices
-- `mcp://context7/react/application-structure` - application structure best practices
-- `mcp://context7/frontend/tooling` - tooling best practices
-- `mcp://context7/react/best-practices` - best practices best practices
-
-**Why:** Documentation-first development policy — see `.claude/rules/context7-required.md`.
+Query Context7 first: see `.claude/rules/context7-required.md`. Libraries: react.
 
 
 **Example**: `/react:app-scaffold dashboard-app --framework=vite --styling=tailwind --state=zustand`
