@@ -50,7 +50,7 @@ The main configuration file is `.claude/config.json`. Here's a typical configura
 
 ```json
 {
-  "version": "3.4.0",
+  "version": "4.0.0",
   "features": {
     "docker_first_development": false,
     "kubernetes_devops_testing": false,
@@ -156,13 +156,13 @@ Or use the CLI:
 
 ```bash
 # List available plugins
-autopm plugins list
+autopm plugin list
 
 # Enable a plugin
-autopm plugins enable plugin-docker
+autopm plugin enable devops
 
 # Disable a plugin
-autopm plugins disable plugin-azure
+autopm plugin disable pm-azure
 ```
 
 ## Environment Variables
@@ -170,11 +170,8 @@ autopm plugins disable plugin-azure
 Environment variables are stored in `.claude/.env`. Copy from the template and configure:
 
 ```bash
-# Copy template
+# Copy template, then edit the values
 cp .claude/.env.example .claude/.env
-
-# Or use interactive setup
-autopm setup-env
 ```
 
 ### Common Environment Variables
@@ -324,23 +321,20 @@ autopm mcp sync
 
 ## CLAUDE.md Configuration
 
-The `CLAUDE.md` file provides instructions to Claude. It's automatically generated based on your configuration but can be customized:
+The `CLAUDE.md` file provides instructions to Claude. `autopm install` generates it from
+`.claude/templates/claude-templates/` (`base.md` plus addons for your scenario); you can edit it.
+It summarizes the critical rules and points to the full files, which Claude reads on demand:
 
 ```markdown
-# Project Configuration
-
-## Active Plugins
-- @include .claude/plugins/plugin-pm/index.md
-- @include .claude/plugins/plugin-pm-github/index.md
-
-## Development Rules
-- @include .claude/rules/tdd.enforcement.md
-- @include .claude/rules/naming-conventions.md
-
-## Active Agents
-- @include .claude/agents/core/code-analyzer.md
-- @include .claude/agents/core/test-runner.md
+<rule id="tdd" priority="HIGHEST">
+TDD mandatory|No code before tests|RED→GREEN→REFACTOR
+📖 Full: .claude/rules/tdd.enforcement.xml
+</rule>
 ```
+
+Claude Code has no `@include` directive (its import syntax is `@path/to/file`), so nothing in `.claude/rules/` or `.claude/agents/` is loaded into context automatically.
+To put a file's content into every session, use Claude Code's import syntax, for example
+`@.claude/rules/tdd.enforcement.xml`, and mind the context it costs.
 
 ### Agent models
 
@@ -354,8 +348,8 @@ themselves, for example `CLAUDE_CODE_SUBAGENT_MODEL=sonnet`.
 After configuration changes:
 
 ```bash
-# Regenerate based on current config
-autopm merge
+# Regenerate from templates (the current CLAUDE.md is backed up first)
+autopm install --force
 
 # Or in Claude Code
 /re-init
@@ -363,55 +357,55 @@ autopm merge
 
 ## Configuration Presets
 
-ClaudeAutoPM provides configuration presets for common scenarios:
+Presets are installation scenarios: `autopm install --scenario <name>` writes `.claude/config.json` for
+that scenario (scenarios: `lite`, `github`, `azure`, `docker`, `full`, `performance`). Re-running it
+backs up the existing `config.json` first.
 
 ### Minimal Development
 
 ```bash
-autopm config preset minimal
+autopm install --scenario lite
 ```
 
 ```json
 {
-  "features": {
-    "docker_first_development": false,
-    "kubernetes_devops_testing": false
-  },
-  "execution_strategy": "sequential"
+  "execution_strategy": "sequential",
+  "tools": {
+    "docker": { "enabled": false },
+    "kubernetes": { "enabled": false }
+  }
 }
 ```
 
 ### Docker Development
 
 ```bash
-autopm config preset docker
+autopm install --scenario docker
 ```
 
 ```json
 {
-  "features": {
-    "docker_first_development": true,
-    "enforce_docker_tests": true
-  },
-  "execution_strategy": "adaptive"
+  "execution_strategy": "adaptive",
+  "tools": {
+    "docker": { "enabled": true, "first": false },
+    "kubernetes": { "enabled": false }
+  }
 }
 ```
 
 ### Full DevOps
 
 ```bash
-autopm config preset devops
+autopm install --scenario full
 ```
 
 ```json
 {
-  "features": {
-    "docker_first_development": true,
-    "kubernetes_devops_testing": true,
-    "github_actions_k8s": true,
-    "integration_tests": true
-  },
-  "execution_strategy": "adaptive"
+  "execution_strategy": "adaptive",
+  "tools": {
+    "docker": { "enabled": true, "first": true },
+    "kubernetes": { "enabled": true }
+  }
 }
 ```
 
@@ -456,8 +450,8 @@ cat .claude/config.json | python -m json.tool
 **Solution:** Configure the required variable:
 
 ```bash
-autopm setup-env
-# Or manually add to .claude/.env
+# Add it to .claude/.env
+echo "GITHUB_TOKEN=ghp_your_token_here" >> .claude/.env
 ```
 
 ### Plugin Not Found
@@ -469,7 +463,7 @@ autopm setup-env
 **Solution:** Verify plugin name and availability:
 
 ```bash
-autopm plugins list
+autopm plugin list
 ```
 
 ## Next Steps

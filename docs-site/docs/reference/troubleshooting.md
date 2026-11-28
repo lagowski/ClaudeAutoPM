@@ -133,9 +133,8 @@ autopm validate
 # Validate JSON
 cat .claude/config.json | jq .
 
-# If invalid, reset to defaults
-cp .claude/config.json .claude/config.json.backup
-autopm init --reset-config
+# If invalid, regenerate it (install backs up the old config.json first)
+autopm install --force
 
 # Or manually fix
 nano .claude/config.json
@@ -157,10 +156,10 @@ git remote set-url origin https://github.com/user/repo.git
 # For Azure DevOps
 git remote set-url origin https://dev.azure.com/org/project/_git/repo
 
-# Force provider detection
-autopm configure --provider github
+# Set the provider explicitly
+autopm config set provider github
 # or
-autopm configure --provider azure
+autopm config set provider azure
 ```
 
 ### Missing Credentials
@@ -293,7 +292,7 @@ chmod +x .git/hooks/pre-push
 git commit --no-verify -m "Emergency fix"
 
 # Re-install hooks
-./scripts/setup-hooks.sh
+./scripts/setup-githooks.sh
 ```
 
 ### Branch Protection Issues
@@ -332,9 +331,6 @@ git commit
 git rebase --continue
 # or abort if needed
 git rebase --abort
-
-# Use merge helper
-autopm merge --assist
 ```
 
 ## Claude Code Integration Issues
@@ -356,7 +352,7 @@ ls .claude/agents/frameworks/
 # In Claude Code, try: /help
 
 # Reinstall if needed
-autopm install --repair
+autopm install --force
 ```
 
 ### Commands Not Recognized
@@ -477,15 +473,15 @@ npm run test:coverage -- --verbose
 top
 df -h
 
-# Clear cache
-npm run pm:clean --cache
+# Clean up completed work (in Claude Code)
+/pm:clean
 
 # Check network connectivity
 ping github.com
 ping dev.azure.com
 
-# Enable performance monitoring
-DEBUG=autopm:* autopm issue:list
+# Show debug output
+autopm epic list --debug
 
 # Update to latest version
 npm update -g claude-autopm
@@ -505,7 +501,7 @@ vm_stat  # macOS
 export NODE_OPTIONS="--max-old-space-size=4096"
 
 # Check for memory leaks
-node --inspect-brk autopm issue:list
+node --inspect-brk "$(command -v autopm)" epic list
 # Open chrome://inspect in Chrome
 
 # Restart Docker with more memory
@@ -602,8 +598,7 @@ Enable detailed logging for complex issues:
 
 ```bash
 # Enable debug output
-export DEBUG=autopm:*
-autopm issue:list
+autopm epic list --debug
 
 # Enable verbose npm logging
 npm config set loglevel verbose
@@ -733,18 +728,16 @@ git push --force-with-lease origin main
 npm install -g claude-autopm@1.1.0
 ```
 
-### Recovery Mode
+### Recovery
 
 If ClaudeAutoPM becomes completely unresponsive:
 
 ```bash
-# Enter recovery mode
-autopm --recovery-mode
-
-# Or manual recovery
+# Manual recovery
 rm -f .claude/.lock
 rm -rf .claude/cache/
-autopm validate --repair
+autopm install --force
+autopm validate
 ```
 
 ## Related Pages

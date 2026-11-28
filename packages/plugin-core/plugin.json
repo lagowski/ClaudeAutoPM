@@ -238,64 +238,14 @@
   ],
   "hooks": [
     {
-      "name": "pre-command-context7",
-      "file": "hooks/pre-command-context7.js",
-      "type": "pre-command",
-      "description": "Enforce Context7 queries before command execution",
-      "blocking": true,
-      "tags": ["context7", "enforcement"]
-    },
-    {
-      "name": "pre-agent-context7",
-      "file": "hooks/pre-agent-context7.js",
-      "type": "pre-agent",
-      "description": "Enforce Context7 queries before agent invocation",
-      "blocking": true,
-      "tags": ["context7", "enforcement"]
-    },
-    {
       "name": "enforce-agents",
-      "files": [
-        "hooks/enforce-agents.js",
-        "hooks/enforce-agents.sh"
-      ],
+      "file": "hooks/enforce-agents.cjs",
       "type": "pre-tool",
-      "description": "Enforce agent usage over direct tool calls",
+      "event": "PreToolUse",
+      "matcher": "Bash|Read",
+      "description": "Opt-in (--enforce-agents): block verbose test suite runs, log reads and large-file reads; use an agent instead",
       "blocking": true,
-      "dual": true,
       "tags": ["agents", "enforcement"]
-    },
-    {
-      "name": "strict-enforce-agents",
-      "file": "hooks/strict-enforce-agents.sh",
-      "type": "pre-tool",
-      "description": "Stricter agent enforcement (zero tolerance)",
-      "blocking": true,
-      "tags": ["agents", "enforcement", "strict"]
-    },
-    {
-      "name": "unified-context7-enforcement",
-      "file": "hooks/unified-context7-enforcement.sh",
-      "type": "wrapper",
-      "description": "Unified wrapper for Context7 enforcement",
-      "blocking": true,
-      "tags": ["context7", "enforcement", "wrapper"]
-    },
-    {
-      "name": "context7-reminder",
-      "file": "hooks/context7-reminder.md",
-      "type": "documentation",
-      "description": "Context7 enforcement reminder text",
-      "blocking": false,
-      "tags": ["context7", "documentation"]
-    },
-    {
-      "name": "test-hook",
-      "file": "hooks/test-hook.sh",
-      "type": "testing",
-      "description": "Hook testing utility for validation",
-      "blocking": false,
-      "tags": ["testing", "utilities"]
     }
   ],
   "scripts": [
