@@ -66,7 +66,7 @@ created: 2025-01-15T10:00:00Z
       const result = service.parseIssueMetadata(content);
 
       expect(result).toEqual({
-        id: '123',
+        id: 123,
         title: 'Fix authentication bug',
         status: 'open',
         assignee: 'developer1',
@@ -113,7 +113,7 @@ status: open
       const result = await service.getLocalIssue(123);
 
       expect(result).toMatchObject({
-        id: '123',
+        id: 123,
         title: 'Test Issue',
         status: 'open',
         content: issueContent
@@ -137,7 +137,7 @@ id: 456
       fs.readFile.mockResolvedValue(issueContent);
 
       const result = await service.getLocalIssue('456');
-      expect(result.id).toBe('456');
+      expect(result.id).toBe(456);
     });
   });
 
@@ -552,7 +552,7 @@ created: 2025-01-15
 
       expect(result).toHaveLength(2);
       expect(result[0]).toMatchObject({
-        id: '123',
+        id: 123,
         title: 'Test Issue',
         status: 'open',
         assignee: 'dev1'
@@ -611,7 +611,7 @@ status: in-progress
 
       expect(mockProvider.updateIssue).toHaveBeenCalledWith(
         expect.objectContaining({
-          id: '123',
+          id: 123,
           status: 'in-progress'
         })
       );
